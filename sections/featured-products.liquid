@@ -1,0 +1,137 @@
+{% comment %}
+  KRAFTMART — FEATURED PRODUCTS COLLECTION GRID SECTION
+  Supports dynamic Shopify collection binding and fallback cards matching real product catalogue
+{% endcomment %}
+
+<section class="km-section">
+  <div class="km-container">
+    <div class="km-section-header">
+      <span class="km-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="km-heading-1">{{ section.settings.title }}</h2>
+      <p class="km-body-lead">{{ section.settings.subtitle }}</p>
+    </div>
+
+    {% assign featured_collection = collections[section.settings.collection] %}
+
+    <div class="km-product-grid">
+      {% if featured_collection and featured_collection.products.size > 0 %}
+        {% for product in featured_collection.products limit: section.settings.products_limit %}
+          {% render 'product-card-heritage', product: product %}
+        {% endfor %}
+      {% else %}
+        <!-- Real Catalogue Fallback Products -->
+        <div class="km-product-card">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Save ₹500</span>
+            <img src="{{ 'sword.png' | asset_url }}" alt="Jaipur Wedding Talwar" class="km-product-img" />
+            <button class="km-quick-view-btn" data-action="quick-view" data-handle="jaipur-wedding-talwar">Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Jaipur Wedding Talwar</h3>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹2,599</span>
+              <span class="km-price-compare">₹3,099</span>
+            </div>
+            <button class="km-add-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="km-product-card">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Popular</span>
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Kundan Hilt Sword" class="km-product-img" />
+            <button class="km-quick-view-btn" data-action="quick-view" data-handle="kundan-hilt-sword">Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Kundan Hilt Rajput Talwar</h3>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹4,299</span>
+              <span class="km-price-compare">₹4,999</span>
+            </div>
+            <button class="km-add-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="km-product-card">
+          <div class="km-product-media">
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Dawami Wedding Talwar" class="km-product-img" />
+            <button class="km-quick-view-btn" data-action="quick-view" data-handle="dawami-talwar">Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Dawami Velvet Scabbard Talwar</h3>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹4,299</span>
+            </div>
+            <button class="km-add-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="km-product-card">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Free Engraving</span>
+            <img src="{{ 'sword.png' | asset_url }}" alt="Sikh Punjabi Khanda" class="km-product-img" />
+            <button class="km-quick-view-btn" data-action="quick-view" data-handle="punjabi-khanda">Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Damarsharr Ceremonial Sword</h3>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹2,599</span>
+              <span class="km-price-compare">₹2,999</span>
+            </div>
+            <button class="km-add-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "NEW ARRIVALS & BEST SELLERS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Handcrafted Collections"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Every sword is individually forged, hand-polished, and personalized with custom engraving."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Shopify Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "label": "Products to Display",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products Grid",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,38 @@
+{% comment %}
+  KRAFTMART — CONTACT US PAGE TEMPLATE
+{% endcomment %}
+
+<div class="km-section">
+  <div class="km-container-narrow">
+    <div class="km-section-header">
+      <span class="km-eyebrow">GET IN TOUCH</span>
+      <h1 class="km-heading-1">Contact KraftMart</h1>
+      <p class="km-body-lead">Have questions regarding custom engraving, wedding bulk orders, or COD payment options? Reach out to our Amritsar workshop team.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px;">
+      <div style="background: var(--km-bg-secondary); padding: 32px; border-radius: var(--km-radius-md); border: var(--km-border-gold);">
+        <h3 class="km-heading-3" style="margin-bottom: 20px;">Workshop Details</h3>
+        <p style="margin-bottom: 16px; font-size: 0.9375rem; color: var(--km-text-secondary);">
+          <strong>Location:</strong><br>Amritsar, Punjab, India
+        </p>
+        <p style="margin-bottom: 16px; font-size: 0.9375rem; color: var(--km-text-secondary);">
+          <strong>Email:</strong><br>support@kraftmart.shop
+        </p>
+        <p style="margin-bottom: 16px; font-size: 0.9375rem; color: var(--km-text-secondary);">
+          <strong>Services:</strong><br>Worldwide Express Shipping (FedEx & DHL)<br>Cash on Delivery Available for India
+        </p>
+      </div>
+
+      <form method="post" action="/contact#contact_form" style="display: flex; flex-direction: column; gap: 16px;">
+        <input type="hidden" name="form_type" value="contact" />
+        <input type="text" name="contact[name]" placeholder="Your Full Name" required style="background: #FFF; border: var(--km-border-subtle); padding: 14px; border-radius: var(--km-radius-sm);" />
+        <input type="email" name="contact[email]" placeholder="Your Email Address" required style="background: #FFF; border: var(--km-border-subtle); padding: 14px; border-radius: var(--km-radius-sm);" />
+        <textarea name="contact[body]" placeholder="How can we assist you with your ceremonial sword order?" rows="5" required style="background: #FFF; border: var(--km-border-subtle); padding: 14px; border-radius: var(--km-radius-sm); resize: none;"></textarea>
+        <button type="submit" class="km-btn km-btn-gold">
+          Send Message →
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

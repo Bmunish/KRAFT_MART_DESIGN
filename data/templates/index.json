@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "kraftmart_home": { "type": "kraftmart-home", "settings": {} }
+  },
+  "order": ["kraftmart_home"]
+}

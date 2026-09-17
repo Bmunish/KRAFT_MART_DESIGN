@@ -1,0 +1,10 @@
+{% liquid
+  assign variant = product.selected_or_first_available_variant
+  assign compare = variant.compare_at_price
+%}
+<div class="km-luxe-product__meta">
+  {% if product.vendor != blank %}<p>{{ product.vendor }}</p>{% endif %}
+  <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+  <div class="km-luxe-price"><span>{{ variant.price | money }}</span>{% if compare > variant.price %}<del>{{ compare | money }}</del><em>{{ compare | minus: variant.price | times: 100.0 | divided_by: compare | round }}% off</em>{% endif %}</div>
+  <a class="km-luxe-product__link" href="{{ product.url }}">View product <span>→</span></a>
+</div>

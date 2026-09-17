@@ -1,0 +1,178 @@
+{% comment %}
+  KRAFTMART — MASTERPIECE SPOTLIGHT SHOWCASE SECTION
+  Single highlighted luxury item card matching design concept mockup
+{% endcomment %}
+
+<section class="km-section km-ld-dark-container">
+  <div class="km-container">
+    <div class="km-section-header" style="margin-bottom: 40px;">
+      <span class="km-eyebrow" style="color: #7084ff;">{{ section.settings.eyebrow }}</span>
+      <h2 class="km-heading-1 km-ld-headline-violet">{{ section.settings.section_title }}</h2>
+      <p style="color: #a7a9ac; max-width: 600px; margin: 12px auto 0 auto;">Precision metallurgy &amp; Amritsar master metalwork.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+      <!-- White Floating Product Visual Panel -->
+      <div class="km-product-panel-white">
+        <div style="position: relative; text-align: center;">
+          <span class="km-sale-badge" style="background-color: var(--color-voltage-blue);">{{ section.settings.badge_text }}</span>
+          {% if section.settings.spotlight_image %}
+            <img src="{{ section.settings.spotlight_image | img_url: '700x' }}" alt="{{ section.settings.product_title }}" style="max-height: 380px; margin: 0 auto; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15));" />
+          {% else %}
+            <img src="{{ 'sword2.png' | asset_url }}" alt="KraftMart Damascus Steel Talwar" style="max-height: 380px; margin: 0 auto; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15));" width="550" height="350" />
+          {% endif %}
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+          <h3 style="font-family: var(--km-font-heading); font-size: 1.6rem; color: var(--color-ink-navy); font-weight: 700;">{{ section.settings.product_title }}</h3>
+          <p style="font-size: 0.875rem; color: var(--color-slate-gray); margin: 6px 0 16px 0;">{{ section.settings.product_description }}</p>
+          <div style="display: flex; justify-content: center; gap: 12px;">
+            <a href="{{ section.settings.btn_url }}" class="km-btn" style="background-color: var(--color-signal-blue); color: #FFF; border-radius: 30px; padding: 12px 24px;">
+              {{ section.settings.btn_text }} ({{ section.settings.price }})
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monospace Tech Console -->
+      <div class="km-tech-spec-console">
+        <div class="km-console-header">
+          <div class="km-console-dots">
+            <span class="km-console-dot red"></span>
+            <span class="km-console-dot yellow"></span>
+            <span class="km-console-dot green"></span>
+          </div>
+          <span class="km-console-title">SPECIFICATION.JSON</span>
+        </div>
+
+        <div class="km-console-row">
+          <span class="km-console-key">"blade_forge":</span>
+          <span class="km-console-val">"{{ section.settings.spec_material }}"</span>
+        </div>
+        <div class="km-console-row">
+          <span class="km-console-key">"overall_length":</span>
+          <span class="km-console-val">"{{ section.settings.spec_length }}"</span>
+        </div>
+        <div class="km-console-row">
+          <span class="km-console-key">"weight_balance":</span>
+          <span class="km-console-val">"{{ section.settings.spec_weight }}"</span>
+        </div>
+        <div class="km-console-row">
+          <span class="km-console-key">"laser_engraving":</span>
+          <span class="km-console-val">"{{ section.settings.spec_engraving }}"</span>
+        </div>
+        <div class="km-console-row" style="border-bottom: none;">
+          <span class="km-console-key">"origin_dispatch":</span>
+          <span class="km-console-val">"Amritsar Workshop via Express"</span>
+        </div>
+
+        <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--color-ld-graphite); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.75rem; color: #a7a9ac;">Custom dimensions available</span>
+          <a href="/pages/contact" style="color: #7084ff; text-decoration: underline; font-weight: 500;">Inquire Custom Forging →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Masterpiece Spotlight",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "FEATURED HERITAGE PIECE"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Masterpiece of the Month"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Product Badge Label",
+      "default": "Top-Selling Sword"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Product Title",
+      "default": "Royal Jodhpur Damascus Talwar"
+    },
+    {
+      "type": "textarea",
+      "id": "product_description",
+      "label": "Product Description",
+      "default": "A testament to human artistry, featuring a hand-engraved brass hilt, velvet scabbard, and a Damascus forged steel blade. Handcrafted in Amritsar over three months."
+    },
+    {
+      "type": "text",
+      "id": "spec_material",
+      "label": "Specification - Material",
+      "default": "Damascus Steel & Brass"
+    },
+    {
+      "type": "text",
+      "id": "spec_length",
+      "label": "Specification - Length",
+      "default": "36 Inches"
+    },
+    {
+      "type": "text",
+      "id": "spec_weight",
+      "label": "Specification - Weight",
+      "default": "1.4 kg"
+    },
+    {
+      "type": "text",
+      "id": "spec_engraving",
+      "label": "Specification - Engraving",
+      "default": "Free Custom Name/Date"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Display Price",
+      "default": "₹4,299"
+    },
+    {
+      "type": "text",
+      "id": "compare_price",
+      "label": "Compare at Price",
+      "default": "₹5,499"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "Order Masterpiece Now"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Shopify Product Handle (for Quick View)",
+      "default": "royal-jodhpur-damascus-talwar"
+    },
+    {
+      "type": "image_picker",
+      "id": "spotlight_image",
+      "label": "Spotlight Image Asset"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Masterpiece Spotlight",
+      "category": "Featured Products"
+    }
+  ]
+}
+{% endschema %}

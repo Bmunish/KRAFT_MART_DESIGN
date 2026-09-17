@@ -1,0 +1,118 @@
+.video-section__media {
+  --ratio-percent: 56.25%;
+  position: relative;
+  padding-bottom: calc(var(--ratio-percent) - var(--media-border-width));
+}
+
+/* Needed for gradient continuity with or without animation so that transparent PNG images come up as we would expect */
+.scroll-trigger:where(.gradient.video-section__media) {
+  background: transparent;
+}
+
+.video-section__media.global-media-settings--full-width {
+  padding-bottom: var(--ratio-percent);
+}
+
+.video-section__media.deferred-media {
+  box-shadow: var(--media-shadow-horizontal-offset) var(--media-shadow-vertical-offset) var(--media-shadow-blur-radius)
+    rgba(var(--color-shadow), var(--media-shadow-opacity));
+}
+
+.video-section__media.deferred-media:after {
+  content: none;
+}
+
+.video-section__poster.deferred-media__poster:focus {
+  outline-offset: 0.3rem;
+}
+
+.video-section__media iframe {
+  background-color: rgba(var(--color-foreground), 0.03);
+  border: 0;
+}
+
+.video-section__poster,
+.video-section__media iframe,
+.video-section__media video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.video-section__media video {
+  background: #000000;
+}
+
+.video-section__media.media-fit-cover video {
+  object-fit: cover;
+}
+
+
+.deferred-media[loaded]>.deferred-media__poster ~ .video-overlay-content {
+  display: none;
+}
+.video-overlay-content {
+  position: absolute;
+  top: 48px;
+  z-index: 1;
+  left: 50px;
+  overflow: auto;
+  max-height: calc(100% - 90px);
+}
+.video-overlay-content::-webkit-scrollbar {
+  width: 5px;
+}
+.video-overlay-content::-webkit-scrollbar-track {
+  background: #fff;
+}
+.video-overlay-content::-webkit-scrollbar-thumb {
+  background: #000000; 
+}
+.video-overlay-content p {
+  margin: 0 0 20px;
+  font-size: calc(var(--font-body-scale)* 1.6rem);
+  color: rgb(var(--color-background));
+}
+.video-overlay-content .overlay--title {
+  margin: 0;
+  max-width: 557px;
+  font-size: calc(var(--font-heading-scale)* 3rem);
+  letter-spacing: 1.6px;
+  text-transform: capitalize;
+  color: rgb(var(--color-background));
+  font-weight: var(--font-body-weight-semibold);
+  /* overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  -webkit-box-orient: vertical; */
+}
+
+@media screen and (max-width: 1199px) {
+  .video-overlay-content {
+    top: 30px;
+    left: 20px;
+  }
+  .video-overlay-content .overlay--title {
+    font-size: calc(var(--font-heading-scale)* 2.5rem);
+  }
+  .video-section__media.deferred-media {
+    --ratio-percent: 46.333333% !important;
+  }
+}
+@media screen and (max-width: 750px) {
+  .video-section__media.deferred-media {
+    --ratio-percent: 60.333333% !important;
+  }
+  .video-overlay-content .overlay--title {
+    font-size: calc(var(--font-heading-scale)* 2rem);
+  }
+}
+@media screen and (max-width: 575px) {
+  .video-section__media.deferred-media {
+    --ratio-percent: 80.333333% !important;
+  }
+  .video-overlay-content {
+    display: none;
+  }
+}

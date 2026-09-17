@@ -1,0 +1,586 @@
+{% comment %}
+  ============================================================
+  KraftMart — Premium Rich Text / COD Announcement Section
+  File: sections/kraftmart-rich-text.liquid
+  Author: Senior Shopify Theme Developer
+  Version: 1.0.0
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign section_id        = 'km-rts-' | append: section.id
+  assign heading           = section.settings.heading
+  assign description       = section.settings.description
+  assign benefit_1         = section.settings.benefit_1
+  assign benefit_2         = section.settings.benefit_2
+  assign benefit_3         = section.settings.benefit_3
+  assign footer_note       = section.settings.footer_note
+  assign btn_text          = section.settings.button_text
+  assign btn_url           = section.settings.button_url
+  assign animation_on      = section.settings.enable_animation
+  assign anim_cycle        = section.settings.animation_cycle | times: 1000
+  assign card_max_w        = section.settings.card_max_width
+  assign border_radius     = section.settings.border_radius
+  assign pad_desktop       = section.settings.padding_desktop
+  assign pad_mobile        = section.settings.padding_mobile
+  assign margin_top        = section.settings.section_margin_top
+  assign margin_bottom     = section.settings.section_margin_bottom
+  assign bg_color          = section.settings.bg_color
+  assign card_color        = section.settings.card_color
+  assign outer_border_col  = section.settings.outer_border_color
+  assign inner_border_col  = section.settings.inner_border_color
+  assign heading_color     = section.settings.heading_color
+  assign text_color        = section.settings.text_color
+  assign btn_bg            = section.settings.button_bg
+  assign btn_border_col    = section.settings.button_border_color
+  assign btn_txt_col       = section.settings.button_text_color
+  assign btn_hover_bg      = section.settings.button_hover_bg
+-%}
+
+<style>
+  #{{ section_id }} {
+    background-color: {{ bg_color }};
+    padding-top:      {{ margin_top }}px;
+    padding-bottom:   {{ margin_bottom }}px;
+    font-family:      'Times New Roman', Times, serif;
+    box-sizing:       border-box;
+  }
+
+  #{{ section_id }} .km-rts-shell {
+    display:         flex;
+    justify-content: center;
+    align-items:     center;
+    padding-left:    20px;
+    padding-right:   20px;
+    box-sizing:      border-box;
+  }
+
+  #{{ section_id }} .km-rts-card {
+    position:         relative;
+    width:            100%;
+    max-width:        {{ card_max_w }}px;
+    background-color: {{ card_color }};
+    border-radius:    {{ border_radius }}px;
+    border:           3px solid {{ outer_border_col }};
+    box-shadow:
+      0 8px 40px rgba(58, 29, 0, 0.12),
+      0 2px 12px rgba(58, 29, 0, 0.08),
+      inset 0 0 0 8px {{ card_color }},
+      inset 0 0 0 10px {{ inner_border_col }};
+    padding:          {{ pad_desktop }}px;
+    box-sizing:       border-box;
+    will-change:      transform, box-shadow;
+    transform:        translateZ(0);
+    transition:       transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                      box-shadow 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  #{{ section_id }} .km-rts-corner {
+    position:       absolute;
+    width:          48px;
+    height:         48px;
+    pointer-events: none;
+    z-index:        2;
+  }
+  #{{ section_id }} .km-rts-corner::before,
+  #{{ section_id }} .km-rts-corner::after {
+    content:    '';
+    position:   absolute;
+    background: {{ inner_border_col }};
+  }
+  #{{ section_id }} .km-rts-corner::before {
+    width:  32px;
+    height: 2px;
+    top:    12px;
+  }
+  #{{ section_id }} .km-rts-corner::after {
+    width:  2px;
+    height: 32px;
+    left:   12px;
+    top:    0;
+  }
+  #{{ section_id }} .km-rts-corner .km-rts-corner-dot {
+    position:      absolute;
+    width:         8px;
+    height:        8px;
+    background:    {{ inner_border_col }};
+    top:           8px;
+    left:          8px;
+    transform:     rotate(45deg);
+    border-radius: 1px;
+  }
+
+  #{{ section_id }} .km-rts-corner--tl { top: 14px; left: 14px; }
+  #{{ section_id }} .km-rts-corner--tl::before { left: 12px; }
+  #{{ section_id }} .km-rts-corner--tl::after  { top: 12px; left: 12px; }
+  #{{ section_id }} .km-rts-corner--tl .km-rts-corner-dot { top: 8px; left: 8px; }
+
+  #{{ section_id }} .km-rts-corner--tr { top: 14px; right: 14px; }
+  #{{ section_id }} .km-rts-corner--tr::before { right: 12px; left: auto; }
+  #{{ section_id }} .km-rts-corner--tr::after  { top: 12px; right: 12px; left: auto; }
+  #{{ section_id }} .km-rts-corner--tr .km-rts-corner-dot { top: 8px; right: 8px; left: auto; }
+
+  #{{ section_id }} .km-rts-corner--bl { bottom: 14px; left: 14px; }
+  #{{ section_id }} .km-rts-corner--bl::before { left: 12px; bottom: 0; top: auto; }
+  #{{ section_id }} .km-rts-corner--bl::after  { bottom: 0; top: auto; left: 12px; }
+  #{{ section_id }} .km-rts-corner--bl .km-rts-corner-dot { bottom: 8px; top: auto; left: 8px; }
+
+  #{{ section_id }} .km-rts-corner--br { bottom: 14px; right: 14px; }
+  #{{ section_id }} .km-rts-corner--br::before { right: 12px; left: auto; bottom: 0; top: auto; }
+  #{{ section_id }} .km-rts-corner--br::after  { bottom: 0; top: auto; right: 12px; left: auto; }
+  #{{ section_id }} .km-rts-corner--br .km-rts-corner-dot { bottom: 8px; top: auto; right: 8px; left: auto; }
+
+  #{{ section_id }} .km-rts-inner {
+    position:   relative;
+    z-index:    1;
+    text-align: center;
+  }
+
+  #{{ section_id }} .km-rts-flourish {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    gap:             10px;
+    margin-bottom:   28px;
+    color:           {{ inner_border_col }};
+    font-size:       18px;
+    letter-spacing:  6px;
+  }
+  #{{ section_id }} .km-rts-flourish-line {
+    flex:       1;
+    height:     1px;
+    max-width:  90px;
+    background: linear-gradient(to right, transparent, {{ inner_border_col }} 40%, {{ inner_border_col }} 60%, transparent);
+  }
+  #{{ section_id }} .km-rts-flourish-line--right {
+    background: linear-gradient(to left, transparent, {{ inner_border_col }} 40%, {{ inner_border_col }} 60%, transparent);
+  }
+  #{{ section_id }} .km-rts-flourish-symbol {
+    display:        flex;
+    align-items:    center;
+    gap:            6px;
+    color:          {{ inner_border_col }};
+    font-size:      14px;
+    letter-spacing: 4px;
+  }
+  #{{ section_id }} .km-rts-flourish-symbol::before,
+  #{{ section_id }} .km-rts-flourish-symbol::after {
+    content:   '◆';
+    font-size: 8px;
+    opacity:   0.7;
+  }
+
+  #{{ section_id }} .km-rts-heading {
+    font-family:    'Times New Roman', Times, serif;
+    font-size:      42px;
+    font-weight:    700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height:    1.25;
+    color:          {{ heading_color }};
+    margin:         0 0 22px;
+    padding:        0;
+  }
+
+  #{{ section_id }} .km-rts-divider {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    gap:             14px;
+    margin:          0 0 28px;
+  }
+  #{{ section_id }} .km-rts-divider-bar {
+    flex:       1;
+    max-width:  120px;
+    height:     1px;
+    background: linear-gradient(to right, transparent, {{ inner_border_col }});
+  }
+  #{{ section_id }} .km-rts-divider-bar--right {
+    background: linear-gradient(to left, transparent, {{ inner_border_col }});
+  }
+  #{{ section_id }} .km-rts-divider-gem {
+    width:         10px;
+    height:        10px;
+    background:    {{ inner_border_col }};
+    transform:     rotate(45deg);
+    border-radius: 1px;
+    flex-shrink:   0;
+  }
+
+  #{{ section_id }} .km-rts-description {
+    font-family: 'Times New Roman', Times, serif;
+    font-size:   20px;
+    line-height: 1.8;
+    color:       {{ text_color }};
+    margin:      0 0 32px;
+    font-style:  italic;
+  }
+
+  #{{ section_id }} .km-rts-benefits {
+    list-style:     none;
+    margin:         0 0 32px;
+    padding:        0;
+    display:        flex;
+    flex-direction: column;
+    gap:            12px;
+    align-items:    center;
+  }
+  #{{ section_id }} .km-rts-benefits li {
+    font-family: 'Times New Roman', Times, serif;
+    font-size:   20px;
+    line-height: 1.8;
+    color:       {{ text_color }};
+    display:     flex;
+    align-items: center;
+    gap:         10px;
+  }
+  #{{ section_id }} .km-rts-benefit-check {
+    display:         inline-flex;
+    align-items:     center;
+    justify-content: center;
+    width:           22px;
+    height:          22px;
+    border:          1.5px solid {{ inner_border_col }};
+    border-radius:   3px;
+    color:           {{ inner_border_col }};
+    font-size:       13px;
+    flex-shrink:     0;
+  }
+
+  #{{ section_id }} .km-rts-footer {
+    font-family: 'Times New Roman', Times, serif;
+    font-size:   16px;
+    line-height: 1.8;
+    color:       {{ text_color }};
+    opacity:     0.75;
+    margin:      0 0 36px;
+    font-style:  italic;
+  }
+
+  #{{ section_id }} .km-rts-btn-wrap {
+    display:         flex;
+    justify-content: center;
+  }
+  #{{ section_id }} .km-rts-btn {
+    display:         inline-block;
+    font-family:     'Times New Roman', Times, serif;
+    font-size:       16px;
+    font-weight:     700;
+    text-transform:  uppercase;
+    letter-spacing:  2px;
+    color:           {{ btn_txt_col }};
+    background:      {{ btn_bg }};
+    border:          2px solid {{ btn_border_col }};
+    border-radius:   4px;
+    padding:         16px 48px;
+    text-decoration: none;
+    cursor:          pointer;
+    position:        relative;
+    transition:      background-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+    will-change:     transform, box-shadow;
+    outline:         none;
+    box-shadow:      0 2px 8px rgba(200, 162, 74, 0.18);
+  }
+  #{{ section_id }} .km-rts-btn:hover,
+  #{{ section_id }} .km-rts-btn:focus-visible {
+    background:   {{ btn_hover_bg }};
+    transform:    translateY(-3px);
+    box-shadow:   0 8px 24px rgba(198, 40, 40, 0.30);
+    border-color: {{ btn_hover_bg }};
+  }
+  #{{ section_id }} .km-rts-btn:focus-visible {
+    outline:        2px solid {{ inner_border_col }};
+    outline-offset: 4px;
+  }
+
+  #{{ section_id }} .km-rts-flourish--bottom {
+    margin-top:    28px;
+    margin-bottom: 0;
+  }
+
+  @keyframes km-rts-pulse {
+    0% {
+      transform:  translateZ(0) scale(1);
+      box-shadow:
+        0 8px 40px rgba(58, 29, 0, 0.12),
+        0 2px 12px rgba(58, 29, 0, 0.08),
+        inset 0 0 0 8px {{ card_color }},
+        inset 0 0 0 10px {{ inner_border_col }};
+    }
+    50% {
+      transform:  translateZ(0) scale(1.02);
+      box-shadow:
+        0 16px 60px rgba(200, 162, 74, 0.45),
+        0 4px 24px rgba(200, 162, 74, 0.30),
+        inset 0 0 0 8px {{ card_color }},
+        inset 0 0 0 10px {{ inner_border_col }};
+    }
+    100% {
+      transform:  translateZ(0) scale(1);
+      box-shadow:
+        0 8px 40px rgba(58, 29, 0, 0.12),
+        0 2px 12px rgba(58, 29, 0, 0.08),
+        inset 0 0 0 8px {{ card_color }},
+        inset 0 0 0 10px {{ inner_border_col }};
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    #{{ section_id }} .km-rts-heading { font-size: 34px; }
+    #{{ section_id }} .km-rts-description,
+    #{{ section_id }} .km-rts-benefits li { font-size: 18px; }
+    #{{ section_id }} .km-rts-card { padding: {{ pad_desktop | times: 0.75 | round }}px; }
+  }
+
+  @media screen and (max-width: 600px) {
+    #{{ section_id }} .km-rts-heading { font-size: 28px; }
+    #{{ section_id }} .km-rts-description,
+    #{{ section_id }} .km-rts-benefits li { font-size: 16px; }
+    #{{ section_id }} .km-rts-footer { font-size: 14px; }
+    #{{ section_id }} .km-rts-card {
+      padding:       {{ pad_mobile }}px;
+      border-radius: {{ border_radius | times: 0.7 | round }}px;
+    }
+    #{{ section_id }} .km-rts-btn {
+      width:      100%;
+      text-align: center;
+      padding:    16px 24px;
+    }
+    #{{ section_id }} .km-rts-btn-wrap { display: block; }
+    #{{ section_id }} .km-rts-corner { width: 36px; height: 36px; }
+    #{{ section_id }} .km-rts-corner::before { width: 22px; }
+    #{{ section_id }} .km-rts-corner::after  { height: 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #{{ section_id }} .km-rts-card { animation: none !important; transition: none !important; }
+    #{{ section_id }} .km-rts-btn  { transition: none !important; }
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="km-rts-section"
+  aria-label="{{ heading | escape }}"
+>
+  <div class="km-rts-shell">
+    <article
+      class="km-rts-card"
+      role="region"
+      aria-label="Announcement card"
+    >
+      <div class="km-rts-corner km-rts-corner--tl" aria-hidden="true"><span class="km-rts-corner-dot"></span></div>
+      <div class="km-rts-corner km-rts-corner--tr" aria-hidden="true"><span class="km-rts-corner-dot"></span></div>
+      <div class="km-rts-corner km-rts-corner--bl" aria-hidden="true"><span class="km-rts-corner-dot"></span></div>
+      <div class="km-rts-corner km-rts-corner--br" aria-hidden="true"><span class="km-rts-corner-dot"></span></div>
+
+      <div class="km-rts-inner">
+
+        <div class="km-rts-flourish" aria-hidden="true">
+          <span class="km-rts-flourish-line"></span>
+          <span class="km-rts-flourish-symbol">✦</span>
+          <span class="km-rts-flourish-line km-rts-flourish-line--right"></span>
+        </div>
+
+        {%- if heading != blank -%}
+          <h2 class="km-rts-heading">{{ heading | escape }}</h2>
+        {%- endif -%}
+
+        <div class="km-rts-divider" aria-hidden="true">
+          <span class="km-rts-divider-bar"></span>
+          <span class="km-rts-divider-gem"></span>
+          <span class="km-rts-divider-bar km-rts-divider-bar--right"></span>
+        </div>
+
+        {%- if description != blank -%}
+          <p class="km-rts-description">{{ description | escape }}</p>
+        {%- endif -%}
+
+        <ul class="km-rts-benefits" aria-label="Benefits">
+          {%- if benefit_1 != blank -%}
+            <li>
+              <span class="km-rts-benefit-check" aria-hidden="true">✓</span>
+              <span>{{ benefit_1 | escape }}</span>
+            </li>
+          {%- endif -%}
+          {%- if benefit_2 != blank -%}
+            <li>
+              <span class="km-rts-benefit-check" aria-hidden="true">✓</span>
+              <span>{{ benefit_2 | escape }}</span>
+            </li>
+          {%- endif -%}
+          {%- if benefit_3 != blank -%}
+            <li>
+              <span class="km-rts-benefit-check" aria-hidden="true">✓</span>
+              <span>{{ benefit_3 | escape }}</span>
+            </li>
+          {%- endif -%}
+        </ul>
+
+        <div class="km-rts-divider" aria-hidden="true">
+          <span class="km-rts-divider-bar"></span>
+          <span class="km-rts-divider-gem"></span>
+          <span class="km-rts-divider-bar km-rts-divider-bar--right"></span>
+        </div>
+
+        {%- if footer_note != blank -%}
+          <p class="km-rts-footer">{{ footer_note | escape }}</p>
+        {%- endif -%}
+
+        {%- if btn_text != blank -%}
+          <div class="km-rts-btn-wrap">
+            
+              href="{{ btn_url | default: '#' }}"
+              class="km-rts-btn"
+              aria-label="{{ btn_text | escape }}"
+            >
+              {{ btn_text | escape }}
+            </a>
+          </div>
+        {%- endif -%}
+
+        <div class="km-rts-flourish km-rts-flourish--bottom" aria-hidden="true">
+          <span class="km-rts-flourish-line"></span>
+          <span class="km-rts-flourish-symbol">✦</span>
+          <span class="km-rts-flourish-line km-rts-flourish-line--right"></span>
+        </div>
+
+      </div>
+    </article>
+  </div>
+</section>
+
+{%- if animation_on -%}
+<script>
+  (function () {
+    'use strict';
+
+    var SECTION_ID   = {{ section_id | json }};
+    var CYCLE_MS     = {{ anim_cycle }};
+    var GLOW_MS      = 1100;
+    var IDLE_WAIT_MS = 2500;
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var section = document.getElementById(SECTION_ID);
+    if (!section) return;
+
+    var card = section.querySelector('.km-rts-card');
+    if (!card) return;
+
+    var styleEl = document.createElement('style');
+    styleEl.textContent =
+      '#' + SECTION_ID + ' .km-rts-card.km-rts-glowing {' +
+        'animation: km-rts-pulse ' + GLOW_MS + 'ms cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;' +
+      '}';
+    document.head.appendChild(styleEl);
+
+    var timerId  = null;
+    var isHidden = false;
+
+    function triggerGlow() {
+      if (isHidden) return;
+      card.classList.remove('km-rts-glowing');
+      void card.offsetWidth;
+      card.classList.add('km-rts-glowing');
+      timerId = setTimeout(function () {
+        card.classList.remove('km-rts-glowing');
+      }, GLOW_MS);
+    }
+
+    function startCycle() {
+      timerId = setTimeout(function loop() {
+        triggerGlow();
+        timerId = setTimeout(loop, CYCLE_MS);
+      }, IDLE_WAIT_MS);
+    }
+
+    function stopCycle() {
+      clearTimeout(timerId);
+      card.classList.remove('km-rts-glowing');
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { isHidden = true;  stopCycle();  }
+      else                 { isHidden = false; startCycle(); }
+    });
+
+    startCycle();
+  }());
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "KraftMart Rich Text",
+  "tag": "div",
+  "class": "km-rts-wrapper",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text",     "id": "heading",      "label": "Heading",      "default": "COD AVAILABLE FOR INDIAN ORDERS" },
+    { "type": "textarea", "id": "description",  "label": "Description",  "default": "Own a piece of India's rich craftsmanship with complete peace of mind." },
+    { "type": "text",     "id": "benefit_1",    "label": "Benefit 1",    "default": "15% Advance Booking Required" },
+    { "type": "text",     "id": "benefit_2",    "label": "Benefit 2",    "default": "85% Cash on Delivery" },
+    { "type": "text",     "id": "benefit_3",    "label": "Benefit 3",    "default": "Get an Additional 5% Discount on Full Payment" },
+    { "type": "text",     "id": "footer_note",  "label": "Footer Note",  "default": "Handcrafted with precision and shipped securely from Amritsar, Punjab." },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_text", "label": "Button Label", "default": "SHOP NOW" },
+    { "type": "url",  "id": "button_url",  "label": "Button URL" },
+    { "type": "header", "content": "Animation" },
+    { "type": "checkbox", "id": "enable_animation",  "label": "Enable Glow Animation", "default": true },
+    { "type": "range",    "id": "animation_cycle",   "label": "Animation Cycle (seconds)", "min": 5, "max": 30, "step": 1, "unit": "s", "default": 9 },
+    { "type": "header", "content": "Card Layout" },
+    { "type": "range", "id": "card_max_width",   "label": "Card Max Width",      "min": 600,  "max": 1200, "step": 20, "unit": "px", "default": 900 },
+    { "type": "range", "id": "border_radius",    "label": "Border Radius",       "min": 0,    "max": 40,   "step": 2,  "unit": "px", "default": 18 },
+    { "type": "range", "id": "padding_desktop",  "label": "Padding — Desktop",   "min": 32,   "max": 100,  "step": 4,  "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_mobile",   "label": "Padding — Mobile",    "min": 20,   "max": 60,   "step": 4,  "unit": "px", "default": 32 },
+    { "type": "header", "content": "Section Spacing" },
+    { "type": "range", "id": "section_margin_top",    "label": "Section Margin Top",    "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60 },
+    { "type": "range", "id": "section_margin_bottom", "label": "Section Margin Bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg_color",            "label": "Section Background",      "default": "#F7F2EA" },
+    { "type": "color", "id": "card_color",          "label": "Card Background",         "default": "#FFFDF8" },
+    { "type": "color", "id": "outer_border_color",  "label": "Outer Border Colour",     "default": "#3A1D00" },
+    { "type": "color", "id": "inner_border_color",  "label": "Inner Border / Gold",     "default": "#C8A24A" },
+    { "type": "color", "id": "heading_color",       "label": "Heading Colour",          "default": "#3A1D00" },
+    { "type": "color", "id": "text_color",          "label": "Body Text Colour",        "default": "#4D3A27" },
+    { "type": "color", "id": "button_bg",           "label": "Button Background",       "default": "#000000" },
+    { "type": "color", "id": "button_border_color", "label": "Button Border",           "default": "#C8A24A" },
+    { "type": "color", "id": "button_text_color",   "label": "Button Text",             "default": "#FFFFFF" },
+    { "type": "color", "id": "button_hover_bg",     "label": "Button Hover Background", "default": "#C62828" }
+  ],
+  "presets": [
+    {
+      "name": "KraftMart Rich Text",
+      "category": "Text",
+      "settings": {
+        "heading":               "COD AVAILABLE FOR INDIAN ORDERS",
+        "description":           "Own a piece of India's rich craftsmanship with complete peace of mind.",
+        "benefit_1":             "15% Advance Booking Required",
+        "benefit_2":             "85% Cash on Delivery",
+        "benefit_3":             "Get an Additional 5% Discount on Full Payment",
+        "footer_note":           "Handcrafted with precision and shipped securely from Amritsar, Punjab.",
+        "button_text":           "SHOP NOW",
+        "enable_animation":      true,
+        "animation_cycle":       9,
+        "card_max_width":        900,
+        "border_radius":         18,
+        "padding_desktop":       64,
+        "padding_mobile":        32,
+        "section_margin_top":    60,
+        "section_margin_bottom": 60,
+        "bg_color":              "#F7F2EA",
+        "card_color":            "#FFFDF8",
+        "outer_border_color":    "#3A1D00",
+        "inner_border_color":    "#C8A24A",
+        "heading_color":         "#3A1D00",
+        "text_color":            "#4D3A27",
+        "button_bg":             "#000000",
+        "button_border_color":   "#C8A24A",
+        "button_text_color":     "#FFFFFF",
+        "button_hover_bg":       "#C62828"
+      }
+    }
+  ]
+}
+{% endschema %}

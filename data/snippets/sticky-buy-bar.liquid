@@ -1,0 +1,35 @@
+
+{% comment %}
+  Sticky bottom bar. Hidden by default, revealed via JS (product-premium.js)
+  once the primary CTA scrolls out of view. Mobile only (hidden on desktop via CSS).
+{% endcomment %}
+
+<div class="pp-sticky-bar" id="pp-sticky-bar" aria-hidden="true">
+  <div class="pp-sticky-bar__inner">
+    {% if product.featured_media %}
+      <img
+        class="pp-sticky-bar__img"
+        src="{{ product.featured_media | image_url: width: 80 }}"
+        width="40" height="40"
+        alt=""
+        loading="lazy"
+      >
+    {% endif %}
+
+    <div class="pp-sticky-bar__info">
+      <span class="pp-sticky-bar__title">{{ product.title }}</span>
+      <span class="pp-sticky-bar__price" id="pp-sticky-price">
+        {{ product.selected_or_first_available_variant.price | money }}
+      </span>
+    </div>
+
+    <button
+      type="button"
+      class="pp-sticky-bar__cta"
+      id="pp-sticky-buy-now"
+      data-pp-buy-now
+    >
+      Buy Now
+    </button>
+  </div>
+</div>

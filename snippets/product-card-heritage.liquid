@@ -1,0 +1,48 @@
+{% comment %}
+  KRAFTMART — REUSABLE HERITAGE PRODUCT CARD SNIPPET
+{% endcomment %}
+
+<div class="km-product-card km-noise-card" style="border-radius: 16px; box-shadow: var(--shadow-blue-sm);">
+  <div class="km-product-media">
+    {% if product.compare_at_price > product.price %}
+      <span class="km-sale-badge">Sale</span>
+    {% endif %}
+
+    <a href="{{ product.url }}">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: '400x500', crop: 'center' }}" alt="{{ product.title | escape }}" class="km-product-img" loading="lazy" />
+      {% else %}
+        <img src="{{ 'sword.png' | asset_url }}" alt="{{ product.title }}" class="km-product-img" loading="lazy" />
+      {% endif %}
+    </a>
+
+    <button class="km-quick-view-btn" data-action="quick-view" data-handle="{{ product.handle }}">
+      Quick View
+    </button>
+  </div>
+
+  <div class="km-product-info">
+    <span class="km-product-vendor">{{ product.vendor | default: "KraftMart" }}</span>
+    <h3 class="km-product-title">
+      <a href="{{ product.url }}" style="color: var(--color-ink-navy);">{{ product.title }}</a>
+    </h3>
+
+    <div class="km-price-wrapper">
+      <span class="km-price-current">{{ product.price | money }}</span>
+      {% if product.compare_at_price > product.price %}
+        <span class="km-price-compare">{{ product.compare_at_price | money }}</span>
+      {% endif %}
+    </div>
+
+    <form method="post" action="/cart/add">
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+      <button type="submit" class="km-add-cart-btn" style="background-color: var(--color-signal-blue); color: #FFF; border: none; border-radius: 8px;">
+        {% if product.available %}
+          Add to Cart
+        {% else %}
+          Sold Out
+        {% endif %}
+      </button>
+    </form>
+  </div>
+</div>

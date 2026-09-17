@@ -1,0 +1,161 @@
+
+{% comment %}
+  Main Product Premium Section
+  Mobile-first luxury PDP. Desktop layout intentionally left close to default
+  (see .pp-wrap desktop breakpoint in product-premium.css).
+{% endcomment %}
+
+{{ 'product-premium.css' | asset_url | stylesheet_tag }}
+
+{% assign product = product %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign compare_at = current_variant.compare_at_price %}
+
+<section class="pp-wrap" data-pp-section id="pp-section-{{ section.id }}">
+  <product-premium-app class="pp-app" data-product-handle="{{ product.handle }}">
+
+    {% comment %} ============ GALLERY ============ {% endcomment %}
+    <div class="pp-gallery" data-pp-gallery style="--gallery-radius: {{ section.settings.gallery_radius }}px;">
+      <div class="pp-gallery__skeleton" data-pp-gallery-skeleton aria-hidden="true"></div>
+
+      {% if section.settings.sale_badge_text != blank and compare_at > current_variant.price %}
+        <span class="pp-badge pp-badge--sale">{{ section.settings.sale_badge_text }}</span>
+      {% endif %}
+
+      {% if section.settings.show_wishlist %}
+        <button type="button" class="pp-wishlist-btn" data-pp-wishlist aria-pressed="false" aria-label="Add to wishlist">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+          </svg>
+        </button>
+      {% endif %}
+
+      <div class="pp-gallery__track" data-pp-gallery-track>
+        {% for media in product.media %}
+          <div class="pp-gallery__slide" data-pp-slide data-index="{{ forloop.index0 }}">
+            {% if media.media_type == 'image' %}
+              <img
+                class="pp-gallery__img"
+                data-pp-zoomable
+                src="{{ media | image_url: width: 1000 }}"
+                srcset="
+                  {{ media | image_url: width: 400 }} 400w,
+                  {{ media | image_url: width: 700 }} 700w,
+                  {{ media | image_url: width: 1000 }} 1000w
+                "
+                sizes="100vw"
+                width="1000" height="1000"
+                alt="{{ media.alt | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              >
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="pp-gallery__counter" data-pp-gallery-counter>
+        <span data-pp-current>1</span>/<span>{{ product.media.size }}</span>
+      </div>
+
+      <div class="pp-gallery__dots" data-pp-gallery-dots>
+        {% for media in product.media %}
+          <button type="button" class="pp-dot{% if forloop.first %} is-active{% endif %}" data-pp-dot data-index="{{ forloop.index0 }}" aria-label="Go to image {{ forloop.index }}"></button>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% comment %} ============ INFO ============ {% endcomment %}
+    <div class="pp-info">
+      <p class="pp-vendor">{{ product.vendor }}</p>
+      <h1 class="pp-title">{{ product.title }}</h1>
+
+      {% render 'product-rating', product: product %}
+
+      <div class="pp-price-row" data-pp-price-row>
+        <span class="pp-price" data-pp-price>{{ current_variant.price | money }}</span>
+        {% if compare_at > current_variant.price %}
+          <span class="pp-price-compare" data-pp-compare-price>{{ compare_at | money }}</span>
+          <span class="pp-price-discount" data-pp-discount>
+            {{ compare_at | minus: current_variant.price | times: 100.0 | divided_by: compare_at | round }}% OFF
+          </span>
+        {% endif %}
+      </div>
+      <p class="pp-tax-text">
+        {{ section.settings.tax_text }}
+        {%- if section.settings.installment_text != blank %} · {{ section.settings.installment_text }}{% endif %}
+      </p>
+
+      {% form 'product', product, id: 'pp-product-form', class: 'pp-form', data-pp-product-form: '' %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-pp-variant-id>
+
+        {% comment %} ---- Variant Picker ---- {% endcomment %}
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            <fieldset class="pp-option" data-pp-option data-option-index="{{ forloop.index0 }}">
+              <legend class="pp-option__label">{{ option.name }}: <span data-pp-option-value>{{ option.selected_value }}</span></legend>
+              <div class="pp-option__values">
+                {% for value in option.values %}
+                  {% assign is_color = false %}
+                  {% if option.name == 'Color' or option.name == 'Colour' %}
+                    {% assign is_color = true %}
+                  {% endif %}
+                  <button
+                    type="button"
+                    class="pp-pill{% if is_color %} pp-pill--swatch{% endif %}{% if value == option.selected_value %} is-selected{% endif %}"
+                    data-pp-option-value="{{ value | escape }}"
+                    {% if is_color %}style="--swatch-color: {{ value | handleize }};"{% endif %}
+                  >
+                    {{ value }}
+                  </button>
+                {% endfor %}
+              </div>
+            </fieldset>
+          {% endfor %}
+        {% endunless %}
+
+        {% comment %} ---- Quantity ---- {% endcomment %}
+        <div class="pp-quantity">
+          <span class="pp-quantity__label">Quantity</span>
+          <div class="pp-quantity__control">
+            <button type="button" class="pp-qty-btn" data-pp-qty-minus aria-label="Decrease quantity">−</button>
+            <input type="number" name="quantity" value="1" min="1" class="pp-qty-input" data-pp-qty-input inputmode="numeric">
+            <button type="button" class="pp-qty-btn" data-pp-qty-plus aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        {% comment %} ---- CTAs ---- {% endcomment %}
+        <div class="pp-cta-group">
+          <button type="button" class="pp-btn pp-btn--primary" data-pp-buy-now {% unless current_variant.available %}disabled{% endunless %}>
+            <span class="pp-btn__ripple"></span>
+            {% if current_variant.available %}Buy Now{% else %}Sold Out{% endif %}
+          </button>
+          <button type="submit" name="add" class="pp-btn pp-btn--secondary" data-pp-add-to-cart {% unless current_variant.available %}disabled{% endunless %}>
+            <span class="pp-btn__ripple"></span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+            Add to Cart
+          </button>
+        </div>
+      {% endform %}
+    </div>
+  </product-premium-app>
+</section>
+
+{% render 'sticky-buy-bar', product: product %}
+
+{{ 'product-premium.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Premium Product (Main)",
+  "settings": [
+    { "type": "range", "id": "gallery_radius", "label": "Gallery corner radius", "min": 0, "max": 40, "step": 2, "default": 20 },
+    { "type": "range", "id": "button_radius", "label": "Button corner radius", "min": 0, "max": 50, "step": 2, "default": 50 },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#7A1F2B" },
+    { "type": "text", "id": "sale_badge_text", "label": "Sale badge text", "default": "SALE" },
+    { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist button", "default": true },
+    { "type": "checkbox", "id": "show_sticky_bar", "label": "Show sticky bottom bar", "default": true },
+    { "type": "text", "id": "tax_text", "label": "Tax text", "default": "Tax included." },
+    { "type": "text", "id": "installment_text", "label": "Installment text (optional)" }
+  ]
+}
+{% endschema %}

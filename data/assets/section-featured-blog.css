@@ -1,0 +1,221 @@
+.blog-placeholder-svg {
+  height: 100%;
+}
+
+@media screen and (min-width: 990px) {
+  .grid--1-col-desktop .article-card .card__content {
+    text-align: center;
+  }
+}
+
+.blog__title {
+  margin: 0;
+}
+
+.blog__posts.articles-wrapper {
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 990px) {
+  .blog__posts.articles-wrapper {
+    margin-bottom: 0;
+  }
+}
+
+.blog__posts.articles-wrapper .article {
+  scroll-snap-align: start;
+}
+
+@media screen and (max-width: 749px) {
+  .blog__post.article {
+    width: calc(100% - .3rem - var(--grid-mobile-horizontal-spacing));
+  }
+}
+
+.background-secondary .blog-placeholder__content {
+  background-color: rgb(var(--color-background));
+}
+
+.blog__posts .card-wrapper {
+  width: 100%;
+}
+
+.blog__button {
+  margin-top: 3rem;
+}
+
+@media screen and (min-width: 750px) {
+  .blog__button {
+    margin-top: 5rem;
+  }
+}
+
+/* check for flexbox gap in older Safari versions */
+@supports not (inset: 10px) {
+  @media screen and (min-width: 750px) {
+    .blog__posts .article + .article {
+      margin-left: var(--grid-desktop-horizontal-spacing);
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE BLOG SLIDER — Enhanced layout
+   Applies ONLY on mobile (≤749px)
+───────────────────────────────────────────────────────────── */
+
+/* Wrapper — positions the arrow buttons */
+.blog-mobile-slider-wrapper {
+  position: relative;
+}
+
+/* ── Card sizing: 85vw wide, 12px gap, peek effect ───────────── */
+@media screen and (max-width: 749px) {
+  /* Turn the UL into a proper horizontal scroll container */
+  .blog-mobile-slider-track.slider--mobile,
+  .blog-mobile-slider-track.slider--tablet {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding: 0 calc(7.5vw) 1.2rem;   /* left/right padding = half the "peeked" amount */
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .blog-mobile-slider-track.slider--mobile::-webkit-scrollbar,
+  .blog-mobile-slider-track.slider--tablet::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Each card takes 85% of viewport */
+  .blog-mobile-slider-track .slider__slide {
+    flex: 0 0 85vw;
+    width: 85vw;
+    min-width: 85vw;
+    max-width: 85vw;
+    scroll-snap-align: start;
+    margin: 0; /* gap handles spacing */
+    /* Use CSS transform for 60fps — no JS position changes */
+    will-change: transform;
+  }
+
+  /* Fixed image height on mobile — prevents layout shift */
+  .blog-mobile-slider-track .article-card__image-wrapper,
+  .blog-mobile-slider-track .article-card__image {
+    aspect-ratio: unset !important;
+    height: 220px !important;
+    overflow: hidden;
+  }
+
+  .blog-mobile-slider-track .article-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Prevent ratio pseudo-element from overriding the fixed height */
+  .blog-mobile-slider-track .card__inner.ratio::before,
+  .blog-mobile-slider-track .card__inner::before {
+    padding-bottom: 0 !important;
+    content: none !important;
+  }
+
+  /* ── FIX 3: Override inline 400px height from index.json custom_css ── */
+  /* !important needed because Shopify custom_css renders as inline <style> */
+  .blog-mobile-slider-track .card__inner,
+  .blog-mobile-slider-track .card--card .card__inner,
+  .blog-mobile-slider-track .card--standard .card__inner {
+    height: 220px !important;
+    min-height: unset !important;
+    max-height: 220px !important;
+    overflow: hidden !important;
+  }
+
+  /* Collapse any extra space inside the card wrapper itself */
+  .blog-mobile-slider-track .card-wrapper {
+    overflow: visible;
+  }
+
+  /* Ensure the outer card has no extra min-height */
+  .blog-mobile-slider-track .card.article-card {
+    height: auto !important;
+    min-height: unset !important;
+  }
+
+  /* Card content (title/excerpt) sits directly below image — no gap */
+  .blog-mobile-slider-track .card__content:not(.card__inner .card__content) {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* Remove any padding-bottom ghost space on the media wrapper */
+  .blog-mobile-slider-track .card__media {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* ── Blog card title — mobile typography ─────────────────────── */
+@media screen and (max-width: 749px) {
+  .blog-card__title-mobile {
+    font-size: 1.6rem;          /* minimum 16px */
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;      /* max 2 lines */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.4rem;
+  }
+}
+
+/* ── Arrow buttons — mobile only ─────────────────────────────── */
+.blog-arrow {
+  display: none; /* hidden by default, shown mobile only */
+}
+
+@media screen and (max-width: 749px) {
+  .blog-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: calc(220px / 2);         /* vertically centred on image area */
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: rgba(var(--color-background, 255 255 255), 0.82);
+    color: rgb(var(--color-foreground, 0 0 0));
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    font-size: 1.8rem;
+    line-height: 1;
+    /* Smooth interaction */
+    transition: background 0.2s ease, transform 0.15s ease;
+    /* Don't block scrollbar hide area */
+    pointer-events: auto;
+  }
+
+  .blog-arrow:active {
+    transform: translateY(-50%) scale(0.92);
+  }
+
+  .blog-arrow--prev {
+    left: 4px;
+  }
+
+  .blog-arrow--next {
+    right: 4px;
+  }
+}

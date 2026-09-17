@@ -1,0 +1,62 @@
+{% comment %}
+  KRAFTMART — AJAX CART DRAWER SNIPPET
+  Slide-out cart drawer with free engraving note input & express checkout
+{% endcomment %}
+
+<div id="kmCartDrawer" class="km-cart-drawer">
+  <div class="km-cart-backdrop" data-action="close-cart"></div>
+
+  <div class="km-cart-panel">
+    <div class="km-cart-header">
+      <h3 class="km-cart-title">Your Heritage Cart</h3>
+      <button class="km-icon-btn" data-action="close-cart" aria-label="Close Cart">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="kmCartDrawerBody" class="km-cart-body">
+      {% if cart.item_count == 0 %}
+        <div style="text-align: center; padding: 48px 0; color: var(--km-text-secondary);">
+          <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin: 0 auto 16px auto; opacity: 0.4;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <p style="font-family: var(--km-font-heading); font-size: 1.25rem;">Your Cart is Empty</p>
+          <p style="font-size: 0.875rem; margin-top: 8px;">Explore our handcrafted swords and heritage collectibles.</p>
+        </div>
+      {% else %}
+        {% for item in cart.items %}
+          <div style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
+            <img src="{{ item.image | img_url: '140x140', crop: 'center' }}" alt="{{ item.title }}" style="width: 70px; height: 70px; object-fit: contain; background: #FFF; border-radius: var(--km-radius-sm); border: var(--km-border-subtle);" />
+            <div style="flex-grow: 1;">
+              <a href="{{ item.url }}" style="font-family: var(--km-font-heading); font-weight: 600; font-size: 1.05rem;">{{ item.product.title }}</a>
+              <div style="font-size: 0.75rem; color: var(--km-text-secondary); margin: 4px 0;">{{ item.variant.title }}</div>
+              <div style="font-weight: 700; font-size: 0.9375rem;">{{ item.final_price | money }} x {{ item.quantity }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div id="kmCartDrawerFooter" class="km-cart-footer" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>
+      <div style="margin-bottom: 16px;">
+        <label style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; color: var(--km-text-secondary);">
+          Free Custom Engraving Instructions:
+        </label>
+        <textarea name="note" placeholder="Enter Bride & Groom names or custom text to engrave on blade..." style="width: 100%; height: 60px; background: #FFF; border: var(--km-border-subtle); padding: 8px; border-radius: var(--km-radius-sm); font-size: 0.8125rem; resize: none;"></textarea>
+      </div>
+
+      <div style="display: flex; justify-space-between; align-items: center; margin-bottom: 16px; font-size: 1.125rem; font-weight: 700;">
+        <span>Subtotal:</span>
+        <span id="kmCartSubtotal">{{ cart.total_price | money }}</span>
+      </div>
+
+      <form action="/checkout" method="post">
+        <button type="submit" class="km-btn km-btn-gold" style="width: 100%;">
+          Proceed to Checkout →
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

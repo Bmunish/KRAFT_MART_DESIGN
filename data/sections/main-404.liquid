@@ -1,0 +1,259 @@
+{%- comment -%}
+  Enhanced 404 Page for KraftMart
+  Optimized for SEO and User Experience
+{%- endcomment -%}
+
+<style type="text/css">
+  .error-404-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+  
+  .error-404-header {
+    margin-bottom: 40px;
+  }
+  
+  .error-404-code {
+    font-size: clamp(80px, 15vw, 120px);
+    font-weight: 900;
+    color: #8B4513;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  
+  .error-404-title {
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #2C2820;
+  }
+  
+  .error-404-description {
+    font-size: clamp(16px, 3vw, 18px);
+    color: #666;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  
+  .error-404-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+  
+  .error-404-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: #8B4513;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background 0.3s;
+  }
+  
+  .error-404-btn:hover {
+    background: #6B3410;
+    color: #fff;
+  }
+  
+  .error-404-btn--secondary {
+    background: transparent;
+    color: #8B4513;
+    border: 2px solid #8B4513;
+  }
+  
+  .error-404-btn--secondary:hover {
+    background: #8B4513;
+    color: #fff;
+  }
+  
+  .error-404-search {
+    max-width: 600px;
+    margin: 0 auto 60px;
+  }
+  
+  .error-404-search input {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .error-404-search input:focus {
+    outline: none;
+    border-color: #8B4513;
+  }
+  
+  .error-404-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 60px;
+    text-align: left;
+  }
+  
+  .error-404-link-card {
+    padding: 24px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: box-shadow 0.3s;
+  }
+  
+  .error-404-link-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .error-404-link-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #2C2820;
+  }
+  
+  .error-404-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .error-404-link-list li {
+    margin-bottom: 8px;
+  }
+  
+  .error-404-link-list a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .error-404-link-list a:hover {
+    color: #8B4513;
+  }
+  
+  .error-404-seo-content {
+    max-width: 800px;
+    margin: 40px auto 0;
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  .error-404-seo-content strong {
+    color: #2C2820;
+  }
+  
+  @media (max-width: 768px) {
+    .error-404-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .error-404-btn {
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    .error-404-links {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="error-404-container page-width page-margin center">
+  
+  {%- comment -%} Header Section {%- endcomment -%}
+  <div class="error-404-header">
+    <div class="error-404-code">404</div>
+    <h1 class="error-404-title">Oops! This Page Doesn't Exist</h1>
+    <p class="error-404-description">
+      The page you're looking for might have been moved, deleted, or never existed. 
+      Don't worry – let's get you back on track to find the perfect Indian wedding sword!
+    </p>
+  </div>
+  
+  {%- comment -%} Action Buttons {%- endcomment -%}
+  <div class="error-404-actions">
+    <a href="{{ routes.root_url }}" class="error-404-btn">Back to Homepage</a>
+    <a href="{{ routes.all_products_collection_url }}" class="error-404-btn error-404-btn--secondary">Browse All Products</a>
+  </div>
+  
+  {%- comment -%} Search Box {%- endcomment -%}
+  <div class="error-404-search">
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <input 
+        type="search" 
+        name="q" 
+        placeholder="Search for wedding swords, Rajput talwars, Khanda..." 
+        aria-label="Search our store"
+        value="{{ search.terms | escape }}"
+      />
+    </form>
+  </div>
+  
+  {%- comment -%} Quick Links {%- endcomment -%}
+  <div class="error-404-links">
+    
+    <div class="error-404-link-card">
+      <h2 class="error-404-link-title">Popular Collections</h2>
+      <ul class="error-404-link-list">
+        <li><a href="/collections/wedding-and-decorative">Wedding Swords</a></li>
+        <li><a href="/collections/sword-under-2000">Swords Under ₹2000</a></li>
+        <li><a href="/collections/handforged-articles">Handforged Articles</a></li>
+        <li><a href="/collections/wall-hangings">Wall Hangings</a></li>
+      </ul>
+    </div>
+    
+    <div class="error-404-link-card">
+      <h2 class="error-404-link-title">Customer Service</h2>
+      <ul class="error-404-link-list">
+        <li><a href="/pages/about-us">About KraftMart</a></li>
+        <li><a href="/pages/contact">Contact Us</a></li>
+        <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+        <li><a href="/policies/refund-policy">Returns & Refunds</a></li>
+      </ul>
+    </div>
+    
+    <div class="error-404-link-card">
+      <h2 class="error-404-link-title">Need Help?</h2>
+      <ul class="error-404-link-list">
+        <li><a href="tel:+917508427731">📞 Call: +91-75084-27731</a></li>
+        <li><a href="mailto:kraftengineering2024@gmail.com">✉️ Email Support</a></li>
+        <li><a href="/blogs/news">Read Our Blog</a></li>
+        <li><a href="/pages/kraftmart-new-year-sale-2026">Current Sale</a></li>
+      </ul>
+    </div>
+    
+  </div>
+  
+  {%- comment -%} SEO Content {%- endcomment -%}
+  <div class="error-404-seo-content">
+    <p>
+      <strong>Looking for authentic Indian wedding swords?</strong> KraftMart specializes in 
+      handcrafted Rajput talwars, Punjabi khandas, and decorative ceremonial swords made in 
+      Amritsar, Punjab. Browse our collection of traditional groom swords, Damascus steel blades, 
+      and custom-engraved pieces with worldwide shipping available.
+    </p>
+  </div>
+  
+</div>
+
+{%- comment -%} Schema Markup for SEO {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "404 - Page Not Found | KraftMart",
+  "description": "This page could not be found. Browse authentic Indian wedding swords, Rajput talwars, and Punjabi khandas at KraftMart.",
+  "url": "{{ canonical_url }}"
+}
+</script>

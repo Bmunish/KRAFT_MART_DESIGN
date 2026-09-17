@@ -1,0 +1,148 @@
+{% comment %}
+  KRAFTMART — CINEMATIC HERITAGE HERO SECTION
+  Features high-resolution floating transparent sword visual, video backdrop, and theme customizer options
+{% endcomment %}
+
+<section class="km-hero-section">
+  <div class="km-container">
+    <div class="km-hero-grid">
+      <!-- Left Editorial Text Content -->
+      <div class="km-hero-content">
+        <span class="km-eyebrow">{{ section.settings.eyebrow_text }}</span>
+        <h1 class="km-heading-hero">{{ section.settings.hero_heading }}</h1>
+        <p class="km-hero-subtext">{{ section.settings.hero_subtext }}</p>
+        
+        <div class="km-hero-actions">
+          <a href="{{ section.settings.primary_button_url }}" class="km-btn km-btn-primary">
+            {{ section.settings.primary_button_text }}
+          </a>
+          <a href="{{ section.settings.secondary_button_url }}" class="km-btn km-btn-outline">
+            {{ section.settings.secondary_button_text }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Visual Display with 3D Cinematic 3-Card Product Carousel Stage -->
+      <div class="km-hero-visual">
+        <div class="km-3d-stage" id="km3dStage">
+          <!-- Card 1: Jaipur Wedding Talwar (CENTER) -->
+          <div class="km-3d-card is-center" data-index="0">
+            <div class="km-3d-card-img-wrap">
+              <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar" />
+            </div>
+            <div class="km-3d-card-label">
+              <span class="km-3d-card-tag">&#10022; Bestseller</span>
+              <h3 class="km-3d-card-title">Jaipur Wedding Talwar</h3>
+              <p class="km-3d-card-sub">Kundan Brass Hilt &bull; Red Velvet Scabbard &bull; Free Engraving</p>
+              <div class="km-3d-card-price">&#x20B9;2,599 <span>&#x20B9;3,099</span></div>
+            </div>
+          </div>
+
+          <!-- Card 2: Royal Jodhpur Damascus (RIGHT) -->
+          <div class="km-3d-card is-right" data-index="1">
+            <div class="km-3d-card-img-wrap">
+              <img src="{{ 'sword2.png' | asset_url }}" alt="Royal Jodhpur Damascus Talwar" />
+            </div>
+            <div class="km-3d-card-label">
+              <span class="km-3d-card-tag">&#10022; Master Metallurgy</span>
+              <h3 class="km-3d-card-title">Royal Jodhpur Damascus</h3>
+              <p class="km-3d-card-sub">1095/15N20 Damascus Steel &bull; 56&ndash;58 HRC Hardness</p>
+              <div class="km-3d-card-price">&#x20B9;4,299 <span>&#x20B9;4,999</span></div>
+            </div>
+          </div>
+
+          <!-- Card 3: Dawami Ceremonial Sword (LEFT) -->
+          <div class="km-3d-card is-left" data-index="2">
+            <div class="km-3d-card-img-wrap">
+              <img src="{{ 'sword.png' | asset_url }}" alt="Dawami Ceremonial Sword" />
+            </div>
+            <div class="km-3d-card-label">
+              <span class="km-3d-card-tag">&#10022; Heritage Classic</span>
+              <h3 class="km-3d-card-title">Dawami Ceremonial Sword</h3>
+              <p class="km-3d-card-sub">Polished Blade &bull; Zari Velvet Scabbard &bull; COD Available</p>
+              <div class="km-3d-card-price">&#x20B9;1,999</div>
+            </div>
+          </div>
+
+          <!-- 3D Carousel Control Bar -->
+          <div class="km-3d-controls">
+            <button class="km-3d-nav-btn" data-3d-nav="prev" aria-label="Previous Product">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="km-3d-dots"></div>
+            <button class="km-3d-nav-btn" data-3d-nav="next" aria-label="Next Product">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cinematic Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow Text",
+      "default": "HANDCRAFTED IN AMRITSAR, PUNJAB"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero Heading",
+      "default": "Heritage You Can Carry."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtext",
+      "label": "Hero Subtext",
+      "default": "Authentic Indian wedding swords, handforged Rajput talwars, and Punjabi ceremonial collectibles built to become treasured family heirlooms."
+    },
+    {
+      "type": "text",
+      "id": "primary_button_text",
+      "label": "Primary Button Label",
+      "default": "Explore Wedding Swords"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_url",
+      "label": "Primary Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_text",
+      "label": "Secondary Button Label",
+      "default": "Discover Our Story"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_url",
+      "label": "Secondary Button Link",
+      "default": "/pages/about-us"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_bg",
+      "label": "Enable Video Background Overlay",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Floating Sword Asset"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinematic Hero",
+      "category": "Hero Sections"
+    }
+  ]
+}
+{% endschema %}

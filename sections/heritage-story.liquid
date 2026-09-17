@@ -1,0 +1,92 @@
+{% comment %}
+  KRAFTMART — HERITAGE STORY & CRAFTSMANSHIP SECTION
+  Chronicles the brand origin from 1996 Lakshmi Engineering Works to global e-commerce excellence
+{% endcomment %}
+
+<section class="km-section" style="background-color: var(--km-bg-secondary); border-top: var(--km-border-subtle); border-bottom: var(--km-border-subtle);">
+  <div class="km-container">
+    <div style="display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; gap: 60px;">
+      <!-- Visual Column -->
+      <div style="position: relative;">
+        <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Amritsar Craftsmanship" style="border-radius: var(--km-radius-md); border: var(--km-border-gold); box-shadow: var(--km-shadow-medium);" />
+        <div style="position: absolute; bottom: -20px; right: -20px; background-color: var(--km-bg-dark); color: var(--km-text-light); padding: 24px; border-radius: var(--km-radius-md); border: var(--km-border-gold); max-width: 240px; text-align: center;">
+          <span style="font-family: var(--km-font-heading); font-size: 2.2rem; font-weight: 700; color: var(--km-gold-light); display: block; line-height: 1;">30+</span>
+          <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-text-muted-light);">Years of Metal Craftsmanship</span>
+        </div>
+      </div>
+
+      <!-- Story Text Content -->
+      <div>
+        <span class="km-eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="km-heading-1" style="margin-bottom: 24px;">{{ section.settings.heading }}</h2>
+        <p class="km-body-lead" style="margin-bottom: 20px;">
+          Starting in 1996 as <strong>Lakshmi Engineering Works</strong> in Amritsar, Punjab, our journey began with precision nickel and chrome electroplating, metal polishing, and vehicle accessories. Over three decades, that master metalworking expertise evolved into handforging authentic Indian ceremonial swords, Kirpans, and heritage artifacts.
+        </p>
+        <p style="color: var(--km-text-secondary); line-height: 1.7; margin-bottom: 32px;">
+          Today, KraftMart carries forward Amritsar's legendary metalworking lineage directly to wedding couples and weapon collectors across the globe via FedEx & DHL, complete with bespoke name and date engraving.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 36px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(197,155,39,0.15); color: var(--km-gold-primary); display: flex; align-items: center; justify-content: center; font-weight: 700;">✓</div>
+            <span style="font-weight: 600; font-size: 0.9375rem;">100% Handcrafted in Amritsar</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(197,155,39,0.15); color: var(--km-gold-primary); display: flex; align-items: center; justify-content: center; font-weight: 700;">✓</div>
+            <span style="font-weight: 600; font-size: 0.9375rem;">Free Custom Laser Engraving</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(197,155,39,0.15); color: var(--km-gold-primary); display: flex; align-items: center; justify-content: center; font-weight: 700;">✓</div>
+            <span style="font-weight: 600; font-size: 0.9375rem;">Authentic Rajput & Sikh Designs</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(197,155,39,0.15); color: var(--km-gold-primary); display: flex; align-items: center; justify-content: center; font-weight: 700;">✓</div>
+            <span style="font-weight: 600; font-size: 0.9375rem;">Worldwide Express Shipping</span>
+          </div>
+        </div>
+
+        <a href="{{ section.settings.link_url }}" class="km-btn km-btn-primary">
+          {{ section.settings.link_text }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Heritage Story",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "OUR LEGACY SINCE 1996"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "The Amritsar Craftsmanship Story"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Button Text",
+      "default": "Read Full Brand Journey"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Button Link",
+      "default": "/pages/about-us"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Heritage Story",
+      "category": "Storytelling"
+    }
+  ]
+}
+{% endschema %}

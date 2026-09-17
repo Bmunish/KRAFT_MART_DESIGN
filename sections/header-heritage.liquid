@@ -1,0 +1,126 @@
+{% comment %}
+  KRAFTMART — LUXURY STICKY HEADER & ANNOUNCEMENT MARQUEE SECTION
+  Full Shopify Theme Customizer Support (Schema editable)
+{% endcomment %}
+
+<div class="km-header-wrapper" data-section-id="{{ section.id }}" data-section-type="header">
+  {% if section.settings.show_announcement %}
+    <div class="km-announcement-bar">
+      <div class="km-marquee-track">
+        {% for i in (1..4) %}
+          <div class="km-marquee-item">
+            <span>{{ section.settings.announcement_text_1 }}</span>
+            <span class="km-marquee-divider">❖</span>
+            <span>{{ section.settings.announcement_text_2 }}</span>
+            <span class="km-marquee-divider">❖</span>
+            <span>{{ section.settings.announcement_text_3 }}</span>
+            <span class="km-marquee-divider">❖</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <header class="km-header">
+    <div class="km-container">
+      <div class="km-header-inner">
+        <a href="{{ routes.root_url }}" class="km-header-logo">
+          {% if section.settings.logo_image %}
+            <img src="{{ section.settings.logo_image | img_url: '200x' }}" alt="{{ shop.name }}" width="180" height="40" />
+          {% else %}
+            <img src="{{ 'logo.jpeg' | asset_url }}" alt="{{ shop.name }}" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
+            <span style="color: var(--color-ink-navy); font-weight: 700;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+          {% endif %}
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="km-desktop-nav" aria-label="Main Navigation">
+          <ul class="km-nav-list">
+            {% for link in linklists[section.settings.menu].links %}
+              <li>
+                <a href="{{ link.url }}" class="km-nav-link {% if link.active %}active{% endif %}">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% else %}
+              <li><a href="/" class="km-nav-link active">Home</a></li>
+              <li><a href="/collections/all" class="km-nav-link">Products</a></li>
+              <li><a href="/collections/wedding-swords" class="km-nav-link">Wedding Swords</a></li>
+              <li><a href="/pages/about-us" class="km-nav-link">About Us</a></li>
+              <li><a href="/blogs/news" class="km-nav-link">Blogs</a></li>
+              <li><a href="/pages/contact" class="km-nav-link">Contact</a></li>
+            {% endfor %}
+          </ul>
+        </nav>
+
+        <!-- Utility Action Icons -->
+        <div class="km-header-actions">
+          <!-- Search trigger -->
+          <a href="{{ routes.search_url }}" class="km-icon-btn" aria-label="Search Store">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </a>
+
+          <!-- Account link -->
+          <a href="{{ routes.account_url }}" class="km-icon-btn" aria-label="Customer Account">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </a>
+
+          <!-- Cart Drawer Button -->
+          <button class="km-icon-btn" data-action="open-cart" aria-label="Cart">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            <span class="km-cart-badge">{{ cart.item_count }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+{% schema %}
+{
+  "name": "Heritage Header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text_1",
+      "label": "Announcement Item 1",
+      "default": "Cash on Delivery Available in India"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text_2",
+      "label": "Announcement Item 2",
+      "default": "Free Custom Engraving on All Orders"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text_3",
+      "label": "Announcement Item 3",
+      "default": "Worldwide Shipping via FedEx & DHL"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Custom Brand Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

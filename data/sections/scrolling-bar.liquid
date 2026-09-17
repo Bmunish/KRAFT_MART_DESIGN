@@ -1,0 +1,80 @@
+{{ 'scrolling-bar.css' | asset_url | stylesheet_tag }}
+{%- if  section.blocks.size > 0 and section.settings.show_marquee_bar -%}
+    <div class="marquee-bar messages color-{{ section.settings.color_scheme }}">
+      <marquee width="100%" scrollamount="{{ section.settings.speed }}" direction="{{ section.settings.direction }}" {% if section.settings.pause_on_hover %}onmouseover="this.stop();" onmouseout="this.start();" style="cursor: pointer;"{% endif %}>
+        {%- for i in (1..25) -%}
+            {%- for block in section.blocks -%}
+                <div class="message">
+                    <p class="marquee-message">{{block.settings.message}}</p>
+                </div>
+            {%- endfor -%}
+        {%- endfor -%}
+      </marquee>
+    </div>
+{%- endif -%}
+     
+{% schema %}
+    {
+        "name": "Marquee",
+        "tag": "section",
+        "class": "section",
+        "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_marquee_bar",
+          "label": "Show"
+        },
+        {
+          "type": "select",
+          "id": "direction",
+          "options": [
+            {
+              "value": "left",
+              "label": "Right to Left"
+            },
+            {
+              "value": "right",
+              "label": "Left to Right"
+            }
+          ],
+          "default": "right",
+          "label": "Direction"
+        },
+        {
+          "type": "checkbox",
+          "id": "pause_on_hover",
+          "label": "Pause on hover"
+        },    
+        {
+          "type": "text",
+          "id": "speed",
+          "label": "Speed",
+          "default": "3"
+        },
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:sections.all.colors.label",
+            "default": "scheme-1"
+        }
+    ],
+    "blocks": [
+        {
+          "type": "header",
+          "name": "Message",
+          "settings": [
+              {
+                "id": "message",
+                "type": "textarea",
+               "label": "Message"
+              }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Marquee"
+        }
+      ]
+    }
+{% endschema %}

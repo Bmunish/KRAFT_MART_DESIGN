@@ -1,0 +1,26 @@
+{% comment %}
+  KRAFTMART — COLLECTION TEMPLATE
+{% endcomment %}
+
+<div class="km-section">
+  <div class="km-container">
+    <div class="km-section-header" style="margin-bottom: 40px;">
+      <span class="km-eyebrow">COLLECTION</span>
+      <h1 class="km-heading-1">{{ collection.title | default: "All Products" }}</h1>
+      {% if collection.description != blank %}
+        <p class="km-body-lead">{{ collection.description }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Product Grid -->
+    <div class="km-product-grid">
+      {% paginate collection.products by 12 %}
+        {% for product in collection.products %}
+          {% render 'product-card-heritage', product: product %}
+        {% else %}
+          {% section 'featured-products' %}
+        {% endfor %}
+      {% endpaginate %}
+    </div>
+  </div>
+</div>

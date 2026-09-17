@@ -1,0 +1,76 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "collection_image": "{{ collection.image }}",
+        "show_collection_image": true,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "select_default_view": "four_col",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "enable-quick-view": true,
+        "enable_filtering": true,
+        "filter_type": "vertical",
+        "enable_sorting": true,
+        "show_variants": true,
+        "picker_type": "button",
+        "show_colorswatch": true,
+        "show_colorvariant": true,
+        "swatch_shape": "circle",
+        "enable_quick_add": true,
+        "enable_listdesc": true,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "scrolling_bar_Fik9DM": {
+      "type": "scrolling-bar",
+      "blocks": {
+        "header_XBN7nn": {
+          "type": "header",
+          "settings": {
+            "message": "Free customised engraving on your ordered sword. *"
+          }
+        }
+      },
+      "block_order": [
+        "header_XBN7nn"
+      ],
+      "name": "Marquee",
+      "settings": {
+        "show_marquee_bar": true,
+        "direction": "left",
+        "pause_on_hover": true,
+        "speed": "10",
+        "color_scheme": ""
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "scrolling_bar_Fik9DM"
+  ]
+}

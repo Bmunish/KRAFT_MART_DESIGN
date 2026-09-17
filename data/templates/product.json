@@ -1,0 +1,217 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "subtitle"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "square"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "disabled": true,
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "share"
+      ],
+      "custom_css": [
+        "p {font-weight: 400;}",
+        "li {font-weight: 400;}"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-2",
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "mobile_thumbnails": "show",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 28,
+        "padding_bottom": 12
+      }
+    },
+    "product_tab_e8b9VM": {
+      "type": "product-tab",
+      "settings": {}
+    },
+    "image_with_text_9LTyUX": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_rYe6Un": {
+          "type": "heading",
+          "settings": {
+            "heading": "Where can I get some?",
+            "heading_size": "h1"
+          }
+        },
+        "text_qRLbK6": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Embrace Your Unique Style With Frames That Command Attention And Exude Personality. From Sleek And Sophisticated To Bold And Daring, Our Collection Features A Wide Range Of Designs To Suit Every Taste And Occasion. Whether You're Rocking A Retro-Inspired Look Or Channeling Modern Chic Vibes, Our Extra Large Glasses And Sunglasses Ensure You Stand Out From The Crowd With Unparalleled Flair.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_96D6dN": {
+          "type": "button",
+          "settings": {
+            "button_label": "View all",
+            "button_link": "shopify://collections",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_rYe6Un",
+        "text_qRLbK6",
+        "button_96D6dN"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "scrolling_bar_YXQnXX": {
+      "type": "scrolling-bar",
+      "blocks": {
+        "header_YyeLAG": {
+          "type": "header",
+          "settings": {
+            "message": "Free customised engraving on your ordered sword."
+          }
+        }
+      },
+      "block_order": [
+        "header_YyeLAG"
+      ],
+      "name": "Marquee",
+      "settings": {
+        "show_marquee_bar": true,
+        "direction": "left",
+        "pause_on_hover": true,
+        "speed": "10",
+        "color_scheme": ""
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h1",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable-quick-view": true,
+        "show_variants": true,
+        "picker_type": "button",
+        "show_colorswatch": true,
+        "show_colorvariant": true,
+        "swatch_shape": "circle",
+        "enable_quick_add": true,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "1759154216456c769b": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_T89yh3": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_T89yh3"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product_tab_e8b9VM",
+    "image_with_text_9LTyUX",
+    "scrolling_bar_YXQnXX",
+    "related-products",
+    "1759154216456c769b"
+  ]
+}

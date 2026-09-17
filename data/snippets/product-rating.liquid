@@ -1,0 +1,23 @@
+
+{% comment %}
+  Renders a clickable star rating row that scrolls to the reviews accordion.
+  Expects: product (object)
+{% endcomment %}
+
+{% assign rating = product.metafields.reviews.rating.value.rating | default: 0 %}
+{% assign rating_count = product.metafields.reviews.rating_count | default: 0 %}
+
+{% if rating_count > 0 %}
+<button
+  type="button"
+  class="pp-rating-row"
+  data-pp-scroll-target="reviews"
+  aria-label="{{ rating_count }} reviews, jump to reviews section"
+>
+  <span class="pp-stars" style="--rating: {{ rating }};" aria-hidden="true">
+    <span class="pp-stars-track">★★★★★</span>
+    <span class="pp-stars-fill">★★★★★</span>
+  </span>
+  <span class="pp-rating-count">({{ rating_count }})</span>
+</button>
+{% endif %}

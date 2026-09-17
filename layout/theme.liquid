@@ -1,0 +1,43 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <title>{{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% else %}
+      <meta name="description" content="Buy authentic Indian wedding swords, Rajput talwars, Punjabi khandas & decorative ceremonial swords online at KraftMart. Handcrafted in Amritsar, Punjab. Free custom engraving on all orders. Worldwide shipping via FedEx & DHL. Cash on delivery available for India.">
+    {% endif %}
+
+    {{ content_for_header }}
+
+    <!-- KraftMart Master Heritage Stylesheet -->
+    <link rel="stylesheet" href="{{ 'kraftmart-heritage.css' | asset_url }}">
+  </head>
+
+  <body>
+    <!-- Sticky Header & Announcement Marquee Section -->
+    {% section 'header-heritage' %}
+
+    <!-- Main Store Content -->
+    <main id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    <!-- Heritage Editorial Footer Section -->
+    {% section 'footer-heritage' %}
+
+    <!-- AJAX Slide-Out Cart Drawer -->
+    {% render 'cart-drawer-heritage' %}
+
+    <!-- KraftMart Master Interactive Engine JS -->
+    <script src="{{ 'kraftmart-heritage.js' | asset_url }}" defer></script>
+  </body>
+</html>

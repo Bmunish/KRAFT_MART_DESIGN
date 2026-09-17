@@ -1,0 +1,29 @@
+.marquee-bar.messages{    
+    position: relative;
+    overflow: hidden;
+    display: flex;
+}
+.marquee-bar .message{
+    text-align:center;    
+    padding:2px 20px;
+    display: inline-block;
+}
+.message h1 {
+    margin: 0;
+    font-weight: var(--font-body-weight-semibold);
+    font-size: calc(var(--font-heading-scale)* 4rem);
+}
+
+@media screen and (max-width: 1400px) {
+    .message h1 {
+        font-size: calc(var(--font-heading-scale)* 3rem);
+    }
+}
+@media screen and (max-width: 575px) {
+    .marquee-bar .message {
+        padding: 2px 10px;
+    }
+    .message h1 {
+        font-size: calc(var(--font-heading-scale)* 2rem);
+    }
+}

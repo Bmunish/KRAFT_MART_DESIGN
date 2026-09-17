@@ -1,0 +1,124 @@
+{% comment %}
+  KRAFTMART — EDITORIAL COLLECTIONS GRID SECTION
+  Vertical cards with smooth zoom hovers & custom borders
+{% endcomment %}
+
+<section class="km-section">
+  <div class="km-container">
+    <div class="km-section-header">
+      <span class="km-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="km-heading-1">{{ section.settings.title }}</h2>
+      <p class="km-body-lead">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="km-category-grid">
+      {% for block in section.blocks %}
+        {% assign collection = collections[block.settings.collection] %}
+        <a href="{{ collection.url | default: '/collections/all' }}" class="km-category-card" {{ block.shopify_attributes }}>
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | img_url: '600x800', crop: 'center' }}" alt="{{ block.settings.title }}" class="km-category-bg" loading="lazy" />
+          {% elsif collection.image %}
+            <img src="{{ collection.image | img_url: '600x800', crop: 'center' }}" alt="{{ collection.title }}" class="km-category-bg" loading="lazy" />
+          {% else %}
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Category" class="km-category-bg" loading="lazy" />
+          {% endif %}
+
+          <div class="km-category-overlay"></div>
+
+          <div class="km-category-content">
+            <h3 class="km-category-title">{{ block.settings.title | default: collection.title | default: "Wedding Collection" }}</h3>
+            <span class="km-category-link-text">
+              Explore Collection
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+      {% else %}
+        <!-- Fallback Default Categories matching reference file -->
+        <a href="/collections/all" class="km-category-card">
+          <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Wedding & Decorative" class="km-category-bg" />
+          <div class="km-category-overlay"></div>
+          <div class="km-category-content">
+            <h3 class="km-category-title">Wedding & Decorative</h3>
+            <span class="km-category-link-text">Explore Collection →</span>
+          </div>
+        </a>
+
+        <a href="/collections/all" class="km-category-card">
+          <img src="{{ 'sword2.png' | asset_url }}" alt="Handforged Swords" class="km-category-bg" />
+          <div class="km-category-overlay"></div>
+          <div class="km-category-content">
+            <h3 class="km-category-title">Handforged Talwars</h3>
+            <span class="km-category-link-text">Explore Collection →</span>
+          </div>
+        </a>
+
+        <a href="/collections/all" class="km-category-card">
+          <img src="{{ 'sword.png' | asset_url }}" alt="Collector & Miniatures" class="km-category-bg" />
+          <div class="km-category-overlay"></div>
+          <div class="km-category-content">
+            <h3 class="km-category-title">Collector & Miniatures</h3>
+            <span class="km-category-link-text">Explore Collection →</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Heritage Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "CURATED SELECTIONS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Heritage Collections"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Handcrafted for wedding ceremonies, royal decor, and discerning weapon collectors."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Category Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Category Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Heritage Collections",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

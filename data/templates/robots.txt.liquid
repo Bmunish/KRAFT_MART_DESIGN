@@ -1,0 +1,138 @@
+{%- comment -%}
+====================================================================
+ robots.txt.liquid — kraftmart.shop
+ Rebuilt: June 29, 2026
+
+ WHY THIS STRUCTURE:
+ Shopify maintains a default rule set (accessed via robots.default_groups)
+ covering *, adsbot-google, Nutch, AhrefsBot, AhrefsSiteAudit, MJ12bot,
+ and Pinterest, and updates it over time. Looping over that object
+ instead of hand-typing every rule means this file automatically
+ inherits future Shopify-side SEO/crawl fixes. Custom rules below are
+ layered ON TOP of the defaults, not a replacement for them.
+
+ Docs: https://shopify.dev/docs/storefronts/themes/seo/robots-txt
+
+ ⚠️ Shopify support classifies robots.txt.liquid edits as an
+ unsupported customization. Test at kraftmart.shop/robots.txt and in
+ Google Search Console's robots.txt tooling before relying on this.
+====================================================================
+{%- endcomment -%}
+{%- for group in robots.default_groups -%}
+{{ group.user_agent }}
+{%- for rule in group.rules -%}
+{{ rule }}
+{%- endfor -%}
+{%- if group.user_agent.value == '*' -%}
+{%- comment -%} ---- Store-specific duplicate-content / tracking-parameter hygiene, layered on top of Shopify's own "*" defaults ---- {%- endcomment -%}
+Disallow: /*?*oseid=*
+Disallow: /*?currency=*
+Disallow: /*?*ls=*&ls=*
+Disallow: /*/*?*ls=*&ls=*
+Disallow: /*/*?*ls%3D*%3Fls%3D*
+Disallow: /*/*?*ls%3d*%3fls%3d*
+Disallow: /*?utm_*
+Disallow: /*&utm_*
+Disallow: /*?pr_*
+Disallow: /*&pr_*
+Disallow: /*?filter.v.*
+Disallow: /*&filter.v.*
+Disallow: */collections/*filter*&*filter*
+Disallow: /a/downloads/-/*
+{%- endif -%}
+{%- if group.sitemap != blank -%}
+{{ group.sitemap }}
+{%- endif -%}
+{%- endfor -%}
+
+# ──────────────────────────────────────────────────────────────
+# Rate-limited SEO tool crawlers not covered by Shopify's defaults
+# (Crawl-delay is a non-standard extension: honored by these tools,
+#  ignored by Google — that's expected, not a bug)
+# ──────────────────────────────────────────────────────────────
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: DotBot
+Crawl-delay: 10
+
+# ════════════════════════════════════════════════════════════════
+# AI CRAWLERS — explicit, current (2026) tokens.
+# Each vendor's TRAINING / SEARCH-CITATION / USER-FETCH bot is an
+# independent user-agent and must be set independently — allowing
+# one does not allow the others.
+# ════════════════════════════════════════════════════════════════
+
+# ---- OpenAI ----
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# ---- Anthropic (current tokens — Claude-Web / anthropic-ai are retired) ----
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# ---- Perplexity ----
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ---- Google (Google-Extended = Gemini/AI-training opt-in, independent of Googlebot) ----
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+# ---- Apple (Applebot = Siri/Spotlight/Safari; Applebot-Extended = Apple Intelligence training) ----
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ---- Amazon / DuckDuckGo / You.com AI surfaces ----
+User-agent: Amazonbot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# ---- Meta: link-preview bot kept open, AI-training bots blocked ----
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
+
+# ---- Bulk/undocumented scrapers: no confirmed robots.txt compliance commitment, no referral value ----
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /

@@ -1,0 +1,139 @@
+{{ 'icon-with-text.css' | asset_url | stylesheet_tag }}
+
+{%  style  %} 
+    .icon-with-text {
+        padding-top: {{ section.settings.top_padding }}px;
+        padding-bottom: {{ section.settings.bottom_padding }}px;
+    }
+{% endstyle %}
+
+<div class="icon-with-text color-{{ section.settings.color_scheme }}">
+    <div class="page-width">
+        <div class="icon--text--row grid grid--4-col-desktop grid--2-col-tablet-down">
+            {% for block in section.blocks %}
+                <div class="icon-with-text-item grid__item text-align--{{ section.settings.text_alignment }} icon--{{ forloop.index }}">
+                    <div class="icon--wrap">
+                        {% render 'icon-list', icon: block.settings.icon_type %}
+                    </div>
+                    {% if block.settings.icon_title != blank %}
+                        <h3 class="title--text">{{ block.settings.icon_title }}</h3>
+                    {% endif %}
+                    {% if block.settings.icon_description != blank %}
+                        <div class="icon__text rte body">
+                            {{ block.settings.icon_description }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "t:sections.icon-with-text.name",
+        "tag": "section",
+        "class": "section",
+        "settings": [
+            {
+                "type": "select",
+                "id": "text_alignment",
+                "label": "t:sections.icon-with-text.settings.select.label",
+                "options": [
+                    {
+                        "value": "left",
+                        "label": "t:sections.icon-with-text.settings.select.options__1.label"
+                    },
+                    {
+                        "value": "center",
+                        "label": "t:sections.icon-with-text.settings.select.options__2.label"
+                    },
+                    {
+                        "value": "right",
+                        "label": "t:sections.icon-with-text.settings.select.options__3.label"
+                    }
+                ],
+                "default": "center"
+            },
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:sections.all.colors.label",
+                "default": "scheme-1"
+            },
+            {
+                "type": "header",
+                "content": "t:sections.icon-with-text.settings.header.content"
+            },
+            {
+                "type": "range",
+                "id": "top_padding",
+                "min": 1,
+                "max": 60,
+                "step": 1,
+                "unit": "px",
+                "label": "t:sections.icon-with-text.settings.top_padding_range.label",
+                "default": 40
+            },
+            {
+                "type": "range",
+                "id": "bottom_padding",
+                "min": 1,
+                "max": 60,
+                "step": 1,
+                "unit": "px",
+                "label": "t:sections.icon-with-text.settings.bottom_padding_range.label",
+                "default": 40
+            }
+        ],
+        "blocks": [
+            {
+            "name": "t:sections.icon-with-text.blocks.icon_with_text.name",
+            "type": "icon_with_text",
+            "limit": 4,
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "icon_type",
+                    "label": "t:sections.icon-with-text.blocks.icon_with_text.settings.select.label",
+                    "options": [
+                        {
+                            "value": "hot_deal",
+                            "label": "t:sections.icon-with-text.blocks.icon_with_text.settings.select.options__1.label"
+                        },
+                        {
+                            "value": "shipping",
+                            "label": "t:sections.icon-with-text.blocks.icon_with_text.settings.select.options__2.label"
+                        },
+                        {
+                            "value": "payment",
+                            "label": "t:sections.icon-with-text.blocks.icon_with_text.settings.select.options__3.label"
+                        },
+                        {
+                            "value": "help_center",
+                            "label": "t:sections.icon-with-text.blocks.icon_with_text.settings.select.options__4.label"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "icon_title",
+                    "label": "t:sections.icon-with-text.blocks.icon_with_text.settings.text.label",
+                    "default": "Icon Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "icon_description",
+                    "label": "t:sections.icon-with-text.blocks.icon_with_text.settings.richtext.label"
+                }
+            ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Icon with Text",
+                "category": "Content"
+            }
+        ]
+    }
+{% endschema %}

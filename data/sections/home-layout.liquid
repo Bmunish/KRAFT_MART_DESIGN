@@ -1,0 +1,163 @@
+{%- style -%}
+.section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+}
+@media screen and (max-width: 991px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+  }
+}
+{%- endstyle -%}
+    <div class="page-width section-{{ section.id }}-padding">
+        <div class="wbmenugallery grid{% if section.settings.menu_type_desktop == 'drawer' %} grid--2-col-desktop{% else %} grid--6-col-desktop{% endif %} grid--2-col-tablet-down">
+        {%- for block in section.blocks -%} 
+        {% for i in (1..1) %}
+            {% capture galleryimg %}wb{{ i }}_img{% endcapture %}
+            {% capture gallerylink %}wb{{ i }}_link{% endcapture %}
+            {% capture gallerytext %}wb{{ i }}_text{% endcapture %}
+            {% if galleryimg or block.settings[gallerylink].size > 0 %}
+            <div class="wp_menu_banner grid__item text-center">
+                {% if block.settings[gallerylink] %}
+                <a
+                    href="{{ block.settings[gallerylink] }}"
+                    class="focus-inset"
+                    title="{{ block.settings[gallerytext] }}">
+                {% endif %}
+                <div class="global-media-settings"> 
+                    <div class="wbmenugllazy{% if block.settings[galleryimg] == blank %} wbimg_placeholder{% endif %} media media--transparent media--{{ block.settings.image_ratio }} media--hover-effect" {% if block.settings.image_ratio == 'adapt' and block.settings[galleryimg] != blank %} style="padding-bottom: {{ 1 | divided_by: block.settings[galleryimg].aspect_ratio | times: 100 }}%;"{% endif %}>
+                    {% if block.settings[galleryimg] %}
+                        {%- assign height = block.settings[galleryimg].width | divided_by: block.settings[galleryimg].aspect_ratio | round -%}
+                        {{ block.settings[galleryimg] | image_url: width: 350 | image_tag: 
+                        loading: 'lazy',
+                        height: height,
+                        sizes: "100vw",
+                        widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840' }}
+                    {% else %}
+                        {%- assign placeholder_slide = forloop.index | modulo: 2 -%}
+                        {%- if placeholder_slide == 1 -%}
+                        {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- else -%}
+                        {{ 'hero-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- endif -%}
+                    {% endif %}
+                    </div>
+                </div>
+                {% if block.settings[gallerytext].size > 0 %}
+                    <p>{{ block.settings[gallerytext] }}</p>
+                {% endif %}
+                {% if block.settings[gallerylink] %}
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        {%- endfor -%}
+        {%- if block.settings.button_label != blank -%}
+            <div class="demo__buttons">
+            <a {% if block.settings.link %}
+                href="{{ block.settings.link }}"
+                {% else %}
+                role="link" aria-disabled="true"
+                {% endif %}
+                {% if block.settings.link_window %}
+                target="_blank"
+                {% endif %}
+                class="{% if block.settings.view_all_style == 'link' %}link underlined-link{% elsif block.settings.view_all_style == 'solid' %}button
+                {% else %}button{% endif %}">
+                {{- block.settings.button_label | escape -}}
+            </a>
+            </div>
+        {%- endif -%}
+            {%- endfor -%}
+        </div>
+    </div>
+{% schema %}
+{
+  "name": "home-layout",
+  "tag": "section",
+  "class": "spaced-section",
+  "max_blocks": 50,
+  "settings": [
+    {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 60
+      }
+  ],
+  "blocks": [
+    {
+      "type": "logo_image",
+      "name": "t:sections.logo_bar.blocks.logo_image.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.logo_bar.blocks.logo_image.settings.image.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.logo_bar.blocks.logo_image.settings.link.label",
+          "info": "t:sections.logo_bar.blocks.logo_image.settings.link.info"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "t:sections.multicolumn.settings.title.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "home-layout", 
+      "blocks": [
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

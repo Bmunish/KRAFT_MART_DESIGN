@@ -1,0 +1,55 @@
+{% liquid
+  assign catalogue = collections['all-products']
+  if catalogue == blank
+    assign catalogue = collections.all
+  endif
+  assign spotlight = catalogue.products.first
+  assign craft_stories = blogs['craft-stories']
+%}
+
+<section class="km-luxe-home">
+  <section class="km-luxe-hero">
+    <div class="km-luxe-shell km-luxe-hero__grid">
+      <div class="km-luxe-hero__copy">
+        <p class="km-luxe-kicker">KraftMart · Amritsar</p>
+        <h1>Objects of ceremony.<br><em>Made to be remembered.</em></h1>
+        <p class="km-luxe-hero__intro">Explore the current KraftMart collection of traditional swords, handcrafted articles and ceremonial pieces.</p>
+        <div class="km-luxe-actions"><a class="km-luxe-button" href="{{ catalogue.url }}">Shop the collection <span>→</span></a><a class="km-luxe-text-link" href="#km-featured">View featured pieces <span>↘</span></a></div>
+      </div>
+      {% if spotlight != blank and spotlight.featured_media != blank %}
+        <a class="km-luxe-hero__art" href="{{ spotlight.url }}" aria-label="View {{ spotlight.title | escape }}">
+          {{ spotlight.featured_media | image_url: width: 1400 | image_tag: widths: '600, 900, 1200, 1400', sizes: '(min-width: 990px) 52vw, 100vw', loading: 'eager', alt: spotlight.featured_media.alt }}
+          <span class="km-luxe-hero__caption"><span>From the collection</span>{{ spotlight.title }}</span>
+        </a>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="km-luxe-manifesto km-luxe-shell"><p class="km-luxe-kicker">A considered collection</p><div><span class="km-luxe-rule" aria-hidden="true"></span><h2>Indian heritage, presented with the attention it deserves.</h2></div></section>
+
+  <section class="km-luxe-section km-luxe-shell" id="km-featured">
+    <header class="km-luxe-heading"><div><p class="km-luxe-kicker">Selected from the catalogue</p><h2>Featured pieces</h2></div><a class="km-luxe-text-link" href="{{ catalogue.url }}">Shop all <span>→</span></a></header>
+    <div class="km-luxe-featured-grid">
+      {% if spotlight != blank %}<article class="km-luxe-product km-luxe-product--lead"><a class="km-luxe-product__image" href="{{ spotlight.url }}">{% if spotlight.featured_media %}{{ spotlight.featured_media | image_url: width: 1200 | image_tag: widths: '480, 720, 1000, 1200', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'lazy', alt: spotlight.featured_media.alt }}{% endif %}</a>{% render 'kraftmart-product-meta', product: spotlight %}</article>{% endif %}
+      <div class="km-luxe-featured-grid__side">{% for product in catalogue.products limit: 2 offset: 1 %}<article class="km-luxe-product"><a class="km-luxe-product__image" href="{{ product.url }}">{% if product.featured_media %}{{ product.featured_media | image_url: width: 720 | image_tag: widths: '360, 540, 720', sizes: '(min-width: 990px) 25vw, 50vw', loading: 'lazy', alt: product.featured_media.alt }}{% endif %}</a>{% render 'kraftmart-product-meta', product: product %}</article>{% endfor %}</div>
+    </div>
+  </section>
+
+  <section class="km-luxe-collections"><div class="km-luxe-shell"><header class="km-luxe-heading"><div><p class="km-luxe-kicker">Discover by collection</p><h2>Distinctly KraftMart</h2></div></header><div class="km-luxe-collection-grid">
+    {% for collection in collections limit: 50 %}{% if collection.handle == 'wall-hangings-handcrafted-decorative-wall-art-kraftmart' or collection.handle == 'swords-under-2000-ii-shop-traditional-swords' or collection.handle == 'handforged-articles' or collection.handle == 'punjabi-kada-collection-cod-available' %}
+      <a class="km-luxe-collection" href="{{ collection.url }}">{% if collection.featured_image %}{{ collection.featured_image | image_url: width: 900 | image_tag: widths: '400, 600, 900', sizes: '(min-width: 990px) 33vw, 75vw', loading: 'lazy', alt: collection.featured_image.alt }}{% elsif collection.products.first.featured_media %}{{ collection.products.first.featured_media | image_url: width: 900 | image_tag: widths: '400, 600, 900', sizes: '(min-width: 990px) 33vw, 75vw', loading: 'lazy', alt: collection.title }}{% endif %}<span class="km-luxe-collection__shade"></span><span class="km-luxe-collection__copy"><small>Collection · {{ collection.products_count }} {{ collection.products_count | pluralize: 'piece', 'pieces' }}</small><strong>{{ collection.title }}</strong><i>Explore →</i></span></a>
+    {% endif %}{% endfor %}
+  </div></div></section>
+
+  <section class="km-luxe-section km-luxe-shell"><header class="km-luxe-heading"><div><p class="km-luxe-kicker">A closer look</p><h2>Made for the moment</h2></div><a class="km-luxe-text-link" href="{{ catalogue.url }}">Explore catalogue <span>→</span></a></header><div class="km-luxe-rail" aria-label="Featured products">{% for product in catalogue.products limit: 8 %}<article class="km-luxe-product km-luxe-rail__item"><a class="km-luxe-product__image" href="{{ product.url }}">{% if product.featured_media %}{{ product.featured_media | image_url: width: 720 | image_tag: widths: '360, 540, 720', sizes: '(min-width: 990px) 24vw, 78vw', loading: 'lazy', alt: product.featured_media.alt }}{% endif %}</a>{% render 'kraftmart-product-meta', product: product %}</article>{% endfor %}</div></section>
+
+  {% if spotlight != blank and spotlight.featured_media != blank %}<section class="km-luxe-story"><div class="km-luxe-shell km-luxe-story__grid"><div class="km-luxe-story__image">{{ spotlight.featured_media | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', sizes: '(min-width: 990px) 48vw, 100vw', loading: 'lazy', alt: spotlight.featured_media.alt }}</div><div class="km-luxe-story__copy"><p class="km-luxe-kicker">The KraftMart collection</p><h2>Find a piece with a presence all its own.</h2><p>Every item shown here is drawn directly from the live KraftMart catalogue. Explore details, availability and current prices on each product page.</p><a class="km-luxe-text-link" href="{{ catalogue.url }}">Explore all products <span>→</span></a></div></div></section>{% endif %}
+
+  <section class="km-luxe-section km-luxe-shell"><header class="km-luxe-heading"><div><p class="km-luxe-kicker">More from the catalogue</p><h2>Continue exploring</h2></div></header><div class="km-luxe-product-grid">{% for product in catalogue.products limit: 8 offset: 3 %}<article class="km-luxe-product"><a class="km-luxe-product__image" href="{{ product.url }}">{% if product.featured_media %}{{ product.featured_media | image_url: width: 720 | image_tag: widths: '300, 480, 720', sizes: '(min-width: 990px) 24vw, 48vw', loading: 'lazy', alt: product.featured_media.alt }}{% endif %}</a>{% render 'kraftmart-product-meta', product: product %}</article>{% endfor %}</div></section>
+
+  {% if craft_stories != blank and craft_stories.articles_count > 0 %}<section class="km-luxe-journal"><div class="km-luxe-shell"><header class="km-luxe-heading"><div><p class="km-luxe-kicker">Craft stories</p><h2>From the journal</h2></div><a class="km-luxe-text-link" href="{{ craft_stories.url }}">View journal <span>→</span></a></header><div class="km-luxe-journal__grid">{% for article in craft_stories.articles limit: 3 %}<article><a href="{{ article.url }}">{% if article.image %}{{ article.image | image_url: width: 800 | image_tag: widths: '400, 600, 800', sizes: '(min-width: 990px) 33vw, 100vw', loading: 'lazy', alt: article.image.alt }}{% endif %}<p>{{ article.published_at | date: '%d %B %Y' }}</p><h3>{{ article.title }}</h3><span>Read story →</span></a></article>{% endfor %}</div></div></section>{% endif %}
+
+  <section class="km-luxe-closing"><div class="km-luxe-shell"><p class="km-luxe-kicker">KraftMart</p><h2>Discover the collection.</h2><a class="km-luxe-button km-luxe-button--light" href="{{ catalogue.url }}">Shop now <span>→</span></a></div></section>
+</section>
+
+{% schema %}{"name":"KraftMart editorial home","settings":[]}{% endschema %}

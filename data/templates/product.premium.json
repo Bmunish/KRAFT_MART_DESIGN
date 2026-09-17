@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product-premium",
+      "settings": {
+        "gallery_radius": 20,
+        "button_radius": 50,
+        "accent_color": "#7A1F2B",
+        "sale_badge_text": "SALE",
+        "show_sticky_bar": true,
+        "show_wishlist": true,
+        "installment_text": "",
+        "tax_text": "Tax included."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
