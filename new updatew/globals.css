@@ -1,0 +1,118 @@
+/* globals.css or app/globals.css additions for KraftMart */
+
+@layer base {
+  :root {
+    --kraft-cream: #F5F0E8;
+    --kraft-cream-dark: #E8E0D5;
+    --kraft-maroon: #5C1A1B;
+    --kraft-maroon-dark: #4a1516;
+    --kraft-gold: #C4A35A;
+    --kraft-gold-dark: #b3924f;
+    --kraft-ink: #1A1A1A;
+  }
+
+  body {
+    background-color: var(--kraft-cream);
+    color: var(--kraft-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--kraft-cream);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--kraft-cream-dark);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--kraft-gold);
+  }
+}
+
+@layer components {
+  /* KraftMart card base */
+  .kraft-card {
+    @apply bg-white rounded-kraft border border-kraft-cream-dark overflow-hidden;
+    @apply transition-all duration-500 ease-kraft;
+  }
+  .kraft-card:hover {
+    @apply shadow-kraft-card-hover -translate-y-1;
+  }
+
+  /* KraftMart button variants */
+  .btn-kraft-primary {
+    @apply px-6 py-3 bg-kraft-maroon text-white rounded-kraft-sm font-semibold text-sm tracking-wide;
+    @apply hover:bg-kraft-maroon-dark transition-colors duration-300;
+    @apply active:scale-[0.98] transform;
+  }
+
+  .btn-kraft-outline {
+    @apply px-6 py-3 bg-white border-2 border-kraft-maroon text-kraft-maroon rounded-kraft-sm font-semibold text-sm;
+    @apply hover:bg-kraft-maroon hover:text-white transition-all duration-300;
+  }
+
+  .btn-kraft-gold {
+    @apply px-6 py-3 bg-kraft-gold text-white rounded-kraft-sm font-semibold text-sm;
+    @apply hover:bg-kraft-gold-dark transition-colors duration-300;
+  }
+
+  /* Filter checkbox custom style */
+  .kraft-checkbox {
+    @apply w-5 h-5 border-2 border-kraft-cream-dark rounded-md;
+    @apply checked:bg-kraft-maroon checked:border-kraft-maroon;
+    @apply transition-all duration-200 cursor-pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .kraft-checkbox:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
+    background-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Section label */
+  .kraft-label {
+    @apply text-xs font-bold tracking-[0.15em] text-kraft-maroon uppercase;
+  }
+
+  /* Price display */
+  .kraft-price {
+    @apply text-lg font-bold text-kraft-maroon;
+  }
+  .kraft-price-strike {
+    @apply text-sm text-gray-400 line-through;
+  }
+}
+
+@layer utilities {
+  /* Text gradient for hero */
+  .text-gradient-gold {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shimmer loading effect */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--kraft-cream) 25%,
+      var(--kraft-cream-dark) 50%,
+      var(--kraft-cream) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+}

@@ -24,9 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductBubbleClicks();
   initLiveEngravingSimulator();
   hydrateProductDetail();
-  initCatalogToolbarAndFilters();
-  initPolicyDropdown();
-  initCurrencySelector();
 });
 
 
@@ -122,28 +119,8 @@ function kmBuildQuickViewDetails(descRaw = '', specsRaw = '') {
   };
 }
 
-const KM_EXCHANGE_RATE_INR_TO_USD = 85;
-
-function getActiveCurrency() {
-  return localStorage.getItem('km_currency') || 'INR';
-}
-
-function getActiveCountry() {
-  return localStorage.getItem('km_country') || 'India';
-}
-
-function getActiveCountryLabel() {
-  return localStorage.getItem('km_country_label') || 'India | INR ₹';
-}
-
-function kmMoney(value, overrideCurrency = null) {
-  const currency = overrideCurrency || getActiveCurrency();
-  const num = Number(value) || 0;
-  if (currency === 'USD') {
-    const usd = Math.round(num / KM_EXCHANGE_RATE_INR_TO_USD);
-    return `$${usd.toLocaleString('en-US')}`;
-  }
-  return `₹${num.toLocaleString('en-IN')}`;
+function kmMoney(value) {
+  return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Number(value));
 }
 
 function kmCategory(product) {
@@ -162,9 +139,9 @@ function kmProductCard(product) {
   const detailUrl = `product-detail.html?handle=${encodeURIComponent(product.handle)}`;
   const details = kmBuildQuickViewDetails(product.body_html || '', '');
   const specsAttr = details.specs.slice(0, 6).map(spec => `${spec.key}: ${spec.value}`).join('|');
-  return `<article class="km-product-card km-noise-card" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}">
+  return `<article class="km-product-card km-noise-card" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}">
     <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy">` : ''}</a><a class="km-quick-view-btn" href="${detailUrl}">View product</a></div>
-    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div><div class="km-swatch-container"><div class="km-variant-swatches"><span class="km-swatch-btn">A</span><span class="km-swatch-btn">B</span><span class="km-swatch-btn">C</span><span class="km-swatch-btn km-swatch-btn-active">D</span></div><div class="km-color-swatches"><span class="km-color-swatch" style="background-color: red; color: red;"></span><span class="km-color-swatch" style="background-color: blue; color: blue;"></span><span class="km-color-swatch" style="background-color: green; color: green;"></span><span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span></div></div><a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
+    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare">${kmMoney(compare)}</span>` : ''}</div><a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
   </article>`;
 }
 
@@ -184,7 +161,7 @@ function hydrateHeroCards(products) {
     const compare = Number(variant.compare_at_price);
     const price = Number(variant.price);
     const shortTitle = kmCleanCardTitle(product.title);
-    card.innerHTML = `<a href="product-detail.html?handle=${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
+    card.innerHTML = `<a href="product-detail.html?handle=${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price">${kmMoney(price)}${compare > price ? `<span>${kmMoney(compare)}</span>` : ''}</div></div>`;
   });
 }
 
@@ -586,7 +563,6 @@ async function updateCartDrawerContent() {
 function initQuickViewModal() {
   const modal = document.getElementById('kmQuickViewModal');
   const closeBtn = document.getElementById('kmQvClose');
-  const backdrop = document.getElementById('kmQvBackdrop');
   if (!modal) return;
 
   // Delegate quick view button clicks
@@ -599,22 +575,13 @@ function initQuickViewModal() {
     if (!card) return;
 
     // Extract attributes
-    const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src || 'assets/sword.png';
-    const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent || 'Ceremonial Masterpiece';
-    const desc = card.getAttribute('data-qv-desc') || 'Handcrafted Rajput ceremonial sword forged in Amritsar, Punjab with traditional Kundan brass work and deep velvet scabbard.';
-    const price = card.getAttribute('data-qv-price') || card.querySelector('.km-price-current')?.textContent || '₹2,599';
+    const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src;
+    const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent;
+    const desc = card.getAttribute('data-qv-desc') || 'Handcrafted Rajput ceremonial sword forged in Amritsar, Punjab.';
+    const price = card.getAttribute('data-qv-price') || card.querySelector('.km-price-current')?.textContent;
     const compare = card.getAttribute('data-qv-compare') || card.querySelector('.km-price-compare')?.textContent || '';
     const specsRaw = card.getAttribute('data-qv-specs') || 'Craft: Amritsar Forged|Material: Brass + Carbon Steel|Engraving: Free Laser Inscription|Dispatch: FedEx / DHL';
     const details = kmBuildQuickViewDetails(desc, specsRaw);
-
-    // Calculate saving percentage if available
-    const numPrice = parseInt(price.replace(/[^0-9]/g, ''), 10) || 0;
-    const numCompare = parseInt(compare.replace(/[^0-9]/g, ''), 10) || 0;
-    let badgeText = 'Crafted in Amritsar';
-    if (numCompare > numPrice && numPrice > 0) {
-      const discount = Math.round(((numCompare - numPrice) / numCompare) * 100);
-      badgeText = `Save ${discount}%`;
-    }
 
     // Populate modal
     const qvImg = document.getElementById('kmQvImage');
@@ -623,25 +590,37 @@ function initQuickViewModal() {
     const qvPrice = document.getElementById('kmQvPrice');
     const qvCompare = document.getElementById('kmQvCompare');
     const qvSpecs = document.getElementById('kmQvSpecs');
-    const qvBadge = document.getElementById('kmQvBadge');
 
     if (qvImg) { qvImg.src = img; qvImg.alt = title; }
     if (qvTitle) qvTitle.textContent = title;
     if (qvDesc) qvDesc.textContent = details.description;
     if (qvPrice) qvPrice.textContent = price;
     if (qvCompare) qvCompare.textContent = compare;
-    if (qvBadge) qvBadge.textContent = badgeText;
 
     if (qvSpecs) {
       let specsHtml = '';
       details.specs.forEach(spec => {
         specsHtml += `
           <div class="km-qv-spec-row">
-            <span class="km-qv-spec-key">${kmEscape(spec.key)}:</span>
+            <span class="km-qv-spec-key">${kmEscape(spec.key)}</span>
             <span class="km-qv-spec-val">${kmEscape(spec.value)}</span>
           </div>
         `;
       });
+
+      if (!specsHtml) {
+        specsHtml = `
+          <div class="km-qv-spec-row">
+            <span class="km-qv-spec-key">Craft</span>
+            <span class="km-qv-spec-val">Amritsar Forged</span>
+          </div>
+          <div class="km-qv-spec-row">
+            <span class="km-qv-spec-key">Dispatch</span>
+            <span class="km-qv-spec-val">FedEx / DHL</span>
+          </div>
+        `;
+      }
+
       qvSpecs.innerHTML = specsHtml;
     }
 
@@ -653,10 +632,6 @@ function initQuickViewModal() {
   // Close triggers
   if (closeBtn) {
     closeBtn.addEventListener('click', closeQuickViewModal);
-  }
-
-  if (backdrop) {
-    backdrop.addEventListener('click', closeQuickViewModal);
   }
 
   modal.addEventListener('click', (e) => {
@@ -1185,51 +1160,21 @@ function initSearchOverlayModal() {
   });
 })();
 
-/* Stat counters: animate numbers smoothly when they scroll into view */
+/* Stat counters: animate numbers when they scroll into view */
 (function initStatCounters() {
   const statNums = document.querySelectorAll('.km-stat-number');
   if (!statNums.length) return;
 
-  function countUp(el) {
-    const rawText = el.textContent.trim();
-    const countTarget = parseFloat(el.dataset.count || rawText.replace(/[^0-9.]/g, ''));
-    if (isNaN(countTarget) || el.dataset.animated) return;
-    el.dataset.animated = '1';
-
-    const suffix = el.dataset.suffix !== undefined ? el.dataset.suffix : (rawText.replace(/[0-9.,\s]/g, '') || '');
-    const prefix = el.dataset.prefix || '';
-    const isFloat = String(countTarget).includes('.');
-    const duration = 1600;
-    const start = performance.now();
-
-    function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
-      const ease = 1 - Math.pow(1 - progress, 3);
-      const current = progress === 1 ? countTarget : (ease * countTarget);
-      const formatted = isFloat ? current.toFixed(1) : Math.floor(current).toLocaleString();
-      el.innerHTML = `${prefix}${formatted}<span>${suffix}</span>`;
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
-    }
-    requestAnimationFrame(update);
-  }
-
-  if (!('IntersectionObserver' in window)) {
-    statNums.forEach(n => countUp(n));
-    return;
-  }
-
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        countUp(entry.target);
-        counterObserver.unobserve(entry.target);
-      }
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const raw = el.textContent.replace(/[^0-9.K+★]/g, '');
+      if (!raw || el.dataset.animated) return;
+      el.dataset.animated = '1';
+      counterObserver.unobserve(el);
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.5 });
 
   statNums.forEach(n => counterObserver.observe(n));
 })();
@@ -1432,518 +1377,5 @@ function initLiveEngravingSimulator() {
   });
 }
 
-
-
-
-/**
- * Catalog Toolbar, Filter Sidebar, Mobile Drawer & Sorting Logic
- */
-function initCatalogToolbarAndFilters() {
-  const grid = document.getElementById('kmProductGrid');
-  const viewGridBtn = document.getElementById('kmViewGridBtn');
-  const viewListBtn = document.getElementById('kmViewListBtn');
-  const countDisplay = document.getElementById('kmCatalogCount');
-  const sortSelect = document.getElementById('kmCatalogSort');
-  const clearFiltersBtn = document.getElementById('kmClearAllFilters');
-
-  // Mobile Filter Drawer elements
-  const mobileDrawer = document.getElementById('kmMobileFilterDrawer');
-  const openMobileFilterBtn = document.getElementById('kmOpenMobileFilter');
-  const closeMobileFilterBtn = document.getElementById('kmCloseMobileFilter');
-  const drawerBackdrop = document.getElementById('kmDrawerBackdrop');
-  const applyMobileFilterBtn = document.getElementById('kmApplyMobileFilter');
-
-  // 1. Grid vs List View Toggle
-  if (viewGridBtn && viewListBtn && grid) {
-    viewGridBtn.addEventListener('click', () => {
-      grid.classList.remove('km-view-list');
-      viewGridBtn.classList.add('active');
-      viewListBtn.classList.remove('active');
-    });
-
-    viewListBtn.addEventListener('click', () => {
-      grid.classList.add('km-view-list');
-      viewListBtn.classList.add('active');
-      viewGridBtn.classList.remove('active');
-    });
-  }
-
-  // 2. Mobile Filter Drawer Open / Close
-  function openMobileFilter() {
-    if (mobileDrawer) {
-      mobileDrawer.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-  }
-
-  function closeMobileFilter() {
-    if (mobileDrawer) {
-      mobileDrawer.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  }
-
-  if (openMobileFilterBtn) openMobileFilterBtn.addEventListener('click', openMobileFilter);
-  if (closeMobileFilterBtn) closeMobileFilterBtn.addEventListener('click', closeMobileFilter);
-  if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeMobileFilter);
-  if (applyMobileFilterBtn) {
-    applyMobileFilterBtn.addEventListener('click', () => {
-      closeMobileFilter();
-      filterProducts();
-    });
-  }
-
-  // 3. Category Checkbox & Price Filter Handling
-  function filterProducts() {
-    if (!grid) return;
-    const cards = grid.querySelectorAll('.km-product-card');
-
-    // Selected categories
-    const checkedCats = Array.from(document.querySelectorAll('.km-filter-cat:checked')).map(cb => cb.value);
-    const isAllCats = checkedCats.includes('all') || checkedCats.length === 0;
-
-    // Selected price chip
-    const activeChip = document.querySelector('.km-filter-chip.active');
-    const priceRange = activeChip ? activeChip.getAttribute('data-price') : 'all';
-
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-      const category = (card.getAttribute('data-category') || 'wedding').toLowerCase();
-      const rawPrice = card.getAttribute('data-price') || card.querySelector('.km-price-current')?.textContent || '0';
-      const price = parseInt(String(rawPrice).replace(/[^0-9]/g, ''), 10) || 0;
-
-      // Check category match
-      let matchCat = isAllCats || checkedCats.includes(category);
-
-      // Check price match
-      let matchPrice = true;
-      if (priceRange === 'under2000') {
-        matchPrice = price < 2000;
-      } else if (priceRange === '2000-4000') {
-        matchPrice = price >= 2000 && price <= 4000;
-      } else if (priceRange === 'above4000') {
-        matchPrice = price > 4000;
-      }
-
-      if (matchCat && matchPrice) {
-        card.style.display = '';
-        card.style.opacity = '1';
-        visibleCount++;
-      } else {
-        card.style.display = 'none';
-      }
-    });
-
-    if (countDisplay) {
-      countDisplay.textContent = `${visibleCount} ${visibleCount === 1 ? 'Masterpiece' : 'Masterpieces'}`;
-    }
-  }
-
-  // Bind Category Checkboxes
-  document.querySelectorAll('.km-filter-cat').forEach(checkbox => {
-    checkbox.addEventListener('change', (e) => {
-      if (e.target.value === 'all' && e.target.checked) {
-        document.querySelectorAll('.km-filter-cat').forEach(cb => {
-          if (cb !== e.target) cb.checked = false;
-        });
-      } else if (e.target.checked) {
-        document.querySelectorAll('.km-filter-cat[value="all"]').forEach(cb => {
-          cb.checked = false;
-        });
-      }
-      filterProducts();
-    });
-  });
-
-  // Bind Price Filter Chips
-  document.querySelectorAll('.km-filter-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('.km-filter-chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      filterProducts();
-    });
-  });
-
-  // Bind Clear Filters
-  if (clearFiltersBtn) {
-    clearFiltersBtn.addEventListener('click', () => {
-      document.querySelectorAll('.km-filter-cat').forEach(cb => {
-        cb.checked = cb.value === 'all';
-      });
-      document.querySelectorAll('.km-filter-chip').forEach(chip => {
-        chip.classList.toggle('active', chip.getAttribute('data-price') === 'all');
-      });
-      filterProducts();
-    });
-  }
-
-  // 4. Sorting Selector Logic
-  if (sortSelect && grid) {
-    sortSelect.addEventListener('change', () => {
-      const val = sortSelect.value;
-      const cards = Array.from(grid.querySelectorAll('.km-product-card'));
-
-      cards.sort((a, b) => {
-        const priceA = parseInt(String(a.getAttribute('data-price') || '0').replace(/[^0-9]/g, ''), 10);
-        const priceB = parseInt(String(b.getAttribute('data-price') || '0').replace(/[^0-9]/g, ''), 10);
-
-        if (val === 'price-asc') return priceA - priceB;
-        if (val === 'price-desc') return priceB - priceA;
-        return 0; // Default order
-      });
-
-      cards.forEach(card => grid.appendChild(card));
-    });
-  }
-}
-
-// Global Swatch Selection, Focus Cards & Interactive Background Tracking
-document.addEventListener('DOMContentLoaded', () => {
-  // Swatches Click (Size & Color)
-  document.body.addEventListener('click', (e) => {
-    const colorSwatch = e.target.closest('.km-color-swatch');
-    if (colorSwatch) {
-      const container = colorSwatch.closest('.km-color-swatches');
-      if (container) {
-        container.querySelectorAll('.km-color-swatch').forEach(el => el.classList.remove('km-color-active'));
-        colorSwatch.classList.add('km-color-active');
-      }
-    }
-
-    const variantBtn = e.target.closest('.km-swatch-btn');
-    if (variantBtn) {
-      const container = variantBtn.closest('.km-variant-swatches');
-      if (container) {
-        container.querySelectorAll('.km-swatch-btn').forEach(el => el.classList.remove('km-swatch-btn-active'));
-        variantBtn.classList.add('km-swatch-btn-active');
-      }
-    }
-  });
-
-  // Aceternity UI Focus Cards Hover Physics (Only on Product Catalog page)
-  document.body.addEventListener('pointerover', (e) => {
-    const card = e.target.closest('.km-product-card');
-    if (!card) return;
-    const grid = card.closest('.km-product-grid');
-    if (!grid || (grid.dataset.liveMode !== 'catalog' && grid.id !== 'kmProductGrid')) return;
-
-    grid.classList.add('km-focus-active');
-    const allCards = grid.querySelectorAll('.km-product-card');
-    allCards.forEach(c => {
-      if (c === card) {
-        c.classList.add('km-focused');
-        c.classList.remove('km-unfocused');
-      } else {
-        c.classList.add('km-unfocused');
-        c.classList.remove('km-focused');
-      }
-    });
-  });
-
-  document.body.addEventListener('pointerout', (e) => {
-    const card = e.target.closest('.km-product-card');
-    if (!card) return;
-    const grid = card.closest('.km-product-grid');
-    if (!grid || (grid.dataset.liveMode !== 'catalog' && grid.id !== 'kmProductGrid')) return;
-
-    const related = e.relatedTarget;
-    if (grid.contains(related)) return;
-
-    grid.classList.remove('km-focus-active');
-    grid.querySelectorAll('.km-product-card').forEach(c => {
-      c.classList.remove('km-focused', 'km-unfocused');
-    });
-  });
-
-  // Aceternity BackgroundGradientAnimation Interactive Mouse Tracking
-  document.querySelectorAll('.km-bg-gradient-container').forEach(container => {
-    const parent = container.parentElement;
-    if (!parent) return;
-
-    let curX = 0;
-    let curY = 0;
-    let tgX = 0;
-    let tgY = 0;
-
-    parent.addEventListener('mousemove', (e) => {
-      const rect = parent.getBoundingClientRect();
-      tgX = e.clientX - rect.left;
-      tgY = e.clientY - rect.top;
-    });
-
-    function moveBlob() {
-      curX += (tgX - curX) / 16;
-      curY += (tgY - curY) / 16;
-      container.style.setProperty('--km-mouse-x', `${Math.round(curX)}px`);
-      container.style.setProperty('--km-mouse-y', `${Math.round(curY)}px`);
-      requestAnimationFrame(moveBlob);
-    }
-    moveBlob();
-  });
-});
-
-/**
- * Policy Dropdown Navigation Toggle
- */
-function initPolicyDropdown() {
-  document.querySelectorAll('.km-has-dropdown').forEach(dropdown => {
-    const toggle = dropdown.querySelector('.km-dropdown-toggle');
-    if (!toggle) return;
-    toggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      dropdown.classList.toggle('is-open');
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.km-has-dropdown')) {
-      document.querySelectorAll('.km-has-dropdown.is-open').forEach(el => el.classList.remove('is-open'));
-    }
-  });
-}
-
-/**
- * Currency Selector & Universal Price Converter
- */
-function initCurrencySelector() {
-  const trigger = document.getElementById('kmCurrencyTrigger');
-  const widget = document.getElementById('kmCurrencyWidget');
-  const triggerText = document.getElementById('kmTriggerText');
-  const options = document.querySelectorAll('.km-currency-opt');
-
-  const currentCountry = getActiveCountry();
-  const currentCurrency = getActiveCurrency();
-  const currentLabel = getActiveCountryLabel();
-
-  // Initialize trigger label and active options
-  if (triggerText) {
-    triggerText.textContent = currentLabel;
-  }
-
-  options.forEach(opt => {
-    if (opt.dataset.country === currentCountry) {
-      opt.classList.add('is-active');
-    } else {
-      opt.classList.remove('is-active');
-    }
-
-    opt.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const country = opt.dataset.country;
-      const currency = opt.dataset.currency;
-      const label = opt.dataset.label || `${country} | ${currency} ${currency === 'USD' ? '$' : '₹'}`;
-
-      localStorage.setItem('km_country', country);
-      localStorage.setItem('km_currency', currency);
-      localStorage.setItem('km_country_label', label);
-
-      if (triggerText) triggerText.textContent = label;
-
-      options.forEach(o => o.classList.remove('is-active'));
-      opt.classList.add('is-active');
-
-      if (widget) widget.classList.remove('is-open');
-
-      applyCurrencyToPage(currency);
-      showCurrencyToast(country, currency);
-    });
-  });
-
-  if (trigger && widget) {
-    trigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      widget.classList.toggle('is-open');
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!widget.contains(e.target)) {
-        widget.classList.remove('is-open');
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') widget.classList.remove('is-open');
-    });
-  }
-
-  // Apply currency to initial page markup
-  applyCurrencyToPage(currentCurrency);
-}
-
-function showCurrencyToast(country, currency) {
-  let toast = document.getElementById('kmCurrencyToast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'kmCurrencyToast';
-    toast.className = 'km-currency-toast';
-    document.body.appendChild(toast);
-  }
-  const symbol = currency === 'USD' ? '$' : '₹';
-  toast.innerHTML = `<span style="color: var(--km-gold-primary); font-size: 1.1rem;">❖</span> Shipping to <strong>${country}</strong>: Prices displayed in <strong>${currency} (${symbol})</strong>`;
-  toast.classList.add('is-visible');
-
-  clearTimeout(toast._timer);
-  toast._timer = setTimeout(() => {
-    toast.classList.remove('is-visible');
-  }, 3200);
-}
-
-function parseNumericPrice(str) {
-  if (!str) return 0;
-  const cleaned = String(str).replace(/,/g, '');
-  const match = cleaned.match(/\d+/);
-  return match ? parseInt(match[0], 10) : 0;
-}
-
-function applyCurrencyToPage(currency) {
-  const isUsd = currency === 'USD';
-
-  // 1. Process 3D Hero Cards & Mini Prices (.km-3d-card-price, .km-mini-price)
-  document.querySelectorAll('.km-3d-card-price, .km-mini-price').forEach(el => {
-    const compareSpan = el.querySelector('span:not(.km-mini-save)');
-    const saveSpan = el.querySelector('.km-mini-save');
-
-    if (!el.dataset.inrMain) {
-      const clone = el.cloneNode(true);
-      clone.querySelectorAll('span').forEach(s => s.remove());
-      el.dataset.inrMain = parseNumericPrice(clone.textContent);
-    }
-    const mainInr = Number(el.dataset.inrMain);
-
-    let compInr = 0;
-    if (compareSpan) {
-      if (!compareSpan.dataset.inrComp) {
-        compareSpan.dataset.inrComp = parseNumericPrice(compareSpan.textContent);
-      }
-      compInr = Number(compareSpan.dataset.inrComp);
-    }
-
-    const mainStr = isUsd ? `$${Math.round(mainInr / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${mainInr.toLocaleString('en-IN')}`;
-
-    if (compareSpan && compInr) {
-      const compStr = isUsd ? `$${Math.round(compInr / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${compInr.toLocaleString('en-IN')}`;
-      if (saveSpan) {
-        if (!saveSpan.dataset.inrSave) saveSpan.dataset.inrSave = parseNumericPrice(saveSpan.textContent);
-        const saveVal = Number(saveSpan.dataset.inrSave);
-        const saveStr = isUsd ? `$${Math.round(saveVal / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${saveVal.toLocaleString('en-IN')}`;
-        el.innerHTML = `${mainStr} <span class="km-mini-save">Save ${saveStr}</span>`;
-      } else {
-        el.innerHTML = `${mainStr} <span>${compStr}</span>`;
-      }
-    } else if (saveSpan) {
-      if (!saveSpan.dataset.inrSave) saveSpan.dataset.inrSave = parseNumericPrice(saveSpan.textContent);
-      const saveVal = Number(saveSpan.dataset.inrSave);
-      const saveStr = isUsd ? `$${Math.round(saveVal / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${saveVal.toLocaleString('en-IN')}`;
-      el.innerHTML = `${mainStr} <span class="km-mini-save">Save ${saveStr}</span>`;
-    } else {
-      el.textContent = mainStr;
-    }
-  });
-
-  // 2. Process Standard Single Price Elements
-  const singlePriceSelectors = [
-    '.km-price-current',
-    '.km-price-compare',
-    '.km-modal-price-current',
-    '.km-modal-price-compare',
-    '.km-cart-subtotal'
-  ];
-
-  document.querySelectorAll(singlePriceSelectors.join(',')).forEach(el => {
-    if (!el.dataset.inrPrice) {
-      el.dataset.inrPrice = parseNumericPrice(el.textContent);
-    }
-    const baseInr = Number(el.dataset.inrPrice);
-    if (!baseInr) return;
-
-    if (isUsd) {
-      el.textContent = `$${Math.round(baseInr / KM_EXCHANGE_RATE_INR_TO_USD).toLocaleString('en-US')}`;
-    } else {
-      el.textContent = `₹${baseInr.toLocaleString('en-IN')}`;
-    }
-  });
-
-  // 3. Process Product Detail Page price row: [data-product-price]
-  document.querySelectorAll('[data-product-price]').forEach(row => {
-    row.querySelectorAll('span').forEach((span) => {
-      if (span.classList.contains('km-sale-badge')) {
-        if (!span.dataset.inrBadgeText) span.dataset.inrBadgeText = span.textContent;
-        const saveMatch = span.dataset.inrBadgeText.match(/(?:₹|Rs\.?|\$)\s*([\d,]+)/);
-        if (saveMatch) {
-          const saveVal = parseInt(saveMatch[1].replace(/,/g, ''), 10);
-          const saveFormatted = isUsd ? `$${Math.round(saveVal / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${saveVal.toLocaleString('en-IN')}`;
-          span.textContent = span.dataset.inrBadgeText.replace(/(?:₹|Rs\.?|\$)\s*[\d,]+/, saveFormatted);
-        }
-      } else {
-        if (!span.dataset.inrPrice) {
-          span.dataset.inrPrice = parseNumericPrice(span.textContent);
-        }
-        const val = Number(span.dataset.inrPrice);
-        if (val) {
-          span.textContent = isUsd ? `$${Math.round(val / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${val.toLocaleString('en-IN')}`;
-        }
-      }
-    });
-  });
-
-  // 4. Process PDP Add to Cart Button: [data-product-add]
-  document.querySelectorAll('[data-product-add]').forEach(btn => {
-    if (!btn.dataset.inrBasePrice) {
-      btn.dataset.inrBasePrice = parseNumericPrice(btn.textContent) || 2599;
-    }
-    const val = Number(btn.dataset.inrBasePrice);
-    if (val) {
-      const formatted = isUsd ? `$${Math.round(val / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${val.toLocaleString('en-IN')}`;
-      btn.innerHTML = `ADD TO CART &mdash; ${formatted}`;
-    }
-  });
-
-  // 5. Update Quick View data attributes on product cards
-  document.querySelectorAll('[data-qv-price]').forEach(card => {
-    if (!card.dataset.inrQvPrice) {
-      card.dataset.inrQvPrice = parseNumericPrice(card.getAttribute('data-qv-price'));
-    }
-    const baseInr = Number(card.dataset.inrQvPrice);
-    if (baseInr) {
-      card.setAttribute('data-qv-price', isUsd ? `$${Math.round(baseInr / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${baseInr.toLocaleString('en-IN')}`);
-    }
-  });
-
-  document.querySelectorAll('[data-qv-compare]').forEach(card => {
-    const attr = card.getAttribute('data-qv-compare');
-    if (attr) {
-      if (!card.dataset.inrQvCompare) {
-        card.dataset.inrQvCompare = parseNumericPrice(attr);
-      }
-      const baseInr = Number(card.dataset.inrQvCompare);
-      if (baseInr) {
-        card.setAttribute('data-qv-compare', isUsd ? `$${Math.round(baseInr / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${baseInr.toLocaleString('en-IN')}`);
-      }
-    }
-  });
-
-  // 6. Badges & Save Tags (e.g. Save ₹500)
-  document.querySelectorAll('.km-sale-badge, .km-card-badge-gold').forEach(badge => {
-    if (badge.closest('[data-product-price]')) return; // Handled above
-    if (!badge.dataset.inrOrigText) {
-      badge.dataset.inrOrigText = badge.textContent;
-    }
-    const match = badge.dataset.inrOrigText.match(/(?:₹|Rs\.?|\$)\s*([\d,]+)/);
-    if (match) {
-      const saveVal = parseInt(match[1].replace(/,/g, ''), 10);
-      const saveFormatted = isUsd ? `$${Math.round(saveVal / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${saveVal.toLocaleString('en-IN')}`;
-      badge.textContent = badge.dataset.inrOrigText.replace(/(?:₹|Rs\.?|\$)\s*[\d,]+/, saveFormatted);
-    }
-  });
-
-  // 7. Filter chips on products.html (< ₹2,000, ₹2k – ₹4k, > ₹4,000)
-  const chipUnder2000 = document.querySelector('.km-filter-chip[data-price="under2000"]');
-  if (chipUnder2000) chipUnder2000.textContent = isUsd ? '< $25' : '< ₹2,000';
-  const chip2000To4000 = document.querySelector('.km-filter-chip[data-price="2000-4000"]');
-  if (chip2000To4000) chip2000To4000.textContent = isUsd ? '$25 – $50' : '₹2k – ₹4k';
-  const chipAbove4000 = document.querySelector('.km-filter-chip[data-price="above4000"]');
-  if (chipAbove4000) chipAbove4000.textContent = isUsd ? '> $50' : '> ₹4,000';
-}
 
 

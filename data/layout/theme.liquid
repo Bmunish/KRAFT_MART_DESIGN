@@ -69,23 +69,18 @@
 
     {% render 'meta-tags' %}
 
-    {{ 'kraftmart-luxe.css' | asset_url | stylesheet_tag }}
+    <!-- Google Fonts for KraftMart Heritage -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!--
-      Down to a single Google Font (Inter, variable weight 100-900) — Raleway and Prompt removed.
-      Raleway wasn't referenced anywhere in this theme's CSS. Inter now covers what Prompt used to
-      (--font-body-secondary-family below) as well as price text (--font-price-family), so we get
-      one font file instead of three separate network requests. Still loaded non-blocking via
-      preload+swap so it never delays first paint.
-    -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    </noscript>
+    {{ 'kraftmart-heritage.css' | asset_url | stylesheet_tag }}
+    {{ 'kraftmart-luxe.css' | asset_url | stylesheet_tag }}
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'kraftmart-heritage.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}

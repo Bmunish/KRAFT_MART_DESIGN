@@ -1,55 +1,630 @@
-{% liquid
-  assign catalogue = collections['all-products']
+{%- liquid
+  assign catalogue = collections[section.settings.featured_collection]
   if catalogue == blank
-    assign catalogue = collections.all
+    assign catalogue = collections['all']
   endif
-  assign spotlight = catalogue.products.first
-  assign craft_stories = blogs['craft-stories']
-%}
+  if catalogue == blank
+    assign catalogue = collections['all-products']
+  endif
 
-<section class="km-luxe-home">
-  <section class="km-luxe-hero">
-    <div class="km-luxe-shell km-luxe-hero__grid">
-      <div class="km-luxe-hero__copy">
-        <p class="km-luxe-kicker">KraftMart · Amritsar</p>
-        <h1>Objects of ceremony.<br><em>Made to be remembered.</em></h1>
-        <p class="km-luxe-hero__intro">Explore the current KraftMart collection of traditional swords, handcrafted articles and ceremonial pieces.</p>
-        <div class="km-luxe-actions"><a class="km-luxe-button" href="{{ catalogue.url }}">Shop the collection <span>→</span></a><a class="km-luxe-text-link" href="#km-featured">View featured pieces <span>↘</span></a></div>
+  assign blog_obj = blogs[section.settings.blog]
+  if blog_obj == blank
+    assign blog_obj = blogs['craft-stories']
+  endif
+  if blog_obj == blank
+    assign blog_obj = blogs['news']
+  endif
+-%}
+
+<div class="km-shopify-heritage-root">
+
+  <!-- Section 1: Hero Showcase with Slideshow & Floating Bubbles -->
+  <section class="km-hero-section km-blob-wrapper" id="km-hero" aria-label="KraftMart Heritage Showcase">
+    <!-- 20-30% Transparency Background Hero Slider -->
+    <div class="km-hero-bg-slider" aria-hidden="true">
+      <div class="km-hero-slide is-active" style="background-image: url({{ 'kraftmart_banner_1.jpg' | asset_url }});"></div>
+      <div class="km-hero-slide" style="background-image: url({{ 'kraftmart_banner_2.jpg' | asset_url }});"></div>
+      <div class="km-hero-slide" style="background-image: url({{ 'kraftmart_banner_3.jpg' | asset_url }});"></div>
+      <div class="km-hero-slide" style="background-image: url({{ 'kraftmart_banner_4.jpg' | asset_url }});"></div>
+    </div>
+
+    <!-- Heritage Background Accents -->
+    <div class="km-blob-left" aria-hidden="true"></div>
+    <div class="km-blob-right" aria-hidden="true"></div>
+
+    <div class="km-container km-hero-grid">
+      <!-- Left Column: Copy & CTAs -->
+      <div class="km-hero-content km-reveal">
+        <div class="km-badge-royal">
+          <span class="km-badge-dot"></span>
+          <span>{{ section.settings.hero_badge | default: 'Amritsar Royal Lineage · Since 1996' }}</span>
+        </div>
+        <h1 class="km-heading-hero">
+          {{ section.settings.hero_title_1 | default: 'Authentic Indian' }}<br />
+          <span class="km-gradient-text">{{ section.settings.hero_title_2 | default: 'Ceremonial Swords' }}</span><br />
+          <span style="font-size: 0.72em; font-weight: 400; font-style: italic; color: var(--km-text-secondary);">{{ section.settings.hero_title_3 | default: '&amp; Heritage Talwars' }}</span>
+        </h1>
+        <p class="km-body-lead" style="margin: 24px 0 32px 0;">
+          {{ section.settings.hero_lead | default: 'Handforged in Amritsar, Punjab by master artisans. Custom laser engraved with groom &amp; bride names. Insured express delivery across India &amp; 42+ countries worldwide.' }}
+        </p>
+
+        <!-- CTA Action Bar -->
+        <div class="km-hero-actions">
+          <a href="{{ catalogue.url | default: '/collections/all' }}" class="km-btn km-btn-primary" style="padding: 16px 36px; font-size: 0.95rem;">
+            {{ section.settings.hero_cta_primary | default: 'Explore Collections →' }}
+          </a>
+          <a href="#wedding-swords" class="km-btn km-btn-secondary" style="padding: 16px 28px;">
+            {{ section.settings.hero_cta_secondary | default: 'Free Custom Engraving ✦' }}
+          </a>
+        </div>
       </div>
-      {% if spotlight != blank and spotlight.featured_media != blank %}
-        <a class="km-luxe-hero__art" href="{{ spotlight.url }}" aria-label="View {{ spotlight.title | escape }}">
-          {{ spotlight.featured_media | image_url: width: 1400 | image_tag: widths: '600, 900, 1200, 1400', sizes: '(min-width: 990px) 52vw, 100vw', loading: 'eager', alt: spotlight.featured_media.alt }}
-          <span class="km-luxe-hero__caption"><span>From the collection</span>{{ spotlight.title }}</span>
+
+      <!-- Right Column: Interactive 3D Card Carousel -->
+      <div class="km-hero-visual km-reveal" style="transition-delay: 0.2s;">
+        <div class="km-hero-visual-box km-noise-card">
+          <div class="km-floating-badge top-left">
+            <span class="km-badge-icon">&#9876;</span>
+            <div>
+              <strong>Amritsar Lineage</strong>
+              <small>30+ Yrs Metalcraft</small>
+            </div>
+          </div>
+          <div class="km-floating-badge bottom-right">
+            <span class="km-badge-icon">&#10003;</span>
+            <div>
+              <strong>15% Advance + COD</strong>
+              <small>Pan India Delivery</small>
+            </div>
+          </div>
+
+          <!-- 3D Card Carousel Stage -->
+          <div class="km-3d-stage" id="km3dStage" aria-label="Featured Swords 3D Showcase">
+            {%- for product in catalogue.products limit: 3 -%}
+              {%- assign card_pos = 'is-center' -%}
+              {%- if forloop.index == 2 -%}{%- assign card_pos = 'is-right' -%}{%- endif -%}
+              {%- if forloop.index == 3 -%}{%- assign card_pos = 'is-left' -%}{%- endif -%}
+              <div class="km-3d-card {{ card_pos }}" data-index="{{ forloop.index0 }}">
+                <div class="km-3d-card-img-wrap">
+                  {%- if product.featured_image -%}
+                    <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" loading="eager" />
+                  {%- else -%}
+                    <img src="{{ 'hero_talwar.png' | asset_url }}" alt="{{ product.title | escape }}" />
+                  {%- endif -%}
+                </div>
+                <div class="km-3d-card-label">
+                  <span class="km-3d-card-tag">&#10022; Bestseller</span>
+                  <h3 class="km-3d-card-title">{{ product.title }}</h3>
+                  <p class="km-3d-card-sub">Handcrafted · Free Engraving · Insured Courier</p>
+                  <div class="km-3d-card-price">{{ product.price | money }} {%- if product.compare_at_price > product.price -%}<span>{{ product.compare_at_price | money }}</span>{%- endif -%}</div>
+                </div>
+              </div>
+            {%- else -%}
+              <div class="km-3d-card is-center" data-index="0">
+                <div class="km-3d-card-img-wrap"><img src="{{ 'hero_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar" /></div>
+                <div class="km-3d-card-label">
+                  <span class="km-3d-card-tag">&#10022; Bestseller</span>
+                  <h3 class="km-3d-card-title">Jaipur Wedding Talwar</h3>
+                  <p class="km-3d-card-sub">Kundan Brass Hilt &bull; Red Velvet Scabbard &bull; Free Engraving</p>
+                  <div class="km-3d-card-price">₹2,599 <span>₹3,099</span></div>
+                </div>
+              </div>
+              <div class="km-3d-card is-right" data-index="1">
+                <div class="km-3d-card-img-wrap"><img src="{{ 'sword2.png' | asset_url }}" alt="Royal Jodhpur Damascus" /></div>
+                <div class="km-3d-card-label">
+                  <span class="km-3d-card-tag">&#10022; Master Metallurgy</span>
+                  <h3 class="km-3d-card-title">Royal Jodhpur Damascus</h3>
+                  <p class="km-3d-card-sub">1095/15N20 Damascus Steel &bull; 56–58 HRC Hardness</p>
+                  <div class="km-3d-card-price">₹4,299 <span>₹4,999</span></div>
+                </div>
+              </div>
+              <div class="km-3d-card is-left" data-index="2">
+                <div class="km-3d-card-img-wrap"><img src="{{ 'sword.png' | asset_url }}" alt="Dawami Ceremonial Sword" /></div>
+                <div class="km-3d-card-label">
+                  <span class="km-3d-card-tag">&#10022; Heritage Classic</span>
+                  <h3 class="km-3d-card-title">Dawami Ceremonial Sword</h3>
+                  <p class="km-3d-card-sub">Polished Blade &bull; Zari Velvet Scabbard &bull; COD Available</p>
+                  <div class="km-3d-card-price">₹1,999</div>
+                </div>
+              </div>
+            {%- endfor -%}
+
+            <!-- 3D Carousel Control Bar -->
+            <div class="km-3d-controls">
+              <button class="km-3d-nav-btn" data-3d-nav="prev" aria-label="Previous Product">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+              </button>
+              <div class="km-3d-dots"></div>
+              <button class="km-3d-nav-btn" data-3d-nav="next" aria-label="Next Product">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Floating Trust Bar -->
+  <div class="km-trust-section">
+    <div class="km-container" style="transform: translateY(-32px);">
+      <div class="km-trust-banner-floating">
+        <div class="km-trust-flex-bar">
+          <div class="km-trust-bar-item">
+            <div class="km-trust-bar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M8 9h8M8 12h5c1.7 0 3 .9 3 2s-1.3 2-3 2H8" /><path d="M10 16l4-7" /></svg>
+            </div>
+            <div>
+              <div class="km-trust-bar-text">15% Advance / 85% COD</div>
+              <div class="km-trust-bar-subtext">Flexible Cash on Delivery in India</div>
+            </div>
+          </div>
+          <div class="km-trust-bar-item">
+            <div class="km-trust-bar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" /></svg>
+            </div>
+            <div>
+              <div class="km-trust-bar-text">Free Custom Laser Engraving</div>
+              <div class="km-trust-bar-subtext">Bespoke names &amp; wedding dates</div>
+            </div>
+          </div>
+          <div class="km-trust-bar-item">
+            <div class="km-trust-bar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><rect x="1" y="16" width="22" height="4" rx="2" /><line x1="7" y1="8" x2="7" y2="12" /><line x1="12" y1="3" x2="12" y2="12" /><line x1="17" y1="8" x2="17" y2="12" /></svg>
+            </div>
+            <div>
+              <div class="km-trust-bar-text">Worldwide Express Delivery</div>
+              <div class="km-trust-bar-subtext">Insured shipping via FedEx &amp; DHL</div>
+            </div>
+          </div>
+          <div class="km-trust-bar-item">
+            <div class="km-trust-bar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+            </div>
+            <div>
+              <div class="km-trust-bar-text">Crafted in Amritsar Since 1996</div>
+              <div class="km-trust-bar-subtext">30+ years of metalcraft lineage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Drag-to-Scroll Category Carousel -->
+  <section class="km-section" style="padding: 70px 0 50px 0;">
+    <div class="km-container">
+      <div class="km-section-header" style="text-align: left; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="km-eyebrow">CURATED HERITAGE SELECTIONS</span>
+          <h2 class="km-heading-1" style="color: var(--color-ink-navy);">Explore Collections</h2>
+        </div>
+        <span style="font-size: 0.875rem; color: var(--color-slate-gray); font-weight: 500;">← Drag or swipe to scroll →</span>
+      </div>
+
+      <div class="km-category-carousel-wrapper">
+        <div class="km-category-carousel">
+          <a href="/collections/all" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Wedding Swords">
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Wedding Swords &amp; Decorative" />
+            <div class="km-category-card-overlay">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Bestseller</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Wedding Swords</h3>
+            </div>
+          </a>
+          <a href="/collections/all" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Premium Talwars">
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Handforged Damascus Talwars" />
+            <div class="km-category-card-overlay">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Master Metallurgy</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Premium Talwars</h3>
+            </div>
+          </a>
+          <a href="/collections/all" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Swords Under ₹2000">
+            <img src="{{ 'sword.png' | asset_url }}" alt="Swords Under ₹2000" />
+            <div class="km-category-card-overlay">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Ceremonial Value</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Swords Under ₹2,000</h3>
+            </div>
+          </a>
+          <a href="/collections/all" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Wall Hangings">
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Royal Wall Hangings" />
+            <div class="km-category-card-overlay">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Haveli Decor</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Wall Hangings</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Featured Products Grid (Ceremonial Collection) -->
+  <section id="featured-products" class="km-section" style="background-color: var(--color-cloud);">
+    <div class="km-container">
+      <div class="km-section-header">
+        <span class="km-eyebrow">CURATED HERITAGE PICKS</span>
+        <h2 class="km-heading-1 km-heading-featured" style="color: var(--km-text-primary);">{{ section.settings.collection_title | default: 'Ceremonial Collection' }}</h2>
+        <p class="km-body-lead km-lead-compact" style="color: var(--km-text-secondary); margin-bottom: 24px;">
+          {{ section.settings.collection_subtext | default: 'Hand-forged talwars with premium scabbards and complimentary name engraving.' }}
+        </p>
+        <div class="km-segmented-tabs">
+          <button class="km-tab-btn active" data-tab="all">All Catalogue</button>
+          <button class="km-tab-btn" data-tab="wedding">Wedding Swords</button>
+          <button class="km-tab-btn" data-tab="damascus">Damascus Steel</button>
+          <button class="km-tab-btn" data-tab="miniature">Miniatures</button>
+        </div>
+      </div>
+
+      <div class="km-product-grid" data-live-products="12" data-live-mode="home" aria-live="polite">
+        {%- for product in catalogue.products limit: 8 -%}
+          <div class="km-product-card km-noise-card km-reveal" data-delay="{{ forloop.index }}" data-category="wedding"
+            data-qv-img="{% if product.featured_image %}{{ product.featured_image | image_url: width: 600 }}{% else %}{{ 'sword.png' | asset_url }}{% endif %}"
+            data-qv-title="{{ product.title | escape }}"
+            data-qv-desc="{{ product.description | strip_html | truncate: 120 | escape }}"
+            data-qv-price="{{ product.price | money }}"
+            data-qv-compare="{% if product.compare_at_price > product.price %}{{ product.compare_at_price | money }}{% endif %}">
+            <div class="km-product-media">
+              {%- if product.compare_at_price > product.price -%}
+                <span class="km-sale-badge">Special Offer</span>
+              {%- endif -%}
+              <a href="{{ product.url }}">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" class="km-product-img" loading="lazy" />
+                {%- else -%}
+                  <img src="{{ 'sword.png' | asset_url }}" alt="{{ product.title | escape }}" class="km-product-img" loading="lazy" />
+                {%- endif -%}
+              </a>
+              <button class="km-quick-view-btn">⚡ Quick View</button>
+            </div>
+            <div class="km-product-info">
+              <span class="km-product-vendor">KraftMart Heritage</span>
+              <h3 class="km-product-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+              <p class="km-product-desc-short">Handcrafted in Amritsar · Complimentary Engraving</p>
+              <div class="km-price-wrapper">
+                <span class="km-price-current">{{ product.price | money }}</span>
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="km-price-compare">{{ product.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+              <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div style="text-align: center; margin-top: 48px;">
+        <a href="{{ catalogue.url | default: '/collections/all' }}" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">
+          View Complete Collection &rarr;
         </a>
-      {% endif %}
+      </div>
     </div>
   </section>
 
-  <section class="km-luxe-manifesto km-luxe-shell"><p class="km-luxe-kicker">A considered collection</p><div><span class="km-luxe-rule" aria-hidden="true"></span><h2>Indian heritage, presented with the attention it deserves.</h2></div></section>
+  <!-- Section 5: The Groom's Heritage & Live Engraving Simulator -->
+  <section id="wedding-swords" class="km-section km-wedding-heritage-section">
+    <div class="km-container" style="position: relative; z-index: 1;">
+      <div class="km-wedding-grid">
+        <div class="km-wedding-content">
+          <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.15em;">THE GROOM'S HERITAGE</span>
+          <h2 class="km-heading-1 km-wedding-title" style="margin-bottom: 20px;">Honor Tradition on Your Special Day</h2>
+          <p class="km-body-lead" style="color: var(--km-text-muted-light); margin-bottom: 28px; line-height: 1.7;">
+            In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and honor. Our wedding talwars feature velvet-sheathed scabbards, hand-engraved brass hilts, and personalized blade inscriptions.
+          </p>
 
-  <section class="km-luxe-section km-luxe-shell" id="km-featured">
-    <header class="km-luxe-heading"><div><p class="km-luxe-kicker">Selected from the catalogue</p><h2>Featured pieces</h2></div><a class="km-luxe-text-link" href="{{ catalogue.url }}">Shop all <span>→</span></a></header>
-    <div class="km-luxe-featured-grid">
-      {% if spotlight != blank %}<article class="km-luxe-product km-luxe-product--lead"><a class="km-luxe-product__image" href="{{ spotlight.url }}">{% if spotlight.featured_media %}{{ spotlight.featured_media | image_url: width: 1200 | image_tag: widths: '480, 720, 1000, 1200', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'lazy', alt: spotlight.featured_media.alt }}{% endif %}</a>{% render 'kraftmart-product-meta', product: spotlight %}</article>{% endif %}
-      <div class="km-luxe-featured-grid__side">{% for product in catalogue.products limit: 2 offset: 1 %}<article class="km-luxe-product"><a class="km-luxe-product__image" href="{{ product.url }}">{% if product.featured_media %}{{ product.featured_media | image_url: width: 720 | image_tag: widths: '360, 540, 720', sizes: '(min-width: 990px) 25vw, 50vw', loading: 'lazy', alt: product.featured_media.alt }}{% endif %}</a>{% render 'kraftmart-product-meta', product: product %}</article>{% endfor %}</div>
+          <!-- Interactive Live Engraving Preview -->
+          <div class="km-engraving-simulator-card">
+            <div class="km-engraving-card-header">
+              <span class="km-engraving-badge">&#10022; Free Custom Laser Engraving Simulator</span>
+            </div>
+            <p style="font-size: 0.8125rem; color: var(--km-text-muted-light); margin-bottom: 12px;">
+              Type Bride &amp; Groom names below to simulate live blade laser inscription:
+            </p>
+            <input type="text" id="kmEngravingInput" class="km-engraving-input" value="Gurpreet ❤️ Simran • 24.10.2026" placeholder="e.g. Gurpreet ❤️ Simran • 24.10.2026" />
+
+            <div class="km-engraving-preset-chips">
+              <span style="font-size: 0.72rem; color: var(--km-text-muted-light); margin-right: 4px;">Presets:</span>
+              <button type="button" class="km-engraving-chip active" data-preset="Gurpreet ❤️ Simran • 24.10.2026">Gurpreet ❤️ Simran</button>
+              <button type="button" class="km-engraving-chip" data-preset="Rajveer Singh • 2026">Rajveer Singh</button>
+              <button type="button" class="km-engraving-chip" data-preset="Harman & Navjot • Forever">Harman &amp; Navjot</button>
+            </div>
+
+            <div class="km-engraving-preview-box">
+              <span class="km-engraving-preview-label">Blade Inscription Preview</span>
+              <div class="km-engraving-preview-text" id="kmEngravingPreviewText">&ldquo;Gurpreet ❤️ Simran • 24.10.2026&rdquo;</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+            <a href="{{ catalogue.url | default: '/collections/all' }}" class="km-btn km-btn-primary" style="padding: 14px 32px;">Shop Wedding Talwars &rarr;</a>
+            <span style="font-size: 0.85rem; color: var(--km-gold-light); display: inline-flex; align-items: center; gap: 6px;">
+              <span>✓</span> Free Laser Engraving Included
+            </span>
+          </div>
+        </div>
+
+        <div class="km-wedding-visual">
+          <div class="km-wedding-glow-backdrop" aria-hidden="true"></div>
+          <div class="km-wedding-image-wrapper">
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="KraftMart Groom Wedding Talwar with Royal Red Velvet Scabbard" class="km-wedding-sword-img" />
+          </div>
+          <div class="km-wedding-floating-tag">
+            <span class="km-tag-icon">&#10022;</span>
+            <div>
+              <strong>Master Handcrafted in Amritsar</strong>
+              <span>Solid Brass Kundan Hilt &bull; Velvet Sheath</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="km-luxe-collections"><div class="km-luxe-shell"><header class="km-luxe-heading"><div><p class="km-luxe-kicker">Discover by collection</p><h2>Distinctly KraftMart</h2></div></header><div class="km-luxe-collection-grid">
-    {% for collection in collections limit: 50 %}{% if collection.handle == 'wall-hangings-handcrafted-decorative-wall-art-kraftmart' or collection.handle == 'swords-under-2000-ii-shop-traditional-swords' or collection.handle == 'handforged-articles' or collection.handle == 'punjabi-kada-collection-cod-available' %}
-      <a class="km-luxe-collection" href="{{ collection.url }}">{% if collection.featured_image %}{{ collection.featured_image | image_url: width: 900 | image_tag: widths: '400, 600, 900', sizes: '(min-width: 990px) 33vw, 75vw', loading: 'lazy', alt: collection.featured_image.alt }}{% elsif collection.products.first.featured_media %}{{ collection.products.first.featured_media | image_url: width: 900 | image_tag: widths: '400, 600, 900', sizes: '(min-width: 990px) 33vw, 75vw', loading: 'lazy', alt: collection.title }}{% endif %}<span class="km-luxe-collection__shade"></span><span class="km-luxe-collection__copy"><small>Collection · {{ collection.products_count }} {{ collection.products_count | pluralize: 'piece', 'pieces' }}</small><strong>{{ collection.title }}</strong><i>Explore →</i></span></a>
-    {% endif %}{% endfor %}
-  </div></div></section>
+  <!-- Section 6: Heritage Numbers Strip & Ribbon -->
+  <section class="km-section" style="padding: 56px 0; background: var(--km-bg-secondary); border-top: var(--km-border-gold); border-bottom: var(--km-border-gold);">
+    <div class="km-container">
+      <div class="km-stats-grid">
+        <div class="km-stat-item">
+          <div class="km-stat-number">30<span>+</span></div>
+          <div class="km-stat-label">Years of Legacy</div>
+          <div class="km-stat-sub">Amritsar · Since 1996</div>
+        </div>
+        <div class="km-stat-divider"></div>
+        <div class="km-stat-item">
+          <div class="km-stat-number">10K<span>+</span></div>
+          <div class="km-stat-label">Blades Handcrafted</div>
+          <div class="km-stat-sub">Talwars · Kirpans · Ceremonials</div>
+        </div>
+        <div class="km-stat-divider"></div>
+        <div class="km-stat-item">
+          <div class="km-stat-number">42<span>+</span></div>
+          <div class="km-stat-label">Countries Served</div>
+          <div class="km-stat-sub">Trusted global delivery</div>
+        </div>
+        <div class="km-stat-divider"></div>
+        <div class="km-stat-item">
+          <div class="km-stat-number">4.9<span>★</span></div>
+          <div class="km-stat-label">Verified Rating</div>
+          <div class="km-stat-sub">10,000+ happy buyers</div>
+        </div>
+      </div>
 
-  <section class="km-luxe-section km-luxe-shell"><header class="km-luxe-heading"><div><p class="km-luxe-kicker">A closer look</p><h2>Made for the moment</h2></div><a class="km-luxe-text-link" href="{{ catalogue.url }}">Explore catalogue <span>→</span></a></header><div class="km-luxe-rail" aria-label="Featured products">{% for product in catalogue.products limit: 8 %}<article class="km-luxe-product km-luxe-rail__item"><a class="km-luxe-product__image" href="{{ product.url }}">{% if product.featured_media %}{{ product.featured_media | image_url: width: 720 | image_tag: widths: '360, 540, 720', sizes: '(min-width: 990px) 24vw, 78vw', loading: 'lazy', alt: product.featured_media.alt }}{% endif %}</a>{% render 'kraftmart-product-meta', product: product %}</article>{% endfor %}</div></section>
+      <div class="km-heritage-ribbon" aria-label="KraftMart trust highlights">
+        <div class="km-ribbon-glow" aria-hidden="true"></div>
+        <div class="km-ribbon-item">
+          <span class="km-ribbon-kicker">Royal Wedding Ready</span>
+          <p>Personalized engraving included</p>
+        </div>
+        <div class="km-ribbon-item">
+          <span class="km-ribbon-kicker">Museum-grade Craft</span>
+          <p>Forged with ceremonial balance</p>
+        </div>
+        <div class="km-ribbon-item">
+          <span class="km-ribbon-kicker">Secure Shipping</span>
+          <p>FedEx and DHL insured worldwide</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  {% if spotlight != blank and spotlight.featured_media != blank %}<section class="km-luxe-story"><div class="km-luxe-shell km-luxe-story__grid"><div class="km-luxe-story__image">{{ spotlight.featured_media | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', sizes: '(min-width: 990px) 48vw, 100vw', loading: 'lazy', alt: spotlight.featured_media.alt }}</div><div class="km-luxe-story__copy"><p class="km-luxe-kicker">The KraftMart collection</p><h2>Find a piece with a presence all its own.</h2><p>Every item shown here is drawn directly from the live KraftMart catalogue. Explore details, availability and current prices on each product page.</p><a class="km-luxe-text-link" href="{{ catalogue.url }}">Explore all products <span>→</span></a></div></div></section>{% endif %}
+  <!-- Section 7: Delivery Partners (Bubble Cards) -->
+  <section class="km-section" style="padding: 64px 0; background: var(--km-bg-primary); border-top: var(--km-border-gold);">
+    <div class="km-container">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <span class="km-eyebrow">TRUSTED GLOBAL LOGISTICS</span>
+        <h2 class="km-heading-2" style="color: var(--km-text-primary); margin-bottom: 10px;">Our Delivery Partners</h2>
+        <p style="color: var(--km-text-secondary); font-size: 0.95rem; max-width: 580px; margin: 0 auto;">Every order ships with full tracking, insurance, and express delivery to 42+ countries worldwide.</p>
+      </div>
+      <div class="km-delivery-grid">
+        <div class="km-delivery-card">
+          <div class="km-delivery-logo">
+            <span style="color:#4D148C; font-size:1.6rem; font-weight:900; letter-spacing:-0.04em;">Fed</span><span style="color:#FF6600; font-size:1.6rem; font-weight:900; letter-spacing:-0.04em;">Ex</span>
+          </div>
+          <div class="km-delivery-label">FedEx Express</div>
+          <div class="km-delivery-sub">3–7 days · International Priority</div>
+        </div>
+        <div class="km-delivery-card">
+          <div class="km-delivery-logo">
+            <span style="color:#FFCC00; background:#CC0000; padding: 4px 10px; border-radius: 3px; font-size: 1.5rem; font-weight: 900; letter-spacing: 0.04em;">DHL</span>
+          </div>
+          <div class="km-delivery-label">DHL Express</div>
+          <div class="km-delivery-sub">2–5 days · Worldwide Express</div>
+        </div>
+        <div class="km-delivery-card">
+          <div class="km-delivery-logo" style="display:flex;align-items:center;gap:6px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#E8472A" /><path d="M8 16h16M16 8v16" stroke="#fff" stroke-width="2.5" stroke-linecap="round" /><circle cx="16" cy="16" r="5" fill="none" stroke="#fff" stroke-width="2" /></svg>
+            <span style="color:#1a1a1a; font-size:1rem; font-weight:800; letter-spacing:0.02em;">India Post</span>
+          </div>
+          <div class="km-delivery-label">India Post Speed Post</div>
+          <div class="km-delivery-sub">5–10 days · PAN India COD</div>
+        </div>
+        <div class="km-delivery-card">
+          <div class="km-delivery-logo" style="display:flex;align-items:center;gap:8px;">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="15" fill="#25D366" /><path d="M20.5 18.3c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4z" fill="#fff" /></svg>
+            <span style="color:#1a1a1a; font-size:1rem; font-weight:800;">WhatsApp</span>
+          </div>
+          <div class="km-delivery-label">WhatsApp COD Support</div>
+          <div class="km-delivery-sub">Live order tracking &amp; support</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <section class="km-luxe-section km-luxe-shell"><header class="km-luxe-heading"><div><p class="km-luxe-kicker">More from the catalogue</p><h2>Continue exploring</h2></div></header><div class="km-luxe-product-grid">{% for product in catalogue.products limit: 8 offset: 3 %}<article class="km-luxe-product"><a class="km-luxe-product__image" href="{{ product.url }}">{% if product.featured_media %}{{ product.featured_media | image_url: width: 720 | image_tag: widths: '300, 480, 720', sizes: '(min-width: 990px) 24vw, 48vw', loading: 'lazy', alt: product.featured_media.alt }}{% endif %}</a>{% render 'kraftmart-product-meta', product: product %}</article>{% endfor %}</div></section>
+  <!-- Section 8: Amritsar Lineage Story -->
+  <section id="about-us" class="km-section" style="background-color: var(--km-bg-secondary); border-top: var(--km-border-subtle); border-bottom: var(--km-border-subtle); padding: 80px 0;">
+    <div class="km-container">
+      <div style="display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; gap: 60px;">
+        <div style="position: relative;">
+          <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Amritsar Craftsmanship" style="border-radius: var(--km-radius-md); border: var(--km-border-gold); box-shadow: var(--km-shadow-medium); width: 100%; object-fit: contain; max-height: 440px;" />
+          <div style="position: absolute; bottom: -20px; right: -20px; background-color: var(--km-bg-dark); color: var(--km-text-light); padding: 24px; border-radius: var(--km-radius-md); border: var(--km-border-gold); max-width: 240px; text-align: center; box-shadow: var(--glow-gold);">
+            <span style="font-family: var(--km-font-heading); font-size: 2.2rem; font-weight: 700; color: var(--km-gold-light); display: block; line-height: 1;">30+</span>
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-text-muted-light);">Years of Metal Craftsmanship</span>
+          </div>
+        </div>
 
-  {% if craft_stories != blank and craft_stories.articles_count > 0 %}<section class="km-luxe-journal"><div class="km-luxe-shell"><header class="km-luxe-heading"><div><p class="km-luxe-kicker">Craft stories</p><h2>From the journal</h2></div><a class="km-luxe-text-link" href="{{ craft_stories.url }}">View journal <span>→</span></a></header><div class="km-luxe-journal__grid">{% for article in craft_stories.articles limit: 3 %}<article><a href="{{ article.url }}">{% if article.image %}{{ article.image | image_url: width: 800 | image_tag: widths: '400, 600, 800', sizes: '(min-width: 990px) 33vw, 100vw', loading: 'lazy', alt: article.image.alt }}{% endif %}<p>{{ article.published_at | date: '%d %B %Y' }}</p><h3>{{ article.title }}</h3><span>Read story →</span></a></article>{% endfor %}</div></div></section>{% endif %}
+        <div>
+          <span class="km-eyebrow">OUR LEGACY SINCE 1996</span>
+          <h2 class="km-heading-1" style="margin-bottom: 24px; color: var(--km-text-primary);">The Amritsar Craftsmanship Story</h2>
+          <p class="km-body-lead" style="margin-bottom: 20px; color: var(--km-text-primary);">
+            Starting in 1996 as <strong>Lakshmi Engineering Works</strong> in Amritsar, Punjab, our journey began with precision nickel and chrome electroplating, metal polishing, and vehicle accessories. Over three decades, that master metalworking expertise evolved into handforging authentic Indian ceremonial swords, Kirpans, and heritage artifacts.
+          </p>
+          <p style="color: var(--km-text-secondary); line-height: 1.7; margin-bottom: 32px;">
+            Today, KraftMart carries forward Amritsar's legendary metalworking lineage directly to wedding couples and weapon collectors across the globe via FedEx &amp; DHL, complete with bespoke name and date engraving.
+          </p>
+          <a href="{{ catalogue.url | default: '/collections/all' }}" class="km-btn km-btn-primary">Explore All Collections &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <section class="km-luxe-closing"><div class="km-luxe-shell"><p class="km-luxe-kicker">KraftMart</p><h2>Discover the collection.</h2><a class="km-luxe-button km-luxe-button--light" href="{{ catalogue.url }}">Shop now <span>→</span></a></div></section>
-</section>
+  <!-- Section 9: Grand Royal Journal / Blog Section -->
+  {%- if blog_obj != blank and blog_obj.articles_count > 0 -%}
+    <section class="km-section km-journal-editorial-section" style="background: var(--km-bg-secondary); border-top: var(--km-border-gold); padding: 96px 0;">
+      <div class="km-container">
+        <div class="km-section-header" style="margin-bottom: 48px; text-align: center;">
+          <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.18em;">❖ THE ROYAL ARCHIVES &amp; FORGE JOURNAL ❖</span>
+          <h2 class="km-heading-1" style="color: var(--km-text-primary); font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin: 8px 0 14px 0;">From the KraftMart Journal</h2>
+          <p class="km-body-lead" style="color: var(--km-text-secondary); max-width: 680px; margin: 0 auto;">Historical guides, traditions, metallurgy secrets, and heirloom preservation from our Amritsar master workshop.</p>
+        </div>
+        <div class="km-blog-grid km-blog-grid-grand">
+          {%- for article in blog_obj.articles limit: 3 -%}
+            <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="{{ forloop.index }}">
+              <div class="km-blog-img-wrap">
+                {%- if article.image -%}
+                  <img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.title | escape }}" loading="lazy" />
+                {%- else -%}
+                  <img src="{{ 'hero_talwar.png' | asset_url }}" alt="{{ article.title | escape }}" />
+                {%- endif -%}
+                <span class="km-blog-tag">&#10022; Heritage Guide</span>
+                <div class="km-blog-img-overlay" aria-hidden="true"></div>
+              </div>
+              <div class="km-blog-body">
+                <div class="km-blog-meta">
+                  <span class="km-blog-meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                    {{ article.published_at | date: '%b %d, %Y' }}
+                  </span>
+                  <span class="km-blog-meta-divider">&bull;</span>
+                  <span class="km-blog-meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                    5 min read
+                  </span>
+                </div>
+                <h3 class="km-blog-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                <p class="km-blog-excerpt">{{ article.excerpt_or_content | strip_html | truncate: 140 }}</p>
+                <div class="km-blog-footer">
+                  <div class="km-blog-author">
+                    <span class="km-author-badge">⚔</span>
+                    <div>
+                      <strong class="km-author-byline">Amritsar Master Forge</strong>
+                      <small>Ceremonial Lineage</small>
+                    </div>
+                  </div>
+                  <a href="{{ article.url }}" class="km-blog-link-btn">Read Entry <span>&rarr;</span></a>
+                </div>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
 
-{% schema %}{"name":"KraftMart editorial home","settings":[]}{% endschema %}
+        <div style="text-align: center; margin-top: 52px;">
+          <a href="{{ blog_obj.url }}" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
+            Explore All Journal Entries &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <!-- Section 10: COD Guarantee Certificate Block -->
+  <section class="km-section" style="background-color: var(--color-cloud); padding: 70px 0;">
+    <div class="km-container">
+      <div class="km-cod-certificate">
+        <div class="km-cod-seal">❖</div>
+        <span class="km-eyebrow" style="color: var(--km-gold-primary); font-weight: 700;">HERITAGE TRUST GUARANTEE</span>
+        <h2 class="km-heading-1" style="color: var(--color-ink-navy); margin: 10px 0 16px 0;">Cash on Delivery Available Across India</h2>
+        <p style="color: var(--color-slate-gray); max-width: 620px; margin: 0 auto 24px auto; font-size: 1.05rem; line-height: 1.7;">
+          To ensure 100% confidence when buying your wedding sword, KraftMart offers a secure <strong>15% Advance Booking + 85% Cash on Delivery</strong> model for all orders within India.
+        </p>
+        <a href="{{ catalogue.url | default: '/collections/all' }}" class="km-btn" style="background-color: var(--color-ink-navy); color: #FFF; border-radius: 8px; padding: 14px 32px;">
+          Shop COD Eligible Swords →
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "KraftMart Heritage Home",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_badge",
+      "label": "Hero Badge Text",
+      "default": "Amritsar Royal Lineage · Since 1996"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_1",
+      "label": "Hero Title Line 1",
+      "default": "Authentic Indian"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_2",
+      "label": "Hero Title Line 2 (Gold Gradient)",
+      "default": "Ceremonial Swords"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_3",
+      "label": "Hero Title Line 3 (Italic)",
+      "default": "& Heritage Talwars"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_lead",
+      "label": "Hero Subtitle Text",
+      "default": "Handforged in Amritsar, Punjab by master artisans. Custom laser engraved with groom & bride names. Insured express delivery across India & 42+ countries worldwide."
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_primary",
+      "label": "Primary CTA Button",
+      "default": "Explore Collections →"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_secondary",
+      "label": "Secondary CTA Button",
+      "default": "Free Custom Engraving ✦"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured Product Collection"
+    },
+    {
+      "type": "text",
+      "id": "collection_title",
+      "label": "Collection Section Title",
+      "default": "Ceremonial Collection"
+    },
+    {
+      "type": "text",
+      "id": "collection_subtext",
+      "label": "Collection Subtext",
+      "default": "Hand-forged talwars with premium scabbards and complimentary name engraving."
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Heritage Journal / Blog"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KraftMart Heritage Home"
+    }
+  ]
+}
+{% endschema %}

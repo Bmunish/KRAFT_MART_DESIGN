@@ -10,6 +10,69 @@
 </head>
 <body>
 
+  <!-- Top Utility Bar: Helpline & Country/Currency Switcher -->
+  <div class="km-top-utility-bar">
+    <div class="km-container km-top-utility-inner">
+      <div class="km-top-utility-left">
+        <span class="km-helpline-label">Helpline Number:</span>
+        <a href="tel:+917508427731" class="km-helpline-num">+91-75084-27731</a>
+      </div>
+      <div class="km-top-utility-right">
+        <div class="km-currency-selector-widget" id="kmCurrencyWidget">
+          <button type="button" class="km-currency-trigger" id="kmCurrencyTrigger" aria-haspopup="true" aria-expanded="false" title="Select Country &amp; Currency">
+            <span class="km-trigger-text" id="kmTriggerText">India | INR ₹</span>
+            <span class="km-trigger-chevron">⌵</span>
+          </button>
+          <div class="km-currency-menu" id="kmCurrencyMenu" role="menu">
+            <div class="km-currency-menu-title">Select Shipping Destination</div>
+            <div class="km-currency-options">
+              <button type="button" class="km-currency-opt is-active" data-country="India" data-currency="INR" data-symbol="₹" data-label="India | INR ₹">
+                <span class="km-opt-flag">🇮🇳</span>
+                <span class="km-opt-name">India</span>
+                <span class="km-opt-badge">INR (₹)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United States" data-currency="USD" data-symbol="$" data-label="United States | USD $">
+                <span class="km-opt-flag">🇺🇸</span>
+                <span class="km-opt-name">United States</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United Kingdom" data-currency="USD" data-symbol="$" data-label="United Kingdom | USD $">
+                <span class="km-opt-flag">🇬🇧</span>
+                <span class="km-opt-name">United Kingdom</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Canada" data-currency="USD" data-symbol="$" data-label="Canada | USD $">
+                <span class="km-opt-flag">🇨🇦</span>
+                <span class="km-opt-name">Canada</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Australia" data-currency="USD" data-symbol="$" data-label="Australia | USD $">
+                <span class="km-opt-flag">🇦🇺</span>
+                <span class="km-opt-name">Australia</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United Arab Emirates" data-currency="USD" data-symbol="$" data-label="UAE | USD $">
+                <span class="km-opt-flag">🇦🇪</span>
+                <span class="km-opt-name">United Arab Emirates</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Europe" data-currency="USD" data-symbol="$" data-label="Europe | USD $">
+                <span class="km-opt-flag">🇪🇺</span>
+                <span class="km-opt-name">Europe (EU)</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Rest of World" data-currency="USD" data-symbol="$" data-label="International | USD $">
+                <span class="km-opt-flag">🌐</span>
+                <span class="km-opt-name">Rest of World</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Top Announcement Bar -->
   <div class="km-announcement-bar">
     <div class="km-marquee-track">
@@ -52,6 +115,21 @@
             <li><a href="about.html" class="km-nav-link">About Us</a></li>
             <li><a href="blog.html" class="km-nav-link">Journal</a></li>
             <li><a href="contact.html" class="km-nav-link active">Contact</a></li>
+
+            <!-- Policy Dropdown Menu -->
+            <li class="km-nav-item km-has-dropdown">
+              <a href="shipping-policy.html" class="km-nav-link km-dropdown-toggle">
+                Our Policies <span class="km-dropdown-arrow">▾</span>
+              </a>
+              <div class="km-policy-dropdown">
+                <ul class="km-policy-dropdown-list">
+                  <li><a href="shipping-policy.html" class="km-policy-link">SHIPPING POLICY</a></li>
+                  <li><a href="privacy-policy.html" class="km-policy-link">PRIVACY POLICY</a></li>
+                  <li><a href="return-policy.html" class="km-policy-link">RETURNS AND REFUNDS</a></li>
+                  <li><a href="contact.html" class="km-policy-link active">CONTACT US</a></li>
+                </ul>
+              </div>
+            </li>
           </ul>
         </nav>
         <div class="km-header-actions">
@@ -67,31 +145,51 @@
     </div>
   </header>
 
-  <!-- Cinematic Page Hero -->
-  <section class="km-page-hero">
-    <div class="km-page-hero-icon">✉</div>
-    <div class="km-container km-page-hero-inner">
-      <div class="km-page-hero-breadcrumb">
-        <a href="index.html">Home</a>
-        <span>›</span>
-        <span style="color: var(--km-gold-light);">Contact Us</span>
+  <!-- Ultra-Compact Minimalist Luxury Page Header -->
+  <section class="km-page-hero km-glass-hero km-hero-minimal">
+    <div class="km-bg-gradient-container" aria-hidden="true">
+      <div class="km-gradients-group">
+        <div class="km-gradient-blob km-first"></div>
+        <div class="km-gradient-blob km-second"></div>
+        <div class="km-gradient-blob km-third"></div>
+        <div class="km-gradient-blob km-fourth"></div>
+        <div class="km-gradient-blob km-fifth"></div>
+        <div class="km-gradient-blob km-interactive"></div>
       </div>
-      <div class="km-page-hero-badge">
-        <span>📍</span> Amritsar Workshop &amp; Global Support
+    </div>
+    <div class="km-container km-page-hero-inner" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; z-index: 2; flex-wrap: wrap;">
+      
+      <!-- Left: Title & Subtitle -->
+      <div style="flex: 1; min-width: 280px; text-align: left;">
+        <div class="km-page-hero-breadcrumb" style="margin-bottom: 4px; font-size: 0.74rem;">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <span style="color: var(--km-gold-light);">Contact Us</span>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px;">
+          <h1 class="km-heading-hero" style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin: 0; line-height: 1.2;">Get in Touch with KraftMart</h1>
+          <span class="km-glass-badge">📍 Amritsar Workshop Support</span>
+        </div>
+        
+        <p class="km-page-hero-lead" style="margin: 0; max-width: 580px; font-size: 0.82rem; line-height: 1.45; color: rgba(250,247,242,0.7);">Direct consultation for laser blade engraving, domestic COD advance &amp; worldwide FedEx/DHL express dispatches.</p>
       </div>
-      <h1 style="color: #FAF7F2; font-family: var(--km-font-heading); font-size: clamp(2.2rem, 4.5vw, 3.8rem); margin: 12px 0 20px 0; line-height: 1.1;">Get in Touch<br>with KraftMart</h1>
-      <p class="km-page-hero-lead">Questions about custom laser engraving, COD advance, or express international shipping? Our Amritsar team responds within 2 hours on WhatsApp.</p>
 
-      <!-- Response time pills -->
-      <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 28px;">
-        <div style="display: flex; align-items: center; gap: 8px; background: rgba(37,211,102,0.15); border: 1px solid rgba(37,211,102,0.35); border-radius: 30px; padding: 7px 16px;">
-          <span style="width: 8px; height: 8px; background: #25D366; border-radius: 50%; display: inline-block;"></span>
-          <span style="font-size: 0.78rem; color: rgba(250,247,242,0.9); font-weight: 600;">WhatsApp: Typically &lt; 30 min</span>
-        </div>
-        <div style="display: flex; align-items: center; gap: 8px; background: rgba(197,160,89,0.12); border: 1px solid rgba(197,160,89,0.3); border-radius: 30px; padding: 7px 16px;">
-          <span style="font-size: 0.78rem; color: rgba(250,247,242,0.85); font-weight: 600;">📧 Email: Within 2–4 Hours</span>
-        </div>
+      <!-- Right: Minimalist Floating Preview Pill -->
+      <div class="km-mini-showcase">
+        <a href="https://wa.me/917508427731" target="_blank" rel="noopener noreferrer" class="km-mini-pill" style="text-decoration: none;">
+          <div class="km-mini-img-box" style="background: rgba(37,211,102,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+            💬
+          </div>
+          <div class="km-mini-info">
+            <div class="km-mini-tag" style="color: #25D366;">Instant Concierge</div>
+            <div class="km-mini-title">WhatsApp Support</div>
+            <div class="km-mini-price" style="font-size: 0.78rem; color: #FAF7F2;">+91-75084-27731 <span class="km-mini-save" style="background: rgba(37,211,102,0.2); color: #25D366;">Online</span></div>
+          </div>
+          <span class="km-mini-btn">→</span>
+        </a>
       </div>
+
     </div>
   </section>
 

@@ -10,6 +10,69 @@
 </head>
 <body>
 
+  <!-- Top Utility Bar: Helpline & Country/Currency Switcher -->
+  <div class="km-top-utility-bar">
+    <div class="km-container km-top-utility-inner">
+      <div class="km-top-utility-left">
+        <span class="km-helpline-label">Helpline Number:</span>
+        <a href="tel:+917508427731" class="km-helpline-num">+91-75084-27731</a>
+      </div>
+      <div class="km-top-utility-right">
+        <div class="km-currency-selector-widget" id="kmCurrencyWidget">
+          <button type="button" class="km-currency-trigger" id="kmCurrencyTrigger" aria-haspopup="true" aria-expanded="false" title="Select Country &amp; Currency">
+            <span class="km-trigger-text" id="kmTriggerText">India | INR ₹</span>
+            <span class="km-trigger-chevron">⌵</span>
+          </button>
+          <div class="km-currency-menu" id="kmCurrencyMenu" role="menu">
+            <div class="km-currency-menu-title">Select Shipping Destination</div>
+            <div class="km-currency-options">
+              <button type="button" class="km-currency-opt is-active" data-country="India" data-currency="INR" data-symbol="₹" data-label="India | INR ₹">
+                <span class="km-opt-flag">🇮🇳</span>
+                <span class="km-opt-name">India</span>
+                <span class="km-opt-badge">INR (₹)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United States" data-currency="USD" data-symbol="$" data-label="United States | USD $">
+                <span class="km-opt-flag">🇺🇸</span>
+                <span class="km-opt-name">United States</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United Kingdom" data-currency="USD" data-symbol="$" data-label="United Kingdom | USD $">
+                <span class="km-opt-flag">🇬🇧</span>
+                <span class="km-opt-name">United Kingdom</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Canada" data-currency="USD" data-symbol="$" data-label="Canada | USD $">
+                <span class="km-opt-flag">🇨🇦</span>
+                <span class="km-opt-name">Canada</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Australia" data-currency="USD" data-symbol="$" data-label="Australia | USD $">
+                <span class="km-opt-flag">🇦🇺</span>
+                <span class="km-opt-name">Australia</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United Arab Emirates" data-currency="USD" data-symbol="$" data-label="UAE | USD $">
+                <span class="km-opt-flag">🇦🇪</span>
+                <span class="km-opt-name">United Arab Emirates</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Europe" data-currency="USD" data-symbol="$" data-label="Europe | USD $">
+                <span class="km-opt-flag">🇪🇺</span>
+                <span class="km-opt-name">Europe (EU)</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Rest of World" data-currency="USD" data-symbol="$" data-label="International | USD $">
+                <span class="km-opt-flag">🌐</span>
+                <span class="km-opt-name">Rest of World</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Top Announcement Bar Marquee -->
   <div class="km-announcement-bar">
     <div class="km-marquee-track">
@@ -43,6 +106,21 @@
             <li><a href="about.html" class="km-nav-link">About Us</a></li>
             <li><a href="blog.html" class="km-nav-link">Journal</a></li>
             <li><a href="contact.html" class="km-nav-link">Contact</a></li>
+
+            <!-- Policy Dropdown Menu -->
+            <li class="km-nav-item km-has-dropdown">
+              <a href="shipping-policy.html" class="km-nav-link km-dropdown-toggle">
+                Our Policies <span class="km-dropdown-arrow">▾</span>
+              </a>
+              <div class="km-policy-dropdown">
+                <ul class="km-policy-dropdown-list">
+                  <li><a href="shipping-policy.html" class="km-policy-link">SHIPPING POLICY</a></li>
+                  <li><a href="privacy-policy.html" class="km-policy-link">PRIVACY POLICY</a></li>
+                  <li><a href="return-policy.html" class="km-policy-link">RETURNS AND REFUNDS</a></li>
+                  <li><a href="contact.html" class="km-policy-link">CONTACT US</a></li>
+                </ul>
+              </div>
+            </li>
           </ul>
         </nav>
 

@@ -1,14 +1,80 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KraftMart | Luxury Indian Heritage E-Commerce Redesign</title>
-  <meta name="description" content="Buy authentic Indian wedding swords, Rajput talwars, Punjabi khandas & ceremonial swords online at KraftMart. Handcrafted in Amritsar, Punjab. Free custom engraving.">
+  <meta name="description"
+    content="Buy authentic Indian wedding swords, Rajput talwars, Punjabi khandas & ceremonial swords online at KraftMart. Handcrafted in Amritsar, Punjab. Free custom engraving.">
   <link rel="stylesheet" href="assets/kraftmart-heritage.css">
   <script src="assets/kraftmart-heritage.js" defer></script>
 </head>
+
 <body>
+
+  <!-- Top Utility Bar: Helpline & Country/Currency Switcher -->
+  <div class="km-top-utility-bar">
+    <div class="km-container km-top-utility-inner">
+      <div class="km-top-utility-left">
+        <span class="km-helpline-label">Helpline Number:</span>
+        <a href="tel:+917508427731" class="km-helpline-num">+91-75084-27731</a>
+      </div>
+      <div class="km-top-utility-right">
+        <div class="km-currency-selector-widget" id="kmCurrencyWidget">
+          <button type="button" class="km-currency-trigger" id="kmCurrencyTrigger" aria-haspopup="true" aria-expanded="false" title="Select Country &amp; Currency">
+            <span class="km-trigger-text" id="kmTriggerText">India | INR ₹</span>
+            <span class="km-trigger-chevron">⌵</span>
+          </button>
+          <div class="km-currency-menu" id="kmCurrencyMenu" role="menu">
+            <div class="km-currency-menu-title">Select Shipping Destination</div>
+            <div class="km-currency-options">
+              <button type="button" class="km-currency-opt is-active" data-country="India" data-currency="INR" data-symbol="₹" data-label="India | INR ₹">
+                <span class="km-opt-flag">🇮🇳</span>
+                <span class="km-opt-name">India</span>
+                <span class="km-opt-badge">INR (₹)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United States" data-currency="USD" data-symbol="$" data-label="United States | USD $">
+                <span class="km-opt-flag">🇺🇸</span>
+                <span class="km-opt-name">United States</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United Kingdom" data-currency="USD" data-symbol="$" data-label="United Kingdom | USD $">
+                <span class="km-opt-flag">🇬🇧</span>
+                <span class="km-opt-name">United Kingdom</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Canada" data-currency="USD" data-symbol="$" data-label="Canada | USD $">
+                <span class="km-opt-flag">🇨🇦</span>
+                <span class="km-opt-name">Canada</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Australia" data-currency="USD" data-symbol="$" data-label="Australia | USD $">
+                <span class="km-opt-flag">🇦🇺</span>
+                <span class="km-opt-name">Australia</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="United Arab Emirates" data-currency="USD" data-symbol="$" data-label="UAE | USD $">
+                <span class="km-opt-flag">🇦🇪</span>
+                <span class="km-opt-name">United Arab Emirates</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Europe" data-currency="USD" data-symbol="$" data-label="Europe | USD $">
+                <span class="km-opt-flag">🇪🇺</span>
+                <span class="km-opt-name">Europe (EU)</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+              <button type="button" class="km-currency-opt" data-country="Rest of World" data-currency="USD" data-symbol="$" data-label="International | USD $">
+                <span class="km-opt-flag">🌐</span>
+                <span class="km-opt-name">Rest of World</span>
+                <span class="km-opt-badge">USD ($)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Top Announcement Bar Marquee -->
   <div class="km-announcement-bar">
@@ -41,8 +107,10 @@
     <div class="km-container">
       <div class="km-header-inner">
         <a href="index.html" class="km-header-logo">
-          <img src="assets/logo.jpeg" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
-          <span style="color: var(--color-ink-navy); font-weight: 700;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+          <img src="assets/logo.jpeg" alt="KraftMart Logo"
+            style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
+          <span style="color: var(--color-ink-navy); font-weight: 700;">Kraft<span
+              style="color: var(--km-gold-primary);">Mart</span></span>
         </a>
 
         <nav class="km-desktop-nav" aria-label="Main Navigation">
@@ -53,18 +121,33 @@
             <li><a href="about.html" class="km-nav-link">About Us</a></li>
             <li><a href="blog.html" class="km-nav-link">Journal</a></li>
             <li><a href="contact.html" class="km-nav-link">Contact</a></li>
+
+            <!-- Policy Dropdown Menu -->
+            <li class="km-nav-item km-has-dropdown">
+              <a href="shipping-policy.html" class="km-nav-link km-dropdown-toggle">
+                Our Policies <span class="km-dropdown-arrow">▾</span>
+              </a>
+              <div class="km-policy-dropdown">
+                <ul class="km-policy-dropdown-list">
+                  <li><a href="shipping-policy.html" class="km-policy-link">SHIPPING POLICY</a></li>
+                  <li><a href="privacy-policy.html" class="km-policy-link">PRIVACY POLICY</a></li>
+                  <li><a href="return-policy.html" class="km-policy-link">RETURNS AND REFUNDS</a></li>
+                  <li><a href="contact.html" class="km-policy-link">CONTACT US</a></li>
+                </ul>
+              </div>
+            </li>
           </ul>
         </nav>
 
         <div class="km-header-actions">
           <button class="km-icon-btn" aria-label="Search">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </button>
           <button class="km-icon-btn" data-action="open-cart" aria-label="Cart">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
             <span class="km-cart-badge">2</span>
           </button>
@@ -74,13 +157,15 @@
   </header>
 
   <!-- Section 1: Split-Screen Hero Canvas & Core Animations -->
-  <section class="km-hero-section km-blob-wrapper" id="km-hero" style="min-height: 76vh; display: flex; align-items: center; position: relative; overflow: hidden;">
+  <section class="km-hero-section km-blob-wrapper" id="km-hero"
+    style="min-height: 76vh; display: flex; align-items: center; position: relative; overflow: hidden;">
 
-    <!-- Sliding image background -->
+    <!-- Sliding image background from KraftMart official website -->
     <div class="km-hero-slider" id="kmHeroSlider" aria-hidden="true">
-      <div class="km-hero-slide is-active" style="background-image: url('assets/hero_talwar.png');"></div>
-      <div class="km-hero-slide" style="background-image: url('assets/sword2.png');"></div>
-      <div class="km-hero-slide" style="background-image: url('assets/sword.png');"></div>
+      <div class="km-hero-slide is-active" style="background-image: url('assets/kraftmart_banner_2.jpg');"></div>
+      <div class="km-hero-slide" style="background-image: url('assets/kraftmart_banner_1.jpg');"></div>
+      <div class="km-hero-slide" style="background-image: url('assets/kraftmart_banner_3.jpg');"></div>
+      <div class="km-hero-slide" style="background-image: url('assets/kraftmart_banner_4.jpg');"></div>
     </div>
     <!-- Layered warm overlay -->
     <div class="km-hero-video-overlay"></div>
@@ -89,32 +174,37 @@
     <div class="km-blob-magenta"></div>
     <div class="km-blob-cyan"></div>
 
-    <!-- Floating decorative sword bubbles (hero) -->
-    <div class="km-bubble-field" aria-hidden="true">
-      <div class="km-bubble km-bubble--a"><img src="assets/hero_talwar.png" alt="" /></div>
-      <div class="km-bubble km-bubble--b"><img src="assets/sword2.png" alt="" /></div>
-      <div class="km-bubble km-bubble--c"><img src="assets/sword.png" alt="" /></div>
-      <div class="km-bubble km-bubble--d"><img src="assets/hero_talwar.png" alt="" /></div>
-      <div class="km-bubble km-bubble--e"><img src="assets/sword2.png" alt="" /></div>
-      <div class="km-bubble km-bubble--f"><img src="assets/sword.png" alt="" /></div>
-      <div class="km-bubble km-bubble--g"><img src="assets/hero_talwar.png" alt="" /></div>
-      <div class="km-bubble km-bubble--h"><img src="assets/sword2.png" alt="" /></div>
-      <div class="km-bubble km-bubble--i"><img src="assets/sword.png" alt="" /></div>
-      <div class="km-bubble km-bubble--j"><img src="assets/hero_talwar.png" alt="" /></div>
+    <!-- Floating interactive sword bubbles (Hero) -->
+    <div class="km-bubble-field">
+      <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-bubble--a" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar" /></a>
+      <a href="product-detail.html?handle=royal-jodhpur-damascus" class="km-bubble km-bubble--b" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" /></a>
+      <a href="product-detail.html?handle=dawami-ceremonial-sword" class="km-bubble km-bubble--c" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="assets/sword.png" alt="Dawami Ceremonial Sword" /></a>
+      <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-bubble--d" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar" /></a>
+      <a href="product-detail.html?handle=royal-jodhpur-damascus" class="km-bubble km-bubble--e" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" /></a>
+      <a href="product-detail.html?handle=dawami-ceremonial-sword" class="km-bubble km-bubble--f" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="assets/sword.png" alt="Dawami Ceremonial Sword" /></a>
+      <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-bubble--g" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar" /></a>
+      <a href="product-detail.html?handle=royal-jodhpur-damascus" class="km-bubble km-bubble--h" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" /></a>
+      <a href="product-detail.html?handle=dawami-ceremonial-sword" class="km-bubble km-bubble--i" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="assets/sword.png" alt="Dawami Ceremonial Sword" /></a>
+      <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-bubble--j" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar" /></a>
     </div>
 
     <div class="km-container" style="position: relative; z-index: 10; width: 100%; padding: 72px 24px;">
       <div class="km-hero-grid">
         <!-- Left Column: Value Proposition & CTAs -->
         <div class="km-hero-content">
-          <span class="km-eyebrow" style="color: var(--km-gold-dark);">HANDCRAFTED IN AMRITSAR, PUNJAB &bull; SINCE 1996</span>
-          <h1 class="km-heading-hero" style="color: var(--km-text-primary); margin-bottom: 16px;">Heritage You<br>Can Carry.</h1>
-          <p class="km-hero-subtext" style="color: var(--km-text-secondary); font-size: 1.1rem; line-height: 1.75; margin-bottom: 36px;">
-            Traditional Indian craftsmanship &mdash; handforged Rajput talwars, wedding swords, and bespoke ceremonial artifacts crafted to honor your royal story.
+          <span class="km-eyebrow" style="color: var(--km-gold-dark);">HANDCRAFTED IN AMRITSAR, PUNJAB &bull; SINCE
+            1996</span>
+          <h1 class="km-heading-hero" style="color: var(--km-text-primary); margin-bottom: 16px;">Heritage You<br>Can
+            Carry.</h1>
+          <p class="km-hero-subtext"
+            style="color: var(--km-text-secondary); font-size: 1.1rem; line-height: 1.75; margin-bottom: 36px;">
+            Traditional Indian craftsmanship &mdash; handforged Rajput talwars, wedding swords, and bespoke ceremonial
+            artifacts crafted to honor your royal story.
           </p>
           <div class="km-hero-actions">
             <!-- Sword-Slash Button Animation CTA: Royal Crimson with blade glint -->
-            <a href="products.html" class="km-btn km-btn-primary km-btn-sword-slash" style="padding: 16px 32px; font-weight: 700;">
+            <a href="products.html" class="km-btn km-btn-primary km-btn-sword-slash"
+              style="padding: 16px 32px; font-weight: 700;">
               <span>SHOP WEDDING SWORDS &#8594;</span>
             </a>
             <a href="about.html" class="km-btn km-btn-outline" style="padding: 16px 28px;">Explore Our Story</a>
@@ -124,7 +214,8 @@
           <div style="margin-top: 28px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 6px;">
               <span style="color: var(--km-gold-primary); font-size: 0.9rem;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-              <span style="color: var(--km-text-secondary); font-size: 0.8rem; font-weight: 500;">4.9 / 5 &bull; 10,000+ Grooms Served</span>
+              <span style="color: var(--km-text-secondary); font-size: 0.8rem; font-weight: 500;">4.9 / 5 &bull; 10,000+
+                Grooms Served</span>
             </div>
             <span style="width: 1px; height: 16px; background: rgba(197,160,89,0.4); display: inline-block;"></span>
             <span style="color: var(--km-text-secondary); font-size: 0.8rem;">FedEx &amp; DHL Express Worldwide</span>
@@ -176,11 +267,15 @@
             <!-- 3D Carousel Control Bar -->
             <div class="km-3d-controls">
               <button class="km-3d-nav-btn" data-3d-nav="prev" aria-label="Previous Product">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
               </button>
               <div class="km-3d-dots"></div>
               <button class="km-3d-nav-btn" data-3d-nav="next" aria-label="Next Product">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
               </button>
             </div>
           </div>
@@ -197,8 +292,11 @@
           <div class="km-trust-bar-item">
             <!-- COD Rupee Coin SVG -->
             <div class="km-trust-bar-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><path d="M8 9h8M8 12h5c1.7 0 3 .9 3 2s-1.3 2-3 2H8"/><path d="M10 16l4-7"/>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M8 9h8M8 12h5c1.7 0 3 .9 3 2s-1.3 2-3 2H8" />
+                <path d="M10 16l4-7" />
               </svg>
             </div>
             <div>
@@ -209,8 +307,9 @@
           <div class="km-trust-bar-item">
             <!-- Engraving / Pen Nib SVG -->
             <div class="km-trust-bar-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
             </div>
             <div>
@@ -221,9 +320,13 @@
           <div class="km-trust-bar-item">
             <!-- Airplane / Express Delivery SVG -->
             <div class="km-trust-bar-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 16v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><rect x="1" y="16" width="22" height="4" rx="2"/>
-                <line x1="7" y1="8" x2="7" y2="12"/><line x1="12" y1="3" x2="12" y2="12"/><line x1="17" y1="8" x2="17" y2="12"/>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <rect x="1" y="16" width="22" height="4" rx="2" />
+                <line x1="7" y1="8" x2="7" y2="12" />
+                <line x1="12" y1="3" x2="12" y2="12" />
+                <line x1="17" y1="8" x2="17" y2="12" />
               </svg>
             </div>
             <div>
@@ -234,8 +337,9 @@
           <div class="km-trust-bar-item">
             <!-- Heritage Shield SVG -->
             <div class="km-trust-bar-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
             <div>
@@ -248,56 +352,67 @@
     </div>
   </div>
 
-  <!-- Section 3: Drag-to-Scroll Category Carousel -->
-  <section class="km-section" style="padding: 80px 0 60px 0;">
+  <!-- Section 3: Drag-to-Scroll Category Carousel (Compact Layout) -->
+  <section class="km-section" style="padding: 24px 0 44px 0;">
     <div class="km-container">
-      <div class="km-section-header" style="text-align: left; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+      <div class="km-section-header"
+        style="text-align: left; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px;">
         <div>
-          <span class="km-eyebrow">CURATED HERITAGE SELECTIONS</span>
-          <h2 class="km-heading-1" style="color: var(--color-ink-navy);">Explore Collections</h2>
+          <span class="km-eyebrow" style="margin-bottom: 2px; font-size: 0.72rem; letter-spacing: 0.14em;">CURATED HERITAGE SELECTIONS</span>
+          <h2 class="km-heading-1" style="color: var(--color-ink-navy); font-size: clamp(1.8rem, 3.2vw, 2.4rem); margin: 0; line-height: 1.15;">Explore Collections</h2>
         </div>
-        <span style="font-size: 0.875rem; color: var(--color-slate-gray); font-weight: 500;">← Drag or swipe to scroll →</span>
+        <span style="font-size: 0.8rem; color: var(--color-slate-gray); font-weight: 500;">← Drag or swipe to scroll →</span>
       </div>
 
       <div class="km-category-carousel-wrapper">
         <div class="km-category-carousel">
-          <a href="#featured-products" class="km-category-item-card">
+          <a href="products.html?category=wedding" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Wedding Swords in New Panel">
             <img src="assets/hero_talwar.png" alt="Wedding Swords &amp; Decorative" />
             <div class="km-category-card-overlay">
-              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Bestseller</span>
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Bestseller</span>
               <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Wedding Swords</h3>
             </div>
           </a>
 
-          <a href="#featured-products" class="km-category-item-card">
+          <a href="products.html?category=damascus" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Premium Talwars in New Panel">
             <img src="assets/sword2.png" alt="Handforged Damascus Talwars" />
             <div class="km-category-card-overlay">
-              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Master Metallurgy</span>
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Master
+                Metallurgy</span>
               <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Premium Talwars</h3>
             </div>
           </a>
 
-          <a href="#featured-products" class="km-category-item-card">
+          <a href="products.html?price=under2000" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Swords Under ₹2000 in New Panel">
             <img src="assets/sword.png" alt="Swords Under ₹2000" />
             <div class="km-category-card-overlay">
-              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Ceremonial Value</span>
-              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Swords Under ₹2,000</h3>
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Ceremonial
+                Value</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Swords Under ₹2,000
+              </h3>
             </div>
           </a>
 
-          <a href="#featured-products" class="km-category-item-card">
+          <a href="products.html?category=wall-hangings" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Wall Hangings in New Panel">
             <img src="assets/hero_talwar.png" alt="Royal Wall Hangings" />
             <div class="km-category-card-overlay">
-              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Haveli Decor</span>
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Haveli
+                Decor</span>
               <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Wall Hangings</h3>
             </div>
           </a>
 
-          <a href="#featured-products" class="km-category-item-card">
+          <a href="products.html?category=miniature" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Miniatures & Khandas in New Panel">
             <img src="assets/sword.png" alt="Miniatures &amp; Khandas" />
             <div class="km-category-card-overlay">
-              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Collectibles</span>
-              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Miniatures &amp; Khandas</h3>
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Collectibles</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Miniatures &amp;
+                Khandas</h3>
             </div>
           </a>
         </div>
@@ -305,8 +420,383 @@
     </div>
   </section>
 
+  <!-- Featured Products Grid — Expanded 8-product catalogue (Compact Layout) -->
+  <section id="featured-products" class="km-section km-featured-compact" style="background-color: var(--color-cloud); padding: 36px 0 54px 0;">
+    <div class="km-container">
+      <div class="km-section-header km-header-compact" style="margin: 0 auto 20px auto;">
+        <span class="km-eyebrow" style="margin-bottom: 4px; font-size: 0.72rem; letter-spacing: 0.12em;">CURATED HERITAGE PICKS</span>
+        <h2 class="km-heading-1 km-heading-featured" style="color: var(--km-text-primary); font-size: clamp(1.8rem, 3.2vw, 2.4rem); margin: 4px 0 6px 0; line-height: 1.15;">Ceremonial Collection</h2>
+        <p class="km-body-lead km-lead-compact" style="color: var(--km-text-secondary); margin-bottom: 16px; font-size: 0.88rem; line-height: 1.45;">
+          Hand-forged talwars with premium scabbards and complimentary name engraving.</p>
+        <!-- Heritage Segmented Tab Control -->
+        <div class="km-segmented-tabs" style="margin-bottom: 20px; padding: 3px; gap: 3px;">
+          <button class="km-tab-btn active" data-tab="all" style="padding: 7px 16px; font-size: 0.75rem;">All Catalogue</button>
+          <button class="km-tab-btn" data-tab="wedding" style="padding: 7px 16px; font-size: 0.75rem;">Wedding Swords</button>
+          <button class="km-tab-btn" data-tab="damascus" style="padding: 7px 16px; font-size: 0.75rem;">Damascus Steel</button>
+          <button class="km-tab-btn" data-tab="miniature" style="padding: 7px 16px; font-size: 0.75rem;">Miniatures</button>
+        </div>
+      </div>
+
+      <div class="km-product-grid" data-live-products="12" data-live-mode="home" aria-live="polite">
+        <!-- Card 1 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="1" data-category="wedding"
+          data-qv-img="assets/sword.png" data-qv-title="Jaipur Wedding Talwar"
+          data-qv-desc="Red Velvet Scabbard · Kundan Brass Hilt · Free Laser Engraving · Ceremonial Grade"
+          data-qv-price="₹2,599" data-qv-compare="₹3,099"
+          data-qv-specs="Blade Length: 28 in|Hilt: Solid Brass Kundan|Scabbard: Deep Red Velvet|Dispatch: 5–7 Days">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Save ₹500</span>
+            <img src="assets/sword.png" alt="Jaipur Wedding Talwar" class="km-product-img" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Jaipur Wedding Talwar</h3>
+            <p class="km-product-desc-short">Kundan Brass Hilt · Deep Red Velvet Scabbard</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹2,599</span>
+              <span class="km-price-compare">₹3,099</span>
+            </div>
+            <div class="km-swatch-container">
+              <div class="km-variant-swatches">
+                <span class="km-swatch-btn">A</span>
+                <span class="km-swatch-btn">B</span>
+                <span class="km-swatch-btn">C</span>
+                <span class="km-swatch-btn km-swatch-btn-active">D</span>
+              </div>
+              <div class="km-color-swatches">
+                <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+                <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+                <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+                <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+              </div>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="2" data-category="damascus"
+          data-qv-img="assets/sword2.png" data-qv-title="Kundan Hilt Rajput Talwar"
+          data-qv-desc="Authentic Damascus Steel · Semi-precious kundan stone hilt · Museum-grade forging by Amritsar masters"
+          data-qv-price="₹4,299" data-qv-compare="₹4,999"
+          data-qv-specs="Steel: 1095/15N20 Damascus|Hardness: 56–58 HRC|Hilt: Kundan with Semi-precious Stones|Blade: 30 in">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Popular</span>
+            <img src="assets/sword2.png" alt="Kundan Hilt Rajput Talwar" class="km-product-img" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Kundan Hilt Rajput Talwar</h3>
+            <p class="km-product-desc-short">Damascus Steel · Kundan Semi-precious Hilt</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹4,299</span>
+              <span class="km-price-compare">₹4,999</span>
+            </div>
+            <div class="km-swatch-container">
+              <div class="km-variant-swatches">
+                <span class="km-swatch-btn">A</span>
+                <span class="km-swatch-btn">B</span>
+                <span class="km-swatch-btn">C</span>
+                <span class="km-swatch-btn km-swatch-btn-active">D</span>
+              </div>
+              <div class="km-color-swatches">
+                <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+                <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+                <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+                <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+              </div>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="3" data-category="wedding"
+          data-qv-img="assets/hero_talwar.png" data-qv-title="Dawami Velvet Scabbard Talwar"
+          data-qv-desc="Zari Velvet-lined scabbard · Hand-polished blade · Traditional Rajput grip with brass pommel"
+          data-qv-price="₹4,299" data-qv-compare=""
+          data-qv-specs="Blade Length: 30 in|Hilt: Brass Rajput Grip|Scabbard: Zari Velvet Sheath|Dispatch: 5–7 Days">
+          <div class="km-product-media">
+            <img src="assets/hero_talwar.png" alt="Dawami Velvet Scabbard Talwar" class="km-product-img" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Dawami Velvet Scabbard Talwar</h3>
+            <p class="km-product-desc-short">Hand-Polished Blade · Zari Velvet Sheath</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹4,299</span>
+            </div>
+            <div class="km-swatch-container">
+              <div class="km-variant-swatches">
+                <span class="km-swatch-btn">A</span>
+                <span class="km-swatch-btn">B</span>
+                <span class="km-swatch-btn">C</span>
+                <span class="km-swatch-btn km-swatch-btn-active">D</span>
+              </div>
+              <div class="km-color-swatches">
+                <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+                <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+                <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+                <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+              </div>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="4" data-category="wedding"
+          data-qv-img="assets/sword.png" data-qv-title="Dawami Ceremonial Sword"
+          data-qv-desc="Traditional Sikh &amp; Rajput marriage sword with mirror-polish carbon steel blade and gold zari velvet scabbard."
+          data-qv-price="₹1,999" data-qv-compare="₹2,499"
+          data-qv-specs="Blade: High Carbon Steel|Hilt: Traditional Cast Brass|Scabbard: Gold Zari Velvet|Usage: Wedding &amp; Display">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Under ₹2K</span>
+            <img src="assets/sword.png" alt="Dawami Ceremonial Sword" class="km-product-img" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Dawami Ceremonial Sword</h3>
+            <p class="km-product-desc-short">Polished Steel Blade · Zari Velvet Scabbard</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹1,999</span>
+              <span class="km-price-compare">₹2,499</span>
+            </div>
+            <div class="km-swatch-container">
+              <div class="km-variant-swatches">
+                <span class="km-swatch-btn">A</span>
+                <span class="km-swatch-btn">B</span>
+                <span class="km-swatch-btn">C</span>
+                <span class="km-swatch-btn km-swatch-btn-active">D</span>
+              </div>
+              <div class="km-color-swatches">
+                <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+                <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+                <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+                <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+              </div>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="5" data-category="damascus"
+          data-qv-img="assets/sword2.png" data-qv-title="Royal Jodhpur Damascus Talwar"
+          data-qv-desc="Hand-forged 1095/15N20 Damascus blade with intricate brass guard and deep burgundy velvet scabbard"
+          data-qv-price="₹3,899" data-qv-compare="₹4,499"
+          data-qv-specs="Steel: Damascus 1095/15N20|Guard: Solid Brass|Scabbard: Burgundy Velvet|Balance: 3.5&quot; from Guard">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Bestseller</span>
+            <img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" class="km-product-img" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Royal Jodhpur Damascus Talwar</h3>
+            <p class="km-product-desc-short">1095/15N20 Damascus · Solid Brass Guard</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹3,899</span>
+              <span class="km-price-compare">₹4,499</span>
+            </div>
+            <div class="km-swatch-container">
+              <div class="km-variant-swatches">
+                <span class="km-swatch-btn">A</span>
+                <span class="km-swatch-btn">B</span>
+                <span class="km-swatch-btn">C</span>
+                <span class="km-swatch-btn km-swatch-btn-active">D</span>
+              </div>
+              <div class="km-color-swatches">
+                <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+                <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+                <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+                <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+              </div>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="6" data-category="wedding"
+          data-qv-img="assets/hero_talwar.png" data-qv-title="Shekhawati Bridal Talwar"
+          data-qv-desc="Gold-plated hilt with white zari velvet scabbard · Ideal for brides and royal wedding ceremonies"
+          data-qv-price="₹3,299" data-qv-compare=""
+          data-qv-specs="Hilt: Gold-Plated Brass|Scabbard: White Zari Velvet|Blade: 28 in Polished|Engraving: Free">
+          <div class="km-product-media">
+            <img src="assets/hero_talwar.png" alt="Shekhawati Bridal Talwar" class="km-product-img" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Shekhawati Bridal Talwar</h3>
+            <p class="km-product-desc-short">Gold-Plated Hilt · White Zari Velvet</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹3,299</span>
+            </div>
+            <div class="km-swatch-container">
+              <div class="km-variant-swatches">
+                <span class="km-swatch-btn">A</span>
+                <span class="km-swatch-btn">B</span>
+                <span class="km-swatch-btn">C</span>
+                <span class="km-swatch-btn km-swatch-btn-active">D</span>
+              </div>
+              <div class="km-color-swatches">
+                <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+                <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+                <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+                <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+              </div>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Card 7 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="7" data-category="miniature"
+          data-qv-img="assets/sword.png" data-qv-title="Miniature Kirpan Gift Set"
+          data-qv-desc="Collectible 10-inch miniature Kirpan in premium gift box · Perfect for gifting at Sikh ceremonies"
+          data-qv-price="₹899" data-qv-compare="₹1,199"
+          data-qv-specs="Size: 10 in Miniature|Packaging: Premium Gift Box|Material: Stainless + Brass|Use: Ceremonial Gift">
+          <div class="km-product-media">
+            <span class="km-sale-badge">COD Available</span>
+            <img src="assets/sword.png" alt="Miniature Kirpan Set" class="km-product-img" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Miniature Kirpan Gift Set</h3>
+            <p class="km-product-desc-short">Collectible 10" · Premium Gift Box</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹899</span>
+              <span class="km-price-compare">₹1,199</span>
+            </div>
+            <div class="km-swatch-container">
+              <div class="km-variant-swatches">
+                <span class="km-swatch-btn">A</span>
+                <span class="km-swatch-btn">B</span>
+                <span class="km-swatch-btn">C</span>
+                <span class="km-swatch-btn km-swatch-btn-active">D</span>
+              </div>
+              <div class="km-color-swatches">
+                <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+                <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+                <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+                <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+              </div>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Card 8 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="8" data-category="damascus"
+          data-qv-img="assets/sword2.png" data-qv-title="Mughal Court Talwar"
+          data-qv-desc="Museum-grade Mughal court sword with inlaid brass filigree work and traditional courtly proportions"
+          data-qv-price="₹5,499" data-qv-compare=""
+          data-qv-specs="Grade: Museum Quality|Inlay: Brass Filigree|Blade: 32 in High Carbon|Finish: Hand-Polished">
+          <div class="km-product-media">
+            <img src="assets/sword2.png" alt="Mughal Court Talwar" class="km-product-img" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Mughal Court Talwar</h3>
+            <p class="km-product-desc-short">Museum-Grade · Inlaid Brass Filigree</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹5,499</span>
+            </div>
+            <div class="km-swatch-container">
+              <div class="km-variant-swatches">
+                <span class="km-swatch-btn">A</span>
+                <span class="km-swatch-btn">B</span>
+                <span class="km-swatch-btn">C</span>
+                <span class="km-swatch-btn km-swatch-btn-active">D</span>
+              </div>
+              <div class="km-color-swatches">
+                <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+                <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+                <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+                <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+              </div>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <div style="text-align: center; margin-top: 48px;">
+        <a href="#featured-products" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">View Complete
+          Collection &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Wedding Campaign & Live Engraving Simulator (The Groom's Heritage) -->
+  <section id="wedding-swords" class="km-section km-wedding-heritage-section">
+    <div class="km-container" style="position: relative; z-index: 1;">
+      <div class="km-wedding-grid">
+        <div class="km-wedding-content">
+          <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.15em;">THE GROOM'S HERITAGE</span>
+          <h2 class="km-heading-1 km-wedding-title" style="margin-bottom: 20px;">Honor Tradition on Your Special Day</h2>
+          <p class="km-body-lead" style="color: var(--km-text-muted-light); margin-bottom: 28px; line-height: 1.7;">
+            In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and
+            honor. Our wedding talwars feature velvet-sheathed scabbards, hand-engraved brass hilts, and personalized
+            blade inscriptions.
+          </p>
+
+          <!-- Interactive Live Engraving Preview: Heritage Parchment Styling -->
+          <div class="km-engraving-simulator-card">
+            <div class="km-engraving-card-header">
+              <span class="km-engraving-badge">&#10022; Free Custom Laser Engraving Simulator</span>
+            </div>
+            <p style="font-size: 0.8125rem; color: var(--km-text-muted-light); margin-bottom: 12px;">
+              Type Bride &amp; Groom names below to simulate live blade laser inscription:
+            </p>
+            <input type="text" id="kmEngravingInput" class="km-engraving-input"
+              value="Gurpreet ❤️ Simran • 24.10.2026"
+              placeholder="e.g. Gurpreet ❤️ Simran • 24.10.2026" />
+            
+            <div class="km-engraving-preset-chips">
+              <span style="font-size: 0.72rem; color: var(--km-text-muted-light); margin-right: 4px;">Presets:</span>
+              <button type="button" class="km-engraving-chip active" data-preset="Gurpreet ❤️ Simran • 24.10.2026">Gurpreet ❤️ Simran</button>
+              <button type="button" class="km-engraving-chip" data-preset="Rajveer Singh • 2026">Rajveer Singh</button>
+              <button type="button" class="km-engraving-chip" data-preset="Harman & Navjot • Forever">Harman &amp; Navjot</button>
+            </div>
+
+            <div class="km-engraving-preview-box">
+              <span class="km-engraving-preview-label">Blade Inscription Preview</span>
+              <div class="km-engraving-preview-text" id="kmEngravingPreviewText">&ldquo;Gurpreet ❤️ Simran • 24.10.2026&rdquo;</div>
+              <div class="km-engraving-laser-shine" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+            <a href="products.html?category=wedding" class="km-btn km-btn-primary" style="padding: 14px 32px;">Shop Wedding Talwars &rarr;</a>
+            <span style="font-size: 0.85rem; color: var(--km-gold-light); display: inline-flex; align-items: center; gap: 6px;">
+              <span>✓</span> Free Laser Engraving Included
+            </span>
+          </div>
+        </div>
+
+        <div class="km-wedding-visual">
+          <div class="km-wedding-glow-backdrop" aria-hidden="true"></div>
+          <div class="km-wedding-image-wrapper">
+            <img src="assets/hero_talwar.png" alt="KraftMart Groom Wedding Talwar with Royal Red Velvet Scabbard" class="km-wedding-sword-img" />
+          </div>
+          <div class="km-wedding-floating-tag">
+            <span class="km-tag-icon">&#10022;</span>
+            <div>
+              <strong>Master Handcrafted in Amritsar</strong>
+              <span>Solid Brass Kundan Hilt &bull; Velvet Sheath</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Heritage Craft Numbers Strip (replaces dark Masterpiece section) -->
-  <section class="km-section" style="padding: 48px 0; background: var(--km-bg-secondary); border-top: var(--km-border-gold); border-bottom: var(--km-border-gold);">
+  <section class="km-section"
+    style="padding: 56px 0; background: var(--km-bg-secondary); border-top: var(--km-border-gold); border-bottom: var(--km-border-gold);">
     <div class="km-container">
       <div class="km-stats-grid">
         <div class="km-stat-item">
@@ -352,215 +842,22 @@
     </div>
   </section>
 
-  <!-- Featured Products Grid — Expanded 8-product catalogue -->
-  <section id="featured-products" class="km-section" style="background-color: var(--color-cloud);">
-    <div class="km-container">
-      <div class="km-section-header">
-        <span class="km-eyebrow">CURATED HERITAGE PICKS</span>
-        <h2 class="km-heading-1 km-heading-featured" style="color: var(--km-text-primary);">Ceremonial Collection</h2>
-        <p class="km-body-lead km-lead-compact" style="color: var(--km-text-secondary); margin-bottom: 24px;">Hand-forged talwars with premium scabbards and complimentary name engraving.</p>
-        <!-- Heritage Segmented Tab Control -->
-        <div class="km-segmented-tabs">
-          <button class="km-tab-btn active" data-tab="all">All Catalogue</button>
-          <button class="km-tab-btn" data-tab="wedding">Wedding Swords</button>
-          <button class="km-tab-btn" data-tab="damascus">Damascus Steel</button>
-          <button class="km-tab-btn" data-tab="miniature">Miniatures</button>
-        </div>
-      </div>
-
-      <div class="km-product-grid" data-live-products="12" data-live-mode="home" aria-live="polite">
-        <!-- Card 1 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="1" data-category="wedding"
-          data-qv-img="assets/sword.png" data-qv-title="Jaipur Wedding Talwar"
-          data-qv-desc="Red Velvet Scabbard · Kundan Brass Hilt · Free Laser Engraving · Ceremonial Grade"
-          data-qv-price="₹2,599" data-qv-compare="₹3,099"
-          data-qv-specs="Blade Length: 28 in|Hilt: Solid Brass Kundan|Scabbard: Deep Red Velvet|Dispatch: 5–7 Days">
-          <div class="km-product-media">
-            <span class="km-sale-badge">Save ₹500</span>
-            <img src="assets/sword.png" alt="Jaipur Wedding Talwar" class="km-product-img" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Jaipur Wedding Talwar</h3>
-            <p class="km-product-desc-short">Kundan Brass Hilt · Deep Red Velvet Scabbard</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹2,599</span>
-              <span class="km-price-compare">₹3,099</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="2" data-category="damascus"
-          data-qv-img="assets/sword2.png" data-qv-title="Kundan Hilt Rajput Talwar"
-          data-qv-desc="Authentic Damascus Steel · Semi-precious kundan stone hilt · Museum-grade forging by Amritsar masters"
-          data-qv-price="₹4,299" data-qv-compare="₹4,999"
-          data-qv-specs="Steel: 1095/15N20 Damascus|Hardness: 56–58 HRC|Hilt: Kundan with Semi-precious Stones|Blade: 30 in">
-          <div class="km-product-media">
-            <span class="km-sale-badge">Popular</span>
-            <img src="assets/sword2.png" alt="Kundan Hilt Rajput Talwar" class="km-product-img" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Kundan Hilt Rajput Talwar</h3>
-            <p class="km-product-desc-short">Damascus Steel · Kundan Semi-precious Hilt</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹4,299</span>
-              <span class="km-price-compare">₹4,999</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="3" data-category="wedding"
-          data-qv-img="assets/hero_talwar.png" data-qv-title="Dawami Velvet Scabbard Talwar"
-          data-qv-desc="Zari Velvet-lined scabbard · Hand-polished blade · Traditional Rajput grip with brass pommel"
-          data-qv-price="₹4,299" data-qv-compare=""
-          data-qv-specs="Blade: Polished High Carbon|Scabbard: Zari Velvet Lined|Overall: 36 in|Grip: Traditional Rajput">
-          <div class="km-product-media">
-            <img src="assets/hero_talwar.png" alt="Dawami Velvet Scabbard Talwar" class="km-product-img" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Dawami Velvet Scabbard Talwar</h3>
-            <p class="km-product-desc-short">Zari Velvet · Polished High Carbon Blade</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹4,299</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 4 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="4" data-category="miniature"
-          data-qv-img="assets/sword.png" data-qv-title="Damarsharr Ceremonial Sword"
-          data-qv-desc="Display-grade ceremonial sword with decorative hilt · Perfect for Gurbani ceremonies and gifting"
-          data-qv-price="₹2,599" data-qv-compare="₹2,999"
-          data-qv-specs="Grade: Display/Ceremonial|Hilt: Decorative Brass|Length: 30 in|Gifting: Premium Box">
-          <div class="km-product-media">
-            <span class="km-sale-badge">Free Engraving</span>
-            <img src="assets/sword.png" alt="Damarsharr Ceremonial Sword" class="km-product-img" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Damarsharr Ceremonial Sword</h3>
-            <p class="km-product-desc-short">Display Grade · Decorative Brass Hilt</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹2,599</span>
-              <span class="km-price-compare">₹2,999</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 5 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="5" data-category="damascus"
-          data-qv-img="assets/sword2.png" data-qv-title="Royal Jodhpur Damascus Talwar"
-          data-qv-desc="Hand-forged 1095/15N20 Damascus blade with intricate brass guard and deep burgundy velvet scabbard"
-          data-qv-price="₹3,899" data-qv-compare="₹4,499"
-          data-qv-specs="Steel: Damascus 1095/15N20|Guard: Solid Brass|Scabbard: Burgundy Velvet|Balance: 3.5&quot; from Guard">
-          <div class="km-product-media">
-            <span class="km-sale-badge">Bestseller</span>
-            <img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" class="km-product-img" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Royal Jodhpur Damascus Talwar</h3>
-            <p class="km-product-desc-short">1095/15N20 Damascus · Solid Brass Guard</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹3,899</span>
-              <span class="km-price-compare">₹4,499</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 6 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="6" data-category="wedding"
-          data-qv-img="assets/hero_talwar.png" data-qv-title="Shekhawati Bridal Talwar"
-          data-qv-desc="Gold-plated hilt with white zari velvet scabbard · Ideal for brides and royal wedding ceremonies"
-          data-qv-price="₹3,299" data-qv-compare=""
-          data-qv-specs="Hilt: Gold-Plated Brass|Scabbard: White Zari Velvet|Blade: 28 in Polished|Engraving: Free">
-          <div class="km-product-media">
-            <img src="assets/hero_talwar.png" alt="Shekhawati Bridal Talwar" class="km-product-img" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Shekhawati Bridal Talwar</h3>
-            <p class="km-product-desc-short">Gold-Plated Hilt · White Zari Velvet</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹3,299</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 7 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="7" data-category="miniature"
-          data-qv-img="assets/sword.png" data-qv-title="Miniature Kirpan Gift Set"
-          data-qv-desc="Collectible 10-inch miniature Kirpan in premium gift box · Perfect for gifting at Sikh ceremonies"
-          data-qv-price="₹899" data-qv-compare="₹1,199"
-          data-qv-specs="Size: 10 in Miniature|Packaging: Premium Gift Box|Material: Stainless + Brass|Use: Ceremonial Gift">
-          <div class="km-product-media">
-            <span class="km-sale-badge">COD Available</span>
-            <img src="assets/sword.png" alt="Miniature Kirpan Set" class="km-product-img" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Miniature Kirpan Gift Set</h3>
-            <p class="km-product-desc-short">Collectible 10" · Premium Gift Box</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹899</span>
-              <span class="km-price-compare">₹1,199</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 8 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="8" data-category="damascus"
-          data-qv-img="assets/sword2.png" data-qv-title="Mughal Court Talwar"
-          data-qv-desc="Museum-grade Mughal court sword with inlaid brass filigree work and traditional courtly proportions"
-          data-qv-price="₹5,499" data-qv-compare=""
-          data-qv-specs="Grade: Museum Quality|Inlay: Brass Filigree|Blade: 32 in High Carbon|Finish: Hand-Polished">
-          <div class="km-product-media">
-            <img src="assets/sword2.png" alt="Mughal Court Talwar" class="km-product-img" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Mughal Court Talwar</h3>
-            <p class="km-product-desc-short">Museum-Grade · Inlaid Brass Filigree</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹5,499</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-
-
-      <div style="text-align: center; margin-top: 48px;">
-        <a href="#featured-products" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">View Complete Collection &rarr;</a>
-      </div>
-    </div>
-  </section>
-
   <!-- Delivery Partners Section -->
-  <section class="km-section" style="padding: 56px 0; background: var(--km-bg-primary); border-top: var(--km-border-gold);">
+  <section class="km-section"
+    style="padding: 64px 0; background: var(--km-bg-primary); border-top: var(--km-border-gold);">
     <div class="km-container">
-      <div style="text-align: center; margin-bottom: 36px;">
+      <div style="text-align: center; margin-bottom: 40px;">
         <span class="km-eyebrow">TRUSTED GLOBAL LOGISTICS</span>
-        <h2 class="km-heading-2" style="color: var(--km-text-primary); margin-bottom: 8px;">Our Delivery Partners</h2>
-        <p style="color: var(--km-text-secondary); font-size: 0.9rem;">Every order ships with full tracking, insurance, and express delivery to 42+ countries.</p>
+        <h2 class="km-heading-2" style="color: var(--km-text-primary); margin-bottom: 10px;">Our Delivery Partners</h2>
+        <p style="color: var(--km-text-secondary); font-size: 0.95rem; max-width: 580px; margin: 0 auto;">Every order ships with full tracking, insurance,
+          and express delivery to 42+ countries worldwide.</p>
       </div>
       <div class="km-delivery-grid">
         <!-- FedEx -->
         <div class="km-delivery-card">
           <div class="km-delivery-logo">
-            <span style="color:#4D148C; font-size:1.6rem; font-weight:900; letter-spacing:-0.04em;">Fed</span><span style="color:#FF6600; font-size:1.6rem; font-weight:900; letter-spacing:-0.04em;">Ex</span>
+            <span style="color:#4D148C; font-size:1.6rem; font-weight:900; letter-spacing:-0.04em;">Fed</span><span
+              style="color:#FF6600; font-size:1.6rem; font-weight:900; letter-spacing:-0.04em;">Ex</span>
           </div>
           <div class="km-delivery-label">FedEx Express</div>
           <div class="km-delivery-sub">3–7 days · International Priority</div>
@@ -568,7 +865,8 @@
         <!-- DHL -->
         <div class="km-delivery-card">
           <div class="km-delivery-logo">
-            <span style="color:#FFCC00; background:#CC0000; padding: 4px 10px; border-radius: 3px; font-size: 1.5rem; font-weight: 900; letter-spacing: 0.04em;">DHL</span>
+            <span
+              style="color:#FFCC00; background:#CC0000; padding: 4px 10px; border-radius: 3px; font-size: 1.5rem; font-weight: 900; letter-spacing: 0.04em;">DHL</span>
           </div>
           <div class="km-delivery-label">DHL Express</div>
           <div class="km-delivery-sub">2–5 days · Worldwide Express</div>
@@ -576,7 +874,11 @@
         <!-- India Post -->
         <div class="km-delivery-card">
           <div class="km-delivery-logo" style="display:flex;align-items:center;gap:6px;">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#E8472A"/><path d="M8 16h16M16 8v16" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="16" r="5" fill="none" stroke="#fff" stroke-width="2"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="16" fill="#E8472A" />
+              <path d="M8 16h16M16 8v16" stroke="#fff" stroke-width="2.5" stroke-linecap="round" />
+              <circle cx="16" cy="16" r="5" fill="none" stroke="#fff" stroke-width="2" />
+            </svg>
             <span style="color:#1a1a1a; font-size:1rem; font-weight:800; letter-spacing:0.02em;">India Post</span>
           </div>
           <div class="km-delivery-label">India Post Speed Post</div>
@@ -585,7 +887,12 @@
         <!-- WhatsApp COD -->
         <div class="km-delivery-card">
           <div class="km-delivery-logo" style="display:flex;align-items:center;gap:8px;">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="15" fill="#25D366"/><path d="M20.5 18.3c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4z" fill="#fff"/></svg>
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="15" fill="#25D366" />
+              <path
+                d="M20.5 18.3c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4z"
+                fill="#fff" />
+            </svg>
             <span style="color:#1a1a1a; font-size:1rem; font-weight:800;">WhatsApp</span>
           </div>
           <div class="km-delivery-label">WhatsApp COD Support</div>
@@ -595,130 +902,247 @@
     </div>
   </section>
 
-  <!-- Heritage Story -->
-  <section id="about-us" class="km-section" style="background-color: var(--km-bg-secondary); border-top: var(--km-border-subtle); border-bottom: var(--km-border-subtle);">
+  <!-- Heritage Story: Multirow Editorial Section Matching Live About Page -->
+  <section id="about-us" class="km-section"
+    style="background-color: var(--km-bg-secondary); border-top: var(--km-border-subtle); border-bottom: var(--km-border-subtle); padding: 96px 0;">
     <div class="km-container">
-      <div style="display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; gap: 60px;">
-        <div style="position: relative;">
-          <img src="assets/hero_talwar.png" alt="Amritsar Craftsmanship" style="border-radius: var(--km-radius-md); border: var(--km-border-gold); box-shadow: var(--km-shadow-medium);" />
-          <div style="position: absolute; bottom: -20px; right: -20px; background-color: var(--km-bg-dark); color: var(--km-text-light); padding: 24px; border-radius: var(--km-radius-md); border: var(--km-border-gold); max-width: 240px; text-align: center;">
-            <span style="font-family: var(--km-font-heading); font-size: 2.2rem; font-weight: 700; color: var(--km-gold-light); display: block; line-height: 1;">30+</span>
-            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-text-muted-light);">Years of Metal Craftsmanship</span>
+      
+      <!-- Section Header -->
+      <div class="km-section-header km-reveal" style="text-align: center; margin-bottom: 64px;">
+        <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.16em;">❖ OUR HERITAGE &amp; ARTISANAL LINEAGE ❖</span>
+        <h2 class="km-heading-1" style="color: var(--km-text-primary); font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin: 8px 0 14px 0;">
+          Lakshmi Engineering Works &rarr; KraftMart
+        </h2>
+        <p class="km-body-lead" style="color: var(--km-text-secondary); max-width: 760px; margin: 0 auto;">
+          Situated in the land of five rivers, Punjab — our journey began in 1996 with precision nickel and chrome electroplating, evolving into KraftMart on 1st November 2019 to bring authentic Sikh articles, wedding swords, and Indo-traditional handicrafts to patrons across the globe.
+        </p>
+      </div>
+
+      <!-- Story Row 1: Lakshmi Engineering Works (Image Left, Content Right) -->
+      <div style="display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: 60px; margin-bottom: 80px;">
+        <div style="position: relative;" class="km-reveal-left">
+          <div style="border-radius: var(--km-radius-md); overflow: hidden; border: 1px solid rgba(197, 160, 89, 0.35); box-shadow: var(--km-shadow-medium); background: #14100D;">
+            <img src="assets/live_about_lakshmi.jpg" alt="Lakshmi Engineering Works - Established 1996 in Punjab"
+              style="width: 100%; object-fit: cover; max-height: 480px; display: block; transition: transform 0.6s ease;" />
+          </div>
+          <div
+            style="position: absolute; bottom: -20px; right: -20px; background-color: var(--km-bg-dark); color: var(--km-text-light); padding: 20px 24px; border-radius: var(--km-radius-md); border: var(--km-border-gold); max-width: 250px; text-align: center; box-shadow: var(--glow-gold);">
+            <span
+              style="font-family: var(--km-font-heading); font-size: 2.2rem; font-weight: 700; color: var(--km-gold-light); display: block; line-height: 1;">1996</span>
+            <span
+              style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-text-muted-light);">Lakshmi Engineering Works · Punjab</span>
           </div>
         </div>
 
-        <div>
-          <span class="km-eyebrow">OUR LEGACY SINCE 1996</span>
-          <h2 class="km-heading-1" style="margin-bottom: 24px;">The Amritsar Craftsmanship Story</h2>
-          <p class="km-body-lead" style="margin-bottom: 20px;">
-            Starting in 1996 as <strong>Lakshmi Engineering Works</strong> in Amritsar, Punjab, our journey began with precision nickel and chrome electroplating, metal polishing, and vehicle accessories. Over three decades, that master metalworking expertise evolved into handforging authentic Indian ceremonial swords, Kirpans, and heritage artifacts.
+        <div class="km-reveal-right">
+          <span class="km-eyebrow" style="color: var(--km-gold-dark);">SITUATE IN THE LAND OF FIVE RIVERS</span>
+          <h3 class="km-heading-1" style="font-size: clamp(1.6rem, 2.5vw, 2.1rem); margin-bottom: 18px; color: var(--km-text-primary);">
+            Our 1996 Roots: Electroplating, Polishing &amp; Blade Craft
+          </h3>
+          <p class="km-body-lead" style="margin-bottom: 16px; color: var(--km-text-primary); font-size: 1rem; line-height: 1.7;">
+            Situate in the land of five rivers, We, <strong>Lakshmi Engineering Works</strong>, began our journey in 1996 as a product + service based enterprise. The core of our service is <strong>Nickel and Chrome Electroplating and Polishing</strong>, making the goods ready to go for their use.
           </p>
-          <p style="color: var(--km-text-secondary); line-height: 1.7; margin-bottom: 32px;">
-            Today, KraftMart carries forward Amritsar's legendary metalworking lineage directly to wedding couples and weapon collectors across the globe via FedEx &amp; DHL, complete with bespoke name and date engraving.
+          
+          <div style="background: rgba(197, 160, 89, 0.08); border: 1px solid rgba(197, 160, 89, 0.25); border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;">
+            <div style="font-family: var(--km-font-display); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-dark); margin-bottom: 10px;">
+              Main products started from &amp; currently doing for job work:
+            </div>
+            <ul style="list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 8px; font-size: 0.9rem; color: var(--km-text-primary);">
+              <li style="display: flex; align-items: center; gap: 8px;"><span>❖</span> Machinery and Corrugation parts .</li>
+              <li style="display: flex; align-items: center; gap: 8px;"><span>❖</span> Automated Stitching And Perforation machines.</li>
+              <li style="display: flex; align-items: center; gap: 8px;"><span>❖</span> Hand-tool drilling machines</li>
+              <li style="display: flex; align-items: center; gap: 8px;"><span>❖</span> Accessories of various vintage vehicles (silencer, handles, rims, etc.)</li>
+              <li style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--km-crimson-primary);"><span>⚔️</span> Kirpan / Sword blades – MAJORLY OUR JOB WORK SERVICE.</li>
+            </ul>
+          </div>
+
+          <p style="color: var(--km-text-secondary); line-height: 1.7; font-size: 0.92rem; margin-bottom: 22px;">
+            <strong>Our Own Line of Products:</strong> In addition to this, we also deal in Sikh Items used for Prakash purposes for Shri Guru Granth Sahib (Prakash Arrowhead / Teer, Prakash Chakar, Prakash Chawar). Backed by 20+ years of electroplating mastery and deep association with Sikhism, we embarked on a product-based startup on <strong>1st November, 2019</strong>. Through Etsy (<strong>KraftMartIN</strong> with 700+ U.S.A. clients), Instagram, eBay, and India Art, we proudly serve over <strong>3,000+ domestic and 1,900+ international clients</strong>.
           </p>
-          <a href="#masterpiece" class="km-btn km-btn-primary">Explore Masterpieces</a>
+
+          <a href="about.html" class="km-btn km-btn-outline" style="padding: 12px 24px; font-size: 0.9rem;">Read The Complete History &rarr;</a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Wedding Campaign: Heritage Dark Haveli Theme -->
-  <section id="wedding-swords" class="km-section km-ld-dark-container">
-    <div class="km-container" style="position: relative; z-index: 1;">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px;">
-        <div>
-          <span class="km-eyebrow" style="color: var(--km-gold-primary);">THE GROOM'S HERITAGE</span>
-          <h2 class="km-heading-1 km-ld-headline-violet" style="margin-bottom: 20px;">Honor Tradition on Your Special Day</h2>
-          <p class="km-body-lead" style="color: var(--km-text-muted-light); margin-bottom: 28px;">
-            In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and honor. Our wedding talwars feature velvet-sheathed scabbards, hand-engraved brass hilts, and personalized blade inscriptions.
+      <!-- Story Row 2: KraftMart (Content Left, Image Right) -->
+      <div style="display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 60px;">
+        <div class="km-reveal-left">
+          <span class="km-eyebrow" style="color: var(--km-gold-dark);">PROUD SUBSIDIARY OF LAKSHMI ENGINEERING WORKS</span>
+          <h3 class="km-heading-1" style="font-size: clamp(1.6rem, 2.5vw, 2.1rem); margin-bottom: 18px; color: var(--km-text-primary);">
+            A Venture Called KraftMart:<br>Your All-In-One Heritage Store
+          </h3>
+          <p class="km-body-lead" style="margin-bottom: 16px; color: var(--km-text-primary); font-size: 1rem; line-height: 1.7;">
+            As a proud subsidiary of Lakshmi Engineering Works, at KraftMart, we specialize in creating exquisite Indo-traditional handicrafts, Sikh Kakar articles, and bidding accessories, catering to a diverse clientele who appreciate authentic and culturally rich items.
           </p>
 
-          <!-- Interactive Live Engraving Preview: Heritage Parchment Styling -->
-          <div style="background: rgba(250,247,242,0.05); border: 1px solid rgba(197,160,89,0.3); padding: 24px; border-radius: 6px; margin-bottom: 32px; box-shadow: var(--glow-gold);">
-            <h4 style="font-family: var(--km-font-display); font-size: 0.8rem; color: var(--km-gold-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.1em; text-transform: uppercase;">
-              &#10022; Free Custom Laser Engraving Simulator
-            </h4>
-            <p style="font-size: 0.8125rem; color: var(--km-text-muted-light); margin-bottom: 12px;">
-              Type Bride &amp; Groom names below to simulate live blade laser inscription:
-            </p>
-            <input type="text" class="km-engraving-input" placeholder="e.g. Gurpreet &#10084;&#65039; Simran &bull; 24.10.2026" style="width: 100%; padding: 10px 14px; margin-bottom: 12px;" />
-            <div style="background: rgba(197,160,89,0.06); border: 1px solid rgba(197,160,89,0.25); padding: 14px; border-radius: 4px; text-align: center;">
-              <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--km-gold-dark); display: block; margin-bottom: 6px; font-family: var(--km-font-display);">Blade Inscription Preview</span>
-              <span class="km-engraving-preview-text" style="font-family: var(--km-font-heading); font-style: italic; font-size: 1.2rem; color: var(--km-gold-light); font-weight: 600;">&ldquo;Gurpreet &#10084;&#65039; Simran &bull; 24.10.2026&rdquo;</span>
+          <div style="background: rgba(197, 160, 89, 0.08); border: 1px solid rgba(197, 160, 89, 0.25); border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;">
+            <div style="font-family: var(--km-font-display); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-dark); margin-bottom: 10px;">
+              Your All-In-One Store For:
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.88rem; color: var(--km-text-primary);">
+              <div style="display: flex; align-items: center; gap: 6px;"><span>☬</span> Customized Sikh Articles &amp; Accessories</div>
+              <div style="display: flex; align-items: center; gap: 6px;"><span>💍</span> Personalized Bidding Handicrafts</div>
+              <div style="display: flex; align-items: center; gap: 6px;"><span>✍️</span> Custom Engraving Options</div>
+              <div style="display: flex; align-items: center; gap: 6px;"><span>⚡</span> Punjabi Hand-Cuff Katas</div>
+              <div style="display: flex; align-items: center; gap: 6px;"><span>🧵</span> Elegant Gold &amp; Silver Wire Work</div>
+              <div style="display: flex; align-items: center; gap: 6px;"><span>🛡️</span> Miniatures Collectibles Pieces</div>
+              <div style="display: flex; align-items: center; gap: 6px; grid-column: span 2;"><span>🏡</span> Home Décor — Wall Hanging Products</div>
             </div>
           </div>
-          <a href="#featured-products" class="km-btn km-btn-primary" style="padding: 14px 28px;">Shop Wedding Talwars &rarr;</a>
+
+          <p style="color: var(--km-text-secondary); line-height: 1.7; font-size: 0.92rem; margin-bottom: 24px;">
+            Our commitment to customer satisfaction is unwavering; we have a dedicated team that promptly addresses and resolves customer requests, ensuring a seamless and pleasant shopping experience. To further enhance our services, <strong>we maintain a FedEx account, facilitating swift and reliable delivery within 10 days</strong>, excluding processing time.
+          </p>
+
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <a href="products.html" class="km-btn km-btn-primary">Explore All Collections &rarr;</a>
+            <a href="about.html" class="km-btn km-btn-outline" style="padding: 14px 22px;">View Our Full Story</a>
+          </div>
         </div>
 
-        <div style="text-align: center;">
-          <div class="km-product-image-frame" style="aspect-ratio: 3/5; max-height: 500px; margin: 0 auto;">
-            <img src="assets/sword.png" alt="KraftMart Groom Wedding Talwar" style="filter: drop-shadow(0 20px 40px rgba(197,160,89,0.25));" />
+        <div style="position: relative;" class="km-reveal-right">
+          <div style="border-radius: var(--km-radius-md); overflow: hidden; border: 1px solid rgba(197, 160, 89, 0.35); box-shadow: var(--km-shadow-medium); background: #14100D;">
+            <img src="assets/live_about_kraftmart.jpg" alt="KraftMart Exquisite Indo-Traditional Handicrafts and Wedding Swords"
+              style="width: 100%; object-fit: cover; max-height: 480px; display: block; transition: transform 0.6s ease;" />
+          </div>
+          <div
+            style="position: absolute; bottom: -20px; left: -20px; background-color: var(--km-bg-dark); color: var(--km-text-light); padding: 18px 22px; border-radius: var(--km-radius-md); border: var(--km-border-gold); max-width: 240px; text-align: center; box-shadow: var(--glow-gold);">
+            <span
+              style="font-family: var(--km-font-heading); font-size: 1.8rem; font-weight: 700; color: var(--km-gold-light); display: block; line-height: 1;">10 Days</span>
+            <span
+              style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-text-muted-light);">FedEx Worldwide Delivery</span>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- Heritage Blog Section -->
-  <section class="km-section" style="background: var(--km-bg-secondary); border-top: var(--km-border-subtle);">
+  <!-- Heritage Blog Section: Grand Royal Journal Layout -->
+  <section class="km-section km-journal-editorial-section" style="background: var(--km-bg-secondary); border-top: var(--km-border-gold); padding: 96px 0;">
     <div class="km-container">
-      <div class="km-section-header">
-        <span class="km-eyebrow">KNOWLEDGE &amp; HERITAGE</span>
-        <h2 class="km-heading-1" style="color: var(--km-text-primary);">From the KraftMart Journal</h2>
-        <p class="km-body-lead" style="color: var(--km-text-secondary);">Guides, traditions, and forging secrets from our Amritsar workshop.</p>
+      <div class="km-section-header" style="margin-bottom: 48px; text-align: center;">
+        <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.18em;">❖ THE ROYAL ARCHIVES &amp; FORGE JOURNAL ❖</span>
+        <h2 class="km-heading-1" style="color: var(--km-text-primary); font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin: 8px 0 14px 0;">From the KraftMart Journal</h2>
+        <p class="km-body-lead" style="color: var(--km-text-secondary); max-width: 680px; margin: 0 auto;">
+          Historical guides, traditions, metallurgy secrets, and heirloom preservation from our Amritsar master workshop.
+        </p>
       </div>
-      <div class="km-blog-grid">
+
+      <div class="km-blog-grid km-blog-grid-grand">
         <!-- Blog Card 1 -->
-        <article class="km-blog-card">
+        <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="1">
           <div class="km-blog-img-wrap">
-            <img src="assets/hero_talwar.png" alt="How to Choose a Wedding Talwar" />
-            <span class="km-blog-tag">Wedding Guide</span>
+            <img src="assets/hero_talwar.png" alt="How to Choose a Wedding Talwar for Indian Grooms" />
+            <span class="km-blog-tag">&#10022; Wedding Guide</span>
+            <div class="km-blog-img-overlay" aria-hidden="true"></div>
           </div>
           <div class="km-blog-body">
             <div class="km-blog-meta">
-              <span>&#128197; Aug 10, 2026</span>
-              <span>&#128338; 5 min read</span>
+              <span class="km-blog-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                Aug 10, 2026
+              </span>
+              <span class="km-blog-meta-divider">&bull;</span>
+              <span class="km-blog-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                5 min read
+              </span>
             </div>
             <h3 class="km-blog-title">How to Choose the Perfect Wedding Talwar for Your Ceremony</h3>
-            <p class="km-blog-excerpt">From blade length and hilt material to scabbard colour matching the sherwani — our complete groom's checklist for selecting the ideal ceremonial sword.</p>
-            <a href="#" class="km-blog-link">Read Article &rarr;</a>
+            <p class="km-blog-excerpt">
+              From blade curvature and hilt ergonomics to velvet scabbard colour-matching with your royal sherwani — our complete groom's guide to selecting an authentic heirloom sword.
+            </p>
+            <div class="km-blog-footer">
+              <div class="km-blog-author">
+                <span class="km-author-badge">⚔</span>
+                <div>
+                  <strong class="km-author-byline">Amritsar Master Forge</strong>
+                  <small>Groom Ceremonials</small>
+                </div>
+              </div>
+              <a href="#" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+            </div>
           </div>
         </article>
+
         <!-- Blog Card 2 -->
-        <article class="km-blog-card">
+        <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="2">
           <div class="km-blog-img-wrap">
-            <img src="assets/sword2.png" alt="Damascus Steel Explained" />
-            <span class="km-blog-tag">Metallurgy</span>
+            <img src="assets/sword2.png" alt="Damascus Steel Metallurgy Explained" />
+            <span class="km-blog-tag">&#10022; Master Metallurgy</span>
+            <div class="km-blog-img-overlay" aria-hidden="true"></div>
           </div>
           <div class="km-blog-body">
             <div class="km-blog-meta">
-              <span>&#128197; Aug 4, 2026</span>
-              <span>&#128338; 7 min read</span>
+              <span class="km-blog-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                Aug 04, 2026
+              </span>
+              <span class="km-blog-meta-divider">&bull;</span>
+              <span class="km-blog-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                7 min read
+              </span>
             </div>
             <h3 class="km-blog-title">Damascus Steel Explained: Why 1095/15N20 Is the King of Blade Alloys</h3>
-            <p class="km-blog-excerpt">The layered pattern you see on a Damascus blade isn't just beauty — it's over 300 folds of high-carbon steel that deliver extraordinary strength and edge retention.</p>
-            <a href="#" class="km-blog-link">Read Article &rarr;</a>
+            <p class="km-blog-excerpt">
+              The intricate swirling pattern on a true Damascus blade isn't surface etching — it is forged from 300+ folds of high-carbon steel, delivering superior hardness, flex balance, and edge strength.
+            </p>
+            <div class="km-blog-footer">
+              <div class="km-blog-author">
+                <span class="km-author-badge">🔥</span>
+                <div>
+                  <strong class="km-author-byline">Master Metallurgist</strong>
+                  <small>56–58 HRC Research</small>
+                </div>
+              </div>
+              <a href="#" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+            </div>
           </div>
         </article>
+
         <!-- Blog Card 3 -->
-        <article class="km-blog-card">
+        <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="3">
           <div class="km-blog-img-wrap">
-            <img src="assets/sword.png" alt="Caring for Your Heritage Sword" />
-            <span class="km-blog-tag">Care &amp; Maintenance</span>
+            <img src="assets/sword.png" alt="Caring for Heirloom Indian Swords" />
+            <span class="km-blog-tag">&#10022; Care &amp; Heirloom</span>
+            <div class="km-blog-img-overlay" aria-hidden="true"></div>
           </div>
           <div class="km-blog-body">
             <div class="km-blog-meta">
-              <span>&#128197; Jul 28, 2026</span>
-              <span>&#128338; 4 min read</span>
+              <span class="km-blog-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                Jul 28, 2026
+              </span>
+              <span class="km-blog-meta-divider">&bull;</span>
+              <span class="km-blog-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                4 min read
+              </span>
             </div>
             <h3 class="km-blog-title">How to Oil, Store &amp; Maintain Your Ceremonial Talwar for Decades</h3>
-            <p class="km-blog-excerpt">A heritage blade is an heirloom. Monthly oiling, proper scabbard storage, and avoiding humidity are the three pillars of keeping your talwar display-ready for generations.</p>
-            <a href="#" class="km-blog-link">Read Article &rarr;</a>
+            <p class="km-blog-excerpt">
+              A heritage sword is meant to be passed down generations. Learn our master oiling techniques, velvet scabbard humidity control, and brass pommel polish rituals.
+            </p>
+            <div class="km-blog-footer">
+              <div class="km-blog-author">
+                <span class="km-author-badge">✨</span>
+                <div>
+                  <strong class="km-author-byline">Lineage Workshop</strong>
+                  <small>Restoration &amp; Care</small>
+                </div>
+              </div>
+              <a href="#" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+            </div>
           </div>
         </article>
       </div>
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="#" class="km-btn km-btn-outline-gold" style="padding: 13px 32px;">View All Articles &rarr;</a>
+
+      <div style="text-align: center; margin-top: 52px;">
+        <a href="blog.html" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
+          Explore All Journal Entries (12 Articles) &rarr;
+        </a>
       </div>
     </div>
   </section>
@@ -739,7 +1163,9 @@
             <span class="km-faq-icon">▼</span>
           </button>
           <div class="km-faq-content">
-            <p>Yes. All KraftMart ceremonial talwars and decorative swords are blunt, handcrafted objects created strictly for ceremonial, wedding, display, and cultural purposes. They comply with Indian legal standards and international customs regulations for decorative metalwork.</p>
+            <p>Yes. All KraftMart ceremonial talwars and decorative swords are blunt, handcrafted objects created
+              strictly for ceremonial, wedding, display, and cultural purposes. They comply with Indian legal standards
+              and international customs regulations for decorative metalwork.</p>
           </div>
         </div>
 
@@ -749,7 +1175,9 @@
             <span class="km-faq-icon">▼</span>
           </button>
           <div class="km-faq-content">
-            <p>For orders within India, we offer a flexible Cash on Delivery option requiring a 15% advance booking amount at checkout to confirm your order, with the remaining 85% payable upon delivery. Customers choosing 100% full advance payment receive an additional 5% instant discount.</p>
+            <p>For orders within India, we offer a flexible Cash on Delivery option requiring a 15% advance booking
+              amount at checkout to confirm your order, with the remaining 85% payable upon delivery. Customers choosing
+              100% full advance payment receive an additional 5% instant discount.</p>
           </div>
         </div>
 
@@ -759,7 +1187,9 @@
             <span class="km-faq-icon">▼</span>
           </button>
           <div class="km-faq-content">
-            <p>You can enter your desired text (names, wedding date, or special message) directly in the "Custom Engraving Notes" field inside your cart or at checkout. Our master craftsman will engrave your inscription prior to final polishing and dispatch.</p>
+            <p>You can enter your desired text (names, wedding date, or special message) directly in the "Custom
+              Engraving Notes" field inside your cart or at checkout. Our master craftsman will engrave your inscription
+              prior to final polishing and dispatch.</p>
           </div>
         </div>
 
@@ -769,7 +1199,8 @@
             <span class="km-faq-icon">▼</span>
           </button>
           <div class="km-faq-content">
-            <p>Yes! We ship worldwide to the USA, Canada, UK, Europe, Australia, UAE, and beyond via express courier services (FedEx and DHL Express). Full tracking details are emailed automatically upon dispatch.</p>
+            <p>Yes! We ship worldwide to the USA, Canada, UK, Europe, Australia, UAE, and beyond via express courier
+              services (FedEx and DHL Express). Full tracking details are emailed automatically upon dispatch.</p>
           </div>
         </div>
       </div>
@@ -781,93 +1212,392 @@
     <div class="km-container">
       <div class="km-cod-certificate">
         <div class="km-cod-seal">❖</div>
-        <span class="km-eyebrow" style="color: var(--km-gold-primary); font-weight: 700;">HERITAGE TRUST GUARANTEE</span>
-        <h2 class="km-heading-1" style="color: var(--color-ink-navy); margin: 10px 0 16px 0;">Cash on Delivery Available Across India</h2>
-        <p style="color: var(--color-slate-gray); max-width: 620px; margin: 0 auto 24px auto; font-size: 1.05rem; line-height: 1.7;">
-          To ensure 100% confidence when buying your wedding sword, KraftMart offers a secure <strong>15% Advance Booking + 85% Cash on Delivery</strong> model for all orders within India.
+        <span class="km-eyebrow" style="color: var(--km-gold-primary); font-weight: 700;">HERITAGE TRUST
+          GUARANTEE</span>
+        <h2 class="km-heading-1" style="color: var(--color-ink-navy); margin: 10px 0 16px 0;">Cash on Delivery Available
+          Across India</h2>
+        <p
+          style="color: var(--color-slate-gray); max-width: 620px; margin: 0 auto 24px auto; font-size: 1.05rem; line-height: 1.7;">
+          To ensure 100% confidence when buying your wedding sword, KraftMart offers a secure <strong>15% Advance
+            Booking + 85% Cash on Delivery</strong> model for all orders within India.
         </p>
 
-        <div style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; text-align: left; max-width: 600px; margin: 0 auto 28px auto;">
+        <div
+          style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; text-align: left; max-width: 600px; margin: 0 auto 28px auto;">
           <div style="display: flex; gap: 12px; align-items: flex-start;">
             <span style="color: var(--km-gold-primary); font-size: 1.2rem;">✓</span>
             <div>
               <strong style="color: var(--color-ink-navy); font-size: 0.875rem;">15% Advance Payment</strong>
-              <div style="font-size: 0.75rem; color: var(--color-slate-gray);">Confirms laser engraving &amp; forging</div>
+              <div style="font-size: 0.75rem; color: var(--color-slate-gray);">Confirms laser engraving &amp; forging
+              </div>
             </div>
           </div>
           <div style="display: flex; gap: 12px; align-items: flex-start;">
             <span style="color: var(--km-gold-primary); font-size: 1.2rem;">✓</span>
             <div>
               <strong style="color: var(--color-ink-navy); font-size: 0.875rem;">85% Balance on Delivery</strong>
-              <div style="font-size: 0.75rem; color: var(--color-slate-gray);">Paid to delivery courier at doorstep</div>
+              <div style="font-size: 0.75rem; color: var(--color-slate-gray);">Paid to delivery courier at doorstep
+              </div>
             </div>
           </div>
         </div>
 
-        <a href="#featured-products" class="km-btn" style="background-color: var(--color-ink-navy); color: #FFF; border-radius: 8px; padding: 12px 28px;">
+        <a href="#featured-products" class="km-btn"
+          style="background-color: var(--color-ink-navy); color: #FFF; border-radius: 8px; padding: 12px 28px;">
           Shop COD Eligible Swords →
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Section 4 (Cont.): Fading Customer Reviews Testimonial Carousel -->
-  <section class="km-testimonial-section">
+  <!-- Section 4: Aceternity-Style Sliding Infinite Moving Testimonials Marquee -->
+  <section class="km-testimonials-marquee-section">
     <div class="km-container">
-      <div class="km-section-header" style="margin-bottom: 32px;">
-        <span class="km-eyebrow">VERIFIED ROYAL REVIEWS</span>
-        <h2 class="km-heading-1" style="color: var(--color-ink-navy);">Trusted by 10,000+ Grooms</h2>
+      <div class="km-testimonials-header">
+        <span class="km-eyebrow" style="color: var(--km-gold-light);">VERIFIED ROYAL REVIEWS &amp; PATRON EXPERIENCES</span>
+        <h2 class="km-heading-1" style="color: #FAF7F2; margin-top: 6px;">Trusted by 10,000+ Grooms Worldwide</h2>
+        <p style="color: #9E958C; font-size: 0.88rem; max-width: 580px; margin: 8px auto 0 auto;">Every sword is forged by multigenerational Amritsar artisans and accompanied by our Lineage Guarantee.</p>
       </div>
+    </div>
 
-      <div class="km-testimonial-slider">
-        <!-- Testimonial 1 -->
-        <div class="km-testimonial-slide is-active">
-          <div class="km-rating-stars">★★★★★</div>
-          <blockquote class="km-testimonial-quote">
-            "The Jodhpur Damascus Talwar was the highlight of my wedding entry. The custom engraving with our names gave it a true royal heritage feel. Highly recommended!"
-          </blockquote>
-          <div class="km-testimonial-author">
-            <img src="assets/hero_talwar.png" alt="Gurpreet Singh" class="km-author-avatar" />
-            <div style="text-align: left;">
-              <div class="km-author-name">Gurpreet Singh Dhillon</div>
-              <div class="km-author-location">Chandigarh, India • Verified Buyer</div>
+    <!-- Infinite Dual-Row Moving Tracks with Gradient Edge Masks -->
+    <div class="km-marquee-container">
+      
+      <!-- Row 1: Sliding Left -->
+      <div class="km-marquee-row">
+        <div class="km-marquee-track km-track-left">
+          
+          <!-- Review 1 -->
+          <div class="km-testimonial-card-v2">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Anand Karaj Order</span>
+              </div>
+              <p class="km-tcard-quote">"The Jaipur Wedding Talwar was the crowning centerpiece of my Baraat entry. The custom laser engraving of our wedding date and names on the blade spine brought my family to tears. Extraordinary craftsmanship!"</p>
+              <div class="km-tcard-product">✦ Jaipur Wedding Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/hero_talwar.png" alt="Gurpreet Singh" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Gurpreet Singh Dhillon</div>
+                <div class="km-tcard-author-meta">Chandigarh, Punjab · Verified Buyer</div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Testimonial 2 -->
-        <div class="km-testimonial-slide">
-          <div class="km-rating-stars">★★★★★</div>
-          <blockquote class="km-testimonial-quote">
-            "Delivered to Toronto via FedEx in just 5 days! The craftmanship of the Kundan brass hilt and velvet scabbard surpassed my expectations."
-          </blockquote>
-          <div class="km-testimonial-author">
-            <img src="assets/sword2.png" alt="Harmanpreet K." class="km-author-avatar" />
-            <div style="text-align: left;">
-              <div class="km-author-name">Harmanpreet K.</div>
-              <div class="km-author-location">Toronto, Canada • International Express Order</div>
+          <!-- Review 2 -->
+          <div class="km-testimonial-card-v2">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ International Express</span>
+              </div>
+              <p class="km-tcard-quote">"Shipped to London via DHL in just 4 days with zero customs hassle. The 512-layer Damascus pattern and Kundan semi-precious stone work are museum-grade. Will cherish this heirloom forever."</p>
+              <div class="km-tcard-product">✦ Royal Jodhpur Damascus</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword2.png" alt="Jaswinder Bains" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Jaswinder S. Bains</div>
+                <div class="km-tcard-author-meta">London, United Kingdom · International Order</div>
+              </div>
             </div>
           </div>
+
+          <!-- Review 3 -->
+          <div class="km-testimonial-card-v2">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Rajput Wedding</span>
+              </div>
+              <p class="km-tcard-quote">"As a Rajput, blade weight, curvature and hilt balance are paramount. KraftMart’s Amritsar master artisans nailed the authentic historical balance. True royal heritage in hand."</p>
+              <div class="km-tcard-product">✦ Kundan Hilt Rajput Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword.png" alt="Vikramaditya Rathore" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Vikramaditya Rathore</div>
+                <div class="km-tcard-author-meta">Jaipur, Rajasthan · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 4 -->
+          <div class="km-testimonial-card-v2">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ COD Verified</span>
+              </div>
+              <p class="km-tcard-quote">"Paid via COD safely at my doorstep. The gold zari work on the scabbard and the sharpness of the mirror-polished blade exceeded every photo on the site."</p>
+              <div class="km-tcard-product">✦ Dawami Velvet Scabbard Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/hero_talwar.png" alt="Amitav Sengupta" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Amitav Sengupta</div>
+                <div class="km-tcard-author-meta">Kolkata, West Bengal · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Repeat 1-4 for Seamless Infinite Marquee Loop -->
+          <div class="km-testimonial-card-v2" aria-hidden="true">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Anand Karaj Order</span>
+              </div>
+              <p class="km-tcard-quote">"The Jaipur Wedding Talwar was the crowning centerpiece of my Baraat entry. The custom laser engraving of our wedding date and names on the blade spine brought my family to tears. Extraordinary craftsmanship!"</p>
+              <div class="km-tcard-product">✦ Jaipur Wedding Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/hero_talwar.png" alt="Gurpreet Singh" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Gurpreet Singh Dhillon</div>
+                <div class="km-tcard-author-meta">Chandigarh, Punjab · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="km-testimonial-card-v2" aria-hidden="true">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ International Express</span>
+              </div>
+              <p class="km-tcard-quote">"Shipped to London via DHL in just 4 days with zero customs hassle. The 512-layer Damascus pattern and Kundan semi-precious stone work are museum-grade. Will cherish this heirloom forever."</p>
+              <div class="km-tcard-product">✦ Royal Jodhpur Damascus</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword2.png" alt="Jaswinder Bains" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Jaswinder S. Bains</div>
+                <div class="km-tcard-author-meta">London, United Kingdom · International Order</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="km-testimonial-card-v2" aria-hidden="true">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Rajput Wedding</span>
+              </div>
+              <p class="km-tcard-quote">"As a Rajput, blade weight, curvature and hilt balance are paramount. KraftMart’s Amritsar master artisans nailed the authentic historical balance. True royal heritage in hand."</p>
+              <div class="km-tcard-product">✦ Kundan Hilt Rajput Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword.png" alt="Vikramaditya Rathore" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Vikramaditya Rathore</div>
+                <div class="km-tcard-author-meta">Jaipur, Rajasthan · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="km-testimonial-card-v2" aria-hidden="true">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ COD Verified</span>
+              </div>
+              <p class="km-tcard-quote">"Paid via COD safely at my doorstep. The gold zari work on the scabbard and the sharpness of the mirror-polished blade exceeded every photo on the site."</p>
+              <div class="km-tcard-product">✦ Dawami Velvet Scabbard Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/hero_talwar.png" alt="Amitav Sengupta" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Amitav Sengupta</div>
+                <div class="km-tcard-author-meta">Kolkata, West Bengal · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
+
+      <!-- Row 2: Sliding Right -->
+      <div class="km-marquee-row">
+        <div class="km-marquee-track km-track-right">
+          
+          <!-- Review 5 -->
+          <div class="km-testimonial-card-v2">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Canadian Order</span>
+              </div>
+              <p class="km-tcard-quote">"Ordered for my Anand Karaj in Vancouver. The packaging was bulletproof, and the velvet gift box with the heritage lineage certificate made unboxing a royal experience."</p>
+              <div class="km-tcard-product">✦ Shekhawati Bridal Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword.png" alt="Manpreet Sandhu" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Manpreet Singh Sandhu</div>
+                <div class="km-tcard-author-meta">Vancouver, Canada · Verified Groom</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 6 -->
+          <div class="km-testimonial-card-v2">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Collector's Choice</span>
+              </div>
+              <p class="km-tcard-quote">"I have collected ceremonial blades from across India and Toledo. KraftMart’s 1095 &amp; 15N20 folded steel craftsmanship holds up to the best historical arms in my collection."</p>
+              <div class="km-tcard-product">✦ Mughal Court Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword2.png" alt="Dr. Rishabh Choudhary" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Dr. Rishabh Choudhary</div>
+                <div class="km-tcard-author-meta">New Delhi, India · Heritage Collector</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 7 -->
+          <div class="km-testimonial-card-v2">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Sacred Blessing</span>
+              </div>
+              <p class="km-tcard-quote">"Bought the miniature Kirpan gift set for my brother’s milestone ceremony. Pure devotion, sacred aura, and master metalcraft in every detail."</p>
+              <div class="km-tcard-product">✦ Miniature Kirpan Gift Set</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/hero_talwar.png" alt="Simranjit Kaur" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Simranjit Kaur</div>
+                <div class="km-tcard-author-meta">Amritsar, Punjab · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 8 -->
+          <div class="km-testimonial-card-v2">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Royal Heritage</span>
+              </div>
+              <p class="km-tcard-quote">"The Kundan brass pommel and velvet lining in imperial maroon are sheer luxury. Everyone at our wedding asked where we acquired this heirloom masterpiece."</p>
+              <div class="km-tcard-product">✦ Jaipur Wedding Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword.png" alt="Zorawar Singh" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Zorawar Singh</div>
+                <div class="km-tcard-author-meta">Patiala, Punjab · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Repeat 5-8 for Seamless Infinite Marquee Loop -->
+          <div class="km-testimonial-card-v2" aria-hidden="true">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Canadian Order</span>
+              </div>
+              <p class="km-tcard-quote">"Ordered for my Anand Karaj in Vancouver. The packaging was bulletproof, and the velvet gift box with the heritage lineage certificate made unboxing a royal experience."</p>
+              <div class="km-tcard-product">✦ Shekhawati Bridal Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword.png" alt="Manpreet Sandhu" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Manpreet Singh Sandhu</div>
+                <div class="km-tcard-author-meta">Vancouver, Canada · Verified Groom</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="km-testimonial-card-v2" aria-hidden="true">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Collector's Choice</span>
+              </div>
+              <p class="km-tcard-quote">"I have collected ceremonial blades from across India and Toledo. KraftMart’s 1095 &amp; 15N20 folded steel craftsmanship holds up to the best historical arms in my collection."</p>
+              <div class="km-tcard-product">✦ Mughal Court Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword2.png" alt="Dr. Rishabh Choudhary" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Dr. Rishabh Choudhary</div>
+                <div class="km-tcard-author-meta">New Delhi, India · Heritage Collector</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="km-testimonial-card-v2" aria-hidden="true">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Sacred Blessing</span>
+              </div>
+              <p class="km-tcard-quote">"Bought the miniature Kirpan gift set for my brother’s milestone ceremony. Pure devotion, sacred aura, and master metalcraft in every detail."</p>
+              <div class="km-tcard-product">✦ Miniature Kirpan Gift Set</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/hero_talwar.png" alt="Simranjit Kaur" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Simranjit Kaur</div>
+                <div class="km-tcard-author-meta">Amritsar, Punjab · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="km-testimonial-card-v2" aria-hidden="true">
+            <div>
+              <div class="km-tcard-top">
+                <div class="km-tcard-stars">★★★★★</div>
+                <span class="km-tcard-badge">❖ Royal Heritage</span>
+              </div>
+              <p class="km-tcard-quote">"The Kundan brass pommel and velvet lining in imperial maroon are sheer luxury. Everyone at our wedding asked where we acquired this heirloom masterpiece."</p>
+              <div class="km-tcard-product">✦ Jaipur Wedding Talwar</div>
+            </div>
+            <div class="km-tcard-author">
+              <img src="assets/sword.png" alt="Zorawar Singh" class="km-tcard-avatar" />
+              <div>
+                <div class="km-tcard-author-name">Zorawar Singh</div>
+                <div class="km-tcard-author-meta">Patiala, Punjab · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="km-footer" style="background-color: var(--color-midnight-ink); border-top: 1px solid var(--color-ld-graphite);">
+  <footer class="km-footer"
+    style="background-color: var(--color-midnight-ink); border-top: 1px solid var(--color-ld-graphite);">
     <div class="km-container">
       <div class="km-footer-grid">
         <div class="km-footer-brand">
           <a href="index.html" class="km-header-logo" style="color: #FFF; margin-bottom: 16px;">
-            <img src="assets/logo.jpeg" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-ld-steel);" />
+            <img src="assets/logo.jpeg" alt="KraftMart Logo"
+              style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-ld-steel);" />
             <span>Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
           </a>
-          <p style="color: var(--color-ld-fog);">Handcrafted Indian wedding swords, Rajput talwars, and Sikh ceremonial heritage objects forged in Amritsar, Punjab since 1996.</p>
+          <p style="color: var(--color-ld-fog);">Handcrafted Indian wedding swords, Rajput talwars, and Sikh ceremonial
+            heritage objects forged in Amritsar, Punjab since 1996.</p>
 
           <!-- Newsletter Capture Form with Right Arrow Submit Button -->
           <form style="display: flex; gap: 8px; max-width: 380px; margin-top: 20px;">
-            <input type="email" placeholder="Enter your email for private offers..." required style="background: var(--color-ld-carbon); border: 1px solid var(--color-ld-graphite); padding: 12px 16px; border-radius: 8px; color: #FFF; width: 100%; font-size: 0.875rem;" />
-            <button type="submit" aria-label="Subscribe" style="background-color: var(--color-signal-blue); color: #FFF; padding: 12px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+            <input type="email" placeholder="Enter your email for private offers..." required
+              style="background: var(--color-ld-carbon); border: 1px solid var(--color-ld-graphite); padding: 12px 16px; border-radius: 8px; color: #FFF; width: 100%; font-size: 0.875rem;" />
+            <button type="submit" aria-label="Subscribe"
+              style="background-color: var(--color-signal-blue); color: #FFF; padding: 12px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">
               →
             </button>
           </form>
@@ -919,25 +1649,32 @@
         <h3 class="km-cart-title">Your Heritage Cart</h3>
         <button class="km-icon-btn" data-action="close-cart" aria-label="Close Cart">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
 
       <div id="kmCartDrawerBody" class="km-cart-body">
-        <div style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
-          <img src="assets/sword.png" alt="Jaipur Wedding Talwar" style="width: 70px; height: 70px; object-fit: contain; background: #FFF; border-radius: var(--km-radius-sm); border: var(--km-border-subtle);" />
+        <div
+          style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
+          <img src="assets/sword.png" alt="Jaipur Wedding Talwar"
+            style="width: 70px; height: 70px; object-fit: contain; background: #FFF; border-radius: var(--km-radius-sm); border: var(--km-border-subtle);" />
           <div style="flex-grow: 1;">
-            <a href="#" style="font-family: var(--km-font-heading); font-weight: 600; font-size: 1.05rem;">Jaipur Wedding Talwar</a>
-            <div style="font-size: 0.75rem; color: var(--km-text-secondary); margin: 4px 0;">Red Velvet Scabbard / Brass Hilt</div>
+            <a href="#" style="font-family: var(--km-font-heading); font-weight: 600; font-size: 1.05rem;">Jaipur
+              Wedding Talwar</a>
+            <div style="font-size: 0.75rem; color: var(--km-text-secondary); margin: 4px 0;">Red Velvet Scabbard / Brass
+              Hilt</div>
             <div style="font-weight: 700; font-size: 0.9375rem;">₹2,599 x 1</div>
           </div>
         </div>
 
-        <div style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
-          <img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" style="width: 70px; height: 70px; object-fit: contain; background: #FFF; border-radius: var(--km-radius-sm); border: var(--km-border-subtle);" />
+        <div
+          style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
+          <img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar"
+            style="width: 70px; height: 70px; object-fit: contain; background: #FFF; border-radius: var(--km-radius-sm); border: var(--km-border-subtle);" />
           <div style="flex-grow: 1;">
-            <a href="#" style="font-family: var(--km-font-heading); font-weight: 600; font-size: 1.05rem;">Royal Jodhpur Damascus Talwar</a>
+            <a href="#" style="font-family: var(--km-font-heading); font-weight: 600; font-size: 1.05rem;">Royal Jodhpur
+              Damascus Talwar</a>
             <div style="font-size: 0.75rem; color: var(--km-text-secondary); margin: 4px 0;">Damascus Forged Steel</div>
             <div style="font-weight: 700; font-size: 0.9375rem;">₹4,299 x 1</div>
           </div>
@@ -946,13 +1683,16 @@
 
       <div id="kmCartDrawerFooter" class="km-cart-footer">
         <div style="margin-bottom: 16px;">
-          <label style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; color: var(--km-text-secondary);">
+          <label
+            style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; color: var(--km-text-secondary);">
             Free Custom Engraving Instructions:
           </label>
-          <textarea name="note" placeholder="Enter Bride &amp; Groom names or custom text to engrave on blade..." style="width: 100%; height: 60px; background: #FFF; border: var(--km-border-subtle); padding: 8px; border-radius: var(--km-radius-sm); font-size: 0.8125rem; resize: none;"></textarea>
+          <textarea name="note" placeholder="Enter Bride &amp; Groom names or custom text to engrave on blade..."
+            style="width: 100%; height: 60px; background: #FFF; border: var(--km-border-subtle); padding: 8px; border-radius: var(--km-radius-sm); font-size: 0.8125rem; resize: none;"></textarea>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 1.125rem; font-weight: 700;">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 1.125rem; font-weight: 700;">
           <span>Subtotal:</span>
           <span id="kmCartSubtotal">₹6,898</span>
         </div>
@@ -994,33 +1734,36 @@
           <p style="font-size:0.72rem;color:var(--km-text-secondary);margin-top:10px;text-align:center;">
             &#128274; 15% Advance COD &bull; Ships in 5–7 Days &bull; Free Engraving Included
           </p>
-  <!-- Search Overlay Modal -->
-  <div id="kmSearchOverlay" class="km-search-overlay" role="dialog" aria-label="Search Catalog">
-    <div class="km-search-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <span class="km-eyebrow" style="color:var(--km-gold-light);margin-bottom:0;">SEARCH KRAFTMART CATALOGUE</span>
-        <button id="kmSearchClose" style="color:#FFF;font-size:1.5rem;cursor:pointer;">&#10005;</button>
-      </div>
-      <input type="text" id="kmSearchInput" class="km-search-input" placeholder="Search talwars, wedding swords, damascus steel, kirpans..." />
-    </div>
-    <div id="kmSearchResults" class="km-search-results"></div>
-  </div>
+          <!-- Search Overlay Modal -->
+          <div id="kmSearchOverlay" class="km-search-overlay" role="dialog" aria-label="Search Catalog">
+            <div class="km-search-box">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <span class="km-eyebrow" style="color:var(--km-gold-light);margin-bottom:0;">SEARCH KRAFTMART
+                  CATALOGUE</span>
+                <button id="kmSearchClose" style="color:#FFF;font-size:1.5rem;cursor:pointer;">&#10005;</button>
+              </div>
+              <input type="text" id="kmSearchInput" class="km-search-input"
+                placeholder="Search talwars, wedding swords, damascus steel, kirpans..." />
+            </div>
+            <div id="kmSearchResults" class="km-search-results"></div>
+          </div>
 
-<!-- Global floating bubbles — fixed layer covering entire page -->
-<div class="km-global-bubbles" id="kmGlobalBubbles" aria-hidden="true">
-  <div class="km-bubble km-gbubble--1"><img src="assets/hero_talwar.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--2"><img src="assets/sword2.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--3"><img src="assets/sword.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--4"><img src="assets/hero_talwar.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--5"><img src="assets/sword2.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--6"><img src="assets/sword.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--7"><img src="assets/hero_talwar.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--8"><img src="assets/sword2.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--9"><img src="assets/sword.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--10"><img src="assets/hero_talwar.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--11"><img src="assets/sword2.png" alt="" /></div>
-  <div class="km-bubble km-gbubble--12"><img src="assets/sword.png" alt="" /></div>
-</div>
+          <!-- Global floating bubbles — fixed layer covering entire page -->
+          <div class="km-global-bubbles" id="kmGlobalBubbles">
+            <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-gbubble--1" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar" /></a>
+            <a href="product-detail.html?handle=royal-jodhpur-damascus" class="km-bubble km-gbubble--2" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" /></a>
+            <a href="product-detail.html?handle=dawami-ceremonial-sword" class="km-bubble km-gbubble--3" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="assets/sword.png" alt="Dawami Ceremonial Sword" /></a>
+            <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-gbubble--4" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar" /></a>
+            <a href="product-detail.html?handle=royal-jodhpur-damascus" class="km-bubble km-gbubble--5" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" /></a>
+            <a href="product-detail.html?handle=dawami-ceremonial-sword" class="km-bubble km-gbubble--6" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="assets/sword.png" alt="Dawami Ceremonial Sword" /></a>
+            <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-gbubble--7" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar" /></a>
+            <a href="product-detail.html?handle=royal-jodhpur-damascus" class="km-bubble km-gbubble--8" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" /></a>
+            <a href="product-detail.html?handle=dawami-ceremonial-sword" class="km-bubble km-gbubble--9" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="assets/sword.png" alt="Dawami Ceremonial Sword" /></a>
+            <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-gbubble--10" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar" /></a>
+            <a href="product-detail.html?handle=royal-jodhpur-damascus" class="km-bubble km-gbubble--11" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" /></a>
+            <a href="product-detail.html?handle=dawami-ceremonial-sword" class="km-bubble km-gbubble--12" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="assets/sword.png" alt="Dawami Ceremonial Sword" /></a>
+          </div>
 
 </body>
+
 </html>
