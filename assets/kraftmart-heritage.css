@@ -913,178 +913,72 @@ body.cart-open .km-global-bubbles {
   animation-delay: -2s;
 }
 
-.km-bubble--e {
-  width: 84px;
-  height: 84px;
-  top: 38%;
-  right: 1%;
-  animation: kmDrift1 12s ease-in-out infinite;
-  animation-delay: -9s;
-}
-
-.km-bubble--f {
-  width: 50px;
-  height: 50px;
-  top: 22%;
-  left: 18%;
-  animation: kmDrift2 10s ease-in-out infinite;
-  animation-delay: -5s;
-  opacity: 0.7;
-}
-
-.km-bubble--g {
-  width: 68px;
-  height: 68px;
-  bottom: 18%;
-  right: 5%;
-  animation: kmDrift0 13s ease-in-out infinite;
-  animation-delay: -3s;
-}
-
-.km-bubble--h {
-  width: 44px;
-  height: 44px;
-  top: 68%;
-  left: 28%;
-  animation: kmDrift1 8s ease-in-out infinite;
-  animation-delay: -6s;
-  opacity: 0.6;
-}
-
-.km-bubble--i {
-  width: 78px;
-  height: 78px;
-  top: 30%;
-  left: 35%;
-  animation: kmDrift2 15s ease-in-out infinite;
-  animation-delay: -11s;
-}
-
+.km-bubble--e,
+.km-bubble--f,
+.km-bubble--g,
+.km-bubble--h,
+.km-bubble--i,
 .km-bubble--j {
-  width: 55px;
-  height: 55px;
-  top: 75%;
-  right: 12%;
-  animation: kmDrift0 10s ease-in-out infinite;
-  animation-delay: -8s;
-  opacity: 0.65;
+  display: none !important;
 }
 
-/* ── Global bubble positions (1–12, spread vertically across full viewport) ── */
+/* ── Global corner bubbles (subtle, non-intrusive ambient accents) ── */
 .km-gbubble--1 {
-  width: 90px;
-  height: 90px;
-  top: 5vh;
-  left: 1%;
-  animation: kmDrift1 13s ease-in-out infinite;
+  width: 76px;
+  height: 76px;
+  top: 16vh;
+  left: 1.5%;
+  animation: kmDrift1 14s ease-in-out infinite;
   animation-delay: -1s;
+  opacity: 0.72;
 }
 
 .km-gbubble--2 {
-  width: 60px;
-  height: 60px;
-  top: 15vh;
-  right: 2%;
-  animation: kmDrift2 10s ease-in-out infinite;
+  width: 62px;
+  height: 62px;
+  top: 42vh;
+  right: 1.8%;
+  animation: kmDrift2 12s ease-in-out infinite;
   animation-delay: -5s;
   opacity: 0.65;
 }
 
 .km-gbubble--3 {
-  width: 75px;
-  height: 75px;
-  top: 28vh;
-  left: 0.5%;
-  animation: kmDrift0 12s ease-in-out infinite;
+  width: 68px;
+  height: 68px;
+  top: 68vh;
+  left: 1.5%;
+  animation: kmDrift0 15s ease-in-out infinite;
   animation-delay: -8s;
   border-color: rgba(107, 29, 47, 0.4);
+  opacity: 0.68;
 }
 
 .km-gbubble--4 {
-  width: 50px;
-  height: 50px;
-  top: 40vh;
-  right: 1%;
-  animation: kmDrift1 9s ease-in-out infinite;
+  width: 54px;
+  height: 54px;
+  top: 88vh;
+  right: 1.8%;
+  animation: kmDrift1 11s ease-in-out infinite;
   animation-delay: -3s;
   opacity: 0.6;
 }
 
-.km-gbubble--5 {
-  width: 85px;
-  height: 85px;
-  top: 52vh;
-  left: 1.5%;
-  animation: kmDrift2 14s ease-in-out infinite;
-  animation-delay: -6s;
-}
-
-.km-gbubble--6 {
-  width: 55px;
-  height: 55px;
-  top: 62vh;
-  right: 0.5%;
-  animation: kmDrift0 11s ease-in-out infinite;
-  animation-delay: -9s;
-  opacity: 0.7;
-}
-
-.km-gbubble--7 {
-  width: 70px;
-  height: 70px;
-  top: 72vh;
-  left: 0.8%;
-  animation: kmDrift1 15s ease-in-out infinite;
-  animation-delay: -2s;
-  border-color: rgba(107, 29, 47, 0.35);
-}
-
-.km-gbubble--8 {
-  width: 45px;
-  height: 45px;
-  top: 82vh;
-  right: 1.5%;
-  animation: kmDrift2 8s ease-in-out infinite;
-  animation-delay: -7s;
-  opacity: 0.58;
-}
-
-.km-gbubble--9 {
-  width: 80px;
-  height: 80px;
-  top: 90vh;
-  left: 2%;
-  animation: kmDrift0 16s ease-in-out infinite;
-  animation-delay: -4s;
-}
-
-.km-gbubble--10 {
-  width: 62px;
-  height: 62px;
-  top: 110vh;
-  right: 0.8%;
-  animation: kmDrift1 12s ease-in-out infinite;
-  animation-delay: -10s;
-}
-
-.km-gbubble--11 {
-  width: 72px;
-  height: 72px;
-  top: 130vh;
-  left: 1%;
-  animation: kmDrift2 13s ease-in-out infinite;
-  animation-delay: -5s;
-  border-color: rgba(107, 29, 47, 0.4);
-}
-
+.km-gbubble--5,
+.km-gbubble--6,
+.km-gbubble--7,
+.km-gbubble--8,
+.km-gbubble--9,
+.km-gbubble--10,
+.km-gbubble--11,
 .km-gbubble--12 {
-  width: 55px;
-  height: 55px;
-  top: 160vh;
-  right: 1%;
-  animation: kmDrift0 10s ease-in-out infinite;
-  animation-delay: -3s;
-  opacity: 0.65;
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .km-global-bubbles {
+    display: none !important;
+  }
 }
 
 /* ── Three distinct drift animations ── */
