@@ -209,8 +209,48 @@ function kmBuildQuickViewDetails(descRaw = '', specsRaw = '', title = '') {
 
   return {
     description: conciseDesc,
-    specs: specs.slice(0, 4)
+    specs: specs.slice(0, 4),
+    bullets: kmGetProductBullets(title, plainDescription)
   };
+}
+
+function kmGetProductBullets(title = '', plainText = '') {
+  const lower = (title + ' ' + plainText).toLowerCase();
+  if (lower.includes('kada') || lower.includes('sarabloh')) {
+    return [
+      'Pure Sarabloh (Iron) Metalcraft Hand-Chiseled In Amritsar.',
+      'Includes Traditional Protective Velvet Pouch For Safe Storage.',
+      'Master Filigree Engraving With Sacred Punjabi Calligraphy.',
+      'Sizing Guidance & Confirmation Direct via WhatsApp Helpline.',
+      'A Meaningful Gift That Resonates Beyond A Single Occasion.'
+    ];
+  }
+  if (lower.includes('damascus')) {
+    return [
+      'Solid Cast Brass & Kundan Semi-Precious Stone Inset Hilt.',
+      'Includes Royal Velvet Sheath / Scabbard For Safe Storage & Display.',
+      'Authentic 1095/15N20 Damascus Steel With 512 Hand-Folded Layers.',
+      'Complimentary Custom Laser Engraving on Blade (Names & Date).',
+      'A Meaningful Gift That Resonates Beyond A Single Occasion.'
+    ];
+  }
+  if (lower.includes('kirpan') || lower.includes('miniature') || lower.includes('dagger')) {
+    return [
+      'Solid Brass Hilt For A Comfortable & Secure Grip.',
+      'Includes Fitted Sheath / Scabbard For Safe Storage And Striking Display.',
+      'Sacred Amritsar Artisan Forging With Mirror Blade Polishing.',
+      'Complimentary Custom Laser Engraving on Blade.',
+      'A Meaningful Gift That Resonates Beyond A Single Occasion.'
+    ];
+  }
+  // Default / Wedding Sword / Sirohi (Exact match to user screenshot)
+  return [
+    'Solid Stainless Steel Hilt For A Comfortable Grip.',
+    'Includes Sheath For Safe Storage And Striking Display.',
+    'Master Artisan Hand-forged Blade With Precision Ceremonial Balance.',
+    'Free Custom Laser Engraving (Groom & Bride Names Included).',
+    'A Meaningful Gift That Resonates Beyond A Single Occasion.'
+  ];
 }
 
 const KM_EXCHANGE_RATE_INR_TO_USD = 85;
@@ -279,7 +319,7 @@ function kmProductCard(product, showSwatches) {
       </div>
     </div>` : '';
 
-  return `<article class="km-product-card km-noise-card" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
+  return `<article class="km-product-card km-noise-card" data-handle="${kmEscapeAttr(product.handle || '')}" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
     <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy">` : ''}</a><button class="km-quick-view-btn" type="button">⚡ Quick View</button></div>
     <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>${swatchesHtml}<a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
   </article>`;
@@ -358,13 +398,55 @@ function hydrateProductDetail(products = []) {
   const titleEl = detail.querySelector('[data-product-title]');
   if (titleEl) titleEl.textContent = product.title;
   const typeEl = detail.querySelector('[data-product-type]');
-  if (typeEl) typeEl.textContent = product.product_type || product.vendor || 'KraftMart';
+  if (typeEl) typeEl.textContent = product.vendor || 'KraftMart';
   const description = detail.querySelector('[data-product-description]');
   if (description) description.textContent = (product.body_html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
   const priceRow = detail.querySelector('[data-product-price]');
-  if (priceRow) priceRow.innerHTML = `<span style="font-family:var(--km-font-heading);font-size:2.2rem;font-weight:700;color:var(--km-crimson-primary);">${kmMoney(price)}</span>${compare > price ? `<span style="font-size:1.1rem;color:var(--km-text-secondary);text-decoration:line-through;">${kmMoney(compare)}</span><span class="km-sale-badge" style="position:static;">${Math.round((compare - price) / compare * 100)}% OFF</span>` : ''}`;
+  if (priceRow) priceRow.innerHTML = `<span class="km-qv-price" style="font-size: 2rem;">${kmMoney(price)}</span>${compare > price ? `<span class="km-qv-compare" style="font-size: 1.1rem;">${kmMoney(compare)}</span><span class="km-qv-sale-badge">Sale</span>` : ''}`;
   const add = detail.querySelector('[data-product-add]');
-  if (add) add.textContent = variant.available !== false ? `ADD TO CART — ${kmMoney(price)}` : 'SOLD OUT';
+  if (add) add.textContent = variant.available !== false ? 'Add To Cart' : 'SOLD OUT';
+
+  // Wire up quantity stepper for Product Detail page
+  let pdpQty = 1;
+  const pdpQtyVal = document.getElementById('kmPdpQtyVal');
+  const pdpQtyDec = document.getElementById('kmPdpQtyDec');
+  const pdpQtyInc = document.getElementById('kmPdpQtyInc');
+
+  if (pdpQtyDec && !pdpQtyDec.dataset.bound) {
+    pdpQtyDec.dataset.bound = 'true';
+    pdpQtyDec.addEventListener('click', () => {
+      if (pdpQty > 1) {
+        pdpQty--;
+        if (pdpQtyVal) pdpQtyVal.textContent = pdpQty;
+      }
+    });
+  }
+  if (pdpQtyInc && !pdpQtyInc.dataset.bound) {
+    pdpQtyInc.dataset.bound = 'true';
+    pdpQtyInc.addEventListener('click', () => {
+      if (pdpQty < 99) {
+        pdpQty++;
+        if (pdpQtyVal) pdpQtyVal.textContent = pdpQty;
+      }
+    });
+  }
+
+  // Specifications Subheading & 5 Concise Bullets
+  const specsTitleEl = detail.querySelector('[data-product-specs-title]');
+  if (specsTitleEl) {
+    let subHeading = kmCleanCardTitle(product.title);
+    if (!subHeading.toLowerCase().includes('blade') && !subHeading.toLowerCase().includes('kada')) {
+      subHeading += ' – Handcrafted Blade';
+    }
+    specsTitleEl.textContent = subHeading;
+  }
+
+  const bulletsEl = detail.querySelector('[data-product-bullets]');
+  if (bulletsEl) {
+    const bullets = kmGetProductBullets(product.title, product.body_html || '');
+    bulletsEl.innerHTML = bullets.map(b => `<li>${kmEscape(b)}</li>`).join('');
+  }
+
   const main = document.getElementById('kmPdpMainImage');
   if (main && image) { main.src = image; main.alt = product.title; }
   const thumbs = document.querySelector('.km-pdp-thumbs');
@@ -382,6 +464,7 @@ function hydrateProductDetail(products = []) {
 async function initRealCatalogue() {
   try {
     const products = await getLiveProducts();
+    window.KM_CACHED_PRODUCTS = products;
     hydrateHeroCards(products);
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -706,6 +789,34 @@ function initQuickViewModal() {
   const backdrop = document.getElementById('kmQvBackdrop');
   if (!modal) return;
 
+  // Quantity Stepper state in Quick View
+  let qvQty = 1;
+  const qvQtyVal = document.getElementById('kmQvQtyVal');
+  const qvQtyDec = document.getElementById('kmQvQtyDec');
+  const qvQtyInc = document.getElementById('kmQvQtyInc');
+
+  if (qvQtyDec && !qvQtyDec.dataset.bound) {
+    qvQtyDec.dataset.bound = 'true';
+    qvQtyDec.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (qvQty > 1) {
+        qvQty--;
+        if (qvQtyVal) qvQtyVal.textContent = qvQty;
+      }
+    });
+  }
+
+  if (qvQtyInc && !qvQtyInc.dataset.bound) {
+    qvQtyInc.dataset.bound = 'true';
+    qvQtyInc.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (qvQty < 99) {
+        qvQty++;
+        if (qvQtyVal) qvQtyVal.textContent = qvQty;
+      }
+    });
+  }
+
   // Delegate quick view button clicks
   document.addEventListener('click', (e) => {
     const qvBtn = e.target.closest('.km-quick-view-btn');
@@ -715,61 +826,83 @@ function initQuickViewModal() {
     const card = qvBtn.closest('.km-product-card');
     if (!card) return;
 
+    // Reset quantity
+    qvQty = 1;
+    if (qvQtyVal) qvQtyVal.textContent = '1';
+
     // Extract attributes
+    const handle = card.getAttribute('data-handle') || '';
     const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src || 'assets/sword.png';
     const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent || 'Ceremonial Masterpiece';
     const desc = card.getAttribute('data-qv-desc') || '';
-    const price = card.getAttribute('data-qv-price') || card.querySelector('.km-price-current')?.textContent || '₹2,599';
+    const price = card.getAttribute('data-qv-price') || card.querySelector('.km-price-current')?.textContent || 'Rs. 9,999.00';
     const compare = card.getAttribute('data-qv-compare') || card.querySelector('.km-price-compare')?.textContent || '';
     const specsRaw = card.getAttribute('data-qv-specs') || '';
     const details = kmBuildQuickViewDetails(desc, specsRaw, title);
 
-    // Calculate saving percentage if available
-    const numPrice = parseInt(price.replace(/[^0-9]/g, ''), 10) || 0;
-    const numCompare = parseInt(compare.replace(/[^0-9]/g, ''), 10) || 0;
-    let badgeText = 'Crafted in Amritsar';
-    if (numCompare > numPrice && numPrice > 0) {
-      const discount = Math.round(((numCompare - numPrice) / numCompare) * 100);
-      badgeText = `Save ${discount}%`;
-    }
-
-    // Populate modal
+    // Populate modal texts
     const qvImg = document.getElementById('kmQvImage');
+    const qvThumbs = document.getElementById('kmQvThumbs');
+    const qvVendor = document.getElementById('kmQvVendor');
     const qvTitle = document.getElementById('kmQvTitle');
-    const qvDesc = document.getElementById('kmQvDesc');
     const qvPrice = document.getElementById('kmQvPrice');
     const qvCompare = document.getElementById('kmQvCompare');
-    const qvSpecs = document.getElementById('kmQvSpecs');
-    const qvBadge = document.getElementById('kmQvBadge');
-    const qvBadge1 = document.getElementById('kmQvBadge1');
+    const qvSaleBadge = document.getElementById('kmQvSaleBadge');
+    const qvSpecsHeading = document.getElementById('kmQvSpecsHeading');
+    const qvSpecsBullets = document.getElementById('kmQvSpecsBullets');
 
     if (qvImg) { qvImg.src = img; qvImg.alt = title; }
+    if (qvVendor) qvVendor.textContent = 'KraftMart';
     if (qvTitle) qvTitle.textContent = title;
-    if (qvDesc) qvDesc.textContent = details.description;
     if (qvPrice) qvPrice.textContent = price;
-    if (qvCompare) qvCompare.textContent = compare;
-    if (qvBadge) qvBadge.textContent = badgeText;
-
-    if (qvBadge1) {
-      const lt = title.toLowerCase();
-      if (lt.includes('damascus')) qvBadge1.textContent = '✦ Authentic Damascus';
-      else if (lt.includes('kada') || lt.includes('sarabloh')) qvBadge1.textContent = '✦ Pure Sarabloh Craft';
-      else if (lt.includes('wedding')) qvBadge1.textContent = '✦ Wedding Ceremonial';
-      else if (lt.includes('kirpan')) qvBadge1.textContent = '✦ Sacred Heritage Kirpan';
-      else qvBadge1.textContent = '✦ Amritsar Handcrafted';
+    if (qvCompare) {
+      qvCompare.textContent = compare;
+      qvCompare.style.display = compare ? 'inline' : 'none';
+    }
+    if (qvSaleBadge) {
+      qvSaleBadge.style.display = compare ? 'inline-block' : 'none';
+    }
+    if (qvSpecsHeading) {
+      let subHeading = kmCleanCardTitle(title);
+      if (!subHeading.toLowerCase().includes('blade') && !subHeading.toLowerCase().includes('kada')) {
+        subHeading += ' – Handcrafted Blade';
+      }
+      qvSpecsHeading.textContent = subHeading;
+    }
+    if (qvSpecsBullets) {
+      qvSpecsBullets.innerHTML = details.bullets.map(b => `<li>${kmEscape(b)}</li>`).join('');
     }
 
-    if (qvSpecs) {
-      let specsHtml = '';
-      details.specs.forEach(spec => {
-        specsHtml += `
-          <div class="km-qv-spec-row">
-            <span class="km-qv-spec-key">${kmEscape(spec.key)}:</span>
-            <span class="km-qv-spec-val">${kmEscape(spec.value)}</span>
-          </div>
-        `;
+    // Populate 4 interactive thumbnails matching the user screenshot
+    const liveProd = (window.KM_CACHED_PRODUCTS || []).find(p => p.handle === handle || p.title === title);
+    let galleryImages = [img];
+    if (liveProd && Array.isArray(liveProd.images) && liveProd.images.length > 0) {
+      galleryImages = liveProd.images.map(i => i.src).filter(Boolean);
+    }
+    const defaultFallbacks = ['assets/sword.png', 'assets/hero_talwar.png', 'assets/sword2.png', 'assets/sword.png'];
+    let idx = 0;
+    while (galleryImages.length < 4) {
+      galleryImages.push(defaultFallbacks[idx % defaultFallbacks.length]);
+      idx++;
+    }
+    const finalThumbs = galleryImages.slice(0, 4);
+
+    if (qvThumbs) {
+      qvThumbs.innerHTML = finalThumbs.map((thumbSrc, index) => `
+        <button type="button" class="km-qv-thumb-item${index === 0 ? ' is-active' : ''}" data-src="${kmEscapeAttr(thumbSrc)}" aria-label="Thumbnail ${index + 1}">
+          <img src="${kmEscapeAttr(thumbSrc)}" alt="${kmEscapeAttr(title)} view ${index + 1}" />
+        </button>
+      `).join('');
+
+      qvThumbs.querySelectorAll('.km-qv-thumb-item').forEach(thumbBtn => {
+        thumbBtn.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          const targetSrc = thumbBtn.getAttribute('data-src');
+          if (qvImg && targetSrc) qvImg.src = targetSrc;
+          qvThumbs.querySelectorAll('.km-qv-thumb-item').forEach(b => b.classList.remove('is-active'));
+          thumbBtn.classList.add('is-active');
+        });
       });
-      qvSpecs.innerHTML = specsHtml;
     }
 
     // Show modal
