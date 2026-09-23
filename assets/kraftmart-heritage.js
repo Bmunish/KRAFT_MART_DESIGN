@@ -72,12 +72,17 @@ function kmPlainTextFromHtml(value = '') {
     if (next === decoded) break;
     decoded = next;
   }
-  const node = document.createElement('div');
-  node.innerHTML = decoded.replace(/<!--[\s\S]*?-->/g, ' ');
-  return (node.textContent || '').replace(/\s+/g, ' ').trim();
+  const stripped = decoded
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<br\s*[\/]?>/gi, ' ')
+    .replace(/<\/(?:p|div|li|h[1-6]|tr|td|table)>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ');
+  return stripped.replace(/\s+/g, ' ').trim();
 }
 
-function kmBuildQuickViewDetails(descRaw = '', specsRaw = '') {
+function kmBuildQuickViewDetails(descRaw = '', specsRaw = '', title = '') {
   const plainDescription = kmPlainTextFromHtml(descRaw);
   const cleanedDescription = plainDescription
     .replace(/^about the sword\s*/i, '')
@@ -86,39 +91,125 @@ function kmBuildQuickViewDetails(descRaw = '', specsRaw = '') {
     .replace(/description box\s*→\s*show html\s*\(\s*<\s*>\s*icon\s*\)/i, '')
     .replace(/={3,}/g, ' ')
     .trim();
-  const description = cleanedDescription.split(/specifications?/i)[0].trim() || cleanedDescription;
+
+  // 1. Cut off at any spec, details, fitting, or operational section
+  let text = cleanedDescription
+    .split(/(?:product details?|specifications?|technical details?|features?:|size\s*&\s*fitting|dimensions?:|important note|note:|disclaimer:|whatsapp)/i)[0]
+    .trim();
+
+  // If text starts with product name repeated, clean it up
+  if (title) {
+    const escTitle = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    text = text.replace(new RegExp(`^${escTitle}\\s*[-–—:]?\\s*`, 'i'), '');
+  }
+
+  // 2. Make it "little and relevant": Extract first 1 or 2 concise sentences (max ~150-180 chars)
+  let conciseDesc = '';
+  if (text) {
+    const sentences = text.match(/[^.!?]+[.!?]+/g);
+    if (sentences && sentences.length > 0) {
+      conciseDesc = sentences[0].trim();
+      if (sentences.length > 1 && (conciseDesc.length + sentences[1].trim().length) <= 170) {
+        conciseDesc += ' ' + sentences[1].trim();
+      }
+    } else {
+      conciseDesc = text;
+    }
+  }
+
+  // If still longer than 180 characters, truncate at word boundary
+  if (conciseDesc.length > 180) {
+    conciseDesc = conciseDesc.substring(0, 175).replace(/\s+\S*$/, '') + '...';
+  }
+
+  // If empty or too short, generate relevant heritage description based on title
+  const lowerTitle = (title || '').toLowerCase();
+  const lowerPlain = plainDescription.toLowerCase();
+  if (!conciseDesc || conciseDesc.length < 20) {
+    if (lowerTitle.includes('kada') || lowerTitle.includes('sarabloh')) {
+      conciseDesc = 'Authentic Sarabloh Punjabi Kada hand-chiseled with sacred calligraphy and traditional artisan finishing in Amritsar.';
+    } else if (lowerTitle.includes('damascus')) {
+      conciseDesc = 'Authentic 1095/15N20 Damascus steel blade hand-forged by master swordsmiths, paired with a traditional hilt and velvet scabbard.';
+    } else if (lowerTitle.includes('wedding') || lowerTitle.includes('talwar') || lowerTitle.includes('ceremonial')) {
+      conciseDesc = 'Ceremonial Indian wedding talwar featuring an ornate handcrafted hilt, mirror-polished blade, and rich velvet scabbard.';
+    } else if (lowerTitle.includes('kirpan') || lowerTitle.includes('dagger') || lowerTitle.includes('katar')) {
+      conciseDesc = 'Sacred ceremonial steel blade handcrafted according to authentic Sikh and Rajput metalcraft traditions.';
+    } else {
+      conciseDesc = 'Authentic Indian heritage metalcraft, handforged in Amritsar by master artisans with insured worldwide delivery.';
+    }
+  }
+
+  // 3. Extract relevant specifications
   const specs = [];
   const seen = new Set();
 
   function addSpec(key, value) {
     const cleanKey = (key || '').replace(/\s+/g, ' ').trim();
     const cleanValue = (value || '').replace(/\s+/g, ' ').trim();
-    if (!cleanKey || !cleanValue) return;
-    const signature = `${cleanKey.toLowerCase()}::${cleanValue.toLowerCase()}`;
+    if (!cleanKey || !cleanValue || cleanValue.length > 55) return;
+    const signature = cleanKey.toLowerCase();
     if (seen.has(signature)) return;
     seen.add(signature);
     specs.push({ key: cleanKey, value: cleanValue });
   }
 
-  // Prefer explicit metadata when provided by static cards.
-  specsRaw.split('|').forEach(pair => {
-    const splitIndex = pair.indexOf(':');
-    if (splitIndex === -1) return;
-    addSpec(pair.slice(0, splitIndex), pair.slice(splitIndex + 1));
-  });
+  // Explicit specs from static card data attribute if passed
+  if (specsRaw && typeof specsRaw === 'string') {
+    specsRaw.split('|').forEach(pair => {
+      const splitIndex = pair.indexOf(':');
+      if (splitIndex === -1) return;
+      addSpec(pair.slice(0, splitIndex), pair.slice(splitIndex + 1));
+    });
+  }
 
-  // Backfill specs from rich description text like "Blade length - 39 inches".
-  const specBlock = plainDescription.match(/specifications?\s*[:\-]?\s*(.+)$/i);
-  const specText = specBlock ? specBlock[1] : '';
-  const specRegex = /([A-Za-z][A-Za-z\s]{2,40})\s*[-:]\s*([^.;|]{2,90})/g;
-  let match;
-  while ((match = specRegex.exec(specText)) !== null) {
-    addSpec(match[1], match[2]);
+  // Scan description text for key-value specs: "Material: Sarabloh (iron)" or "Surface Width: 1 inch"
+  const knownKeys = [
+    'Material', 'Steel', 'Craft', 'Surface Width', 'Width', 'Engraving',
+    'Blade Length', 'Total Length', 'Hilt', 'Handle', 'Scabbard', 'Sheath',
+    'Average Weight', 'Weight', 'Finish', 'Packaging', 'Processing Time', 'Dispatch'
+  ];
+
+  for (const k of knownKeys) {
+    const regex = new RegExp(`(?:^|[\\r\\n•·;|,])\\s*${k}\\s*[:\\-]\\s*([^\\r\\n•·;|,]{2,60})`, 'i');
+    const m = plainDescription.match(regex);
+    if (m && m[1]) {
+      addSpec(k, m[1]);
+    }
+  }
+
+  // If still fewer than 2 specs, provide contextually relevant specs based on product type
+  if (specs.length < 2) {
+    if (lowerTitle.includes('kada') || lowerTitle.includes('sarabloh') || lowerPlain.includes('kada')) {
+      addSpec('Craft', 'Hand Chiseled Filigree');
+      addSpec('Material', lowerPlain.includes('brass') ? 'Solid Cast Brass' : 'Pure Sarabloh (Iron)');
+      addSpec('Sizing', 'Confirmed via WhatsApp');
+      addSpec('Dispatch', 'FedEx / DHL Express');
+    } else if (lowerTitle.includes('damascus') || lowerPlain.includes('damascus')) {
+      addSpec('Steel', '1095/15N20 Damascus');
+      addSpec('Hilt', 'Kundan Semi-Precious / Brass');
+      addSpec('Scabbard', 'Zari Velvet Sheath');
+      addSpec('Dispatch', 'FedEx / DHL Express');
+    } else if (lowerTitle.includes('wedding') || lowerTitle.includes('talwar') || lowerPlain.includes('talwar')) {
+      addSpec('Steel', 'High Carbon Mirror Steel');
+      addSpec('Hilt', 'Traditional Cast Brass');
+      addSpec('Scabbard', 'Deep Velvet Scabbard');
+      addSpec('Engraving', 'Free Custom Laser Inscription');
+    } else if (lowerTitle.includes('kirpan') || lowerTitle.includes('dagger') || lowerTitle.includes('miniature')) {
+      addSpec('Craft', 'Amritsar Master Forged');
+      addSpec('Blade', 'Stainless Carbon Steel');
+      addSpec('Packaging', 'Velvet Ceremonial Box');
+      addSpec('Dispatch', 'FedEx / DHL Express');
+    } else {
+      addSpec('Craft', 'Amritsar Royal Lineage');
+      addSpec('Material', 'Authentic Handcrafted Metal');
+      addSpec('Engraving', 'Free Custom Inscription');
+      addSpec('Dispatch', 'FedEx / DHL Express');
+    }
   }
 
   return {
-    description,
-    specs
+    description: conciseDesc,
+    specs: specs.slice(0, 4)
   };
 }
 
@@ -160,10 +251,10 @@ function kmProductCard(product) {
   const price = Number(variant.price);
   const saving = compare > price ? `Save ${kmMoney(compare - price)}` : '';
   const detailUrl = `product-detail.html?handle=${encodeURIComponent(product.handle)}`;
-  const details = kmBuildQuickViewDetails(product.body_html || '', '');
-  const specsAttr = details.specs.slice(0, 6).map(spec => `${spec.key}: ${spec.value}`).join('|');
+  const details = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
+  const specsAttr = details.specs.slice(0, 4).map(spec => `${spec.key}: ${spec.value}`).join('|');
   return `<article class="km-product-card km-noise-card" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}">
-    <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy">` : ''}</a><a class="km-quick-view-btn" href="${detailUrl}">View product</a></div>
+    <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy">` : ''}</a><button class="km-quick-view-btn" type="button">⚡ Quick View</button></div>
     <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div><a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
   </article>`;
 }
@@ -601,11 +692,11 @@ function initQuickViewModal() {
     // Extract attributes
     const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src || 'assets/sword.png';
     const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent || 'Ceremonial Masterpiece';
-    const desc = card.getAttribute('data-qv-desc') || 'Handcrafted Rajput ceremonial sword forged in Amritsar, Punjab with traditional Kundan brass work and deep velvet scabbard.';
+    const desc = card.getAttribute('data-qv-desc') || '';
     const price = card.getAttribute('data-qv-price') || card.querySelector('.km-price-current')?.textContent || '₹2,599';
     const compare = card.getAttribute('data-qv-compare') || card.querySelector('.km-price-compare')?.textContent || '';
-    const specsRaw = card.getAttribute('data-qv-specs') || 'Craft: Amritsar Forged|Material: Brass + Carbon Steel|Engraving: Free Laser Inscription|Dispatch: FedEx / DHL';
-    const details = kmBuildQuickViewDetails(desc, specsRaw);
+    const specsRaw = card.getAttribute('data-qv-specs') || '';
+    const details = kmBuildQuickViewDetails(desc, specsRaw, title);
 
     // Calculate saving percentage if available
     const numPrice = parseInt(price.replace(/[^0-9]/g, ''), 10) || 0;
@@ -624,6 +715,7 @@ function initQuickViewModal() {
     const qvCompare = document.getElementById('kmQvCompare');
     const qvSpecs = document.getElementById('kmQvSpecs');
     const qvBadge = document.getElementById('kmQvBadge');
+    const qvBadge1 = document.getElementById('kmQvBadge1');
 
     if (qvImg) { qvImg.src = img; qvImg.alt = title; }
     if (qvTitle) qvTitle.textContent = title;
@@ -631,6 +723,15 @@ function initQuickViewModal() {
     if (qvPrice) qvPrice.textContent = price;
     if (qvCompare) qvCompare.textContent = compare;
     if (qvBadge) qvBadge.textContent = badgeText;
+
+    if (qvBadge1) {
+      const lt = title.toLowerCase();
+      if (lt.includes('damascus')) qvBadge1.textContent = '✦ Authentic Damascus';
+      else if (lt.includes('kada') || lt.includes('sarabloh')) qvBadge1.textContent = '✦ Pure Sarabloh Craft';
+      else if (lt.includes('wedding')) qvBadge1.textContent = '✦ Wedding Ceremonial';
+      else if (lt.includes('kirpan')) qvBadge1.textContent = '✦ Sacred Heritage Kirpan';
+      else qvBadge1.textContent = '✦ Amritsar Handcrafted';
+    }
 
     if (qvSpecs) {
       let specsHtml = '';
@@ -648,6 +749,7 @@ function initQuickViewModal() {
     // Show modal
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
   });
 
   // Close triggers
@@ -677,6 +779,7 @@ function closeQuickViewModal() {
   if (modal) {
     modal.classList.remove('is-open');
     document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
   }
 }
 

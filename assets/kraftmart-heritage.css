@@ -815,6 +815,16 @@ button {
   z-index: 100;
   pointer-events: none;
   overflow: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+body.modal-open .km-global-bubbles,
+.km-qv-overlay.is-open ~ .km-global-bubbles,
+body:has(.km-qv-overlay.is-open) .km-global-bubbles,
+body.cart-open .km-global-bubbles {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* ── Base bubble ── */
