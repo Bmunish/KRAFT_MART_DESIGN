@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductBubbleClicks();
   initLiveEngravingSimulator();
   hydrateProductDetail();
+  initCatalogToolbarAndFilters();
+  initPolicyDropdown();
+  initCurrencySelector();
 });
 
 
@@ -69,12 +72,17 @@ function kmPlainTextFromHtml(value = '') {
     if (next === decoded) break;
     decoded = next;
   }
-  const node = document.createElement('div');
-  node.innerHTML = decoded.replace(/<!--[\s\S]*?-->/g, ' ');
-  return (node.textContent || '').replace(/\s+/g, ' ').trim();
+  const stripped = decoded
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<br\s*[\/]?>/gi, ' ')
+    .replace(/<\/(?:p|div|li|h[1-6]|tr|td|table)>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ');
+  return stripped.replace(/\s+/g, ' ').trim();
 }
 
-function kmBuildQuickViewDetails(descRaw = '', specsRaw = '') {
+function kmBuildQuickViewDetails(descRaw = '', specsRaw = '', title = '') {
   const plainDescription = kmPlainTextFromHtml(descRaw);
   const cleanedDescription = plainDescription
     .replace(/^about the sword\s*/i, '')
@@ -83,44 +91,250 @@ function kmBuildQuickViewDetails(descRaw = '', specsRaw = '') {
     .replace(/description box\s*→\s*show html\s*\(\s*<\s*>\s*icon\s*\)/i, '')
     .replace(/={3,}/g, ' ')
     .trim();
-  const description = cleanedDescription.split(/specifications?/i)[0].trim() || cleanedDescription;
+
+  // 1. Cut off at any spec, details, fitting, or operational section
+  let text = cleanedDescription
+    .split(/(?:product details?|specifications?|technical details?|features?:|size\s*&\s*fitting|dimensions?:|important note|note:|disclaimer:|whatsapp)/i)[0]
+    .trim();
+
+  // If text starts with product name repeated, clean it up
+  if (title) {
+    const escTitle = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    text = text.replace(new RegExp(`^${escTitle}\\s*[-–—:]?\\s*`, 'i'), '');
+  }
+
+  // 2. Make it "little and relevant": Extract first 1 or 2 concise sentences (max ~150-180 chars)
+  let conciseDesc = '';
+  if (text) {
+    const sentences = text.match(/[^.!?]+[.!?]+/g);
+    if (sentences && sentences.length > 0) {
+      conciseDesc = sentences[0].trim();
+      if (sentences.length > 1 && (conciseDesc.length + sentences[1].trim().length) <= 170) {
+        conciseDesc += ' ' + sentences[1].trim();
+      }
+    } else {
+      conciseDesc = text;
+    }
+  }
+
+  // If still longer than 180 characters, truncate at word boundary
+  if (conciseDesc.length > 180) {
+    conciseDesc = conciseDesc.substring(0, 175).replace(/\s+\S*$/, '') + '...';
+  }
+
+  // If empty or too short, generate relevant heritage description based on title
+  const lowerTitle = (title || '').toLowerCase();
+  const lowerPlain = plainDescription.toLowerCase();
+  if (!conciseDesc || conciseDesc.length < 20) {
+    if (lowerTitle.includes('kada') || lowerTitle.includes('sarabloh')) {
+      conciseDesc = 'Authentic Sarabloh Punjabi Kada hand-chiseled with sacred calligraphy and traditional artisan finishing in Amritsar.';
+    } else if (lowerTitle.includes('damascus')) {
+      conciseDesc = 'Authentic 1095/15N20 Damascus steel blade hand-forged by master swordsmiths, paired with a traditional hilt and velvet scabbard.';
+    } else if (lowerTitle.includes('wedding') || lowerTitle.includes('talwar') || lowerTitle.includes('ceremonial')) {
+      conciseDesc = 'Ceremonial Indian wedding talwar featuring an ornate handcrafted hilt, mirror-polished blade, and rich velvet scabbard.';
+    } else if (lowerTitle.includes('kirpan') || lowerTitle.includes('dagger') || lowerTitle.includes('katar')) {
+      conciseDesc = 'Sacred ceremonial steel blade handcrafted according to authentic Sikh and Rajput metalcraft traditions.';
+    } else {
+      conciseDesc = 'Authentic Indian heritage metalcraft, handforged in Amritsar by master artisans with insured worldwide delivery.';
+    }
+  }
+
+  // 3. Extract relevant specifications
   const specs = [];
   const seen = new Set();
 
   function addSpec(key, value) {
     const cleanKey = (key || '').replace(/\s+/g, ' ').trim();
     const cleanValue = (value || '').replace(/\s+/g, ' ').trim();
-    if (!cleanKey || !cleanValue) return;
-    const signature = `${cleanKey.toLowerCase()}::${cleanValue.toLowerCase()}`;
+    if (!cleanKey || !cleanValue || cleanValue.length > 55) return;
+    const signature = cleanKey.toLowerCase();
     if (seen.has(signature)) return;
     seen.add(signature);
     specs.push({ key: cleanKey, value: cleanValue });
   }
 
-  // Prefer explicit metadata when provided by static cards.
-  specsRaw.split('|').forEach(pair => {
-    const splitIndex = pair.indexOf(':');
-    if (splitIndex === -1) return;
-    addSpec(pair.slice(0, splitIndex), pair.slice(splitIndex + 1));
-  });
+  // Explicit specs from static card data attribute if passed
+  if (specsRaw && typeof specsRaw === 'string') {
+    specsRaw.split('|').forEach(pair => {
+      const splitIndex = pair.indexOf(':');
+      if (splitIndex === -1) return;
+      addSpec(pair.slice(0, splitIndex), pair.slice(splitIndex + 1));
+    });
+  }
 
-  // Backfill specs from rich description text like "Blade length - 39 inches".
-  const specBlock = plainDescription.match(/specifications?\s*[:\-]?\s*(.+)$/i);
-  const specText = specBlock ? specBlock[1] : '';
-  const specRegex = /([A-Za-z][A-Za-z\s]{2,40})\s*[-:]\s*([^.;|]{2,90})/g;
-  let match;
-  while ((match = specRegex.exec(specText)) !== null) {
-    addSpec(match[1], match[2]);
+  // Scan description text for key-value specs: "Material: Sarabloh (iron)" or "Surface Width: 1 inch"
+  const knownKeys = [
+    'Material', 'Steel', 'Craft', 'Surface Width', 'Width', 'Engraving',
+    'Blade Length', 'Total Length', 'Hilt', 'Handle', 'Scabbard', 'Sheath',
+    'Average Weight', 'Weight', 'Finish', 'Packaging', 'Processing Time', 'Dispatch'
+  ];
+
+  for (const k of knownKeys) {
+    const regex = new RegExp(`(?:^|[\\r\\n•·;|,])\\s*${k}\\s*[:\\-]\\s*([^\\r\\n•·;|,]{2,60})`, 'i');
+    const m = plainDescription.match(regex);
+    if (m && m[1]) {
+      addSpec(k, m[1]);
+    }
+  }
+
+  // If still fewer than 2 specs, provide contextually relevant specs based on product type
+  if (specs.length < 2) {
+    if (lowerTitle.includes('kada') || lowerTitle.includes('sarabloh') || lowerPlain.includes('kada')) {
+      addSpec('Craft', 'Hand Chiseled Filigree');
+      addSpec('Material', lowerPlain.includes('brass') ? 'Solid Cast Brass' : 'Pure Sarabloh (Iron)');
+      addSpec('Sizing', 'Confirmed via WhatsApp');
+      addSpec('Dispatch', 'FedEx / DHL Express');
+    } else if (lowerTitle.includes('damascus') || lowerPlain.includes('damascus')) {
+      addSpec('Steel', '1095/15N20 Damascus');
+      addSpec('Hilt', 'Kundan Semi-Precious / Brass');
+      addSpec('Scabbard', 'Zari Velvet Sheath');
+      addSpec('Dispatch', 'FedEx / DHL Express');
+    } else if (lowerTitle.includes('wedding') || lowerTitle.includes('talwar') || lowerPlain.includes('talwar')) {
+      addSpec('Steel', 'High Carbon Mirror Steel');
+      addSpec('Hilt', 'Traditional Cast Brass');
+      addSpec('Scabbard', 'Deep Velvet Scabbard');
+      addSpec('Engraving', 'Free Custom Laser Inscription');
+    } else if (lowerTitle.includes('kirpan') || lowerTitle.includes('dagger') || lowerTitle.includes('miniature')) {
+      addSpec('Craft', 'Amritsar Master Forged');
+      addSpec('Blade', 'Stainless Carbon Steel');
+      addSpec('Packaging', 'Velvet Ceremonial Box');
+      addSpec('Dispatch', 'FedEx / DHL Express');
+    } else {
+      addSpec('Craft', 'Amritsar Royal Lineage');
+      addSpec('Material', 'Authentic Handcrafted Metal');
+      addSpec('Engraving', 'Free Custom Inscription');
+      addSpec('Dispatch', 'FedEx / DHL Express');
+    }
   }
 
   return {
-    description,
-    specs
+    description: conciseDesc,
+    specs: specs.slice(0, 4),
+    bullets: kmGetProductBullets(title, plainDescription)
   };
 }
 
-function kmMoney(value) {
-  return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Number(value));
+function kmGetProductBullets(title = '', plainText = '') {
+  const lower = (title + ' ' + plainText).toLowerCase();
+  if (lower.includes('kada') || lower.includes('sarabloh')) {
+    return [
+      'Pure Sarabloh (Iron) Metalcraft Hand-Chiseled In Amritsar.',
+      'Includes Traditional Protective Velvet Pouch For Safe Storage.',
+      'Master Filigree Engraving With Sacred Punjabi Calligraphy.',
+      'Sizing Guidance & Confirmation Direct via WhatsApp Helpline.',
+      'A Meaningful Gift That Resonates Beyond A Single Occasion.'
+    ];
+  }
+  if (lower.includes('damascus')) {
+    return [
+      'Solid Cast Brass & Kundan Semi-Precious Stone Inset Hilt.',
+      'Includes Royal Velvet Sheath / Scabbard For Safe Storage & Display.',
+      'Authentic 1095/15N20 Damascus Steel With 512 Hand-Folded Layers.',
+      'Complimentary Custom Laser Engraving on Blade (Names & Date).',
+      'A Meaningful Gift That Resonates Beyond A Single Occasion.'
+    ];
+  }
+  if (lower.includes('kirpan') || lower.includes('miniature') || lower.includes('dagger')) {
+    return [
+      'Solid Brass Hilt For A Comfortable & Secure Grip.',
+      'Includes Fitted Sheath / Scabbard For Safe Storage And Striking Display.',
+      'Sacred Amritsar Artisan Forging With Mirror Blade Polishing.',
+      'Complimentary Custom Laser Engraving on Blade.',
+      'A Meaningful Gift That Resonates Beyond A Single Occasion.'
+    ];
+  }
+  // Default / Wedding Sword / Sirohi (Exact match to user screenshot)
+  return [
+    'Solid Stainless Steel Hilt For A Comfortable Grip.',
+    'Includes Sheath For Safe Storage And Striking Display.',
+    'Master Artisan Hand-forged Blade With Precision Ceremonial Balance.',
+    'Free Custom Laser Engraving (Groom & Bride Names Included).',
+    'A Meaningful Gift That Resonates Beyond A Single Occasion.'
+  ];
+}
+
+function kmFormatProductAccordionStory(title = '', bodyHtml = '') {
+  const lower = (title + ' ' + bodyHtml).toLowerCase();
+  const isKada = lower.includes('kada') || lower.includes('sarabloh');
+  const isDamascus = lower.includes('damascus');
+  const isDagger = lower.includes('kirpan') || lower.includes('dagger') || lower.includes('miniature');
+
+  if (isKada) {
+    return `
+      <p><strong>Generational Punjabi Metalcraft:</strong> Handcrafted with reverence and precision, this traditional Kada is forged as a profound statement of martial strength, spiritual grounding, and cultural pride. Each piece features distinct hand-chiseled contouring and artisan-toothed borders that balance heritage aesthetics with everyday distinction.</p>
+      <p><strong>Artisan Techniques &amp; Specifications:</strong></p>
+      <ul class="km-acc-list">
+        <li><strong>Material &amp; Alloy:</strong> 100% Pure Sarabloh (sacred iron) forged in Amritsar, Punjab.</li>
+        <li><strong>Artisan Technique:</strong> Hand-turned metalwork paired with intricate floral filigree relief.</li>
+        <li><strong>Weight &amp; Feel:</strong> Solid heirloom weight (~180g – 220g), resting comfortably on the wrist.</li>
+        <li><strong>Custom Sizing:</strong> Our concierge team connects via WhatsApp (+91 98888 23986) to calibrate your bespoke diameter before dispatch.</li>
+      </ul>
+    `;
+  }
+
+  if (isDamascus) {
+    return `
+      <p><strong>The Legacy of Wootz &amp; Damascus Blades:</strong> Hand-folded up to 512 layers using high-carbon 1095 and 15N20 steels, this sword displays a hypnotic natural water-pattern grain. Forged in Amritsar according to martial Sikh and Rajput regal traditions, it delivers ceremonial heft and timeless presence for royal weddings.</p>
+      <p><strong>Techniques &amp; Specifications:</strong></p>
+      <ul class="km-acc-list">
+        <li><strong>Blade Steel:</strong> Genuine hand-folded 1095 &amp; 15N20 layered Damascus steel.</li>
+        <li><strong>Hilt &amp; Pommel:</strong> Ornate cast brass with intricate kundan stone inlay and guard protection.</li>
+        <li><strong>Scabbard:</strong> Carved wooden core wrapped in rich zari-embroidered velvet with brass chape and locket.</li>
+        <li><strong>Edge Profile:</strong> Traditional unsharpened ceremonial edge (legal &amp; safe for wedding processions).</li>
+        <li><strong>Total Weight:</strong> ~1.2 kg with optimal point-of-balance near the guard.</li>
+      </ul>
+    `;
+  }
+
+  if (isDagger) {
+    return `
+      <p><strong>Sacred Ceremonial Heritage:</strong> Inspired by classic Indian ceremonial daggers, this piece represents courage, honor, and protective grace. Every blade is precision-forged in Amritsar using traditional furnace tempering and hand-polished to a mirror finish.</p>
+      <p><strong>Techniques &amp; Specifications:</strong></p>
+      <ul class="km-acc-list">
+        <li><strong>Blade:</strong> Solid carbon steel hand-ground with classic fuller curvature.</li>
+        <li><strong>Handle:</strong> Solid cast brass or composite rosewood with ergonomic finger contour.</li>
+        <li><strong>Sheath:</strong> Custom wooden scabbard lined with soft velvet and decorative metal mounts.</li>
+        <li><strong>Usage:</strong> Ceremonial display, traditional attires, and collector heirlooms.</li>
+      </ul>
+    `;
+  }
+
+  // Default Royal Wedding Sword / Sirohi Talwar
+  return `
+    <p><strong>Why This Royal Sword:</strong> The wedding sword (Talwar) has been a sacred emblem of dignity, valor, and marital commitment in Indian heritage for centuries. Handcrafted in Amritsar, Punjab by master swordsmiths whose families have forged blades since the 19th century, this sword transforms the groom's wedding attire into an unforgettable royal spectacle.</p>
+    <p><strong>Master Craftsmanship &amp; Techniques:</strong></p>
+    <ul class="km-acc-list">
+      <li><strong>Blade Forging:</strong> High-grade carbon steel blade hand-hammered, heat-treated, and mirror-buffed to a radiant polish.</li>
+      <li><strong>Hilt Ergonomics:</strong> Heavy cast brass or stainless steel Punjabi talwar hilt featuring a traditional disc pommel (katori) and quillillons.</li>
+      <li><strong>Royal Scabbard (Miyan):</strong> Hand-carved seasoned hardwood core upholstered in royal velvet with hand-embroidered gold zari borders.</li>
+      <li><strong>Edge Specification:</strong> Unsharpened ceremonial dull edge in strict compliance with safety laws and wedding procession etiquette.</li>
+      <li><strong>Dimensions:</strong> ~36-38 inches total length; weight ~1.15 kg balanced for effortless ceremonial carry.</li>
+    </ul>
+  `;
+}
+
+const KM_EXCHANGE_RATE_INR_TO_USD = 85;
+
+function getActiveCurrency() {
+  return localStorage.getItem('km_currency') || 'INR';
+}
+
+function getActiveCountry() {
+  return localStorage.getItem('km_country') || 'India';
+}
+
+function getActiveCountryLabel() {
+  return localStorage.getItem('km_country_label') || 'India | INR ₹';
+}
+
+function kmMoney(value, overrideCurrency = null) {
+  const currency = overrideCurrency || getActiveCurrency();
+  const num = Number(value) || 0;
+  if (currency === 'USD') {
+    const usd = Math.round(num / KM_EXCHANGE_RATE_INR_TO_USD);
+    return `$${usd.toLocaleString('en-US')}`;
+  }
+  return `₹${num.toLocaleString('en-IN')}`;
 }
 
 function kmCategory(product) {
@@ -137,8 +351,8 @@ function kmProductCard(product, showSwatches) {
   const price = Number(variant.price);
   const saving = compare > price ? `Save ${kmMoney(compare - price)}` : '';
   const detailUrl = `product-detail.html?handle=${encodeURIComponent(product.handle)}`;
-  const details = kmBuildQuickViewDetails(product.body_html || '', '');
-  const specsAttr = details.specs.slice(0, 6).map(spec => `${spec.key}: ${spec.value}`).join('|');
+  const details = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
+  const specsAttr = details.specs.slice(0, 4).map(spec => `${spec.key}: ${spec.value}`).join('|');
 
   // Display ABCD & color options ONLY on the products catalog page
   const isCatalogPage = showSwatches !== undefined ? Boolean(showSwatches) : (
@@ -166,8 +380,8 @@ function kmProductCard(product, showSwatches) {
     </div>` : '';
 
   return `<article class="km-product-card km-noise-card" data-handle="${kmEscapeAttr(product.handle || '')}" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
-    <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy">` : ''}</a><a class="km-quick-view-btn" href="${detailUrl}">View product</a></div>
-    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare">${kmMoney(compare)}</span>` : ''}</div>${swatchesHtml}<a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
+    <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy">` : ''}</a><button class="km-quick-view-btn" type="button">⚡ Quick View</button></div>
+    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>${swatchesHtml}<a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
   </article>`;
 }
 
@@ -187,7 +401,7 @@ function hydrateHeroCards(products) {
     const compare = Number(variant.compare_at_price);
     const price = Number(variant.price);
     const shortTitle = kmCleanCardTitle(product.title);
-    card.innerHTML = `<a href="product-detail.html?handle=${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price">${kmMoney(price)}${compare > price ? `<span>${kmMoney(compare)}</span>` : ''}</div></div>`;
+    card.innerHTML = `<a href="product-detail.html?handle=${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
   });
 }
 
@@ -244,13 +458,108 @@ function hydrateProductDetail(products = []) {
   const titleEl = detail.querySelector('[data-product-title]');
   if (titleEl) titleEl.textContent = product.title;
   const typeEl = detail.querySelector('[data-product-type]');
-  if (typeEl) typeEl.textContent = product.product_type || product.vendor || 'KraftMart';
+  if (typeEl) typeEl.textContent = product.vendor || 'KraftMart';
   const description = detail.querySelector('[data-product-description]');
-  if (description) description.textContent = (product.body_html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  if (description) {
+    const qvInfo = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
+    description.textContent = qvInfo.description;
+  }
   const priceRow = detail.querySelector('[data-product-price]');
-  if (priceRow) priceRow.innerHTML = `<span style="font-family:var(--km-font-heading);font-size:2.2rem;font-weight:700;color:var(--km-crimson-primary);">${kmMoney(price)}</span>${compare > price ? `<span style="font-size:1.1rem;color:var(--km-text-secondary);text-decoration:line-through;">${kmMoney(compare)}</span><span class="km-sale-badge" style="position:static;">${Math.round((compare - price) / compare * 100)}% OFF</span>` : ''}`;
+  if (priceRow) priceRow.innerHTML = `<span class="km-qv-price" style="font-size: 2rem;">${kmMoney(price)}</span>${compare > price ? `<span class="km-qv-compare" style="font-size: 1.1rem;">${kmMoney(compare)}</span><span class="km-qv-sale-badge">Sale</span>` : ''}`;
   const add = detail.querySelector('[data-product-add]');
-  if (add) add.textContent = variant.available !== false ? `ADD TO CART — ${kmMoney(price)}` : 'SOLD OUT';
+  if (add) add.textContent = variant.available !== false ? 'Add To Cart' : 'SOLD OUT';
+
+  // Wire up quantity stepper for Product Detail page
+  let pdpQty = 1;
+  const pdpQtyVal = document.getElementById('kmPdpQtyVal');
+  const pdpQtyDec = document.getElementById('kmPdpQtyDec');
+  const pdpQtyInc = document.getElementById('kmPdpQtyInc');
+
+  if (pdpQtyDec && !pdpQtyDec.dataset.bound) {
+    pdpQtyDec.dataset.bound = 'true';
+    pdpQtyDec.addEventListener('click', () => {
+      if (pdpQty > 1) {
+        pdpQty--;
+        if (pdpQtyVal) pdpQtyVal.textContent = pdpQty;
+      }
+    });
+  }
+  if (pdpQtyInc && !pdpQtyInc.dataset.bound) {
+    pdpQtyInc.dataset.bound = 'true';
+    pdpQtyInc.addEventListener('click', () => {
+      if (pdpQty < 99) {
+        pdpQty++;
+        if (pdpQtyVal) pdpQtyVal.textContent = pdpQty;
+      }
+    });
+  }
+
+  // Specifications Subheading & 5 Concise Bullets
+  const specsTitleEl = detail.querySelector('[data-product-specs-title]');
+  if (specsTitleEl) {
+    let subHeading = kmCleanCardTitle(product.title);
+    if (!subHeading.toLowerCase().includes('blade') && !subHeading.toLowerCase().includes('kada')) {
+      subHeading += ' – Handcrafted Blade';
+    }
+    specsTitleEl.textContent = subHeading;
+  }
+
+  const bulletsEl = detail.querySelector('[data-product-bullets]');
+  if (bulletsEl) {
+    const bullets = kmGetProductBullets(product.title, product.body_html || '');
+    bulletsEl.innerHTML = bullets.map(b => `<li>${kmEscape(b)}</li>`).join('');
+  }
+
+  // Populate Dropdown 1: Description & Craftsmanship Story
+  const accDescEl = detail.querySelector('[data-acc-description]');
+  if (accDescEl) {
+    accDescEl.innerHTML = kmFormatProductAccordionStory(product.title, product.body_html || '');
+  }
+
+  // Dynamic customization of Dropdown titles & content for Kada vs Sword
+  const isKadaProduct = (product.title + ' ' + (product.body_html || '')).toLowerCase().includes('kada');
+  const accDescTitle = detail.querySelector('[data-acc-desc-title]');
+  if (accDescTitle) {
+    accDescTitle.textContent = isKadaProduct ? 'Description & Sacred Heritage Craftsmanship' : 'Description & Royal Heritage Craftsmanship';
+  }
+
+  const accRealTitle = detail.querySelector('[data-acc-real-title]');
+  if (accRealTitle) {
+    accRealTitle.innerHTML = `<span class="km-acc-icon">${isKadaProduct ? '✨' : '⚔️'}</span><span>${isKadaProduct ? 'Is It Real Sarabloh or Plastic?' : 'Is It Real or Plastic?'}</span>`;
+  }
+
+  const accRealBody = detail.querySelector('[data-acc-real-body]');
+  if (accRealBody && isKadaProduct) {
+    accRealBody.innerHTML = `
+      <p><strong>100% Authentic Pure Sarabloh (Iron) — Zero Plastic:</strong></p>
+      <p>At KraftMart, every kada is forged from traditional solid metals in adherence to sacred martial heritage:</p>
+      <ul class="km-acc-list">
+        <li><strong>Authentic Metal:</strong> Pure Sarabloh (iron base) or solid brass. No alloys, no hollow shells, and strictly no plastic or synthetic molds.</li>
+        <li><strong>Heft &amp; Feel:</strong> Solid weight (~180g – 220g) providing the traditional reassuring presence on the wrist.</li>
+        <li><strong>Hand-Chiseled Edges:</strong> Individually filed teeth and hand-carved floral motifs that maintain crisp character for generations.</li>
+        <li><strong>Care &amp; Longevity:</strong> As genuine Sarabloh, light oiling (mustard or coconut oil) keeps it conditioned with a deep antique patina.</li>
+      </ul>
+    `;
+  }
+
+  const accEngraveTitle = detail.querySelector('[data-acc-engrave-title]');
+  if (accEngraveTitle) {
+    accEngraveTitle.innerHTML = `<span class="km-acc-icon">✒️</span><span>${isKadaProduct ? 'Can I Engrave on This Kada?' : 'Can I Engrave in This Sword?'}</span>`;
+  }
+
+  const accEngraveBody = detail.querySelector('[data-acc-engrave-body]');
+  if (accEngraveBody && isKadaProduct) {
+    accEngraveBody.innerHTML = `
+      <p><strong>Yes, Complimentary High-Precision Laser Engraving is Included!</strong></p>
+      <p>Personalize your sacred Sarabloh Kada with permanent laser inscription:</p>
+      <ul class="km-acc-list">
+        <li><strong>What You Can Engrave:</strong> Sacred mantras (<em>“Ik Onkar”</em>, <em>“Deg Tegh Fateh”</em>), initials, names, wedding dates, or Gurmukhi calligraphy.</li>
+        <li><strong>Placement:</strong> Can be subtly etched along the inner circumference or outer flat rim.</li>
+        <li><strong>How to Submit:</strong> Enter your desired text in the custom box above or message our team on WhatsApp (+91 98888 23986) with your order ID.</li>
+      </ul>
+    `;
+  }
+
   const main = document.getElementById('kmPdpMainImage');
   if (main && image) { main.src = image; main.alt = product.title; }
   const thumbs = document.querySelector('.km-pdp-thumbs');
@@ -268,6 +577,7 @@ function hydrateProductDetail(products = []) {
 async function initRealCatalogue() {
   try {
     const products = await getLiveProducts();
+    window.KM_CACHED_PRODUCTS = products;
     hydrateHeroCards(products);
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -589,7 +899,36 @@ async function updateCartDrawerContent() {
 function initQuickViewModal() {
   const modal = document.getElementById('kmQuickViewModal');
   const closeBtn = document.getElementById('kmQvClose');
+  const backdrop = document.getElementById('kmQvBackdrop');
   if (!modal) return;
+
+  // Quantity Stepper state in Quick View
+  let qvQty = 1;
+  const qvQtyVal = document.getElementById('kmQvQtyVal');
+  const qvQtyDec = document.getElementById('kmQvQtyDec');
+  const qvQtyInc = document.getElementById('kmQvQtyInc');
+
+  if (qvQtyDec && !qvQtyDec.dataset.bound) {
+    qvQtyDec.dataset.bound = 'true';
+    qvQtyDec.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (qvQty > 1) {
+        qvQty--;
+        if (qvQtyVal) qvQtyVal.textContent = qvQty;
+      }
+    });
+  }
+
+  if (qvQtyInc && !qvQtyInc.dataset.bound) {
+    qvQtyInc.dataset.bound = 'true';
+    qvQtyInc.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (qvQty < 99) {
+        qvQty++;
+        if (qvQtyVal) qvQtyVal.textContent = qvQty;
+      }
+    });
+  }
 
   // Delegate quick view button clicks
   document.addEventListener('click', (e) => {
@@ -600,64 +939,98 @@ function initQuickViewModal() {
     const card = qvBtn.closest('.km-product-card');
     if (!card) return;
 
-    // Extract attributes
-    const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src;
-    const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent;
-    const desc = card.getAttribute('data-qv-desc') || 'Handcrafted Rajput ceremonial sword forged in Amritsar, Punjab.';
-    const price = card.getAttribute('data-qv-price') || card.querySelector('.km-price-current')?.textContent;
-    const compare = card.getAttribute('data-qv-compare') || card.querySelector('.km-price-compare')?.textContent || '';
-    const specsRaw = card.getAttribute('data-qv-specs') || 'Craft: Amritsar Forged|Material: Brass + Carbon Steel|Engraving: Free Laser Inscription|Dispatch: FedEx / DHL';
-    const details = kmBuildQuickViewDetails(desc, specsRaw);
+    // Reset quantity
+    qvQty = 1;
+    if (qvQtyVal) qvQtyVal.textContent = '1';
 
-    // Populate modal
+    // Extract attributes
+    const handle = card.getAttribute('data-handle') || '';
+    const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src || 'assets/sword.png';
+    const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent || 'Ceremonial Masterpiece';
+    const desc = card.getAttribute('data-qv-desc') || '';
+    const price = card.getAttribute('data-qv-price') || card.querySelector('.km-price-current')?.textContent || 'Rs. 9,999.00';
+    const compare = card.getAttribute('data-qv-compare') || card.querySelector('.km-price-compare')?.textContent || '';
+    const specsRaw = card.getAttribute('data-qv-specs') || '';
+    const details = kmBuildQuickViewDetails(desc, specsRaw, title);
+
+    // Populate modal texts
     const qvImg = document.getElementById('kmQvImage');
+    const qvThumbs = document.getElementById('kmQvThumbs');
+    const qvVendor = document.getElementById('kmQvVendor');
     const qvTitle = document.getElementById('kmQvTitle');
-    const qvDesc = document.getElementById('kmQvDesc');
     const qvPrice = document.getElementById('kmQvPrice');
     const qvCompare = document.getElementById('kmQvCompare');
-    const qvSpecs = document.getElementById('kmQvSpecs');
+    const qvSaleBadge = document.getElementById('kmQvSaleBadge');
+    const qvSpecsHeading = document.getElementById('kmQvSpecsHeading');
+    const qvSpecsBullets = document.getElementById('kmQvSpecsBullets');
 
     if (qvImg) { qvImg.src = img; qvImg.alt = title; }
+    if (qvVendor) qvVendor.textContent = 'KraftMart';
     if (qvTitle) qvTitle.textContent = title;
-    if (qvDesc) qvDesc.textContent = details.description;
     if (qvPrice) qvPrice.textContent = price;
-    if (qvCompare) qvCompare.textContent = compare;
-
-    if (qvSpecs) {
-      let specsHtml = '';
-      details.specs.forEach(spec => {
-        specsHtml += `
-          <div class="km-qv-spec-row">
-            <span class="km-qv-spec-key">${kmEscape(spec.key)}</span>
-            <span class="km-qv-spec-val">${kmEscape(spec.value)}</span>
-          </div>
-        `;
-      });
-
-      if (!specsHtml) {
-        specsHtml = `
-          <div class="km-qv-spec-row">
-            <span class="km-qv-spec-key">Craft</span>
-            <span class="km-qv-spec-val">Amritsar Forged</span>
-          </div>
-          <div class="km-qv-spec-row">
-            <span class="km-qv-spec-key">Dispatch</span>
-            <span class="km-qv-spec-val">FedEx / DHL</span>
-          </div>
-        `;
+    if (qvCompare) {
+      qvCompare.textContent = compare;
+      qvCompare.style.display = compare ? 'inline' : 'none';
+    }
+    if (qvSaleBadge) {
+      qvSaleBadge.style.display = compare ? 'inline-block' : 'none';
+    }
+    if (qvSpecsHeading) {
+      let subHeading = kmCleanCardTitle(title);
+      if (!subHeading.toLowerCase().includes('blade') && !subHeading.toLowerCase().includes('kada')) {
+        subHeading += ' – Handcrafted Blade';
       }
+      qvSpecsHeading.textContent = subHeading;
+    }
+    if (qvSpecsBullets) {
+      qvSpecsBullets.innerHTML = details.bullets.map(b => `<li>${kmEscape(b)}</li>`).join('');
+    }
 
-      qvSpecs.innerHTML = specsHtml;
+    // Populate 4 interactive thumbnails matching the user screenshot
+    const liveProd = (window.KM_CACHED_PRODUCTS || []).find(p => p.handle === handle || p.title === title);
+    let galleryImages = [img];
+    if (liveProd && Array.isArray(liveProd.images) && liveProd.images.length > 0) {
+      galleryImages = liveProd.images.map(i => i.src).filter(Boolean);
+    }
+    const defaultFallbacks = ['assets/sword.png', 'assets/hero_talwar.png', 'assets/sword2.png', 'assets/sword.png'];
+    let idx = 0;
+    while (galleryImages.length < 4) {
+      galleryImages.push(defaultFallbacks[idx % defaultFallbacks.length]);
+      idx++;
+    }
+    const finalThumbs = galleryImages.slice(0, 4);
+
+    if (qvThumbs) {
+      qvThumbs.innerHTML = finalThumbs.map((thumbSrc, index) => `
+        <button type="button" class="km-qv-thumb-item${index === 0 ? ' is-active' : ''}" data-src="${kmEscapeAttr(thumbSrc)}" aria-label="Thumbnail ${index + 1}">
+          <img src="${kmEscapeAttr(thumbSrc)}" alt="${kmEscapeAttr(title)} view ${index + 1}" />
+        </button>
+      `).join('');
+
+      qvThumbs.querySelectorAll('.km-qv-thumb-item').forEach(thumbBtn => {
+        thumbBtn.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          const targetSrc = thumbBtn.getAttribute('data-src');
+          if (qvImg && targetSrc) qvImg.src = targetSrc;
+          qvThumbs.querySelectorAll('.km-qv-thumb-item').forEach(b => b.classList.remove('is-active'));
+          thumbBtn.classList.add('is-active');
+        });
+      });
     }
 
     // Show modal
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
   });
 
   // Close triggers
   if (closeBtn) {
     closeBtn.addEventListener('click', closeQuickViewModal);
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeQuickViewModal);
   }
 
   modal.addEventListener('click', (e) => {
@@ -678,6 +1051,7 @@ function closeQuickViewModal() {
   if (modal) {
     modal.classList.remove('is-open');
     document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
   }
 }
 
@@ -1186,21 +1560,51 @@ function initSearchOverlayModal() {
   });
 })();
 
-/* Stat counters: animate numbers when they scroll into view */
+/* Stat counters: animate numbers smoothly when they scroll into view */
 (function initStatCounters() {
   const statNums = document.querySelectorAll('.km-stat-number');
   if (!statNums.length) return;
 
+  function countUp(el) {
+    const rawText = el.textContent.trim();
+    const countTarget = parseFloat(el.dataset.count || rawText.replace(/[^0-9.]/g, ''));
+    if (isNaN(countTarget) || el.dataset.animated) return;
+    el.dataset.animated = '1';
+
+    const suffix = el.dataset.suffix !== undefined ? el.dataset.suffix : (rawText.replace(/[0-9.,\s]/g, '') || '');
+    const prefix = el.dataset.prefix || '';
+    const isFloat = String(countTarget).includes('.');
+    const duration = 1600;
+    const start = performance.now();
+
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = progress === 1 ? countTarget : (ease * countTarget);
+      const formatted = isFloat ? current.toFixed(1) : Math.floor(current).toLocaleString();
+      el.innerHTML = `${prefix}${formatted}<span>${suffix}</span>`;
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+    requestAnimationFrame(update);
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    statNums.forEach(n => countUp(n));
+    return;
+  }
+
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const raw = el.textContent.replace(/[^0-9.K+★]/g, '');
-      if (!raw || el.dataset.animated) return;
-      el.dataset.animated = '1';
-      counterObserver.unobserve(el);
+      if (entry.isIntersecting) {
+        countUp(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.2 });
 
   statNums.forEach(n => counterObserver.observe(n));
 })();
@@ -1403,5 +1807,518 @@ function initLiveEngravingSimulator() {
   });
 }
 
+
+
+
+/**
+ * Catalog Toolbar, Filter Sidebar, Mobile Drawer & Sorting Logic
+ */
+function initCatalogToolbarAndFilters() {
+  const grid = document.getElementById('kmProductGrid');
+  const viewGridBtn = document.getElementById('kmViewGridBtn');
+  const viewListBtn = document.getElementById('kmViewListBtn');
+  const countDisplay = document.getElementById('kmCatalogCount');
+  const sortSelect = document.getElementById('kmCatalogSort');
+  const clearFiltersBtn = document.getElementById('kmClearAllFilters');
+
+  // Mobile Filter Drawer elements
+  const mobileDrawer = document.getElementById('kmMobileFilterDrawer');
+  const openMobileFilterBtn = document.getElementById('kmOpenMobileFilter');
+  const closeMobileFilterBtn = document.getElementById('kmCloseMobileFilter');
+  const drawerBackdrop = document.getElementById('kmDrawerBackdrop');
+  const applyMobileFilterBtn = document.getElementById('kmApplyMobileFilter');
+
+  // 1. Grid vs List View Toggle
+  if (viewGridBtn && viewListBtn && grid) {
+    viewGridBtn.addEventListener('click', () => {
+      grid.classList.remove('km-view-list');
+      viewGridBtn.classList.add('active');
+      viewListBtn.classList.remove('active');
+    });
+
+    viewListBtn.addEventListener('click', () => {
+      grid.classList.add('km-view-list');
+      viewListBtn.classList.add('active');
+      viewGridBtn.classList.remove('active');
+    });
+  }
+
+  // 2. Mobile Filter Drawer Open / Close
+  function openMobileFilter() {
+    if (mobileDrawer) {
+      mobileDrawer.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeMobileFilter() {
+    if (mobileDrawer) {
+      mobileDrawer.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (openMobileFilterBtn) openMobileFilterBtn.addEventListener('click', openMobileFilter);
+  if (closeMobileFilterBtn) closeMobileFilterBtn.addEventListener('click', closeMobileFilter);
+  if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeMobileFilter);
+  if (applyMobileFilterBtn) {
+    applyMobileFilterBtn.addEventListener('click', () => {
+      closeMobileFilter();
+      filterProducts();
+    });
+  }
+
+  // 3. Category Checkbox & Price Filter Handling
+  function filterProducts() {
+    if (!grid) return;
+    const cards = grid.querySelectorAll('.km-product-card');
+
+    // Selected categories
+    const checkedCats = Array.from(document.querySelectorAll('.km-filter-cat:checked')).map(cb => cb.value);
+    const isAllCats = checkedCats.includes('all') || checkedCats.length === 0;
+
+    // Selected price chip
+    const activeChip = document.querySelector('.km-filter-chip.active');
+    const priceRange = activeChip ? activeChip.getAttribute('data-price') : 'all';
+
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const category = (card.getAttribute('data-category') || 'wedding').toLowerCase();
+      const rawPrice = card.getAttribute('data-price') || card.querySelector('.km-price-current')?.textContent || '0';
+      const price = parseInt(String(rawPrice).replace(/[^0-9]/g, ''), 10) || 0;
+
+      // Check category match
+      let matchCat = isAllCats || checkedCats.includes(category);
+
+      // Check price match
+      let matchPrice = true;
+      if (priceRange === 'under2000') {
+        matchPrice = price < 2000;
+      } else if (priceRange === '2000-4000') {
+        matchPrice = price >= 2000 && price <= 4000;
+      } else if (priceRange === 'above4000') {
+        matchPrice = price > 4000;
+      }
+
+      if (matchCat && matchPrice) {
+        card.style.display = '';
+        card.style.opacity = '1';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (countDisplay) {
+      countDisplay.textContent = `${visibleCount} ${visibleCount === 1 ? 'Masterpiece' : 'Masterpieces'}`;
+    }
+  }
+
+  // Bind Category Checkboxes
+  document.querySelectorAll('.km-filter-cat').forEach(checkbox => {
+    checkbox.addEventListener('change', (e) => {
+      if (e.target.value === 'all' && e.target.checked) {
+        document.querySelectorAll('.km-filter-cat').forEach(cb => {
+          if (cb !== e.target) cb.checked = false;
+        });
+      } else if (e.target.checked) {
+        document.querySelectorAll('.km-filter-cat[value="all"]').forEach(cb => {
+          cb.checked = false;
+        });
+      }
+      filterProducts();
+    });
+  });
+
+  // Bind Price Filter Chips
+  document.querySelectorAll('.km-filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.km-filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      filterProducts();
+    });
+  });
+
+  // Bind Clear Filters
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', () => {
+      document.querySelectorAll('.km-filter-cat').forEach(cb => {
+        cb.checked = cb.value === 'all';
+      });
+      document.querySelectorAll('.km-filter-chip').forEach(chip => {
+        chip.classList.toggle('active', chip.getAttribute('data-price') === 'all');
+      });
+      filterProducts();
+    });
+  }
+
+  // 4. Sorting Selector Logic
+  if (sortSelect && grid) {
+    sortSelect.addEventListener('change', () => {
+      const val = sortSelect.value;
+      const cards = Array.from(grid.querySelectorAll('.km-product-card'));
+
+      cards.sort((a, b) => {
+        const priceA = parseInt(String(a.getAttribute('data-price') || '0').replace(/[^0-9]/g, ''), 10);
+        const priceB = parseInt(String(b.getAttribute('data-price') || '0').replace(/[^0-9]/g, ''), 10);
+
+        if (val === 'price-asc') return priceA - priceB;
+        if (val === 'price-desc') return priceB - priceA;
+        return 0; // Default order
+      });
+
+      cards.forEach(card => grid.appendChild(card));
+    });
+  }
+}
+
+// Global Swatch Selection, Focus Cards & Interactive Background Tracking
+document.addEventListener('DOMContentLoaded', () => {
+  // Swatches Click (Size & Color)
+  document.body.addEventListener('click', (e) => {
+    const colorSwatch = e.target.closest('.km-color-swatch');
+    if (colorSwatch) {
+      const container = colorSwatch.closest('.km-color-swatches');
+      if (container) {
+        container.querySelectorAll('.km-color-swatch').forEach(el => el.classList.remove('km-color-active'));
+        colorSwatch.classList.add('km-color-active');
+      }
+    }
+
+    const variantBtn = e.target.closest('.km-swatch-btn');
+    if (variantBtn) {
+      const container = variantBtn.closest('.km-variant-swatches');
+      if (container) {
+        container.querySelectorAll('.km-swatch-btn').forEach(el => el.classList.remove('km-swatch-btn-active'));
+        variantBtn.classList.add('km-swatch-btn-active');
+      }
+    }
+  });
+
+  // Aceternity UI Focus Cards Hover Physics (Only on Product Catalog page)
+  document.body.addEventListener('pointerover', (e) => {
+    const card = e.target.closest('.km-product-card');
+    if (!card) return;
+    const grid = card.closest('.km-product-grid');
+    if (!grid || (grid.dataset.liveMode !== 'catalog' && grid.id !== 'kmProductGrid')) return;
+
+    grid.classList.add('km-focus-active');
+    const allCards = grid.querySelectorAll('.km-product-card');
+    allCards.forEach(c => {
+      if (c === card) {
+        c.classList.add('km-focused');
+        c.classList.remove('km-unfocused');
+      } else {
+        c.classList.add('km-unfocused');
+        c.classList.remove('km-focused');
+      }
+    });
+  });
+
+  document.body.addEventListener('pointerout', (e) => {
+    const card = e.target.closest('.km-product-card');
+    if (!card) return;
+    const grid = card.closest('.km-product-grid');
+    if (!grid || (grid.dataset.liveMode !== 'catalog' && grid.id !== 'kmProductGrid')) return;
+
+    const related = e.relatedTarget;
+    if (grid.contains(related)) return;
+
+    grid.classList.remove('km-focus-active');
+    grid.querySelectorAll('.km-product-card').forEach(c => {
+      c.classList.remove('km-focused', 'km-unfocused');
+    });
+  });
+
+  // Aceternity BackgroundGradientAnimation Interactive Mouse Tracking
+  document.querySelectorAll('.km-bg-gradient-container').forEach(container => {
+    const parent = container.parentElement;
+    if (!parent) return;
+
+    let curX = 0;
+    let curY = 0;
+    let tgX = 0;
+    let tgY = 0;
+
+    parent.addEventListener('mousemove', (e) => {
+      const rect = parent.getBoundingClientRect();
+      tgX = e.clientX - rect.left;
+      tgY = e.clientY - rect.top;
+    });
+
+    function moveBlob() {
+      curX += (tgX - curX) / 16;
+      curY += (tgY - curY) / 16;
+      container.style.setProperty('--km-mouse-x', `${Math.round(curX)}px`);
+      container.style.setProperty('--km-mouse-y', `${Math.round(curY)}px`);
+      requestAnimationFrame(moveBlob);
+    }
+    moveBlob();
+  });
+});
+
+/**
+ * Policy Dropdown Navigation Toggle
+ */
+function initPolicyDropdown() {
+  document.querySelectorAll('.km-has-dropdown').forEach(dropdown => {
+    const toggle = dropdown.querySelector('.km-dropdown-toggle');
+    if (!toggle) return;
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdown.classList.toggle('is-open');
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.km-has-dropdown')) {
+      document.querySelectorAll('.km-has-dropdown.is-open').forEach(el => el.classList.remove('is-open'));
+    }
+  });
+}
+
+/**
+ * Currency Selector & Universal Price Converter
+ */
+function initCurrencySelector() {
+  const trigger = document.getElementById('kmCurrencyTrigger');
+  const widget = document.getElementById('kmCurrencyWidget');
+  const triggerText = document.getElementById('kmTriggerText');
+  const options = document.querySelectorAll('.km-currency-opt');
+
+  const currentCountry = getActiveCountry();
+  const currentCurrency = getActiveCurrency();
+  const currentLabel = getActiveCountryLabel();
+
+  // Initialize trigger label and active options
+  if (triggerText) {
+    triggerText.textContent = currentLabel;
+  }
+
+  options.forEach(opt => {
+    if (opt.dataset.country === currentCountry) {
+      opt.classList.add('is-active');
+    } else {
+      opt.classList.remove('is-active');
+    }
+
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const country = opt.dataset.country;
+      const currency = opt.dataset.currency;
+      const label = opt.dataset.label || `${country} | ${currency} ${currency === 'USD' ? '$' : '₹'}`;
+
+      localStorage.setItem('km_country', country);
+      localStorage.setItem('km_currency', currency);
+      localStorage.setItem('km_country_label', label);
+
+      if (triggerText) triggerText.textContent = label;
+
+      options.forEach(o => o.classList.remove('is-active'));
+      opt.classList.add('is-active');
+
+      if (widget) widget.classList.remove('is-open');
+
+      applyCurrencyToPage(currency);
+      showCurrencyToast(country, currency);
+    });
+  });
+
+  if (trigger && widget) {
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      widget.classList.toggle('is-open');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!widget.contains(e.target)) {
+        widget.classList.remove('is-open');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') widget.classList.remove('is-open');
+    });
+  }
+
+  // Apply currency to initial page markup
+  applyCurrencyToPage(currentCurrency);
+}
+
+function showCurrencyToast(country, currency) {
+  let toast = document.getElementById('kmCurrencyToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'kmCurrencyToast';
+    toast.className = 'km-currency-toast';
+    document.body.appendChild(toast);
+  }
+  const symbol = currency === 'USD' ? '$' : '₹';
+  toast.innerHTML = `<span style="color: var(--km-gold-primary); font-size: 1.1rem;">❖</span> Shipping to <strong>${country}</strong>: Prices displayed in <strong>${currency} (${symbol})</strong>`;
+  toast.classList.add('is-visible');
+
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.classList.remove('is-visible');
+  }, 3200);
+}
+
+function parseNumericPrice(str) {
+  if (!str) return 0;
+  const cleaned = String(str).replace(/,/g, '');
+  const match = cleaned.match(/\d+/);
+  return match ? parseInt(match[0], 10) : 0;
+}
+
+function applyCurrencyToPage(currency) {
+  const isUsd = currency === 'USD';
+
+  // 1. Process 3D Hero Cards & Mini Prices (.km-3d-card-price, .km-mini-price)
+  document.querySelectorAll('.km-3d-card-price, .km-mini-price').forEach(el => {
+    const compareSpan = el.querySelector('span:not(.km-mini-save)');
+    const saveSpan = el.querySelector('.km-mini-save');
+
+    if (!el.dataset.inrMain) {
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll('span').forEach(s => s.remove());
+      el.dataset.inrMain = parseNumericPrice(clone.textContent);
+    }
+    const mainInr = Number(el.dataset.inrMain);
+
+    let compInr = 0;
+    if (compareSpan) {
+      if (!compareSpan.dataset.inrComp) {
+        compareSpan.dataset.inrComp = parseNumericPrice(compareSpan.textContent);
+      }
+      compInr = Number(compareSpan.dataset.inrComp);
+    }
+
+    const mainStr = isUsd ? `$${Math.round(mainInr / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${mainInr.toLocaleString('en-IN')}`;
+
+    if (compareSpan && compInr) {
+      const compStr = isUsd ? `$${Math.round(compInr / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${compInr.toLocaleString('en-IN')}`;
+      if (saveSpan) {
+        if (!saveSpan.dataset.inrSave) saveSpan.dataset.inrSave = parseNumericPrice(saveSpan.textContent);
+        const saveVal = Number(saveSpan.dataset.inrSave);
+        const saveStr = isUsd ? `$${Math.round(saveVal / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${saveVal.toLocaleString('en-IN')}`;
+        el.innerHTML = `${mainStr} <span class="km-mini-save">Save ${saveStr}</span>`;
+      } else {
+        el.innerHTML = `${mainStr} <span>${compStr}</span>`;
+      }
+    } else if (saveSpan) {
+      if (!saveSpan.dataset.inrSave) saveSpan.dataset.inrSave = parseNumericPrice(saveSpan.textContent);
+      const saveVal = Number(saveSpan.dataset.inrSave);
+      const saveStr = isUsd ? `$${Math.round(saveVal / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${saveVal.toLocaleString('en-IN')}`;
+      el.innerHTML = `${mainStr} <span class="km-mini-save">Save ${saveStr}</span>`;
+    } else {
+      el.textContent = mainStr;
+    }
+  });
+
+  // 2. Process Standard Single Price Elements
+  const singlePriceSelectors = [
+    '.km-price-current',
+    '.km-price-compare',
+    '.km-modal-price-current',
+    '.km-modal-price-compare',
+    '.km-cart-subtotal'
+  ];
+
+  document.querySelectorAll(singlePriceSelectors.join(',')).forEach(el => {
+    if (!el.dataset.inrPrice) {
+      el.dataset.inrPrice = parseNumericPrice(el.textContent);
+    }
+    const baseInr = Number(el.dataset.inrPrice);
+    if (!baseInr) return;
+
+    if (isUsd) {
+      el.textContent = `$${Math.round(baseInr / KM_EXCHANGE_RATE_INR_TO_USD).toLocaleString('en-US')}`;
+    } else {
+      el.textContent = `₹${baseInr.toLocaleString('en-IN')}`;
+    }
+  });
+
+  // 3. Process Product Detail Page price row: [data-product-price]
+  document.querySelectorAll('[data-product-price]').forEach(row => {
+    row.querySelectorAll('span').forEach((span) => {
+      if (span.classList.contains('km-sale-badge')) {
+        if (!span.dataset.inrBadgeText) span.dataset.inrBadgeText = span.textContent;
+        const saveMatch = span.dataset.inrBadgeText.match(/(?:₹|Rs\.?|\$)\s*([\d,]+)/);
+        if (saveMatch) {
+          const saveVal = parseInt(saveMatch[1].replace(/,/g, ''), 10);
+          const saveFormatted = isUsd ? `$${Math.round(saveVal / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${saveVal.toLocaleString('en-IN')}`;
+          span.textContent = span.dataset.inrBadgeText.replace(/(?:₹|Rs\.?|\$)\s*[\d,]+/, saveFormatted);
+        }
+      } else {
+        if (!span.dataset.inrPrice) {
+          span.dataset.inrPrice = parseNumericPrice(span.textContent);
+        }
+        const val = Number(span.dataset.inrPrice);
+        if (val) {
+          span.textContent = isUsd ? `$${Math.round(val / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${val.toLocaleString('en-IN')}`;
+        }
+      }
+    });
+  });
+
+  // 4. Process PDP Add to Cart Button: [data-product-add]
+  document.querySelectorAll('[data-product-add]').forEach(btn => {
+    if (!btn.dataset.inrBasePrice) {
+      btn.dataset.inrBasePrice = parseNumericPrice(btn.textContent) || 2599;
+    }
+    const val = Number(btn.dataset.inrBasePrice);
+    if (val) {
+      const formatted = isUsd ? `$${Math.round(val / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${val.toLocaleString('en-IN')}`;
+      btn.innerHTML = `ADD TO CART &mdash; ${formatted}`;
+    }
+  });
+
+  // 5. Update Quick View data attributes on product cards
+  document.querySelectorAll('[data-qv-price]').forEach(card => {
+    if (!card.dataset.inrQvPrice) {
+      card.dataset.inrQvPrice = parseNumericPrice(card.getAttribute('data-qv-price'));
+    }
+    const baseInr = Number(card.dataset.inrQvPrice);
+    if (baseInr) {
+      card.setAttribute('data-qv-price', isUsd ? `$${Math.round(baseInr / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${baseInr.toLocaleString('en-IN')}`);
+    }
+  });
+
+  document.querySelectorAll('[data-qv-compare]').forEach(card => {
+    const attr = card.getAttribute('data-qv-compare');
+    if (attr) {
+      if (!card.dataset.inrQvCompare) {
+        card.dataset.inrQvCompare = parseNumericPrice(attr);
+      }
+      const baseInr = Number(card.dataset.inrQvCompare);
+      if (baseInr) {
+        card.setAttribute('data-qv-compare', isUsd ? `$${Math.round(baseInr / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${baseInr.toLocaleString('en-IN')}`);
+      }
+    }
+  });
+
+  // 6. Badges & Save Tags (e.g. Save ₹500)
+  document.querySelectorAll('.km-sale-badge, .km-card-badge-gold').forEach(badge => {
+    if (badge.closest('[data-product-price]')) return; // Handled above
+    if (!badge.dataset.inrOrigText) {
+      badge.dataset.inrOrigText = badge.textContent;
+    }
+    const match = badge.dataset.inrOrigText.match(/(?:₹|Rs\.?|\$)\s*([\d,]+)/);
+    if (match) {
+      const saveVal = parseInt(match[1].replace(/,/g, ''), 10);
+      const saveFormatted = isUsd ? `$${Math.round(saveVal / KM_EXCHANGE_RATE_INR_TO_USD)}` : `₹${saveVal.toLocaleString('en-IN')}`;
+      badge.textContent = badge.dataset.inrOrigText.replace(/(?:₹|Rs\.?|\$)\s*[\d,]+/, saveFormatted);
+    }
+  });
+
+  // 7. Filter chips on products.html (< ₹2,000, ₹2k – ₹4k, > ₹4,000)
+  const chipUnder2000 = document.querySelector('.km-filter-chip[data-price="under2000"]');
+  if (chipUnder2000) chipUnder2000.textContent = isUsd ? '< $25' : '< ₹2,000';
+  const chip2000To4000 = document.querySelector('.km-filter-chip[data-price="2000-4000"]');
+  if (chip2000To4000) chip2000To4000.textContent = isUsd ? '$25 – $50' : '₹2k – ₹4k';
+  const chipAbove4000 = document.querySelector('.km-filter-chip[data-price="above4000"]');
+  if (chipAbove4000) chipAbove4000.textContent = isUsd ? '> $50' : '> ₹4,000';
+}
 
 

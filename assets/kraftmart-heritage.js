@@ -253,6 +253,66 @@ function kmGetProductBullets(title = '', plainText = '') {
   ];
 }
 
+function kmFormatProductAccordionStory(title = '', bodyHtml = '') {
+  const lower = (title + ' ' + bodyHtml).toLowerCase();
+  const isKada = lower.includes('kada') || lower.includes('sarabloh');
+  const isDamascus = lower.includes('damascus');
+  const isDagger = lower.includes('kirpan') || lower.includes('dagger') || lower.includes('miniature');
+
+  if (isKada) {
+    return `
+      <p><strong>Generational Punjabi Metalcraft:</strong> Handcrafted with reverence and precision, this traditional Kada is forged as a profound statement of martial strength, spiritual grounding, and cultural pride. Each piece features distinct hand-chiseled contouring and artisan-toothed borders that balance heritage aesthetics with everyday distinction.</p>
+      <p><strong>Artisan Techniques &amp; Specifications:</strong></p>
+      <ul class="km-acc-list">
+        <li><strong>Material &amp; Alloy:</strong> 100% Pure Sarabloh (sacred iron) forged in Amritsar, Punjab.</li>
+        <li><strong>Artisan Technique:</strong> Hand-turned metalwork paired with intricate floral filigree relief.</li>
+        <li><strong>Weight &amp; Feel:</strong> Solid heirloom weight (~180g – 220g), resting comfortably on the wrist.</li>
+        <li><strong>Custom Sizing:</strong> Our concierge team connects via WhatsApp (+91 98888 23986) to calibrate your bespoke diameter before dispatch.</li>
+      </ul>
+    `;
+  }
+
+  if (isDamascus) {
+    return `
+      <p><strong>The Legacy of Wootz &amp; Damascus Blades:</strong> Hand-folded up to 512 layers using high-carbon 1095 and 15N20 steels, this sword displays a hypnotic natural water-pattern grain. Forged in Amritsar according to martial Sikh and Rajput regal traditions, it delivers ceremonial heft and timeless presence for royal weddings.</p>
+      <p><strong>Techniques &amp; Specifications:</strong></p>
+      <ul class="km-acc-list">
+        <li><strong>Blade Steel:</strong> Genuine hand-folded 1095 &amp; 15N20 layered Damascus steel.</li>
+        <li><strong>Hilt &amp; Pommel:</strong> Ornate cast brass with intricate kundan stone inlay and guard protection.</li>
+        <li><strong>Scabbard:</strong> Carved wooden core wrapped in rich zari-embroidered velvet with brass chape and locket.</li>
+        <li><strong>Edge Profile:</strong> Traditional unsharpened ceremonial edge (legal &amp; safe for wedding processions).</li>
+        <li><strong>Total Weight:</strong> ~1.2 kg with optimal point-of-balance near the guard.</li>
+      </ul>
+    `;
+  }
+
+  if (isDagger) {
+    return `
+      <p><strong>Sacred Ceremonial Heritage:</strong> Inspired by classic Indian ceremonial daggers, this piece represents courage, honor, and protective grace. Every blade is precision-forged in Amritsar using traditional furnace tempering and hand-polished to a mirror finish.</p>
+      <p><strong>Techniques &amp; Specifications:</strong></p>
+      <ul class="km-acc-list">
+        <li><strong>Blade:</strong> Solid carbon steel hand-ground with classic fuller curvature.</li>
+        <li><strong>Handle:</strong> Solid cast brass or composite rosewood with ergonomic finger contour.</li>
+        <li><strong>Sheath:</strong> Custom wooden scabbard lined with soft velvet and decorative metal mounts.</li>
+        <li><strong>Usage:</strong> Ceremonial display, traditional attires, and collector heirlooms.</li>
+      </ul>
+    `;
+  }
+
+  // Default Royal Wedding Sword / Sirohi Talwar
+  return `
+    <p><strong>Why This Royal Sword:</strong> The wedding sword (Talwar) has been a sacred emblem of dignity, valor, and marital commitment in Indian heritage for centuries. Handcrafted in Amritsar, Punjab by master swordsmiths whose families have forged blades since the 19th century, this sword transforms the groom's wedding attire into an unforgettable royal spectacle.</p>
+    <p><strong>Master Craftsmanship &amp; Techniques:</strong></p>
+    <ul class="km-acc-list">
+      <li><strong>Blade Forging:</strong> High-grade carbon steel blade hand-hammered, heat-treated, and mirror-buffed to a radiant polish.</li>
+      <li><strong>Hilt Ergonomics:</strong> Heavy cast brass or stainless steel Punjabi talwar hilt featuring a traditional disc pommel (katori) and quillillons.</li>
+      <li><strong>Royal Scabbard (Miyan):</strong> Hand-carved seasoned hardwood core upholstered in royal velvet with hand-embroidered gold zari borders.</li>
+      <li><strong>Edge Specification:</strong> Unsharpened ceremonial dull edge in strict compliance with safety laws and wedding procession etiquette.</li>
+      <li><strong>Dimensions:</strong> ~36-38 inches total length; weight ~1.15 kg balanced for effortless ceremonial carry.</li>
+    </ul>
+  `;
+}
+
 const KM_EXCHANGE_RATE_INR_TO_USD = 85;
 
 function getActiveCurrency() {
@@ -400,7 +460,10 @@ function hydrateProductDetail(products = []) {
   const typeEl = detail.querySelector('[data-product-type]');
   if (typeEl) typeEl.textContent = product.vendor || 'KraftMart';
   const description = detail.querySelector('[data-product-description]');
-  if (description) description.textContent = (product.body_html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  if (description) {
+    const qvInfo = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
+    description.textContent = qvInfo.description;
+  }
   const priceRow = detail.querySelector('[data-product-price]');
   if (priceRow) priceRow.innerHTML = `<span class="km-qv-price" style="font-size: 2rem;">${kmMoney(price)}</span>${compare > price ? `<span class="km-qv-compare" style="font-size: 1.1rem;">${kmMoney(compare)}</span><span class="km-qv-sale-badge">Sale</span>` : ''}`;
   const add = detail.querySelector('[data-product-add]');
@@ -445,6 +508,56 @@ function hydrateProductDetail(products = []) {
   if (bulletsEl) {
     const bullets = kmGetProductBullets(product.title, product.body_html || '');
     bulletsEl.innerHTML = bullets.map(b => `<li>${kmEscape(b)}</li>`).join('');
+  }
+
+  // Populate Dropdown 1: Description & Craftsmanship Story
+  const accDescEl = detail.querySelector('[data-acc-description]');
+  if (accDescEl) {
+    accDescEl.innerHTML = kmFormatProductAccordionStory(product.title, product.body_html || '');
+  }
+
+  // Dynamic customization of Dropdown titles & content for Kada vs Sword
+  const isKadaProduct = (product.title + ' ' + (product.body_html || '')).toLowerCase().includes('kada');
+  const accDescTitle = detail.querySelector('[data-acc-desc-title]');
+  if (accDescTitle) {
+    accDescTitle.textContent = isKadaProduct ? 'Description & Sacred Heritage Craftsmanship' : 'Description & Royal Heritage Craftsmanship';
+  }
+
+  const accRealTitle = detail.querySelector('[data-acc-real-title]');
+  if (accRealTitle) {
+    accRealTitle.innerHTML = `<span class="km-acc-icon">${isKadaProduct ? '✨' : '⚔️'}</span><span>${isKadaProduct ? 'Is It Real Sarabloh or Plastic?' : 'Is It Real or Plastic?'}</span>`;
+  }
+
+  const accRealBody = detail.querySelector('[data-acc-real-body]');
+  if (accRealBody && isKadaProduct) {
+    accRealBody.innerHTML = `
+      <p><strong>100% Authentic Pure Sarabloh (Iron) — Zero Plastic:</strong></p>
+      <p>At KraftMart, every kada is forged from traditional solid metals in adherence to sacred martial heritage:</p>
+      <ul class="km-acc-list">
+        <li><strong>Authentic Metal:</strong> Pure Sarabloh (iron base) or solid brass. No alloys, no hollow shells, and strictly no plastic or synthetic molds.</li>
+        <li><strong>Heft &amp; Feel:</strong> Solid weight (~180g – 220g) providing the traditional reassuring presence on the wrist.</li>
+        <li><strong>Hand-Chiseled Edges:</strong> Individually filed teeth and hand-carved floral motifs that maintain crisp character for generations.</li>
+        <li><strong>Care &amp; Longevity:</strong> As genuine Sarabloh, light oiling (mustard or coconut oil) keeps it conditioned with a deep antique patina.</li>
+      </ul>
+    `;
+  }
+
+  const accEngraveTitle = detail.querySelector('[data-acc-engrave-title]');
+  if (accEngraveTitle) {
+    accEngraveTitle.innerHTML = `<span class="km-acc-icon">✒️</span><span>${isKadaProduct ? 'Can I Engrave on This Kada?' : 'Can I Engrave in This Sword?'}</span>`;
+  }
+
+  const accEngraveBody = detail.querySelector('[data-acc-engrave-body]');
+  if (accEngraveBody && isKadaProduct) {
+    accEngraveBody.innerHTML = `
+      <p><strong>Yes, Complimentary High-Precision Laser Engraving is Included!</strong></p>
+      <p>Personalize your sacred Sarabloh Kada with permanent laser inscription:</p>
+      <ul class="km-acc-list">
+        <li><strong>What You Can Engrave:</strong> Sacred mantras (<em>“Ik Onkar”</em>, <em>“Deg Tegh Fateh”</em>), initials, names, wedding dates, or Gurmukhi calligraphy.</li>
+        <li><strong>Placement:</strong> Can be subtly etched along the inner circumference or outer flat rim.</li>
+        <li><strong>How to Submit:</strong> Enter your desired text in the custom box above or message our team on WhatsApp (+91 98888 23986) with your order ID.</li>
+      </ul>
+    `;
   }
 
   const main = document.getElementById('kmPdpMainImage');
