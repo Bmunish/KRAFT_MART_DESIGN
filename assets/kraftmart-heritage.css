@@ -5867,6 +5867,12 @@ body {
   }
 }
 /* Swatches */
+[data-live-mode="home"] .km-swatch-container,
+.km-product-grid[data-live-mode="home"] .km-swatch-container,
+#featured-products .km-swatch-container {
+  display: none !important;
+}
+
 .km-swatch-container {
   display: flex;
   flex-direction: column;

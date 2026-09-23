@@ -16,5 +16,12 @@ class KraftMartPreview(SimpleHTTPRequestHandler):
             return
         super().do_GET()
 
+    def end_headers(self):
+        if not self.path.split('?')[0].startswith('/api/'):
+            self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        super().end_headers()
+
 
 ThreadingHTTPServer(('127.0.0.1', 4173), KraftMartPreview).serve_forever()
