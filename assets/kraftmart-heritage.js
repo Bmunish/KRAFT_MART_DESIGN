@@ -244,7 +244,7 @@ function kmCategory(product) {
   return 'wedding';
 }
 
-function kmProductCard(product) {
+function kmProductCard(product, showSwatches) {
   const variant = product.variants[0] || {};
   const image = product.images[0] && product.images[0].src;
   const compare = Number(variant.compare_at_price);
@@ -253,9 +253,35 @@ function kmProductCard(product) {
   const detailUrl = `product-detail.html?handle=${encodeURIComponent(product.handle)}`;
   const details = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
   const specsAttr = details.specs.slice(0, 4).map(spec => `${spec.key}: ${spec.value}`).join('|');
-  return `<article class="km-product-card km-noise-card" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}">
+
+  // Display ABCD & color options ONLY on the products catalog page
+  const isCatalogPage = showSwatches !== undefined ? Boolean(showSwatches) : (
+    typeof document !== 'undefined' && (
+      (!!document.querySelector('[data-live-mode="catalog"]') || !!document.getElementById('kmProductGrid') || window.location.pathname.includes('products')) &&
+      !document.querySelector('[data-live-mode="home"]') &&
+      !window.location.pathname.endsWith('index.html')
+    )
+  );
+
+  const swatchesHtml = isCatalogPage ? `
+    <div class="km-swatch-container">
+      <div class="km-variant-swatches">
+        <span class="km-swatch-btn">A</span>
+        <span class="km-swatch-btn">B</span>
+        <span class="km-swatch-btn">C</span>
+        <span class="km-swatch-btn km-swatch-btn-active">D</span>
+      </div>
+      <div class="km-color-swatches">
+        <span class="km-color-swatch" style="background-color: red; color: red;"></span>
+        <span class="km-color-swatch" style="background-color: blue; color: blue;"></span>
+        <span class="km-color-swatch" style="background-color: green; color: green;"></span>
+        <span class="km-color-swatch km-color-active" style="background-color: #FFA500; color: #FFA500;"></span>
+      </div>
+    </div>` : '';
+
+  return `<article class="km-product-card km-noise-card" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
     <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy">` : ''}</a><button class="km-quick-view-btn" type="button">⚡ Quick View</button></div>
-    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div><a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
+    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>${swatchesHtml}<a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
   </article>`;
 }
 
@@ -378,10 +404,10 @@ async function initRealCatalogue() {
     }
 
     document.querySelectorAll('[data-live-products]').forEach(grid => {
-      const isCatalog = grid.dataset.liveMode === 'catalog';
+      const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
       const sourceList = isCatalog ? displayProducts : products;
       const limit = grid.dataset.liveProducts === 'all' ? sourceList.length : Number(grid.dataset.liveProducts);
-      grid.innerHTML = sourceList.slice(0, limit).map(kmProductCard).join('');
+      grid.innerHTML = sourceList.slice(0, limit).map(p => kmProductCard(p, isCatalog)).join('');
     });
 
     const count = document.getElementById('kmCatalogCount');
@@ -389,12 +415,12 @@ async function initRealCatalogue() {
 
     const sort = document.getElementById('kmCatalogSort');
     sort?.addEventListener('change', () => {
-      const grid = document.querySelector('[data-live-mode="catalog"]');
+      const grid = document.querySelector('[data-live-mode="catalog"]') || document.getElementById('kmProductGrid');
       const sorted = [...displayProducts].sort((a, b) => {
         const aPrice = Number(a.variants[0]?.price), bPrice = Number(b.variants[0]?.price);
         return sort.selectedIndex === 1 ? aPrice - bPrice : sort.selectedIndex === 2 ? bPrice - aPrice : 0;
       });
-      if (grid) grid.innerHTML = sorted.map(kmProductCard).join('');
+      if (grid) grid.innerHTML = sorted.map(p => kmProductCard(p, true)).join('');
     });
     hydrateProductDetail(products);
     initProductBubbleClicks(products);

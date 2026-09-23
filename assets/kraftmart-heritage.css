@@ -5770,11 +5770,17 @@ body {
     margin: 0 auto;
   }
 }
-/* Swatches */
+/* Swatches: Exclusively on Products Catalog Page */
 [data-live-mode="home"] .km-swatch-container,
 .km-product-grid[data-live-mode="home"] .km-swatch-container,
 #featured-products .km-swatch-container {
   display: none !important;
+}
+
+[data-live-mode="catalog"] .km-swatch-container,
+.km-product-grid[data-live-mode="catalog"] .km-swatch-container,
+#kmProductGrid .km-swatch-container {
+  display: flex !important;
 }
 
 .km-swatch-container {
