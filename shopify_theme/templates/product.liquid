@@ -15,14 +15,24 @@
         <div class="km-pdp-gallery">
           
           <div class="km-pdp-main-img">
-            <img id="kmPdpMainImage" src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title | escape }}" decoding="async" />
+            {% if product.featured_image %}
+              <img id="kmPdpMainImage" src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title | escape }}" decoding="async" />
+            {% else %}
+              <img id="kmPdpMainImage" src="{{ 'sword.png' | asset_url }}" alt="{{ product.title | escape }}" decoding="async" />
+            {% endif %}
           </div>
           <div class="km-pdp-thumbs">
-            {% for image in product.images limit: 4 %}
-            <div class="km-pdp-thumb {% if forloop.first %}is-active{% endif %}" onclick="document.getElementById('kmPdpMainImage').src='{{ image | img_url: '1000x' }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-              <img src="{{ image | img_url: '200x' }}" alt="{{ image.alt | escape }}" decoding="async" loading="lazy" />
-            </div>
-            {% endfor %}
+            {% if product.images.size > 0 %}
+              {% for image in product.images limit: 4 %}
+              <div class="km-pdp-thumb {% if forloop.first %}is-active{% endif %}" onclick="document.getElementById('kmPdpMainImage').src='{{ image | img_url: '1000x' }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+                <img src="{{ image | img_url: '200x' }}" alt="{{ image.alt | escape }}" decoding="async" loading="lazy" />
+              </div>
+              {% endfor %}
+            {% else %}
+              <div class="km-pdp-thumb is-active" onclick="document.getElementById('kmPdpMainImage').src='{{ 'sword.png' | asset_url }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+                <img src="{{ 'sword.png' | asset_url }}" alt="{{ product.title | escape }}" decoding="async" loading="lazy" />
+              </div>
+            {% endif %}
           </div>
         </div>
         </div>
@@ -224,7 +234,11 @@
               {% if rel_product.compare_at_price > rel_product.price %}
               <span class="km-sale-badge">Sale</span>
               {% endif %}
-              <a href="{{ rel_product.url }}"><img src="{{ rel_product.featured_image | img_url: '500x' }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" /></a>
+              <a href="{{ rel_product.url }}">{% if rel_product.featured_image %}
+                <img src="{{ rel_product.featured_image | img_url: '500x' }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
+              {% else %}
+                <img src="{{ 'sword.png' | asset_url }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
+              {% endif %}</a>
             </div>
             <div class="km-product-info">
               <span class="km-product-vendor">{{ rel_product.vendor }}</span>
