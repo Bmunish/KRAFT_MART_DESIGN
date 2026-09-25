@@ -4,10 +4,10 @@
 
     <!-- Sliding image background from KraftMart official website -->
     <div class="km-hero-slider" id="kmHeroSlider" aria-hidden="true">
-      <div class="km-hero-slide is-active" style="background-image: url({{ 'kraftmart_banner_2.jpg' | asset_url }});"></div>
-      <div class="km-hero-slide" style="background-image: url({{ 'kraftmart_banner_1.jpg' | asset_url }});"></div>
-      <div class="km-hero-slide" style="background-image: url({{ 'kraftmart_banner_3.jpg' | asset_url }});"></div>
-      <div class="km-hero-slide" style="background-image: url({{ 'kraftmart_banner_4.jpg' | asset_url }});"></div>
+      <div class="km-hero-slide is-active" style="background-image: url('{{ 'kraftmart_banner_2.jpg' | asset_url }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ 'kraftmart_banner_1.jpg' | asset_url }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ 'kraftmart_banner_3.jpg' | asset_url }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ 'kraftmart_banner_4.jpg' | asset_url }}');"></div>
     </div>
     <!-- Layered warm overlay -->
     <div class="km-hero-video-overlay"></div>
@@ -18,10 +18,10 @@
 
     <!-- Floating interactive sword bubbles (Hero) -->
     <div class="km-bubble-field">
-      <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-bubble--a" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="{{ 'hero_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar" decoding="async" /></a>
-      <a href="product-detail.html?handle=royal-jodhpur-damascus" class="km-bubble km-bubble--b" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="{{ 'sword2.png' | asset_url }}" alt="Royal Jodhpur Damascus Talwar" decoding="async" /></a>
-      <a href="product-detail.html?handle=dawami-ceremonial-sword" class="km-bubble km-bubble--c" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="{{ 'sword.png' | asset_url }}" alt="Dawami Ceremonial Sword" decoding="async" /></a>
-      <a href="product-detail.html?handle=jaipur-wedding-talwar" class="km-bubble km-bubble--d" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="{{ 'hero_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar" decoding="async" /></a>
+      <a href="/products/jaipur-wedding-talwar" class="km-bubble km-bubble--a" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="{{ 'hero_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar" decoding="async" /></a>
+      <a href="/products/royal-jodhpur-damascus" class="km-bubble km-bubble--b" data-handle="royal-jodhpur-damascus" aria-label="Royal Jodhpur Damascus Talwar" title="View Royal Jodhpur Damascus Talwar"><img src="{{ 'sword2.png' | asset_url }}" alt="Royal Jodhpur Damascus Talwar" decoding="async" /></a>
+      <a href="/products/dawami-ceremonial-sword" class="km-bubble km-bubble--c" data-handle="dawami-ceremonial-sword" aria-label="Dawami Ceremonial Sword" title="View Dawami Ceremonial Sword"><img src="{{ 'sword.png' | asset_url }}" alt="Dawami Ceremonial Sword" decoding="async" /></a>
+      <a href="/products/jaipur-wedding-talwar" class="km-bubble km-bubble--d" data-handle="jaipur-wedding-talwar" aria-label="Jaipur Wedding Talwar" title="View Jaipur Wedding Talwar"><img src="{{ 'hero_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar" decoding="async" /></a>
     </div>
 
     <div class="km-container" style="position: relative; z-index: 10; width: 100%; padding: 72px 24px;">
@@ -39,11 +39,11 @@
           </p>
           <div class="km-hero-actions">
             <!-- Sword-Slash Button Animation CTA: Royal Crimson with blade glint -->
-            <a href="products.html" class="km-btn km-btn-primary km-btn-sword-slash"
+            <a href="/collections/all" class="km-btn km-btn-primary km-btn-sword-slash"
               style="padding: 16px 32px; font-weight: 700;">
               <span>SHOP WEDDING SWORDS &#8594;</span>
             </a>
-            <a href="about.html" class="km-btn km-btn-outline" style="padding: 16px 28px;">Explore Our Story</a>
+            <a href="/pages/about" class="km-btn km-btn-outline" style="padding: 16px 28px;">Explore Our Story</a>
           </div>
 
           <!-- Social proof pill under CTAs -->
@@ -202,7 +202,7 @@
 
       <div class="km-category-carousel-wrapper">
         <div class="km-category-carousel">
-          <a href="products.html?category=wedding" class="km-category-item-card" title="Explore Wedding Swords in New Panel">
+          <a href="/collections/wedding-swords" class="km-category-item-card" title="Explore Wedding Swords in New Panel">
             <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Wedding Swords &amp; Decorative" decoding="async" loading="lazy" />
             <div class="km-category-card-overlay">
               <span
@@ -448,7 +448,7 @@
 
 
       <div style="text-align: center; margin-top: 48px;">
-        <a href="products.html" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">View Complete Collection &rarr;</a>
+        <a href="/collections/all" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">View Complete Collection &rarr;</a>
       </div>
     </div>
   </section>
@@ -493,7 +493,7 @@
           </div>
 
           <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
-            <a href="products.html?category=wedding" class="km-btn km-btn-primary" style="padding: 14px 32px;">Shop Wedding Talwars &rarr;</a>
+            <a href="/collections/wedding-swords" class="km-btn km-btn-primary" style="padding: 14px 32px;">Shop Wedding Talwars &rarr;</a>
             <span style="font-size: 0.85rem; color: var(--km-gold-light); display: inline-flex; align-items: center; gap: 6px;">
               <span>✓</span> Free Laser Engraving Included
             </span>
@@ -683,7 +683,7 @@
             <strong>Our Own Line of Products:</strong> In addition to this, we also deal in Sikh Items used for Prakash purposes for Shri Guru Granth Sahib (Prakash Arrowhead / Teer, Prakash Chakar, Prakash Chawar). Backed by 20+ years of electroplating mastery and deep association with Sikhism, we embarked on a product-based startup on <strong>1st November, 2019</strong>. Through Etsy (<strong>KraftMartIN</strong> with 700+ U.S.A. clients), Instagram, eBay, and India Art, we proudly serve over <strong>3,000+ domestic and 1,900+ international clients</strong>.
           </p>
 
-          <a href="about.html" class="km-btn km-btn-outline" style="padding: 12px 24px; font-size: 0.9rem;">Read The Complete History &rarr;</a>
+          <a href="/pages/about" class="km-btn km-btn-outline" style="padding: 12px 24px; font-size: 0.9rem;">Read The Complete History &rarr;</a>
         </div>
       </div>
 
@@ -718,8 +718,8 @@
           </p>
 
           <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-            <a href="products.html" class="km-btn km-btn-primary">Explore All Collections &rarr;</a>
-            <a href="about.html" class="km-btn km-btn-outline" style="padding: 14px 22px;">View Our Full Story</a>
+            <a href="/collections/all" class="km-btn km-btn-primary">Explore All Collections &rarr;</a>
+            <a href="/pages/about" class="km-btn km-btn-outline" style="padding: 14px 22px;">View Our Full Story</a>
           </div>
         </div>
 
@@ -965,7 +965,7 @@
           </div>
         </div>
 
-        <a href="products.html" class="km-btn"
+        <a href="/collections/all" class="km-btn"
           style="background-color: var(--color-ink-navy); color: #FFF; border-radius: 8px; padding: 12px 28px;">
           Shop COD Eligible Swords →
         </a>

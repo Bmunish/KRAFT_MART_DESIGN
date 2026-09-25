@@ -29,21 +29,8 @@
   
   {% section 'footer' %}
   
-  {% render 'cart-drawer' %}
+  {% render 'overlays' %}
 
-  <!-- Search Overlay Modal -->
-  <div id="kmSearchOverlay" class="km-search-overlay" role="dialog" aria-label="Search Catalog">
-    <div class="km-search-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <span style="font-family:var(--km-font-heading);font-size:1.4rem;color:var(--km-gold-primary);">Search Heritage Collection</span>
-        <button id="kmCloseSearchBtn" aria-label="Close search" style="background:none;border:none;color:var(--km-text-secondary);font-size:1.5rem;cursor:pointer;">&times;</button>
-      </div>
-      <input type="text" id="kmSearchInput" class="km-search-input" placeholder="Search for talwars, kirpans, damascus..." autofocus>
-      <div id="kmSearchResults" class="km-search-results"></div>
-    </div>
-  </div>
-
-  <script src="{{ 'kraftmart-heritage.js' | asset_url }}" defer></script>
-  <script src="{{ 'km-cart.js' | asset_url }}" defer></script>
+  
 </body>
 </html>
