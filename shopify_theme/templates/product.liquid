@@ -6,33 +6,31 @@
       <div style="font-size: 0.8rem; color: var(--km-text-secondary); margin-bottom: 24px;">
         <a href="/" style="text-decoration: underline;">Home</a> &nbsp;/&nbsp; 
         <a href="/collections/all" style="text-decoration: underline;">Products</a> &nbsp;/&nbsp; 
-        <span data-product-breadcrumb style="color: var(--km-gold-dark);">Jaipur Wedding Talwar</span>
+        <span data-product-breadcrumb style="color: var(--km-gold-dark);">{{ product.title }}</span>
       </div>
 
       <div class="km-pdp-grid">
         
         <!-- Left: Image Gallery -->
         <div class="km-pdp-gallery">
+          
           <div class="km-pdp-main-img">
-            <img id="kmPdpMainImage" src="{{ 'sword.png' | asset_url }}" alt="Jaipur Wedding Talwar" decoding="async" />
+            <img id="kmPdpMainImage" src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title | escape }}" decoding="async" />
           </div>
           <div class="km-pdp-thumbs">
-            <div class="km-pdp-thumb is-active" onclick="document.getElementById('kmPdpMainImage').src='assets/sword.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-              <img src="{{ 'sword.png' | asset_url }}" alt="Jaipur Wedding Talwar Front" decoding="async" />
+            {% for image in product.images limit: 4 %}
+            <div class="km-pdp-thumb {% if forloop.first %}is-active{% endif %}" onclick="document.getElementById('kmPdpMainImage').src='{{ image | img_url: '1000x' }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+              <img src="{{ image | img_url: '200x' }}" alt="{{ image.alt | escape }}" decoding="async" loading="lazy" />
             </div>
-            <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='assets/hero_talwar.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-              <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar Hilt" decoding="async" loading="lazy" />
-            </div>
-            <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='assets/sword2.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-              <img src="{{ 'sword2.png' | asset_url }}" alt="Jaipur Wedding Talwar Blade" decoding="async" loading="lazy" />
-            </div>
+            {% endfor %}
           </div>
+        </div>
         </div>
 
         <!-- Right: Product Information & Purchase Controls -->
         <div data-live-product-detail class="km-pdp-details-col">
-          <div class="km-qv-vendor" data-product-type>KraftMart</div>
-          <h1 class="km-heading-1" data-product-title style="font-size: 2.2rem; margin-bottom: 8px;">Wedding Sword – Sirohi Blade With Punjabi Detailing</h1>
+          <div class="km-qv-vendor" data-product-type>{{ product.vendor }}</div>
+          <h1 class="km-heading-1" data-product-title style="font-size: 2.2rem; margin-bottom: 8px;">{{ product.title }}</h1>
           
           <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
             <span style="color: var(--km-gold-primary); font-size: 0.95rem;">★★★★★</span>
@@ -40,11 +38,15 @@
           </div>
 
           <!-- Price Row with Green Sale Badge -->
+          
           <div data-product-price class="km-qv-price-row" style="margin-bottom: 4px;">
-            <span class="km-qv-price" style="font-size: 2rem;">Rs. 9,999.00</span>
-            <span class="km-qv-compare" style="font-size: 1.1rem;">Rs. 14,999.00</span>
+            <span class="km-qv-price" style="font-size: 2rem;">{{ product.price | money }}</span>
+            {% if product.compare_at_price > product.price %}
+            <span class="km-qv-compare" style="font-size: 1.1rem;">{{ product.compare_at_price | money }}</span>
             <span class="km-qv-sale-badge">Sale</span>
+            {% endif %}
           </div>
+
           <div class="km-qv-shipping-note">Shipping calculated at checkout.</div>
 
           <!-- Minimized Concise Product Description (1-2 sentences) -->
@@ -61,14 +63,18 @@
           </div>
 
           <!-- Purchase Action Buttons (Stacked: Add To Cart Outline, Buy it now Solid) -->
-          <div class="km-qv-actions-stacked" style="margin-bottom: 24px;">
-            <button type="button" class="km-btn-add-to-cart-outline" data-product-add data-action="open-cart">
+          
+          <form method="post" action="/cart/add" class="km-qv-actions-stacked" style="margin-bottom: 24px;" id="product-form-{{ product.id }}">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+            <input type="hidden" name="quantity" id="kmPdpRealQty" value="1" />
+            <button type="submit" name="add" class="km-btn-add-to-cart-outline" data-product-add>
               Add To Cart
             </button>
-            <button type="button" class="km-btn-buy-now-solid" data-action="open-cart">
+            <button type="button" class="km-btn-buy-now-solid" onclick="document.getElementById('product-form-{{ product.id }}').submit();">
               Buy it now
             </button>
-          </div>
+          </form>
+
 
           <!-- Free Custom Engraving Simulator Container -->
           <div style="background: rgba(197,160,89,0.08); border: 1px solid rgba(197,160,89,0.3); padding: 20px; border-radius: 8px; margin-bottom: 24px;">
@@ -106,9 +112,11 @@
                 </span>
                 <span class="km-acc-chevron">▾</span>
               </summary>
+              
               <div class="km-accordion-body" data-acc-description>
-                <!-- Populated dynamically based on product -->
+                {{ product.description }}
               </div>
+
             </details>
 
             <!-- Drop down 2: Estimated Processing Time -->
@@ -208,27 +216,35 @@
         <span class="km-eyebrow">COMPLETE YOUR ROYAL ATTIRE</span>
         <h2 class="km-heading-1" style="font-size: 2rem; margin-bottom: 24px;">You May Also Like</h2>
         
+        
         <div class="km-product-grid" data-live-products="4" data-live-mode="related" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));" aria-live="polite">
-          <!-- Card 1 -->
-          <div class="km-product-card km-noise-card" data-category="damascus"
-            data-qv-img="assets/sword2.png" data-qv-title="Kundan Hilt Rajput Talwar"
-            data-qv-desc="Authentic Damascus Steel · Semi-precious kundan stone hilt"
-            data-qv-price="₹4,299" data-qv-compare="₹4,999">
+          {% for rel_product in collections['all'].products limit:4 %}
+          <div class="km-product-card km-noise-card">
             <div class="km-product-media">
-              <span class="km-sale-badge">Popular</span>
-              <a href="product-detail.html"><img src="{{ 'sword2.png' | asset_url }}" alt="Kundan Hilt Rajput Talwar" class="km-product-img" decoding="async" loading="lazy" /></a>
-              <button class="km-quick-view-btn">⚡ Quick View</button>
+              {% if rel_product.compare_at_price > rel_product.price %}
+              <span class="km-sale-badge">Sale</span>
+              {% endif %}
+              <a href="{{ rel_product.url }}"><img src="{{ rel_product.featured_image | img_url: '500x' }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" /></a>
             </div>
             <div class="km-product-info">
-              <span class="km-product-vendor">KraftMart Heritage</span>
-              <h3 class="km-product-title"><a href="product-detail.html">Kundan Hilt Rajput Talwar</a></h3>
+              <span class="km-product-vendor">{{ rel_product.vendor }}</span>
+              <h3 class="km-product-title"><a href="{{ rel_product.url }}">{{ rel_product.title }}</a></h3>
               <div class="km-price-wrapper">
-                <span class="km-price-current">₹4,299</span>
-                <span class="km-price-compare">₹4,999</span>
+                <span class="km-price-current">{{ rel_product.price | money }}</span>
+                {% if rel_product.compare_at_price > rel_product.price %}
+                <span class="km-price-compare">{{ rel_product.compare_at_price | money }}</span>
+                {% endif %}
               </div>
-              <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+              <form method="post" action="/cart/add" style="margin-top: 10px;">
+                <input type="hidden" name="id" value="{{ rel_product.selected_or_first_available_variant.id }}" />
+                <button type="submit" class="km-add-cart-btn">Add to Cart</button>
+              </form>
             </div>
           </div>
+          {% endfor %}
+        </div>
+
+      </div>
 
           <!-- Card 2 -->
           <div class="km-product-card km-noise-card" data-category="wedding"
