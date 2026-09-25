@@ -17,6 +17,7 @@
     }
   </style>
   <script src="assets/kraftmart-heritage.js?v=20260923f" defer></script>
+  <script src="assets/km-cart.js" defer></script>
 </head>
 
 <body>
@@ -125,9 +126,9 @@
           <ul class="km-nav-list">
             <li><a href="index.html" class="km-nav-link active">Home</a></li>
             <li><a href="products.html" class="km-nav-link">Products</a></li>
-            <li><a href="products.html#wedding" class="km-nav-link">Wedding Swords</a></li>
+            <li><a href="wedding-swords.html" class="km-nav-link">Wedding Swords</a></li>
             <li><a href="about.html" class="km-nav-link">About Us</a></li>
-            <li><a href="blog.html" class="km-nav-link">Journal</a></li>
+            <li><a href="blog.html" class="km-nav-link">Blogs</a></li>
             <li><a href="contact.html" class="km-nav-link">Contact</a></li>
 
             <!-- Policy Dropdown Menu -->
@@ -157,7 +158,7 @@
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
-            <span class="km-cart-badge">2</span>
+            <span class="km-cart-badge">0</span>
           </button>
         </div>
       </div>
@@ -368,7 +369,7 @@
 
       <div class="km-category-carousel-wrapper">
         <div class="km-category-carousel">
-          <a href="products.html?category=wedding" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Wedding Swords in New Panel">
+          <a href="products.html?category=wedding" class="km-category-item-card" title="Explore Wedding Swords in New Panel">
             <img src="assets/hero_talwar.png" alt="Wedding Swords &amp; Decorative" decoding="async" loading="lazy" />
             <div class="km-category-card-overlay">
               <span
@@ -377,7 +378,7 @@
             </div>
           </a>
 
-          <a href="products.html?category=damascus" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Premium Talwars in New Panel">
+          <a href="products.html?category=damascus" class="km-category-item-card" title="Explore Premium Talwars in New Panel">
             <img src="assets/sword2.png" alt="Handforged Damascus Talwars" decoding="async" loading="lazy" />
             <div class="km-category-card-overlay">
               <span
@@ -387,7 +388,7 @@
             </div>
           </a>
 
-          <a href="products.html?price=under2000" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Swords Under ₹2000 in New Panel">
+          <a href="products.html?price=under2000" class="km-category-item-card" title="Explore Swords Under ₹2000 in New Panel">
             <img src="assets/sword.png" alt="Swords Under ₹2000" decoding="async" loading="lazy" />
             <div class="km-category-card-overlay">
               <span
@@ -398,7 +399,7 @@
             </div>
           </a>
 
-          <a href="products.html?category=wall-hangings" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Wall Hangings in New Panel">
+          <a href="products.html?category=wall-hangings" class="km-category-item-card" title="Explore Wall Hangings in New Panel">
             <img src="assets/hero_talwar.png" alt="Royal Wall Hangings" decoding="async" loading="lazy" />
             <div class="km-category-card-overlay">
               <span
@@ -408,7 +409,7 @@
             </div>
           </a>
 
-          <a href="products.html?category=miniature" target="_blank" rel="noopener noreferrer" class="km-category-item-card" title="Explore Miniatures & Khandas in New Panel">
+          <a href="products.html?category=miniature" class="km-category-item-card" title="Explore Miniatures & Khandas in New Panel">
             <img src="assets/sword.png" alt="Miniatures &amp; Khandas" decoding="async" loading="lazy" />
             <div class="km-category-card-overlay">
               <span
@@ -614,8 +615,7 @@
 
 
       <div style="text-align: center; margin-top: 48px;">
-        <a href="#featured-products" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">View Complete
-          Collection &rarr;</a>
+        <a href="products.html" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">View Complete Collection &rarr;</a>
       </div>
     </div>
   </section>
@@ -912,8 +912,8 @@
   <section class="km-section km-journal-editorial-section" style="background: var(--km-bg-secondary); border-top: var(--km-border-gold); padding: 96px 0;">
     <div class="km-container">
       <div class="km-section-header" style="margin-bottom: 48px; text-align: center;">
-        <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.18em;">❖ THE ROYAL ARCHIVES &amp; FORGE JOURNAL ❖</span>
-        <h2 class="km-heading-1" style="color: var(--km-text-primary); font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin: 8px 0 14px 0;">From the KraftMart Journal</h2>
+        <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.18em;">❖ THE ROYAL ARCHIVES &amp; FORGE BLOG ❖</span>
+        <h2 class="km-heading-1" style="color: var(--km-text-primary); font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin: 8px 0 14px 0;">From the KraftMart Blog</h2>
         <p class="km-body-lead" style="color: var(--km-text-secondary); max-width: 680px; margin: 0 auto;">
           Historical guides, traditions, metallurgy secrets, and heirloom preservation from our Amritsar master workshop.
         </p>
@@ -951,7 +951,7 @@
                   <small>Groom Ceremonials</small>
                 </div>
               </div>
-              <a href="#" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+              <a href="blogs/wedding-talwar-selection.html" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
             </div>
           </div>
         </article>
@@ -987,7 +987,7 @@
                   <small>56–58 HRC Research</small>
                 </div>
               </div>
-              <a href="#" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+              <a href="blogs/damascus-steel-metallurgy.html" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
             </div>
           </div>
         </article>
@@ -1023,7 +1023,7 @@
                   <small>Restoration &amp; Care</small>
                 </div>
               </div>
-              <a href="#" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+              <a href="blogs/sword-care-maintenance.html" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
             </div>
           </div>
         </article>
@@ -1031,7 +1031,7 @@
 
       <div style="text-align: center; margin-top: 52px;">
         <a href="blog.html" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
-          Explore All Journal Entries (12 Articles) &rarr;
+          Explore All Blog Articles &rarr;
         </a>
       </div>
     </div>
@@ -1132,7 +1132,7 @@
           </div>
         </div>
 
-        <a href="#featured-products" class="km-btn"
+        <a href="products.html" class="km-btn"
           style="background-color: var(--color-ink-navy); color: #FFF; border-radius: 8px; padding: 12px 28px;">
           Shop COD Eligible Swords →
         </a>
@@ -1497,9 +1497,9 @@
           <h4 class="km-footer-title">Quick Links</h4>
           <ul class="km-footer-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="#featured-products">All Products</a></li>
-            <li><a href="#wedding-swords">Wedding Swords</a></li>
-            <li><a href="#about-us">About KraftMart</a></li>
+            <li><a href="products.html">All Products</a></li>
+            <li><a href="wedding-swords.html">Wedding Swords</a></li>
+            <li><a href="about.html">About KraftMart</a></li>
           </ul>
         </div>
 

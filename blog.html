@@ -7,6 +7,7 @@
   <meta name="description" content="Read expert guides, wedding talwar selection advice, Damascus steel metallurgy insights, and sword maintenance secrets from KraftMart's Amritsar master craftsmen.">
   <link rel="stylesheet" href="assets/kraftmart-heritage.css">
   <script src="assets/kraftmart-heritage.js" defer></script>
+  <script src="assets/km-cart.js" defer></script>
 </head>
 <body>
 
@@ -111,9 +112,9 @@
           <ul class="km-nav-list">
             <li><a href="index.html" class="km-nav-link">Home</a></li>
             <li><a href="products.html" class="km-nav-link">Products</a></li>
-            <li><a href="products.html#wedding" class="km-nav-link">Wedding Swords</a></li>
+            <li><a href="wedding-swords.html" class="km-nav-link">Wedding Swords</a></li>
             <li><a href="about.html" class="km-nav-link">About Us</a></li>
-            <li><a href="blog.html" class="km-nav-link active">Journal</a></li>
+            <li><a href="blog.html" class="km-nav-link active">Blogs</a></li>
             <li><a href="contact.html" class="km-nav-link">Contact</a></li>
 
             <!-- Policy Dropdown Menu -->
@@ -138,7 +139,7 @@
           </button>
           <button class="km-icon-btn" data-action="open-cart" aria-label="Cart">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-            <span class="km-cart-badge">2</span>
+            <span class="km-cart-badge">0</span>
           </button>
         </div>
       </div>
@@ -200,7 +201,7 @@
         <span class="km-eyebrow">Featured Article</span>
       </div>
       <!-- Featured big card -->
-      <a href="product-detail.html" class="km-reveal" style="display: block; border-radius: 20px; overflow: hidden; position: relative; height: 480px; text-decoration: none; box-shadow: 0 20px 60px rgba(20,18,16,0.15); margin-bottom: 80px;">
+      <a href="blogs/wedding-talwar-selection.html" class="km-reveal" style="display: block; border-radius: 20px; overflow: hidden; position: relative; height: 480px; text-decoration: none; box-shadow: 0 20px 60px rgba(20,18,16,0.15); margin-bottom: 80px;">
         <img src="assets/hero_talwar.png" alt="How to Choose a Wedding Talwar" style="width: 100%; height: 100%; object-fit: cover; object-position: center 25%;" />
         <div style="position: absolute; inset: 0; background: linear-gradient(100deg, rgba(14,10,8,0.9) 0%, rgba(14,10,8,0.65) 55%, rgba(14,10,8,0.2) 100%);"></div>
         <div style="position: absolute; bottom: 0; left: 0; padding: 48px; max-width: 620px; color: #FAF7F2;">
@@ -241,7 +242,7 @@
             </div>
             <h3 class="km-blog-title">How to Choose the Perfect Wedding Talwar</h3>
             <p class="km-blog-excerpt">From blade length and hilt to scabbard colour — our complete groom's checklist for selecting the ideal ceremonial sword.</p>
-            <a href="product-detail.html" class="km-blog-link">Read Full Guide →</a>
+            <a href="blogs/wedding-talwar-selection.html" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
 
@@ -258,7 +259,7 @@
             </div>
             <h3 class="km-blog-title">Damascus Steel: Why 1095/15N20 Reigns Supreme</h3>
             <p class="km-blog-excerpt">Over 300 folds of high-carbon steel deliver extraordinary strength, edge retention, and the iconic water-pattern beauty of Damascus.</p>
-            <a href="product-detail.html" class="km-blog-link">Read Full Guide →</a>
+            <a href="blogs/damascus-steel-metallurgy.html" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
 
@@ -275,7 +276,7 @@
             </div>
             <h3 class="km-blog-title">Oil, Store &amp; Maintain Your Talwar for Decades</h3>
             <p class="km-blog-excerpt">Monthly oiling, proper scabbard storage, and avoiding humidity — three pillars of keeping your blade display-ready for generations.</p>
-            <a href="product-detail.html" class="km-blog-link">Read Full Guide →</a>
+            <a href="blogs/sword-care-maintenance.html" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
 
@@ -292,7 +293,7 @@
             </div>
             <h3 class="km-blog-title">The History of the Rajput Talwar: Royal Blade of India</h3>
             <p class="km-blog-excerpt">From Mughal courts to modern wedding ceremonies — tracing 600 years of the talwar's evolution as India's most iconic ceremonial weapon.</p>
-            <a href="product-detail.html" class="km-blog-link">Read Full Guide →</a>
+            <a href="blogs/rajput-talwar-history.html" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
 
@@ -309,7 +310,7 @@
             </div>
             <h3 class="km-blog-title">What to Engrave on Your Wedding Sword: 10 Beautiful Ideas</h3>
             <p class="km-blog-excerpt">Names, dates, shlokas, family crests — the blade inscription is forever. Here are 10 engraving ideas that couples absolutely love.</p>
-            <a href="product-detail.html" class="km-blog-link">Read Full Guide →</a>
+            <a href="blogs/engraving-ideas.html" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
 
@@ -326,7 +327,7 @@
             </div>
             <h3 class="km-blog-title">The Sikh Kirpan: Sacred Symbol, Sacred Craft</h3>
             <p class="km-blog-excerpt">Understanding the spiritual significance, design traditions, and proper care of the Kirpan — one of the Five Ks of Sikhism.</p>
-            <a href="product-detail.html" class="km-blog-link">Read Full Guide →</a>
+            <a href="blogs/sikh-kirpan-tradition.html" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
 
@@ -416,7 +417,8 @@
       </div>
       <div id="kmCartDrawerFooter" class="km-cart-footer">
         <div style="display: flex; justify-content: space-between; margin-bottom: 16px; font-weight: 700;">
-          <span>Subtotal:</span><span>₹2,599</span>
+          <span>Subtotal:</span>
+          <span id="kmCartSubtotal">₹2,599</span>
         </div>
         <button type="button" class="km-btn km-btn-gold" style="width: 100%;">Proceed to Checkout →</button>
       </div>

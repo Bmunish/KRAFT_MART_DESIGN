@@ -390,9 +390,10 @@ function kmProductCard(product, showSwatches) {
       </div>
     </div>` : '';
 
-  return `<article class="km-product-card km-noise-card" data-handle="${kmEscapeAttr(product.handle || '')}" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
+  const variantId = variant.id || '';
+  return `<article class="km-product-card km-noise-card" data-handle="${kmEscapeAttr(product.handle || '')}" data-variant-id="${variantId}" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
     <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy" decoding="async">` : ''}</a><button class="km-quick-view-btn" type="button">⚡ Quick View</button></div>
-    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>${swatchesHtml}<a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
+    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>${swatchesHtml}<button type="button" class="km-add-cart-btn">Add to Cart</button></div>
   </article>`;
 }
 
@@ -873,61 +874,8 @@ function closeCartDrawer() {
  * Update Cart Drawer items via Shopify AJAX API
  */
 async function updateCartDrawerContent() {
-  try {
-    const res = await fetch('/cart.js');
-    if (!res.ok) return;
-    const cart = await res.json();
-
-    // Update cart badge counts across header
-    document.querySelectorAll('.km-cart-badge').forEach(badge => {
-      badge.textContent = cart.item_count;
-    });
-
-    const body = document.getElementById('kmCartDrawerBody');
-    const footer = document.getElementById('kmCartDrawerFooter');
-
-    if (cart.item_count === 0) {
-      if (body) {
-        body.innerHTML = `
-          <div style="text-align: center; padding: 48px 0; color: var(--km-text-secondary);">
-            <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin: 0 auto 16px auto; opacity: 0.4;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-            </svg>
-            <p style="font-family: var(--km-font-heading); font-size: 1.25rem;">Your Cart is Empty</p>
-            <p style="font-size: 0.875rem; margin-top: 8px;">Explore our handcrafted swords and heritage collectibles.</p>
-          </div>
-        `;
-      }
-      if (footer) footer.style.display = 'none';
-      return;
-    }
-
-    if (footer) footer.style.display = 'block';
-
-    let itemsHtml = '';
-    cart.items.forEach(item => {
-      const priceFormatted = (item.final_price / 100).toLocaleString('en-IN', { style: 'currency', currency: cart.currency });
-      itemsHtml += `
-        <div style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
-          <img src="${item.image}" alt="${item.title}" style="width: 70px; height: 70px; object-fit: contain; background: #FFF; border-radius: var(--km-radius-sm); border: var(--km-border-subtle);" />
-          <div style="flex-grow: 1;">
-            <a href="${item.url}" style="font-family: var(--km-font-heading); font-weight: 600; font-size: 1.05rem;">${item.product_title}</a>
-            <div style="font-size: 0.75rem; color: var(--km-text-secondary); margin: 4px 0;">${item.variant_title !== 'Default Title' ? item.variant_title : ''}</div>
-            <div style="font-weight: 700; font-size: 0.9375rem;">${priceFormatted} x ${item.quantity}</div>
-          </div>
-        </div>
-      `;
-    });
-
-    if (body) body.innerHTML = itemsHtml;
-
-    const subtotal = (cart.total_price / 100).toLocaleString('en-IN', { style: 'currency', currency: cart.currency });
-    const subtotalEl = document.getElementById('kmCartSubtotal');
-    if (subtotalEl) subtotalEl.textContent = subtotal;
-
-  } catch (err) {
-    console.error('Failed to update cart drawer', err);
-  }
+  // km-cart.js owns the drawer rendering — this function is a no-op in local preview.
+  // On Shopify deployment, remove km-cart.js and restore the full Shopify AJAX logic here.
 }
 
 /**
