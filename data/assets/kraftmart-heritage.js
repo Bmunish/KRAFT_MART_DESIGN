@@ -4,6 +4,17 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Low-End Hardware & Performance Mode Detection
+  const isLowEndDevice = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return true;
+    if (navigator.deviceMemory && navigator.deviceMemory <= 4) return true;
+    return false;
+  };
+  if (isLowEndDevice()) {
+    document.documentElement.classList.add('km-perf-mode');
+  }
+
   initStickyHeader();
   initFaqAccordions();
   initCartDrawer();
@@ -380,7 +391,7 @@ function kmProductCard(product, showSwatches) {
     </div>` : '';
 
   return `<article class="km-product-card km-noise-card" data-handle="${kmEscapeAttr(product.handle || '')}" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
-    <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy">` : ''}</a><button class="km-quick-view-btn" type="button">⚡ Quick View</button></div>
+    <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy" decoding="async">` : ''}</a><button class="km-quick-view-btn" type="button">⚡ Quick View</button></div>
     <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>${swatchesHtml}<a class="km-add-cart-btn" href="${detailUrl}">View product</a></div>
   </article>`;
 }
@@ -401,7 +412,7 @@ function hydrateHeroCards(products) {
     const compare = Number(variant.compare_at_price);
     const price = Number(variant.price);
     const shortTitle = kmCleanCardTitle(product.title);
-    card.innerHTML = `<a href="product-detail.html?handle=${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
+    card.innerHTML = `<a href="product-detail.html?handle=${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
   });
 }
 
@@ -660,12 +671,15 @@ function initFloatingSwords() {
       const py = currentY * depths[i] * 8;
       parallaxOffsets[i].x = px;
       parallaxOffsets[i].y = py;
-      // CSS animation is on the element itself; we shift via a wrapper-level transform.
-      // Since we can't stack transforms cleanly without a wrapper, we use a CSS var approach.
       sword.style.setProperty('--px', `${px.toFixed(1)}px`);
       sword.style.setProperty('--py', `${py.toFixed(1)}px`);
     });
-    rafId = requestAnimationFrame(applyParallax);
+
+    if (Math.abs(targetX - currentX) > 0.003 || Math.abs(targetY - currentY) > 0.003) {
+      rafId = requestAnimationFrame(applyParallax);
+    } else {
+      rafId = null;
+    }
   }
 
   stage.addEventListener('mousemove', (e) => {
@@ -673,13 +687,27 @@ function initFloatingSwords() {
     const rect = stage.getBoundingClientRect();
     targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;  // -1 to 1
     targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    if (!rafId) applyParallax();
-  });
+    if (!rafId) rafId = requestAnimationFrame(applyParallax);
+  }, { passive: true });
 
   stage.addEventListener('mouseleave', () => {
     targetX = 0;
     targetY = 0;
+    if (!rafId) rafId = requestAnimationFrame(applyParallax);
   });
+
+  if ('IntersectionObserver' in window) {
+    const stageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        stage.classList.toggle('is-offscreen', !entry.isIntersecting);
+        if (!entry.isIntersecting && rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      });
+    }, { threshold: 0.05 });
+    stageObserver.observe(stage);
+  }
 
   // Hydrate with live product data (up to 3 featured products)
   getLiveProducts().then(products => {
@@ -722,13 +750,22 @@ function initStickyHeader() {
   const header = document.querySelector('.km-header');
   if (!header) return;
 
+  let isScrolled = false;
+  let ticking = false;
+
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      header.classList.add('is-scrolled');
-    } else {
-      header.classList.remove('is-scrolled');
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const scrolled = window.scrollY > 40;
+        if (scrolled !== isScrolled) {
+          isScrolled = scrolled;
+          header.classList.toggle('is-scrolled', isScrolled);
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
-  });
+  }, { passive: true });
 }
 
 /**
@@ -1083,6 +1120,7 @@ function initMarqueePause() {
  */
 function initNoiseBackground() {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (document.documentElement.classList.contains('km-perf-mode')) return;
   const cards = document.querySelectorAll('.km-noise-card, .km-product-card, .km-category-card');
 
   cards.forEach(card => {
@@ -1311,6 +1349,16 @@ function init3DCinematicCarousel() {
       resume();
     }
   }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    const stageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) resume();
+        else pause();
+      });
+    }, { threshold: 0.1 });
+    stageObserver.observe(stage);
+  }
 }
 
 /**
@@ -1323,11 +1371,10 @@ function initCategoryDragCarousel() {
   let isDown = false;
   let startX;
   let scrollLeft;
-  let autoTimer = null;
+  let rafId = null;
   let autoResumeTimer = null;
   let autoDirection = 1;
-  const AUTO_STEP = 1;
-  const AUTO_INTERVAL = 22;
+  const AUTO_STEP = 0.6; // px per frame at 60fps ≈ ~36px/s smooth glide
 
   carousel.addEventListener('mousedown', (e) => {
     isDown = true;
@@ -1366,27 +1413,28 @@ function initCategoryDragCarousel() {
       clearTimeout(autoResumeTimer);
       autoResumeTimer = null;
     }
-    if (autoTimer) {
-      clearInterval(autoTimer);
-      autoTimer = null;
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
     }
   }
 
   function startAutoScroll() {
-    if (autoTimer) return;
+    if (rafId) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    autoTimer = setInterval(() => {
-      if (isDown) return;
-
-      const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
-      if (maxScrollLeft <= 0) return;
-
-      if (carousel.scrollLeft >= maxScrollLeft - 2) autoDirection = -1;
-      if (carousel.scrollLeft <= 2) autoDirection = 1;
-
-      carousel.scrollLeft += AUTO_STEP * autoDirection;
-    }, AUTO_INTERVAL);
+    function tick() {
+      if (!isDown) {
+        const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+        if (maxScrollLeft > 0) {
+          if (carousel.scrollLeft >= maxScrollLeft - 2) autoDirection = -1;
+          if (carousel.scrollLeft <= 2) autoDirection = 1;
+          carousel.scrollLeft += AUTO_STEP * autoDirection;
+        }
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+    rafId = requestAnimationFrame(tick);
   }
 
   function queueAutoResume() {
@@ -1395,6 +1443,16 @@ function initCategoryDragCarousel() {
   }
 
   startAutoScroll();
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) startAutoScroll();
+        else stopAutoScroll();
+      });
+    }, { threshold: 0.1 });
+    obs.observe(carousel);
+  }
 }
 
 /**
@@ -1403,14 +1461,39 @@ function initCategoryDragCarousel() {
 function initTestimonialFadeSlider() {
   const slides = document.querySelectorAll('.km-testimonial-slide');
   if (!slides.length) return;
+  const section = slides[0].closest('section') || slides[0].parentElement;
 
   let currentIndex = 0;
+  let timer = null;
 
-  setInterval(() => {
+  function next() {
     slides[currentIndex].classList.remove('is-active');
     currentIndex = (currentIndex + 1) % slides.length;
     slides[currentIndex].classList.add('is-active');
-  }, 5000);
+  }
+
+  function start() {
+    if (!timer && slides.length > 1) timer = setInterval(next, 5000);
+  }
+
+  function stop() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  start();
+
+  if (section && 'IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) start();
+        else stop();
+      });
+    }, { threshold: 0.1 });
+    obs.observe(section);
+  }
 }
 
 /**
@@ -1614,25 +1697,51 @@ function initSearchOverlayModal() {
  * Cross-fades between the three KraftMart sword images in the background
  */
 function initHeroSlider() {
+  const hero = document.getElementById('km-hero');
   const slides = document.querySelectorAll('.km-hero-slide');
   if (slides.length < 2) return;
 
   let current = 0;
+  let timer = null;
   const INTERVAL = 4500;
 
-  setInterval(() => {
+  function next() {
     slides[current].classList.remove('is-active');
     current = (current + 1) % slides.length;
     slides[current].classList.add('is-active');
-  }, INTERVAL);
+  }
+
+  function start() {
+    if (!timer) timer = setInterval(next, INTERVAL);
+  }
+
+  function stop() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  start();
+
+  if (hero && 'IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) start();
+        else stop();
+      });
+    }, { threshold: 0.1 });
+    obs.observe(hero);
+  }
 }
 
 /**
  * Bubble Cursor Sensitivity (Desktop Only, Optimized with RAF & Target Isolation)
- * On mobile/touch devices, skipped entirely for maximum CPU/battery efficiency.
+ * On mobile/touch devices or low-end mode, skipped entirely for maximum CPU/battery efficiency.
  */
 function initBubbleSensitivity() {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (document.documentElement.classList.contains('km-perf-mode')) return;
   const hero = document.getElementById('km-hero');
   const bubbles = Array.from(document.querySelectorAll('.km-bubble'));
   if (!hero || !bubbles.length) return;
@@ -2035,26 +2144,33 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.km-bg-gradient-container').forEach(container => {
     const parent = container.parentElement;
     if (!parent) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (document.documentElement.classList.contains('km-perf-mode')) return;
 
     let curX = 0;
     let curY = 0;
     let tgX = 0;
     let tgY = 0;
-
-    parent.addEventListener('mousemove', (e) => {
-      const rect = parent.getBoundingClientRect();
-      tgX = e.clientX - rect.left;
-      tgY = e.clientY - rect.top;
-    });
+    let rafId = null;
 
     function moveBlob() {
       curX += (tgX - curX) / 16;
       curY += (tgY - curY) / 16;
       container.style.setProperty('--km-mouse-x', `${Math.round(curX)}px`);
       container.style.setProperty('--km-mouse-y', `${Math.round(curY)}px`);
-      requestAnimationFrame(moveBlob);
+      if (Math.abs(tgX - curX) > 0.5 || Math.abs(tgY - curY) > 0.5) {
+        rafId = requestAnimationFrame(moveBlob);
+      } else {
+        rafId = null;
+      }
     }
-    moveBlob();
+
+    parent.addEventListener('mousemove', (e) => {
+      const rect = parent.getBoundingClientRect();
+      tgX = e.clientX - rect.left;
+      tgY = e.clientY - rect.top;
+      if (!rafId) rafId = requestAnimationFrame(moveBlob);
+    }, { passive: true });
   });
 });
 

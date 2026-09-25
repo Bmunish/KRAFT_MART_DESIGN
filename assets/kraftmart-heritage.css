@@ -324,6 +324,9 @@ button {
   display: flex;
   white-space: nowrap;
   animation: kmMarquee 30s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .km-marquee-item {
@@ -339,11 +342,11 @@ button {
 
 @keyframes kmMarquee {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -832,31 +835,30 @@ body.cart-open .km-global-bubbles {
   position: absolute;
   border-radius: 50%;
   overflow: hidden;
-  border: 2.5px solid rgba(197, 160, 89, 0.55);
+  border: 2px solid rgba(197, 160, 89, 0.65);
   box-shadow:
-    0 10px 40px rgba(20, 18, 16, 0.28),
-    0 0 0 1px rgba(197, 160, 89, 0.2),
-    0 0 22px rgba(197, 160, 89, 0.18),
-    inset 0 0 24px rgba(197, 160, 89, 0.1);
-  background: rgba(250, 247, 242, 0.14);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+    0 8px 24px rgba(20, 18, 16, 0.25),
+    0 0 16px rgba(197, 160, 89, 0.2);
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.25) 0%, rgba(250, 247, 242, 0.12) 65%, rgba(197, 160, 89, 0.15) 100%);
   pointer-events: auto !important;
   cursor: pointer;
   display: block;
   text-decoration: none;
+  /* Hardware accelerated transforms for smooth 60/120fps motion */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   /* CSS vars for JS cursor-push (default 0) */
   translate: var(--bx, 0px) var(--by, 0px);
-  transition: translate 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: translate 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .km-bubble:hover {
-  transform: scale(1.12);
+  transform: scale(1.1) translate3d(0, 0, 0);
   border-color: var(--km-gold-primary);
   box-shadow:
-    0 14px 45px rgba(20, 18, 16, 0.4),
-    0 0 28px rgba(197, 160, 89, 0.5),
-    inset 0 0 24px rgba(197, 160, 89, 0.25);
+    0 12px 32px rgba(20, 18, 16, 0.35),
+    0 0 24px rgba(197, 160, 89, 0.45);
   z-index: 150;
 }
 
@@ -981,78 +983,78 @@ body.cart-open .km-global-bubbles {
   }
 }
 
-/* ── Three distinct drift animations ── */
+/* ── Three distinct drift animations (Hardware accelerated on GPU) ── */
 @keyframes kmDrift0 {
   0% {
-    transform: translateY(0px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, 0px, 0) rotate(0deg);
   }
 
   18% {
-    transform: translateY(-26px) translateX(9px) rotate(4deg);
+    transform: translate3d(9px, -26px, 0) rotate(4deg);
   }
 
   42% {
-    transform: translateY(-12px) translateX(-12px) rotate(-3.5deg);
+    transform: translate3d(-12px, -12px, 0) rotate(-3.5deg);
   }
 
   65% {
-    transform: translateY(-32px) translateX(7px) rotate(5deg);
+    transform: translate3d(7px, -32px, 0) rotate(5deg);
   }
 
   84% {
-    transform: translateY(-10px) translateX(-7px) rotate(-2deg);
+    transform: translate3d(-7px, -10px, 0) rotate(-2deg);
   }
 
   100% {
-    transform: translateY(0px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, 0px, 0) rotate(0deg);
   }
 }
 
 @keyframes kmDrift1 {
   0% {
-    transform: translateY(-8px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, -8px, 0) rotate(0deg);
   }
 
   22% {
-    transform: translateY(6px) translateX(-14px) rotate(-4deg);
+    transform: translate3d(-14px, 6px, 0) rotate(-4deg);
   }
 
   48% {
-    transform: translateY(-20px) translateX(10px) rotate(3deg);
+    transform: translate3d(10px, -20px, 0) rotate(3deg);
   }
 
   70% {
-    transform: translateY(4px) translateX(-8px) rotate(-2.5deg);
+    transform: translate3d(-8px, 4px, 0) rotate(-2.5deg);
   }
 
   90% {
-    transform: translateY(-16px) translateX(11px) rotate(4deg);
+    transform: translate3d(11px, -16px, 0) rotate(4deg);
   }
 
   100% {
-    transform: translateY(-8px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, -8px, 0) rotate(0deg);
   }
 }
 
 @keyframes kmDrift2 {
   0% {
-    transform: translateY(-5px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, -5px, 0) rotate(0deg);
   }
 
   28% {
-    transform: translateY(-22px) translateX(-9px) rotate(-4.5deg);
+    transform: translate3d(-9px, -22px, 0) rotate(-4.5deg);
   }
 
   55% {
-    transform: translateY(-4px) translateX(13px) rotate(3deg);
+    transform: translate3d(13px, -4px, 0) rotate(3deg);
   }
 
   78% {
-    transform: translateY(-18px) translateX(-5px) rotate(-2deg);
+    transform: translate3d(-5px, -18px, 0) rotate(-2deg);
   }
 
   100% {
-    transform: translateY(-5px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, -5px, 0) rotate(0deg);
   }
 }
 
@@ -1526,14 +1528,12 @@ body.cart-open .km-global-bubbles {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s ease,
-              filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              opacity 0.35s ease;
   position: relative;
   animation: kmCardPopIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, filter, opacity, box-shadow;
 }
 
 .km-product-card.km-card-animate {
@@ -1545,6 +1545,7 @@ body.cart-open .km-global-bubbles {
   border-color: var(--km-gold-primary);
   box-shadow: 0 16px 36px rgba(20, 18, 16, 0.12), 0 0 0 1px rgba(197, 160, 89, 0.35);
   transform: translateY(-6px);
+  will-change: transform;
   z-index: 2;
 }
 
@@ -1562,15 +1563,14 @@ body.cart-open .km-global-bubbles {
   box-shadow: 0 16px 36px rgba(20, 18, 16, 0.12), 0 0 0 1px rgba(197, 160, 89, 0.35) !important;
 }
 
-/* Aceternity Focus Cards: Blur non-hovered siblings ONLY on product catalog page */
+/* Aceternity Focus Cards: Smooth opacity focus ONLY on product catalog page (zero blur lag on low-end devices) */
 @media (hover: hover) and (pointer: fine) {
   .km-product-grid[data-live-mode="catalog"]:has(.km-product-card:hover) .km-product-card:not(:hover),
   .km-product-grid[data-live-mode="catalog"].km-focus-active .km-product-card.km-unfocused,
   #kmProductGrid:has(.km-product-card:hover) .km-product-card:not(:hover),
   #kmProductGrid.km-focus-active .km-product-card.km-unfocused {
-    filter: blur(4px) grayscale(20%);
-    opacity: 0.5;
-    transform: scale(0.965);
+    opacity: 0.65;
+    transform: scale(0.985);
   }
 
   .km-product-grid[data-live-mode="catalog"] .km-product-card:hover,
@@ -2964,6 +2964,7 @@ body.cart-open .km-global-bubbles {
 .km-reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
 }
 
 /* ─────────────────────────────────────────────
@@ -3576,6 +3577,7 @@ body.cart-open .km-global-bubbles {
 
 .km-reveal.km-is-visible {
   animation: kmRevealUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: auto;
 }
 
 .km-reveal-left {
@@ -3584,6 +3586,7 @@ body.cart-open .km-global-bubbles {
 
 .km-reveal-left.km-is-visible {
   animation: kmRevealLeft 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: auto;
 }
 
 .km-reveal-right {
@@ -3592,6 +3595,7 @@ body.cart-open .km-global-bubbles {
 
 .km-reveal-right.km-is-visible {
   animation: kmRevealRight 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: auto;
 }
 
 .km-reveal-scale {
@@ -3600,6 +3604,7 @@ body.cart-open .km-global-bubbles {
 
 .km-reveal-scale.km-is-visible {
   animation: kmRevealScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: auto;
 }
 
 .km-reveal[data-delay="1"] {
@@ -4550,10 +4555,11 @@ body.cart-open .km-global-bubbles {
   align-items: center;
   /* GPU layer — JS will set translate via --px/--py for parallax */
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   /* Consume parallax CSS variables set by JS */
   translate: var(--px, 0px) var(--py, 0px);
   transition: translate 0.05s linear;
-  /* near-instant; lerp is in JS */
 }
 
 /* Sword inner: contains image + shimmer */
@@ -4561,9 +4567,9 @@ body.cart-open .km-global-bubbles {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  /* Soft atmospheric shadow beneath each sword */
-  filter: drop-shadow(0 20px 36px rgba(20, 18, 16, 0.55)) drop-shadow(0 0 18px rgba(197, 160, 89, 0.22));
-  transition: filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Soft atmospheric shadow beneath each sword (single pass for mobile GPU performance) */
+  filter: drop-shadow(0 16px 28px rgba(20, 18, 16, 0.45));
+  transition: filter 0.35s ease;
 }
 
 /* Metallic blade shimmer stripe — appears on hover via animation */
@@ -4651,82 +4657,82 @@ body.cart-open .km-global-bubbles {
   transform: rotate(-6deg);
 }
 
-/* ── Three distinct, asynchronous float animations ── */
+/* ── Three distinct, asynchronous float animations (GPU Accelerated) ── */
 
 /* Sword 0: tall arc, slow roll */
 @keyframes kmFloat0 {
   0% {
-    transform: translateY(0px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, 0px, 0) rotate(0deg);
   }
 
   20% {
-    transform: translateY(-18px) translateX(5px) rotate(1.5deg);
+    transform: translate3d(5px, -18px, 0) rotate(1.5deg);
   }
 
   45% {
-    transform: translateY(-10px) translateX(-4px) rotate(-2.5deg);
+    transform: translate3d(-4px, -10px, 0) rotate(-2.5deg);
   }
 
   65% {
-    transform: translateY(-22px) translateX(3px) rotate(2deg);
+    transform: translate3d(3px, -22px, 0) rotate(2deg);
   }
 
   85% {
-    transform: translateY(-6px) translateX(-5px) rotate(-1deg);
+    transform: translate3d(-5px, -6px, 0) rotate(-1deg);
   }
 
   100% {
-    transform: translateY(0px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, 0px, 0) rotate(0deg);
   }
 }
 
 /* Sword 1: shorter, faster drift — different phase */
 @keyframes kmFloat1 {
   0% {
-    transform: translateY(-8px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, -8px, 0) rotate(0deg);
   }
 
   18% {
-    transform: translateY(4px) translateX(-6px) rotate(-2deg);
+    transform: translate3d(-6px, 4px, 0) rotate(-2deg);
   }
 
   40% {
-    transform: translateY(-14px) translateX(4px) rotate(1.8deg);
+    transform: translate3d(4px, -14px, 0) rotate(1.8deg);
   }
 
   60% {
-    transform: translateY(2px) translateX(-3px) rotate(-1.5deg);
+    transform: translate3d(-3px, 2px, 0) rotate(-1.5deg);
   }
 
   80% {
-    transform: translateY(-10px) translateX(5px) rotate(2.2deg);
+    transform: translate3d(5px, -10px, 0) rotate(2.2deg);
   }
 
   100% {
-    transform: translateY(-8px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, -8px, 0) rotate(0deg);
   }
 }
 
 /* Sword 2: gentle sway, medium amplitude */
 @keyframes kmFloat2 {
   0% {
-    transform: translateY(-4px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, -4px, 0) rotate(0deg);
   }
 
   25% {
-    transform: translateY(-16px) translateX(-7px) rotate(-3deg);
+    transform: translate3d(-7px, -16px, 0) rotate(-3deg);
   }
 
   50% {
-    transform: translateY(-2px) translateX(5px) rotate(2deg);
+    transform: translate3d(5px, -2px, 0) rotate(2deg);
   }
 
   75% {
-    transform: translateY(-12px) translateX(-4px) rotate(-1.5deg);
+    transform: translate3d(-4px, -12px, 0) rotate(-1.5deg);
   }
 
   100% {
-    transform: translateY(-4px) translateX(0px) rotate(0deg);
+    transform: translate3d(0px, -4px, 0) rotate(0deg);
   }
 }
 
@@ -5909,6 +5915,7 @@ body {
   pointer-events: none;
   z-index: 1;
   background: linear-gradient(135deg, #130E0C 0%, #1D140F 50%, #25160E 100%);
+  contain: strict;
 }
 
 .km-bg-noise-svg {
@@ -5926,6 +5933,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .km-gradient-blob {
@@ -5936,6 +5944,8 @@ body {
   mix-blend-mode: hard-light;
   opacity: 0.85;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .km-first {
@@ -7359,3 +7369,92 @@ body {
   font-size: 0.74rem;
   color: #9E958C;
 }
+
+/* ==========================================================================
+   PERFORMANCE & LOW-END DEVICE OPTIMIZATIONS (Content-Visibility, Offscreen Pausing)
+   ========================================================================== */
+
+/* Defer layout and rendering of heavy below-the-fold content blocks */
+.km-deferred-section,
+.km-journal-editorial-section,
+.km-wedding-heritage-section,
+.km-testimonials-marquee-section,
+.km-catalog-section,
+.km-section#faq,
+.km-section#about-us,
+.km-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+#kmProductGrid,
+#kmRealProductGrid {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* Pause CSS animations when container is scrolled out of viewport */
+.is-offscreen,
+.is-offscreen * {
+  animation-play-state: paused !important;
+}
+
+/* Low-end device mode (<= 4 CPU cores or low memory) */
+.km-perf-mode .km-gradients-group {
+  filter: blur(12px) !important;
+  -webkit-filter: blur(12px) !important;
+}
+
+.km-perf-mode .km-gradient-blob {
+  mix-blend-mode: normal !important;
+  animation-duration: 36s !important;
+  will-change: auto !important;
+}
+
+/* Disable heavy GPU-blur blobs on low-end devices */
+.km-perf-mode .km-blob-magenta,
+.km-perf-mode .km-blob-cyan {
+  display: none !important;
+}
+
+/* Remove GPU-expensive backdrop-filter on glassmorphism elements */
+.km-perf-mode .km-header,
+.km-perf-mode .km-search-overlay,
+.km-perf-mode .km-qv-panel,
+.km-perf-mode .km-cart-drawer,
+.km-perf-mode .km-3d-card-label,
+.km-perf-mode .km-category-card-info,
+.km-perf-mode .km-pdp-sticky-footer {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.km-perf-mode .km-bubble {
+  box-shadow: 0 4px 12px rgba(20, 18, 16, 0.2) !important;
+}
+
+.km-perf-mode .km-float-sword {
+  animation-duration: 18s !important;
+}
+
+/* Pause marquee on low-end; it fires a continuous transform loop */
+.km-perf-mode .km-marquee-track {
+  animation-duration: 60s !important;
+}
+
+/* Disable complex animation stagger delays to avoid layout thrash */
+.km-perf-mode [data-delay] {
+  transition-delay: 0ms !important;
+  animation-delay: 0ms !important;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

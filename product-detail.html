@@ -94,7 +94,7 @@
     <div class="km-container">
       <div class="km-header-inner">
         <a href="index.html" class="km-header-logo">
-          <img src="assets/logo.jpeg" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
+          <img src="assets/logo.jpeg" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" decoding="async" />
           <span style="color: var(--color-ink-navy); font-weight: 700;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
         </a>
 
@@ -157,17 +157,17 @@
         <!-- Left: Image Gallery -->
         <div class="km-pdp-gallery">
           <div class="km-pdp-main-img">
-            <img id="kmPdpMainImage" src="assets/sword.png" alt="Jaipur Wedding Talwar" />
+            <img id="kmPdpMainImage" src="assets/sword.png" alt="Jaipur Wedding Talwar" decoding="async" />
           </div>
           <div class="km-pdp-thumbs">
             <div class="km-pdp-thumb is-active" onclick="document.getElementById('kmPdpMainImage').src='assets/sword.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-              <img src="assets/sword.png" alt="Jaipur Wedding Talwar Front" />
+              <img src="assets/sword.png" alt="Jaipur Wedding Talwar Front" decoding="async" />
             </div>
             <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='assets/hero_talwar.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-              <img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar Hilt" />
+              <img src="assets/hero_talwar.png" alt="Jaipur Wedding Talwar Hilt" decoding="async" loading="lazy" />
             </div>
             <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='assets/sword2.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-              <img src="assets/sword2.png" alt="Jaipur Wedding Talwar Blade" />
+              <img src="assets/sword2.png" alt="Jaipur Wedding Talwar Blade" decoding="async" loading="lazy" />
             </div>
           </div>
         </div>
@@ -359,7 +359,7 @@
             data-qv-price="₹4,299" data-qv-compare="₹4,999">
             <div class="km-product-media">
               <span class="km-sale-badge">Popular</span>
-              <a href="product-detail.html"><img src="assets/sword2.png" alt="Kundan Hilt Rajput Talwar" class="km-product-img" /></a>
+              <a href="product-detail.html"><img src="assets/sword2.png" alt="Kundan Hilt Rajput Talwar" class="km-product-img" decoding="async" loading="lazy" /></a>
               <button class="km-quick-view-btn">⚡ Quick View</button>
             </div>
             <div class="km-product-info">
@@ -379,7 +379,7 @@
             data-qv-desc="Zari Velvet-lined scabbard · Hand-polished blade"
             data-qv-price="₹4,299">
             <div class="km-product-media">
-              <a href="product-detail.html"><img src="assets/hero_talwar.png" alt="Dawami Velvet Scabbard Talwar" class="km-product-img" /></a>
+              <a href="product-detail.html"><img src="assets/hero_talwar.png" alt="Dawami Velvet Scabbard Talwar" class="km-product-img" decoding="async" loading="lazy" /></a>
               <button class="km-quick-view-btn">⚡ Quick View</button>
             </div>
             <div class="km-product-info">
@@ -403,7 +403,7 @@
       <div class="km-footer-grid">
         <div class="km-footer-brand">
           <a href="index.html" class="km-header-logo" style="color: #FFF; margin-bottom: 16px;">
-            <img src="assets/logo.jpeg" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-ld-steel);" />
+            <img src="assets/logo.jpeg" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-ld-steel);" decoding="async" loading="lazy" />
             <span>Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
           </a>
           <p style="color: var(--color-ld-fog);">Handcrafted Indian wedding swords, Rajput talwars, and Sikh ceremonial heritage objects forged in Amritsar, Punjab since 1996.</p>
@@ -454,7 +454,7 @@
       </div>
       <div id="kmCartDrawerBody" class="km-cart-body">
         <div style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
-          <img src="assets/sword.png" alt="Jaipur Wedding Talwar" style="width: 70px; height: 70px; object-fit: contain; background: #FFF;" />
+          <img src="assets/sword.png" alt="Jaipur Wedding Talwar" style="width: 70px; height: 70px; object-fit: contain; background: #FFF;" decoding="async" loading="lazy" />
           <div style="flex-grow: 1;">
             <a href="product-detail.html" style="font-family: var(--km-font-heading); font-weight: 600;">Jaipur Wedding Talwar</a>
             <div style="font-size: 0.75rem; color: var(--km-text-secondary); margin: 4px 0;">Red Velvet Scabbard / Brass Hilt</div>
@@ -481,20 +481,20 @@
         <!-- Left: Image Showcase Column with 4 Interactive Thumbnails -->
         <div class="km-qv-media-col">
           <div class="km-qv-img-box">
-            <img id="kmQvImage" src="assets/sword.png" alt="Product Quick View" />
+            <img id="kmQvImage" src="assets/sword.png" alt="Product Quick View" decoding="async" loading="lazy" />
           </div>
           <div class="km-qv-thumbs" id="kmQvThumbs">
             <button type="button" class="km-qv-thumb-item is-active" aria-label="Thumbnail 1">
-              <img src="assets/sword.png" alt="Thumbnail 1" />
+              <img src="assets/sword.png" alt="Thumbnail 1" decoding="async" loading="lazy" />
             </button>
             <button type="button" class="km-qv-thumb-item" aria-label="Thumbnail 2">
-              <img src="assets/hero_talwar.png" alt="Thumbnail 2" />
+              <img src="assets/hero_talwar.png" alt="Thumbnail 2" decoding="async" loading="lazy" />
             </button>
             <button type="button" class="km-qv-thumb-item" aria-label="Thumbnail 3">
-              <img src="assets/sword2.png" alt="Thumbnail 3" />
+              <img src="assets/sword2.png" alt="Thumbnail 3" decoding="async" loading="lazy" />
             </button>
             <button type="button" class="km-qv-thumb-item" aria-label="Thumbnail 4">
-              <img src="assets/sword.png" alt="Thumbnail 4" />
+              <img src="assets/sword.png" alt="Thumbnail 4" decoding="async" loading="lazy" />
             </button>
           </div>
         </div>
