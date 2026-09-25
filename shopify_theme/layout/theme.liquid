@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KraftMart | Luxury Indian Heritage E-Commerce Redesign</title>
+  <meta name="description"
+    content="Buy authentic Indian wedding swords, Rajput talwars, Punjabi khandas & ceremonial swords online at KraftMart. Handcrafted in Amritsar, Punjab. Free custom engraving.">
+  <link rel="stylesheet" href="{{ \'kraftmart-heritage.css?v=20260923f\' | asset_url }}">
+  <style>
+    /* Strictly remove ABCD and color swatches on homepage */
+    .km-swatch-container,
+    .km-variant-swatches,
+    .km-color-swatches {
+      display: none !important;
+    }
+  </style>
+  <script src="assets/kraftmart-heritage.js?v=20260923f" defer></script>
+  <script src="assets/km-cart.js" defer></script>
+
+  {{ content_for_header }}
+</head>
+<body>
+  {% section 'header' %}
+  
+  <main id="MainContent" role="main">
+    {{ content_for_layout }}
+  </main>
+  
+  {% section 'footer' %}
+  
+  {% render 'cart-drawer' %}
+
+  <!-- Search Overlay Modal -->
+  <div id="kmSearchOverlay" class="km-search-overlay" role="dialog" aria-label="Search Catalog">
+    <div class="km-search-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span style="font-family:var(--km-font-heading);font-size:1.4rem;color:var(--km-gold-primary);">Search Heritage Collection</span>
+        <button id="kmCloseSearchBtn" aria-label="Close search" style="background:none;border:none;color:var(--km-text-secondary);font-size:1.5rem;cursor:pointer;">&times;</button>
+      </div>
+      <input type="text" id="kmSearchInput" class="km-search-input" placeholder="Search for talwars, kirpans, damascus..." autofocus>
+      <div id="kmSearchResults" class="km-search-results"></div>
+    </div>
+  </div>
+
+  <script src="{{ 'kraftmart-heritage.js' | asset_url }}" defer></script>
+  <script src="{{ 'km-cart.js' | asset_url }}" defer></script>
+</body>
+</html>

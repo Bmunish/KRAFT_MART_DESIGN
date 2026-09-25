@@ -1,0 +1,257 @@
+<!-- Product Detail Section -->
+  <section class="km-section" style="padding: 40px 0 80px 0;">
+    <div class="km-container">
+      
+      <!-- Breadcrumb -->
+      <div style="font-size: 0.8rem; color: var(--km-text-secondary); margin-bottom: 24px;">
+        <a href="index.html" style="text-decoration: underline;">Home</a> &nbsp;/&nbsp; 
+        <a href="products.html" style="text-decoration: underline;">Products</a> &nbsp;/&nbsp; 
+        <span data-product-breadcrumb style="color: var(--km-gold-dark);">Jaipur Wedding Talwar</span>
+      </div>
+
+      <div class="km-pdp-grid">
+        
+        <!-- Left: Image Gallery -->
+        <div class="km-pdp-gallery">
+          <div class="km-pdp-main-img">
+            <img id="kmPdpMainImage" src="{{ \'sword.png\' | asset_url }}" alt="Jaipur Wedding Talwar" decoding="async" />
+          </div>
+          <div class="km-pdp-thumbs">
+            <div class="km-pdp-thumb is-active" onclick="document.getElementById('kmPdpMainImage').src='assets/sword.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+              <img src="{{ \'sword.png\' | asset_url }}" alt="Jaipur Wedding Talwar Front" decoding="async" />
+            </div>
+            <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='assets/hero_talwar.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+              <img src="{{ \'hero_talwar.png\' | asset_url }}" alt="Jaipur Wedding Talwar Hilt" decoding="async" loading="lazy" />
+            </div>
+            <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='assets/sword2.png'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+              <img src="{{ \'sword2.png\' | asset_url }}" alt="Jaipur Wedding Talwar Blade" decoding="async" loading="lazy" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Product Information & Purchase Controls -->
+        <div data-live-product-detail class="km-pdp-details-col">
+          <div class="km-qv-vendor" data-product-type>KraftMart</div>
+          <h1 class="km-heading-1" data-product-title style="font-size: 2.2rem; margin-bottom: 8px;">Wedding Sword – Sirohi Blade With Punjabi Detailing</h1>
+          
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="color: var(--km-gold-primary); font-size: 0.95rem;">★★★★★</span>
+            <span style="font-size: 0.85rem; color: var(--km-text-secondary); font-weight: 500;">4.9 / 5.0 (128 verified groom reviews)</span>
+          </div>
+
+          <!-- Price Row with Green Sale Badge -->
+          <div data-product-price class="km-qv-price-row" style="margin-bottom: 4px;">
+            <span class="km-qv-price" style="font-size: 2rem;">Rs. 9,999.00</span>
+            <span class="km-qv-compare" style="font-size: 1.1rem;">Rs. 14,999.00</span>
+            <span class="km-qv-sale-badge">Sale</span>
+          </div>
+          <div class="km-qv-shipping-note">Shipping calculated at checkout.</div>
+
+          <!-- Minimized Concise Product Description (1-2 sentences) -->
+          <p class="km-product-desc-minimized" data-product-description style="font-size: 0.95rem; color: var(--km-text-secondary); line-height: 1.65; margin: 14px 0 18px 0;"></p>
+
+          <!-- Quantity Stepper matching screenshot bronze/brown box -->
+          <div class="km-qv-qty-box">
+            <label class="km-qv-qty-label">Quantity</label>
+            <div class="km-qv-stepper">
+              <button type="button" class="km-qv-qty-btn" id="kmPdpQtyDec" aria-label="Decrease quantity">−</button>
+              <span class="km-qv-qty-val" id="kmPdpQtyVal">1</span>
+              <button type="button" class="km-qv-qty-btn" id="kmPdpQtyInc" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+
+          <!-- Purchase Action Buttons (Stacked: Add To Cart Outline, Buy it now Solid) -->
+          <div class="km-qv-actions-stacked" style="margin-bottom: 24px;">
+            <button type="button" class="km-btn-add-to-cart-outline" data-product-add data-action="open-cart">
+              Add To Cart
+            </button>
+            <button type="button" class="km-btn-buy-now-solid" data-action="open-cart">
+              Buy it now
+            </button>
+          </div>
+
+          <!-- Free Custom Engraving Simulator Container -->
+          <div style="background: rgba(197,160,89,0.08); border: 1px solid rgba(197,160,89,0.3); padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+            <h4 style="font-family: var(--km-font-display); font-size: 0.8rem; color: var(--km-gold-dark); margin-bottom: 8px; letter-spacing: 0.12em; text-transform: uppercase;">
+              ✒️ Free Custom Laser Blade Engraving
+            </h4>
+            <label style="font-size: 0.78rem; color: var(--km-text-secondary); display: block; margin-bottom: 8px;">Enter names &amp; wedding date to engrave on blade:</label>
+            <input type="text" class="km-engraving-input" placeholder="e.g. Gurpreet ❤ Simran • 24.10.2026" style="width: 100%; padding: 10px 14px; margin-bottom: 10px; background: #FFF; border: var(--km-border-subtle); border-radius: 4px;" />
+            <div style="background: #FFF; border: 1px dashed rgba(197,160,89,0.4); padding: 10px; border-radius: 4px; text-align: center;">
+              <span style="font-size: 0.68rem; text-transform: uppercase; color: var(--km-text-secondary); display: block; margin-bottom: 4px;">Live Engraving Preview</span>
+              <span class="km-engraving-preview-text" style="font-family: var(--km-font-heading); font-style: italic; font-size: 1.1rem; color: var(--km-gold-dark); font-weight: 700;">&ldquo;Gurpreet ❤ Simran • 24.10.2026&rdquo;</span>
+            </div>
+          </div>
+
+          <!-- Specifications Highlights & Bullets -->
+          <div class="km-qv-details-bottom" style="margin-top: 10px;">
+            <h3 class="km-qv-specs-title" data-product-specs-title style="font-size: 1.25rem;">Wedding Sword – Handcrafted Sirohi Blade</h3>
+            <ul class="km-qv-specs-bullets" data-product-bullets>
+              <li>Solid Stainless Steel Hilt For A Comfortable Grip.</li>
+              <li>Includes Sheath For Safe Storage And Striking Display.</li>
+              <li>Master Artisan Hand-forged Blade With Precision Ceremonial Balance.</li>
+              <li>Free Custom Laser Engraving (Groom &amp; Bride Names Included).</li>
+              <li>A Meaningful Gift That Resonates Beyond A Single Occasion.</li>
+            </ul>
+          </div>
+
+          <!-- 5 Theme-Related Aesthetic Luxury Dropdown Accordions -->
+          <div class="km-product-accordions">
+            <!-- Drop down-1: Description, Why This Sword, Techniques & Specifications -->
+            <details class="km-accordion-item" open>
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title">
+                  <span class="km-acc-icon">📜</span>
+                  <span data-acc-desc-title>Description &amp; Heritage Craftsmanship</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body" data-acc-description>
+                <!-- Populated dynamically based on product -->
+              </div>
+            </details>
+
+            <!-- Drop down 2: Estimated Processing Time -->
+            <details class="km-accordion-item">
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title">
+                  <span class="km-acc-icon">⏳</span>
+                  <span>Estimated Processing Time</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body">
+                <p><strong>Handcrafted to Order:</strong> Each ceremonial piece undergoes meticulous forging, mirror-polishing, balance testing, and bespoke laser engraving at our Amritsar heritage atelier.</p>
+                <ul class="km-acc-list">
+                  <li><strong>Standard Orders:</strong> Dispatches within <strong>2 to 4 business days</strong>.</li>
+                  <li><strong>Custom Laser Engraved Pieces:</strong> Dispatches within <strong>3 to 5 business days</strong> after personalization proof confirmation.</li>
+                  <li><strong>Urgent Wedding Inquiries:</strong> Express rush processing is available upon request via WhatsApp (+91 98888 23986).</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- Drop down-3: Delivery Duration -->
+            <details class="km-accordion-item">
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title">
+                  <span class="km-acc-icon">✈️</span>
+                  <span>Delivery Duration &amp; Insured Shipping</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body">
+                <p>We partner with premier insured logistics carriers to ensure your ceremonial heritage article arrives safely and securely in tamper-evident protective casing.</p>
+                <ul class="km-acc-list">
+                  <li><strong>Domestic Shipping (All Across India):</strong> <strong>4 to 7 business days</strong> via Bluedart, Delhivery, or FedEx Surface Express.</li>
+                  <li><strong>International Express Delivery:</strong> <strong>7 to 12 business days</strong> worldwide via DHL Express or FedEx Priority (UK, USA, Canada, Australia, Europe).</li>
+                  <li><strong>Real-time Tracking:</strong> Full tracking links and dispatch status are sent directly to your mobile number and email upon dispatch.</li>
+                  <li><strong>100% Transit Insurance:</strong> All shipments are fully insured against transit loss or handling defects.</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- Drop down -4: Is It Real or Plastic -->
+            <details class="km-accordion-item">
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title" data-acc-real-title>
+                  <span class="km-acc-icon">⚔️</span>
+                  <span>Is It Real or Plastic?</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body" data-acc-real-body>
+                <p><strong>100% Authentic Metal &amp; Organic Materials — Zero Plastic:</strong></p>
+                <p>At KraftMart, we strictly forbid plastic or flimsy imitation molds. Every sword, dagger, and kada is forged from authentic solid metals:</p>
+                <ul class="km-acc-list">
+                  <li><strong>Blade / Metal Structure:</strong> Genuine High-Carbon Steel, Forged Sarabloh (Pure Iron), or Layered Damascus Steel with authentic ceremonial heft (~1.1 to 1.3 kg for swords, ~190g for Sarabloh kadas).</li>
+                  <li><strong>Hilt &amp; Mounts:</strong> Solid cast brass, forged steel, or heavy nickel-brass electroplated with gold/antique patina.</li>
+                  <li><strong>Scabbard:</strong> Carved seasoned wood core wrapped in pure velvet, embroidered zari, or genuine leather.</li>
+                  <li><strong>Ceremonial Edge (Legal &amp; Safe):</strong> The blades are crafted with ceremonial unsharpened (dull) safety edges to comply strictly with Indian courier regulations and wedding ceremonial safety.</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- Drop down-5: Can I Engrave in This Sword? -->
+            <details class="km-accordion-item">
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title" data-acc-engrave-title>
+                  <span class="km-acc-icon">✒️</span>
+                  <span>Can I Engrave in This Sword?</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body" data-acc-engrave-body>
+                <p><strong>Yes, Complimentary High-Precision Laser Engraving is Included!</strong></p>
+                <p>Transform your ceremonial piece into a cherished family heirloom with bespoke personalization:</p>
+                <ul class="km-acc-list">
+                  <li><strong>What You Can Engrave:</strong> Bride &amp; Groom names, wedding dates, family insignias, initials, or sacred scriptures (e.g., <em>“Deg Tegh Fateh”</em>, <em>“Jai Bhavani”</em>, <em>“Khanda”</em> emblems).</li>
+                  <li><strong>Technology:</strong> Industrial-grade fiber laser engraving etched permanently into the steel — will never fade, rub off, or tarnish.</li>
+                  <li><strong>How to Submit:</strong> Use the live engraving box above or enter your text in the order notes at checkout. Our artisan team will confirm the typography mockup before etching.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+
+          <!-- Trust Badges -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.8rem; color: var(--km-text-secondary); background: var(--km-bg-secondary); padding: 16px; border-radius: 6px; border: var(--km-border-subtle); margin-top: 24px;">
+            <div>✓ <strong>15% Advance / 85% COD</strong> in India</div>
+            <div>✓ <strong>Free Laser Engraving</strong> Included</div>
+            <div>✓ <strong>Insured FedEx / DHL</strong> Shipping</div>
+            <div>✓ <strong>Handcrafted in Amritsar</strong> since 1996</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Related Products Section -->
+      <div style="margin-top: 80px; border-top: var(--km-border-gold); padding-top: 48px;">
+        <span class="km-eyebrow">COMPLETE YOUR ROYAL ATTIRE</span>
+        <h2 class="km-heading-1" style="font-size: 2rem; margin-bottom: 24px;">You May Also Like</h2>
+        
+        <div class="km-product-grid" data-live-products="4" data-live-mode="related" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));" aria-live="polite">
+          <!-- Card 1 -->
+          <div class="km-product-card km-noise-card" data-category="damascus"
+            data-qv-img="assets/sword2.png" data-qv-title="Kundan Hilt Rajput Talwar"
+            data-qv-desc="Authentic Damascus Steel · Semi-precious kundan stone hilt"
+            data-qv-price="₹4,299" data-qv-compare="₹4,999">
+            <div class="km-product-media">
+              <span class="km-sale-badge">Popular</span>
+              <a href="product-detail.html"><img src="{{ \'sword2.png\' | asset_url }}" alt="Kundan Hilt Rajput Talwar" class="km-product-img" decoding="async" loading="lazy" /></a>
+              <button class="km-quick-view-btn">⚡ Quick View</button>
+            </div>
+            <div class="km-product-info">
+              <span class="km-product-vendor">KraftMart Heritage</span>
+              <h3 class="km-product-title"><a href="product-detail.html">Kundan Hilt Rajput Talwar</a></h3>
+              <div class="km-price-wrapper">
+                <span class="km-price-current">₹4,299</span>
+                <span class="km-price-compare">₹4,999</span>
+              </div>
+              <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="km-product-card km-noise-card" data-category="wedding"
+            data-qv-img="assets/hero_talwar.png" data-qv-title="Dawami Velvet Scabbard Talwar"
+            data-qv-desc="Zari Velvet-lined scabbard · Hand-polished blade"
+            data-qv-price="₹4,299">
+            <div class="km-product-media">
+              <a href="product-detail.html"><img src="{{ \'hero_talwar.png\' | asset_url }}" alt="Dawami Velvet Scabbard Talwar" class="km-product-img" decoding="async" loading="lazy" /></a>
+              <button class="km-quick-view-btn">⚡ Quick View</button>
+            </div>
+            <div class="km-product-info">
+              <span class="km-product-vendor">KraftMart Heritage</span>
+              <h3 class="km-product-title"><a href="product-detail.html">Dawami Velvet Scabbard Talwar</a></h3>
+              <div class="km-price-wrapper">
+                <span class="km-price-current">₹4,299</span>
+              </div>
+              <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
