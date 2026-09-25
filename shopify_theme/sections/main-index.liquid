@@ -30,13 +30,8 @@
         <div class="km-hero-content">
           <span class="km-eyebrow" style="color: var(--km-gold-dark);">HANDCRAFTED IN AMRITSAR, PUNJAB &bull; SINCE
             1996</span>
-          <h1 class="km-heading-hero" style="color: var(--km-text-primary); margin-bottom: 16px;">Heritage You<br>Can
-            Carry.</h1>
-          <p class="km-hero-subtext"
-            style="color: var(--km-text-secondary); font-size: 1.1rem; line-height: 1.75; margin-bottom: 36px;">
-            Traditional Indian craftsmanship &mdash; handforged Rajput talwars, wedding swords, and bespoke ceremonial
-            artifacts crafted to honor your royal story.
-          </p>
+          <h1 class="km-heading-hero" style="color: var(--km-text-primary); margin-bottom: 16px;">{{ section.settings.hero_title }}</h1>
+          <p class="km-hero-subtext" style="color: var(--km-text-secondary); font-size: 1.1rem; line-height: 1.75; margin-bottom: 36px;">{{ section.settings.hero_subtext }}</p>
           <div class="km-hero-actions">
             <!-- Sword-Slash Button Animation CTA: Royal Crimson with blade glint -->
             <a href="/collections/all" class="km-btn km-btn-primary km-btn-sword-slash"
@@ -1304,11 +1299,24 @@
   <!-- Footer -->
 {% schema %}
 {
-  "name": "Index Section",
-  "settings": [],
+  "name": "Main Index Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Heritage You<br>Can Carry."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtext",
+      "label": "Hero Subtitle",
+      "default": "Traditional Indian craftsmanship — handforged Rajput talwars, wedding swords, and bespoke ceremonial artifacts crafted to honor your royal story."
+    }
+  ],
   "presets": [
     {
-      "name": "Index Section"
+      "name": "Main Index Section"
     }
   ]
 }
