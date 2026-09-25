@@ -6,7 +6,7 @@
   <title>KraftMart | Luxury Indian Heritage E-Commerce Redesign</title>
   <meta name="description"
     content="Buy authentic Indian wedding swords, Rajput talwars, Punjabi khandas & ceremonial swords online at KraftMart. Handcrafted in Amritsar, Punjab. Free custom engraving.">
-  <link rel="stylesheet" href="{{ \'kraftmart-heritage.css?v=20260923f\' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'kraftmart-heritage.css' | asset_url }}">
   <style>
     /* Strictly remove ABCD and color swatches on homepage */
     .km-swatch-container,
@@ -15,8 +15,8 @@
       display: none !important;
     }
   </style>
-  <script src="assets/kraftmart-heritage.js?v=20260923f" defer></script>
-  <script src="assets/km-cart.js" defer></script>
+  <script src="{{ 'kraftmart-heritage.js' | asset_url }}" defer></script>
+  <script src="{{ 'km-cart.js' | asset_url }}" defer></script>
 
   {{ content_for_header }}
 </head>
