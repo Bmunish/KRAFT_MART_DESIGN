@@ -6332,6 +6332,37 @@ body {
   font-size: 0.75rem !important;
 }
 
+#featured-products .km-product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+@media (max-width: 1024px) {
+  #featured-products .km-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #featured-products .km-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+}
+
+#featured-products .km-product-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+#featured-products .km-product-media {
+  aspect-ratio: 1 / 1 !important;
+  max-height: 280px !important;
+}
+
 /* ─────────────────────────────────────────────────────────
    KRAFTMART NEW UPDATE: LUXURY PRODUCT CATALOGUE DESIGN SYSTEM
 ───────────────────────────────────────────────────────── */

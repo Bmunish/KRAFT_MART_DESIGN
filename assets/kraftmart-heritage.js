@@ -1167,7 +1167,8 @@ function initSegmentedTabs() {
 
         const targetCategory = tab.getAttribute('data-tab');
         if (targetCategory) {
-          const items = document.querySelectorAll('[data-category]');
+          const parentSection = container.closest('section') || document;
+          const items = parentSection.querySelectorAll('[data-category]');
           items.forEach(item => {
             if (targetCategory === 'all' || item.getAttribute('data-category') === targetCategory) {
               item.style.display = '';

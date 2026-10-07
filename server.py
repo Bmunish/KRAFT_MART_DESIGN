@@ -146,6 +146,12 @@ def render_page(template_name):
 
 
 class KraftMartPreview(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        self.send_header('Pragma', 'no-cache')
+        self.send_header('Expires', '0')
+        super().end_headers()
+
     def do_HEAD(self):
         self.do_GET()
 
