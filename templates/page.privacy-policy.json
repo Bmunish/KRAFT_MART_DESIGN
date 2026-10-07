@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-privacy-policy"
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

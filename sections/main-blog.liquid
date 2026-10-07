@@ -1,0 +1,183 @@
+{% paginate blog.articles by 12 %}
+<section class="km-page-hero km-glass-hero km-hero-minimal">
+  <div class="km-bg-gradient-container" aria-hidden="true">
+    <div class="km-gradients-group">
+      <div class="km-gradient-blob km-first"></div>
+      <div class="km-gradient-blob km-second"></div>
+      <div class="km-gradient-blob km-third"></div>
+      <div class="km-gradient-blob km-fourth"></div>
+      <div class="km-gradient-blob km-fifth"></div>
+      <div class="km-gradient-blob km-interactive"></div>
+    </div>
+  </div>
+  <div class="km-container km-page-hero-inner" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; z-index: 2; flex-wrap: wrap;">
+    
+    <div style="flex: 1; min-width: 280px; text-align: left;">
+      <div class="km-page-hero-breadcrumb" style="margin-bottom: 4px; font-size: 0.74rem;">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span>›</span>
+        <span style="color: var(--km-gold-light);">{{ blog.title | default: "Royal Archives & Blog" }}</span>
+      </div>
+      
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px;">
+        <h1 class="km-heading-hero" style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin: 0; line-height: 1.2;">{{ blog.title | default: "The Royal Archives & Forge Blog" }}</h1>
+        <span class="km-glass-badge">✍ Knowledge &amp; Heritage</span>
+      </div>
+      
+      <p class="km-page-hero-lead" style="margin: 0; max-width: 580px; font-size: 0.82rem; line-height: 1.45; color: rgba(250,247,242,0.7);">Guides, forging traditions &amp; Damascus metallurgy secrets from our Amritsar workshop master bladesmiths.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="km-section" style="padding: 56px 0 100px 0;">
+  <div class="km-container">
+    <div style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <span class="km-eyebrow">All Articles</span>
+        <h2 class="km-heading-2" style="margin-top: 4px;">From the Workshop &amp; Beyond</h2>
+      </div>
+    </div>
+
+    <div class="km-blog-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
+      {% for article in blog.articles %}
+        <article class="km-blog-card km-reveal" data-delay="{{ forloop.index }}">
+          <div class="km-blog-img-wrap">
+            <img src="{{ article.image | default: ('hero_talwar.png' | asset_url) }}" alt="{{ article.title | default: 'KraftMart Heritage Guide' | escape }}" decoding="async" loading="lazy" />
+            <span class="km-blog-tag">{{ article.tags.first | default: "Heritage" }}</span>
+          </div>
+          <div class="km-blog-body">
+            <div class="km-blog-meta">
+              <span>📅 {{ article.published_at | date: "%b %d, %Y" }}</span>
+              <span>⏱ 5 min read</span>
+            </div>
+            <h3 class="km-blog-title">{{ article.title }}</h3>
+            <p class="km-blog-excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+            <a href="{{ article.url }}" class="km-blog-link">Read Full Guide →</a>
+          </div>
+        </article>
+      {% else %}
+        <!-- Article 1 -->
+        <article class="km-blog-card km-reveal" data-delay="1">
+          <div class="km-blog-img-wrap">
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="How to Choose a Wedding Talwar for Indian Grooms" decoding="async" loading="lazy" />
+            <span class="km-blog-tag">Wedding Guide</span>
+          </div>
+          <div class="km-blog-body">
+            <div class="km-blog-meta">
+              <span>📅 Aug 10, 2026</span>
+              <span>⏱ 5 min read</span>
+            </div>
+            <h3 class="km-blog-title">How to Choose the Perfect Wedding Talwar for Your Ceremony</h3>
+            <p class="km-blog-excerpt">From blade curvature and hilt ergonomics to velvet scabbard colour-matching with your royal sherwani — our complete groom's guide.</p>
+            <a href="/blogs/news/wedding-talwar-selection" class="km-blog-link">Read Full Guide →</a>
+          </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="km-blog-card km-reveal" data-delay="2">
+          <div class="km-blog-img-wrap">
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Damascus Steel Metallurgy Explained" decoding="async" loading="lazy" />
+            <span class="km-blog-tag">Master Metallurgy</span>
+          </div>
+          <div class="km-blog-body">
+            <div class="km-blog-meta">
+              <span>📅 Aug 04, 2026</span>
+              <span>⏱ 7 min read</span>
+            </div>
+            <h3 class="km-blog-title">Damascus Steel Explained: Why 1095/15N20 Is the King of Alloys</h3>
+            <p class="km-blog-excerpt">Forged from 300+ folds of high-carbon steel, delivering superior hardness, flex balance, and distinct swirling wave patterns.</p>
+            <a href="/blogs/news/damascus-steel-metallurgy" class="km-blog-link">Read Full Guide →</a>
+          </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="km-blog-card km-reveal" data-delay="3">
+          <div class="km-blog-img-wrap">
+            <img src="{{ 'sword.png' | asset_url }}" alt="Caring for Heirloom Indian Swords" decoding="async" loading="lazy" />
+            <span class="km-blog-tag">Care &amp; Heirloom</span>
+          </div>
+          <div class="km-blog-body">
+            <div class="km-blog-meta">
+              <span>📅 Jul 28, 2026</span>
+              <span>⏱ 4 min read</span>
+            </div>
+            <h3 class="km-blog-title">How to Oil, Store &amp; Maintain Your Ceremonial Talwar for Decades</h3>
+            <p class="km-blog-excerpt">Learn master oiling techniques, velvet scabbard humidity control, and brass pommel polish rituals passed down generations.</p>
+            <a href="/blogs/news/sword-care-maintenance" class="km-blog-link">Read Full Guide →</a>
+          </div>
+        </article>
+
+        <!-- Article 4 -->
+        <article class="km-blog-card km-reveal" data-delay="4">
+          <div class="km-blog-img-wrap">
+            <img src="{{ 'live_about_kraftmart.jpg' | asset_url }}" alt="The Sacred Tradition of Carrying a Talwar in Indian Weddings" decoding="async" loading="lazy" />
+            <span class="km-blog-tag">Traditions</span>
+          </div>
+          <div class="km-blog-body">
+            <div class="km-blog-meta">
+              <span>📅 Jul 15, 2026</span>
+              <span>⏱ 6 min read</span>
+            </div>
+            <h3 class="km-blog-title">The Sacred Tradition of Carrying a Talwar in Indian Weddings</h3>
+            <p class="km-blog-excerpt">Explore the deep cultural symbolism of the wedding talwar across Rajput, Sikh, and Punjabi wedding rituals.</p>
+            <a href="/blogs/news/wedding-talwar-selection" class="km-blog-link">Read Full Guide →</a>
+          </div>
+        </article>
+
+        <!-- Article 5 -->
+        <article class="km-blog-card km-reveal" data-delay="5">
+          <div class="km-blog-img-wrap">
+            <img src="{{ 'lakshmi_workshop_1996.jpg' | asset_url }}" alt="Sarabloh vs Damascus Steel" decoding="async" loading="lazy" />
+            <span class="km-blog-tag">Metallurgy</span>
+          </div>
+          <div class="km-blog-body">
+            <div class="km-blog-meta">
+              <span>📅 Jun 30, 2026</span>
+              <span>⏱ 5 min read</span>
+            </div>
+            <h3 class="km-blog-title">Sarabloh vs Damascus: An Amritsar Bladesmith's Perspective</h3>
+            <p class="km-blog-excerpt">Understanding pure all-iron Sarabloh spirituality versus pattern-welded Damascus steel edge longevity.</p>
+            <a href="/blogs/news/damascus-steel-metallurgy" class="km-blog-link">Read Full Guide →</a>
+          </div>
+        </article>
+
+        <!-- Article 6 -->
+        <article class="km-blog-card km-reveal" data-delay="6">
+          <div class="km-blog-img-wrap">
+            <img src="{{ 'sikh_prakash_articles.jpg' | asset_url }}" alt="Custom Blade Laser Engraving" decoding="async" loading="lazy" />
+            <span class="km-blog-tag">Customisation</span>
+          </div>
+          <div class="km-blog-body">
+            <div class="km-blog-meta">
+              <span>📅 Jun 12, 2026</span>
+              <span>⏱ 3 min read</span>
+            </div>
+            <h3 class="km-blog-title">Complimentary Laser Engraving: Gurmukhi, Devanagari &amp; English</h3>
+            <p class="km-blog-excerpt">How our fiber-laser engraving preserves blade integrity while personalizing wedding vows and family dates forever.</p>
+            <a href="/blogs/news/wedding-talwar-selection" class="km-blog-link">Read Full Guide →</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if paginate.pages > 1 %}
+      <div class="km-reveal" style="text-align: center; margin-top: 52px;">
+        {{ paginate | default_pagination }}
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Blog",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Blog"
+    }
+  ]
+}
+{% endschema %}

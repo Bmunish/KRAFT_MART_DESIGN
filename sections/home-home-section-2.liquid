@@ -1,0 +1,80 @@
+<!-- Section 3: Drag-to-Scroll Category Carousel (Compact Layout) -->
+  <section class="km-section" style="padding: 24px 0 44px 0;">
+    <div class="km-container">
+      <div class="km-section-header"
+        style="text-align: left; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span class="km-eyebrow" style="margin-bottom: 2px; font-size: 0.72rem; letter-spacing: 0.14em;">CURATED HERITAGE SELECTIONS</span>
+          <h2 class="km-heading-1" style="color: var(--color-ink-navy); font-size: clamp(1.8rem, 3.2vw, 2.4rem); margin: 0; line-height: 1.15;">Explore Collections</h2>
+        </div>
+        <span style="font-size: 0.8rem; color: var(--color-slate-gray); font-weight: 500;">← Drag or swipe to scroll →</span>
+      </div>
+
+      <div class="km-category-carousel-wrapper">
+        <div class="km-category-carousel">
+          <a href="/collections/wedding-swords" class="km-category-item-card" title="Explore Wedding Swords in New Panel">
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Wedding Swords &amp; Decorative" decoding="async" loading="lazy" />
+            <div class="km-category-card-overlay">
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Bestseller</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Wedding Swords</h3>
+            </div>
+          </a>
+
+          <a href="/collections/all?category=damascus" class="km-category-item-card" title="Explore Premium Talwars in New Panel">
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Handforged Damascus Talwars" decoding="async" loading="lazy" />
+            <div class="km-category-card-overlay">
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Master
+                Metallurgy</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Premium Talwars</h3>
+            </div>
+          </a>
+
+          <a href="/collections/all?price=under2000" class="km-category-item-card" title="Explore Swords Under ₹2000 in New Panel">
+            <img src="{{ 'sword.png' | asset_url }}" alt="Swords Under ₹2000" decoding="async" loading="lazy" />
+            <div class="km-category-card-overlay">
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Ceremonial
+                Value</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Swords Under ₹2,000
+              </h3>
+            </div>
+          </a>
+
+          <a href="/collections/all?category=wall-hangings" class="km-category-item-card" title="Explore Wall Hangings in New Panel">
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Royal Wall Hangings" decoding="async" loading="lazy" />
+            <div class="km-category-card-overlay">
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Haveli
+                Decor</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Wall Hangings</h3>
+            </div>
+          </a>
+
+          <a href="/collections/all?category=miniature" class="km-category-item-card" title="Explore Miniatures & Khandas in New Panel">
+            <img src="{{ 'sword.png' | asset_url }}" alt="Miniatures &amp; Khandas" decoding="async" loading="lazy" />
+            <div class="km-category-card-overlay">
+              <span
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-light);">Collectibles</span>
+              <h3 style="font-family: var(--km-font-heading); font-size: 1.4rem; font-weight: 600;">Miniatures &amp;
+                Khandas</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% schema %}
+{
+  "name": "Home Section 2",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Home Section 2"
+    }
+  ]
+}
+{% endschema %}

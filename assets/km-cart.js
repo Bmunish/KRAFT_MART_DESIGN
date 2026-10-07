@@ -138,7 +138,7 @@
         '<path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>' +
         '<p style="font-family:var(--km-font-heading);font-size:1.2rem;margin-bottom:8px;">Your Cart is Empty</p>' +
         '<p style="font-size:0.875rem;">Explore our handcrafted heritage swords.</p>' +
-        '<a href="products.html" style="display:inline-block;margin-top:20px;padding:10px 24px;background:var(--km-gold-primary);color:#0E0A08;border-radius:6px;font-weight:700;font-size:0.875rem;text-decoration:none;">Browse Products</a>' +
+        '<a href="/collections/all" style="display:inline-block;margin-top:20px;padding:10px 24px;background:var(--km-gold-primary);color:#0E0A08;border-radius:6px;font-weight:700;font-size:0.875rem;text-decoration:none;">Browse Products</a>' +
         '</div>';
       if (footer) footer.style.display = 'none';
       _rendering = false;
@@ -148,13 +148,14 @@
     if (footer) footer.style.display = '';
 
     body.innerHTML = items.map(function(item) {
+      var prodUrl = item.handle ? ('/products/' + encodeURIComponent(item.handle)) : '/collections/all';
       var lineTotal = fmtPrice(item.price * item.qty);
       return '<div class="km-cart-item" data-id="' + escAttr(item.id) + '" style="display:flex;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:var(--km-border-subtle);">' +
-        '<a href="product-detail.html?handle=' + escAttr(item.handle) + '" style="flex-shrink:0;">' +
+        '<a href="' + escAttr(prodUrl) + '" style="flex-shrink:0;">' +
         '<img src="' + escAttr(item.image) + '" alt="' + escAttr(item.title) + '" style="width:72px;height:72px;object-fit:contain;background:#FFF;border-radius:6px;border:var(--km-border-subtle);" loading="lazy" decoding="async"/>' +
         '</a>' +
         '<div style="flex-grow:1;min-width:0;">' +
-        '<a href="product-detail.html?handle=' + escAttr(item.handle) + '" style="font-family:var(--km-font-heading);font-weight:600;font-size:0.95rem;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(item.title) + '</a>' +
+        '<a href="' + escAttr(prodUrl) + '" style="font-family:var(--km-font-heading);font-weight:600;font-size:0.95rem;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(item.title) + '</a>' +
         (item.variant ? '<div style="font-size:0.74rem;color:var(--km-text-secondary);margin-bottom:6px;">' + esc(item.variant) + '</div>' : '') +
         '<div style="display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;">' +
         '<div class="km-qv-stepper" style="gap:0;">' +

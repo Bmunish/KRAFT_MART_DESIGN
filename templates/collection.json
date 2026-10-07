@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection"
+    },
+    "testimonials": {
+      "type": "home-testimonials-marquee"
+    }
+  },
+  "order": [
+    "main",
+    "testimonials"
+  ]
+}

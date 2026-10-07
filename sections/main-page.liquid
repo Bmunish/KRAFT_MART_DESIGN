@@ -1,0 +1,22 @@
+<section class="km-section" style="padding: 96px 0;">
+  <div class="km-container">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <h1 class="km-heading-1" style="margin-bottom: 32px; text-align: center;">{{ page.title }}</h1>
+      <div class="km-page-content" style="color: var(--km-text-secondary); line-height: 1.8;">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Page"
+    }
+  ]
+}
+{% endschema %}

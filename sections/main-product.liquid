@@ -1,0 +1,380 @@
+<!-- Product Detail Section -->
+  <section class="km-section" style="padding: 40px 0 80px 0;">
+    <div class="km-container">
+      
+      <!-- Breadcrumb -->
+      <div style="font-size: 0.8rem; color: var(--km-text-secondary); margin-bottom: 24px;">
+        <a href="/" style="text-decoration: underline;">Home</a> &nbsp;/&nbsp; 
+        <a href="/collections/all" style="text-decoration: underline;">Products</a> &nbsp;/&nbsp; 
+        <span data-product-breadcrumb style="color: var(--km-gold-dark);">{{ product.title }}</span>
+      </div>
+
+      <div class="km-pdp-grid">
+        
+        <!-- Left: Image Gallery -->
+        <div class="km-pdp-gallery">
+          
+          <div class="km-pdp-main-img">
+            {% if product.featured_image %}
+              <img id="kmPdpMainImage" src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title | escape }}" decoding="async" />
+            {% else %}
+              <img id="kmPdpMainImage" src="{{ 'sword.png' | asset_url }}" alt="{{ product.title | escape }}" decoding="async" />
+            {% endif %}
+          </div>
+          <div class="km-pdp-thumbs">
+            {% if product.images.size > 0 %}
+              {% for image in product.images limit: 4 %}
+              <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='{{ image | img_url: '1000x' }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+                <img src="{{ image | img_url: '200x' }}" alt="{{ image.alt | escape }}" decoding="async" loading="lazy" />
+              </div>
+              {% endfor %}
+            {% else %}
+              <div class="km-pdp-thumb is-active" onclick="document.getElementById('kmPdpMainImage').src='{{ 'sword.png' | asset_url }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+                <img src="{{ 'sword.png' | asset_url }}" alt="{{ product.title | escape }}" decoding="async" loading="lazy" />
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Right: Product Information & Purchase Controls -->
+        <div data-live-product-detail class="km-pdp-details-col">
+          <div class="km-qv-vendor" data-product-type>{{ product.vendor }}</div>
+          <h1 class="km-heading-1" data-product-title style="font-size: 2.2rem; margin-bottom: 8px;">{{ product.title }}</h1>
+          
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="color: var(--km-gold-primary); font-size: 0.95rem;">★★★★★</span>
+            <span style="font-size: 0.85rem; color: var(--km-text-secondary); font-weight: 500;">4.9 / 5.0 (128 verified groom reviews)</span>
+          </div>
+
+          <!-- Price Row with Green Sale Badge -->
+          
+          <div data-product-price class="km-qv-price-row" style="margin-bottom: 4px;">
+            <span class="km-qv-price" style="font-size: 2rem;">{{ product.price | money }}</span>
+            {% if product.compare_at_price > product.price %}
+            <span class="km-qv-compare" style="font-size: 1.1rem;">{{ product.compare_at_price | money }}</span>
+            <span class="km-qv-sale-badge">Sale</span>
+            {% endif %}
+          </div>
+
+          <div class="km-qv-shipping-note">Shipping calculated at checkout.</div>
+
+          <!-- Room Booking Style Urgency & Scarcity Box -->
+          <div class="km-booking-urgency-box">
+            <div class="km-urgency-row">
+              <span class="km-urgency-icon-pulse">🔥</span>
+              <div class="km-urgency-text-group">
+                <span class="km-urgency-primary-text"><strong>Hurry! Few in stock — Only 3 pieces left!</strong></span>
+                <span class="km-urgency-social-viewers">⚡ High demand: 18 collectors viewing this blade right now &bull; 4 dispatched today</span>
+              </div>
+            </div>
+            <div class="km-urgency-stock-meter" aria-hidden="true">
+              <div class="km-urgency-stock-bar" style="width: 25%;"></div>
+            </div>
+          </div>
+
+          <!-- Minimized Concise Product Description (1-2 sentences) -->
+          <p class="km-product-desc-minimized" data-product-description style="font-size: 0.95rem; color: var(--km-text-secondary); line-height: 1.65; margin: 14px 0 18px 0;"></p>
+
+          <!-- Quantity Stepper matching screenshot bronze/brown box -->
+          <div class="km-qv-qty-box">
+            <label class="km-qv-qty-label">Quantity</label>
+            <div class="km-qv-stepper">
+              <button type="button" class="km-qv-qty-btn" id="kmPdpQtyDec" aria-label="Decrease quantity">−</button>
+              <span class="km-qv-qty-val" id="kmPdpQtyVal">1</span>
+              <button type="button" class="km-qv-qty-btn" id="kmPdpQtyInc" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+
+          <!-- Purchase Action Buttons (Stacked: Add To Cart Outline, Buy it now Solid) -->
+          
+          <form method="post" action="{{ routes.cart_add_url }}" class="km-qv-actions-stacked" style="margin-bottom: 20px;" id="product-form-{{ product.id }}">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+            <input type="hidden" name="quantity" id="kmPdpRealQty" value="1" />
+            <button type="submit" name="add" class="km-btn-add-to-cart-outline" data-product-add>
+              Add To Cart
+            </button>
+            <button type="button" class="km-btn-buy-now-solid" onclick="document.getElementById('product-form-{{ product.id }}').submit();">
+              Buy it now
+            </button>
+          </form>
+
+          <!-- PDP Trust Badges & USP Strip -->
+          <div class="km-pdp-trust-grid" style="margin-bottom: 24px;">
+            <div class="km-pdp-trust-item">
+              <span class="km-pdp-trust-icon">🗡️</span>
+              <div>
+                <strong>Our Brand USP</strong>
+                <span>Affordable swords at your doorstep with a pinch of customisation.</span>
+              </div>
+            </div>
+            <div class="km-pdp-trust-item">
+              <span class="km-pdp-trust-icon">🚚</span>
+              <div>
+                <strong>Doorstep Delivery</strong>
+                <span><strong>7–10 Business Days</strong> across India &bull; <strong>8 Business Days</strong> for export.</span>
+              </div>
+            </div>
+            <div class="km-pdp-trust-item">
+              <span class="km-pdp-trust-icon">⏳</span>
+              <div>
+                <strong>Processing Time</strong>
+                <span>Varies from item to item. Please check item description below.</span>
+              </div>
+            </div>
+            <a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&amp;rlz=1C1FHFK_enIN1105IN1105&amp;sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&amp;kgmid=/g/11q2rz95sv&amp;q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop&amp;shem=dlvs1,epsd1,esd2e,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=ac419447525adea1&amp;utm_source=dlvs1,epsd1,esd2e,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x39197d192e9f82b5:0x73a13ed215287278,1,,,," target="_blank" rel="noopener noreferrer" class="km-pdp-trust-item km-pdp-trust-google">
+              <span class="km-pdp-trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
+              </span>
+              <div>
+                <strong>Google Business Verified (4.9 ★)</strong>
+                <span style="color: #1a73e8; font-weight: 600;">Click to view authentic reviews &rarr;</span>
+              </div>
+            </a>
+          </div>
+
+
+          <!-- Free Custom Engraving Simulator Container -->
+          <div style="background: rgba(197,160,89,0.08); border: 1px solid rgba(197,160,89,0.3); padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+            <h4 style="font-family: var(--km-font-display); font-size: 0.8rem; color: var(--km-gold-dark); margin-bottom: 8px; letter-spacing: 0.12em; text-transform: uppercase;">
+              ✒️ Free Custom Laser Blade Engraving
+            </h4>
+            <label style="font-size: 0.78rem; color: var(--km-text-secondary); display: block; margin-bottom: 8px;">Enter names &amp; wedding date to engrave on blade:</label>
+            <input type="text" class="km-engraving-input" placeholder="e.g. Gurpreet ❤ Simran • 24.10.2026" style="width: 100%; padding: 10px 14px; margin-bottom: 10px; background: #FFF; border: var(--km-border-subtle); border-radius: 4px;" />
+            <div style="background: #FFF; border: 1px dashed rgba(197,160,89,0.4); padding: 10px; border-radius: 4px; text-align: center;">
+              <span style="font-size: 0.68rem; text-transform: uppercase; color: var(--km-text-secondary); display: block; margin-bottom: 4px;">Live Engraving Preview</span>
+              <span class="km-engraving-preview-text" style="font-family: var(--km-font-heading); font-style: italic; font-size: 1.1rem; color: var(--km-gold-dark); font-weight: 700;">&ldquo;Gurpreet ❤ Simran • 24.10.2026&rdquo;</span>
+            </div>
+          </div>
+
+          <!-- Specifications Highlights & Bullets -->
+          <div class="km-qv-details-bottom" style="margin-top: 10px;">
+            <h3 class="km-qv-specs-title" data-product-specs-title style="font-size: 1.25rem;">Wedding Sword – Handcrafted Sirohi Blade</h3>
+            <ul class="km-qv-specs-bullets" data-product-bullets>
+              <li>Solid Stainless Steel Hilt For A Comfortable Grip.</li>
+              <li>Includes Sheath For Safe Storage And Striking Display.</li>
+              <li>Master Artisan Hand-forged Blade With Precision Ceremonial Balance.</li>
+              <li>Free Custom Laser Engraving (Groom &amp; Bride Names Included).</li>
+              <li>A Meaningful Gift That Resonates Beyond A Single Occasion.</li>
+            </ul>
+          </div>
+
+          <!-- 5 Theme-Related Aesthetic Luxury Dropdown Accordions -->
+          <div class="km-product-accordions">
+            <!-- Drop down-1: Description, Why This Sword, Techniques & Specifications -->
+            <details class="km-accordion-item" open>
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title">
+                  <span class="km-acc-icon">📜</span>
+                  <span data-acc-desc-title>Description &amp; Heritage Craftsmanship</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              
+              <div class="km-accordion-body" data-acc-description>
+                {{ product.description }}
+              </div>
+
+            </details>
+
+            <!-- Drop down 2: Estimated Processing Time -->
+            <details class="km-accordion-item">
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title">
+                  <span class="km-acc-icon">⏳</span>
+                  <span>Estimated Processing Time</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body">
+                <p><strong>Processing time varies from item to item.</strong> Please check the specific item description for exact craftsmanship duration, steel forging schedule, and blade personalization.</p>
+                <ul class="km-acc-list">
+                  <li><strong>Standard In-Stock Pieces:</strong> Dispatches within <strong>2 to 3 business days</strong>.</li>
+                  <li><strong>Custom Laser Engraved Pieces:</strong> Dispatches within <strong>3 to 5 business days</strong> after personalization proof confirmation.</li>
+                  <li><strong>Urgent Wedding Inquiries:</strong> Express rush processing is available upon request via WhatsApp (+91-75084-27731).</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- Drop down-3: Delivery Duration -->
+            <details class="km-accordion-item">
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title">
+                  <span class="km-acc-icon">✈️</span>
+                  <span>Delivery Duration &amp; Insured Shipping</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body">
+                <p>We partner with premier insured logistics carriers to ensure your ceremonial heritage article arrives safely and securely in tamper-evident protective casing.</p>
+                <ul class="km-acc-list">
+                  <li><strong>Delivery Time (Pan-India):</strong> <strong>7–10 business days</strong> via Bluedart, Delhivery, DTDC, or India Post Speed Post.</li>
+                  <li><strong>For Export / Worldwide Shipping:</strong> <strong>8 business days</strong> transit time via FedEx Priority or DHL Express (USA, UK, Canada, Australia, UAE, Europe).</li>
+                  <li><strong>Real-time Tracking:</strong> Full tracking links and SMS/WhatsApp status sent immediately upon dispatch.</li>
+                  <li><strong>100% Transit Insurance:</strong> All shipments are fully insured against transit damage.</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- Drop down -4: Is It Real or Plastic -->
+            <details class="km-accordion-item">
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title" data-acc-real-title>
+                  <span class="km-acc-icon">⚔️</span>
+                  <span>Is It Real or Plastic?</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body" data-acc-real-body>
+                <p><strong>100% Authentic Metal &amp; Organic Materials — Zero Plastic:</strong></p>
+                <p>At KraftMart, we strictly forbid plastic or flimsy imitation molds. Every sword, dagger, and kada is forged from authentic solid metals:</p>
+                <ul class="km-acc-list">
+                  <li><strong>Blade / Metal Structure:</strong> Genuine High-Carbon Steel, Forged Sarabloh (Pure Iron), or Layered Damascus Steel with authentic ceremonial heft (~1.1 to 1.3 kg for swords, ~190g for Sarabloh kadas).</li>
+                  <li><strong>Hilt &amp; Mounts:</strong> Solid cast brass, forged steel, or heavy nickel-brass electroplated with gold/antique patina.</li>
+                  <li><strong>Scabbard:</strong> Carved seasoned wood core wrapped in pure velvet, embroidered zari, or genuine leather.</li>
+                  <li><strong>Ceremonial Edge (Legal &amp; Safe):</strong> The blades are crafted with ceremonial unsharpened (dull) safety edges to comply strictly with Indian courier regulations and wedding ceremonial safety.</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- Drop down-5: Can I Engrave in This Sword? -->
+            <details class="km-accordion-item">
+              <summary class="km-accordion-header">
+                <span class="km-accordion-title" data-acc-engrave-title>
+                  <span class="km-acc-icon">✒️</span>
+                  <span>Can I Engrave in This Sword?</span>
+                </span>
+                <span class="km-acc-chevron">▾</span>
+              </summary>
+              <div class="km-accordion-body" data-acc-engrave-body>
+                <p><strong>Yes, Complimentary High-Precision Laser Engraving is Included!</strong></p>
+                <p>Transform your ceremonial piece into a cherished family heirloom with bespoke personalization:</p>
+                <ul class="km-acc-list">
+                  <li><strong>What You Can Engrave:</strong> Bride &amp; Groom names, wedding dates, family insignias, initials, or sacred scriptures (e.g., <em>“Deg Tegh Fateh”</em>, <em>“Jai Bhavani”</em>, <em>“Khanda”</em> emblems).</li>
+                  <li><strong>Technology:</strong> Industrial-grade fiber laser engraving etched permanently into the steel — will never fade, rub off, or tarnish.</li>
+                  <li><strong>How to Submit:</strong> Use the live engraving box above or enter your text in the order notes at checkout. Our artisan team will confirm the typography mockup before etching.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+
+          <!-- Trust Badges -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.8rem; color: var(--km-text-secondary); background: var(--km-bg-secondary); padding: 16px; border-radius: 6px; border: var(--km-border-subtle); margin-top: 24px;">
+            <div>✓ <strong>15% Advance / 85% COD</strong> in India</div>
+            <div>✓ <strong>Free Laser Engraving</strong> Included</div>
+            <div>✓ <strong>Insured FedEx / DHL</strong> Shipping</div>
+            <div>✓ <strong>Handcrafted in Amritsar</strong> since 1996</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Related Products Section -->
+      <div style="margin-top: 80px; border-top: var(--km-border-gold); padding-top: 48px;">
+        <span class="km-eyebrow">COMPLETE YOUR ROYAL ATTIRE</span>
+        <h2 class="km-heading-1" style="font-size: 2rem; margin-bottom: 24px;">You May Also Like</h2>
+        
+        
+        <div class="km-product-grid" data-live-products="4" data-live-mode="related" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));" aria-live="polite">
+          {% for rel_product in collections['all'].products limit:4 %}
+          <div class="km-product-card km-noise-card">
+            <div class="km-product-media">
+              {% if rel_product.compare_at_price > rel_product.price %}
+              <span class="km-sale-badge">Sale</span>
+              {% endif %}
+              <a href="{{ rel_product.url }}">{% if rel_product.featured_image %}
+                <img src="{{ rel_product.featured_image | img_url: '500x' }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
+              {% else %}
+                <img src="{{ 'sword.png' | asset_url }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
+              {% endif %}</a>
+            </div>
+            <div class="km-product-info">
+              <span class="km-product-vendor">{{ rel_product.vendor }}</span>
+              <h3 class="km-product-title"><a href="{{ rel_product.url }}">{{ rel_product.title }}</a></h3>
+              <div class="km-price-wrapper">
+                <span class="km-price-current">{{ rel_product.price | money }}</span>
+                {% if rel_product.compare_at_price > rel_product.price %}
+                <span class="km-price-compare">{{ rel_product.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+              <form method="post" action="{{ routes.cart_add_url }}" style="margin-top: 10px;">
+                <input type="hidden" name="id" value="{{ rel_product.selected_or_first_available_variant.id }}" />
+                <button type="submit" class="km-add-cart-btn">Add to Cart</button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+{% schema %}
+{
+  "name": "Product Details",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show Reviews",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_note",
+      "label": "Shipping Note",
+      "default": "Shipping calculated at checkout."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "quantity_selector",
+      "name": "Quantity Selector",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy Buttons",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "engraving",
+      "name": "Engraving Simulator",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "Share",
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Details"
+    }
+  ]
+}
+{% endschema %}

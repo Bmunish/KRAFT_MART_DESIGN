@@ -1,0 +1,296 @@
+<section class="km-hero-section km-blob-wrapper" id="km-hero"
+    style="min-height: 76vh; display: flex; align-items: center; position: relative; overflow: hidden;">
+
+    <!-- Sliding image background from KraftMart official website -->
+    <div class="km-hero-slider" id="kmHeroSlider" aria-hidden="true">
+      <div class="km-hero-slide is-active" style="background-image: url('{{ section.settings.banner_image_1 | default: ('kraftmart_banner_2.jpg' | asset_url) }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_2 | default: ('kraftmart_banner_1.jpg' | asset_url) }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_3 | default: ('kraftmart_banner_3.jpg' | asset_url) }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_4 | default: ('kraftmart_banner_4.jpg' | asset_url) }}');"></div>
+    </div>
+    <!-- Layered warm overlay -->
+    <div class="km-hero-video-overlay"></div>
+
+    <!-- Ambient gold glow blobs -->
+    <div class="km-blob-magenta"></div>
+    <div class="km-blob-cyan"></div>
+
+
+    <div class="km-container" style="position: relative; z-index: 10; width: 100%; padding: 72px 24px;">
+      <div class="km-hero-grid">
+        <!-- Left Column: Value Proposition & CTAs -->
+        <div class="km-hero-content">
+          <span class="km-eyebrow" style="color: var(--km-gold-dark); letter-spacing: 0.16em; font-size: 0.72rem; margin-bottom: 8px;">AMRITSAR FORGE &bull; EST. 1996</span>
+          <div class="km-usp-hero-banner" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(197, 160, 89, 0.12); border: 1px solid rgba(197, 160, 89, 0.4); border-radius: 20px; padding: 4px 14px; margin-bottom: 14px;">
+            <span style="color: var(--km-gold-dark); font-size: 0.85rem;">✦</span>
+            <span style="font-family: var(--km-font-display); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.06em; color: var(--km-gold-dark); text-transform: uppercase;">Affordable Royal Swords at Your Doorstep &bull; Bespoke Customisation</span>
+          </div>
+          <h1 class="km-heading-hero" id="kmHeroTitle" style="color: var(--km-text-primary); margin-bottom: 16px;">{{ section.settings.hero_title | default: "Royal Wedding Talwars, Handcrafted in Amritsar" }}</h1>
+          <p class="km-hero-subtext" id="kmHeroSubtext" style="color: var(--km-text-secondary); font-size: 1.05rem; line-height: 1.7; max-width: 520px; margin-bottom: 30px;">{{ section.settings.hero_subtext | default: "Authentic Rajput talwars &amp; ceremonial blades with complimentary custom laser engraving. Delivered with royal lineage to your doorstep." }}</p>
+          <div class="km-hero-actions">
+            <!-- Sword-Slash Button Animation CTA: Royal Crimson with blade glint -->
+            <a href="/collections/all" class="km-btn km-btn-primary km-btn-sword-slash"
+              style="padding: 16px 32px; font-weight: 700;">
+              <span>EXPLORE WEDDING SWORDS &#8594;</span>
+            </a>
+            <a href="/pages/about" class="km-btn km-btn-outline" style="padding: 16px 28px;">Our Heritage Story</a>
+          </div>
+
+          <!-- Social proof pill under CTAs -->
+          <div style="margin-top: 26px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&amp;rlz=1C1FHFK_enIN1105IN1105&amp;sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&amp;kgmid=/g/11q2rz95sv&amp;q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop&amp;shem=dlvs1,epsd1,esd2e,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=ac419447525adea1&amp;utm_source=dlvs1,epsd1,esd2e,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x39197d192e9f82b5:0x73a13ed215287278,1,,,," target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+              <span style="color: #FFD700; font-size: 0.9rem;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span style="color: var(--km-text-secondary); font-size: 0.8rem; font-weight: 600;">4.9 / 5 on Google Business (Verified)</span>
+            </a>
+            <span style="width: 1px; height: 16px; background: rgba(197,160,89,0.4); display: inline-block;"></span>
+            <span style="color: var(--km-text-secondary); font-size: 0.8rem;">7–10 Day Delivery (Pan-India) &bull; 8 Days (Export)</span>
+          </div>
+        </div>
+
+        <!-- Right Column: 3D Cinematic 3-Card Rotating Carousel Stage -->
+        <div class="km-hero-visual">
+          <div class="km-3d-stage" id="km3dStage">
+            <!-- Card 1: Jaipur Wedding Talwar (CENTER) -->
+            <div class="km-3d-card is-center" data-index="0" data-hero-card="1">
+              <div class="km-3d-card-img-wrap">
+                <img id="kmHeroCardImg1" src="{{ section.settings.card_image_1 | default: ('hero_talwar.png' | asset_url) }}" alt="{{ section.settings.card_title_1 | default: 'Jaipur Wedding Talwar' }}" decoding="async" />
+              </div>
+              <div class="km-3d-card-label">
+                <span class="km-3d-card-tag" id="kmHeroCardTag1">&#10022; {{ section.settings.card_tag_1 | default: "Bestseller" }}</span>
+                <h3 class="km-3d-card-title" id="kmHeroCardTitle1">{{ section.settings.card_title_1 | default: "Jaipur Wedding Talwar" }}</h3>
+                <p class="km-3d-card-sub" id="kmHeroCardSub1">{{ section.settings.card_sub_1 | default: "Kundan Brass Hilt • Red Velvet Scabbard • Free Engraving" }}</p>
+                <div class="km-3d-card-price" id="kmHeroCardPrice1">{{ section.settings.card_price_1 | default: "₹2,599" }} <span id="kmHeroCardCompare1">{{ section.settings.card_compare_1 | default: "₹3,099" }}</span></div>
+              </div>
+            </div>
+
+            <!-- Card 2: Royal Jodhpur Damascus (RIGHT) -->
+            <div class="km-3d-card is-right" data-index="1" data-hero-card="2">
+              <div class="km-3d-card-img-wrap">
+                <img id="kmHeroCardImg2" src="{{ section.settings.card_image_2 | default: ('sword2.png' | asset_url) }}" alt="{{ section.settings.card_title_2 | default: 'Royal Jodhpur Damascus' }}" decoding="async" loading="lazy" />
+              </div>
+              <div class="km-3d-card-label">
+                <span class="km-3d-card-tag" id="kmHeroCardTag2">&#10022; {{ section.settings.card_tag_2 | default: "Master Metallurgy" }}</span>
+                <h3 class="km-3d-card-title" id="kmHeroCardTitle2">{{ section.settings.card_title_2 | default: "Royal Jodhpur Damascus" }}</h3>
+                <p class="km-3d-card-sub" id="kmHeroCardSub2">{{ section.settings.card_sub_2 | default: "1095/15N20 Damascus Steel • 56–58 HRC Hardness" }}</p>
+                <div class="km-3d-card-price" id="kmHeroCardPrice2">{{ section.settings.card_price_2 | default: "₹4,299" }} <span id="kmHeroCardCompare2">{{ section.settings.card_compare_2 | default: "₹4,999" }}</span></div>
+              </div>
+            </div>
+
+            <!-- Card 3: Dawami Ceremonial Sword (LEFT) -->
+            <div class="km-3d-card is-left" data-index="2" data-hero-card="3">
+              <div class="km-3d-card-img-wrap">
+                <img id="kmHeroCardImg3" src="{{ section.settings.card_image_3 | default: ('sword.png' | asset_url) }}" alt="{{ section.settings.card_title_3 | default: 'Dawami Ceremonial Sword' }}" decoding="async" loading="lazy" />
+              </div>
+              <div class="km-3d-card-label">
+                <span class="km-3d-card-tag" id="kmHeroCardTag3">&#10022; {{ section.settings.card_tag_3 | default: "Heritage Classic" }}</span>
+                <h3 class="km-3d-card-title" id="kmHeroCardTitle3">{{ section.settings.card_title_3 | default: "Dawami Ceremonial Sword" }}</h3>
+                <p class="km-3d-card-sub" id="kmHeroCardSub3">{{ section.settings.card_sub_3 | default: "Polished Blade • Zari Velvet Scabbard • COD Available" }}</p>
+                <div class="km-3d-card-price" id="kmHeroCardPrice3">{{ section.settings.card_price_3 | default: "₹1,999" }}</div>
+              </div>
+            </div>
+
+            <!-- 3D Carousel Control Bar -->
+            <div class="km-3d-controls">
+              <button class="km-3d-nav-btn" data-3d-nav="prev" aria-label="Previous Product">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div class="km-3d-dots"></div>
+              <button class="km-3d-nav-btn" data-3d-nav="next" aria-label="Next Product">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Heading",
+      "default": "Handcrafted Indian Wedding Swords & Ceremonial Blades"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtext",
+      "label": "Subtext",
+      "default": "Individually hand-forged Rajput talwars, Punjabi khandas & ceremonial blades forged in Amritsar, Punjab with free custom laser engraving."
+    },
+    {
+      "type": "header",
+      "content": "Showcase Collection & Products"
+    },
+    {
+      "type": "collection",
+      "id": "hero_collection",
+      "label": "Hero Showcase Collection (Optional)",
+      "info": "Choose a collection to link with the hero showcase"
+    },
+    {
+      "type": "header",
+      "content": "Showcase Card 1"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Product 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_1",
+      "label": "Card 1 Image Override"
+    },
+    {
+      "type": "text",
+      "id": "card_tag_1",
+      "label": "Card 1 Badge Tag",
+      "default": "Bestseller"
+    },
+    {
+      "type": "text",
+      "id": "card_title_1",
+      "label": "Card 1 Title",
+      "default": "Jaipur Wedding Talwar"
+    },
+    {
+      "type": "text",
+      "id": "card_sub_1",
+      "label": "Card 1 Subtitle",
+      "default": "Kundan Brass Hilt • Red Velvet Scabbard • Free Engraving"
+    },
+    {
+      "type": "text",
+      "id": "card_price_1",
+      "label": "Card 1 Price",
+      "default": "₹2,599"
+    },
+    {
+      "type": "text",
+      "id": "card_compare_1",
+      "label": "Card 1 Compare Price",
+      "default": "₹3,099"
+    },
+    {
+      "type": "header",
+      "content": "Showcase Card 2"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Product 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_2",
+      "label": "Card 2 Image Override"
+    },
+    {
+      "type": "text",
+      "id": "card_tag_2",
+      "label": "Card 2 Badge Tag",
+      "default": "Master Metallurgy"
+    },
+    {
+      "type": "text",
+      "id": "card_title_2",
+      "label": "Card 2 Title",
+      "default": "Royal Jodhpur Damascus"
+    },
+    {
+      "type": "text",
+      "id": "card_sub_2",
+      "label": "Card 2 Subtitle",
+      "default": "1095/15N20 Damascus Steel • 56–58 HRC Hardness"
+    },
+    {
+      "type": "text",
+      "id": "card_price_2",
+      "label": "Card 2 Price",
+      "default": "₹4,299"
+    },
+    {
+      "type": "text",
+      "id": "card_compare_2",
+      "label": "Card 2 Compare Price",
+      "default": "₹4,999"
+    },
+    {
+      "type": "header",
+      "content": "Showcase Card 3"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Product 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_3",
+      "label": "Card 3 Image Override"
+    },
+    {
+      "type": "text",
+      "id": "card_tag_3",
+      "label": "Card 3 Badge Tag",
+      "default": "Heritage Classic"
+    },
+    {
+      "type": "text",
+      "id": "card_title_3",
+      "label": "Card 3 Title",
+      "default": "Dawami Ceremonial Sword"
+    },
+    {
+      "type": "text",
+      "id": "card_sub_3",
+      "label": "Card 3 Subtitle",
+      "default": "Polished Blade • Zari Velvet Scabbard • COD Available"
+    },
+    {
+      "type": "text",
+      "id": "card_price_3",
+      "label": "Card 3 Price",
+      "default": "₹1,999"
+    },
+    {
+      "type": "header",
+      "content": "Hero Background Banners"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_1",
+      "label": "Background Banner Slide 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_2",
+      "label": "Background Banner Slide 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_3",
+      "label": "Background Banner Slide 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_4",
+      "label": "Background Banner Slide 4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -49,8 +49,9 @@ let kmProductsPromise;
 function getLiveProducts() {
   if (!kmProductsPromise) {
     kmProductsPromise = fetch(KM_PRODUCTS_ENDPOINT)
-      .then(response => response.ok ? response.json() : Promise.reject(response.status))
-      .then(data => data.products.filter(product => product.handle !== 'partial-payment'));
+      .then(response => response.ok ? response.json() : {products: []})
+      .then(data => (data.products || []).filter(product => product.handle !== 'partial-payment'))
+      .catch(() => []);
   }
   return kmProductsPromise;
 }
@@ -361,7 +362,7 @@ function kmProductCard(product, showSwatches) {
   const compare = Number(variant.compare_at_price);
   const price = Number(variant.price);
   const saving = compare > price ? `Save ${kmMoney(compare - price)}` : '';
-  const detailUrl = `product-detail.html?handle=${encodeURIComponent(product.handle)}`;
+  const detailUrl = `/products/${encodeURIComponent(product.handle)}`;
   const details = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
   const specsAttr = details.specs.slice(0, 4).map(spec => `${spec.key}: ${spec.value}`).join('|');
 
@@ -390,10 +391,33 @@ function kmProductCard(product, showSwatches) {
       </div>
     </div>` : '';
 
+  // Urgency badge (Room booking style: "Hurry, few in stock", "Only 3 left", etc.)
+  const urgencyVariants = [
+    'Hurry! Only 3 left',
+    'Last 4 pieces in stock',
+    'Only 2 left at this price',
+    'Hurry, few in stock',
+    'Last 3 pieces left'
+  ];
+  const charSum = (product.title || '').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const urgencyText = urgencyVariants[charSum % urgencyVariants.length];
+
   const variantId = variant.id || '';
   return `<article class="km-product-card km-noise-card" data-handle="${kmEscapeAttr(product.handle || '')}" data-variant-id="${variantId}" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
-    <div class="km-product-media">${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}<a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy" decoding="async">` : ''}</a><button class="km-quick-view-btn" type="button">⚡ Quick View</button></div>
-    <div class="km-product-info"><span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span><h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3><div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>${swatchesHtml}<button type="button" class="km-add-cart-btn">Add to Cart</button></div>
+    <div class="km-product-media">
+      ${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}
+      <span class="km-card-urgency-badge"><span class="km-urgency-pulse-dot"></span>${urgencyText}</span>
+      <a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy" decoding="async">` : ''}</a>
+      <button class="km-quick-view-btn" type="button">⚡ Quick View</button>
+    </div>
+    <div class="km-product-info">
+      <span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span>
+      <h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3>
+      <div class="km-card-trust-line">🛡️ Handcrafted in Amritsar &bull; Free Engraving</div>
+      <div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>
+      ${swatchesHtml}
+      <button type="button" class="km-add-cart-btn">Add to Cart</button>
+    </div>
   </article>`;
 }
 
@@ -413,7 +437,7 @@ function hydrateHeroCards(products) {
     const compare = Number(variant.compare_at_price);
     const price = Number(variant.price);
     const shortTitle = kmCleanCardTitle(product.title);
-    card.innerHTML = `<a href="product-detail.html?handle=${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
+    card.innerHTML = `<a href="/products/${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
   });
 }
 
@@ -450,7 +474,13 @@ const KM_STATIC_PRODUCTS = {
 function hydrateProductDetail(products = []) {
   const detail = document.querySelector('[data-live-product-detail]');
   if (!detail) return;
-  const handle = new URLSearchParams(window.location.search).get('handle') || 'jaipur-wedding-talwar';
+  const pathParts = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+  let pathHandle = '';
+  if (pathParts[0] === 'products' && pathParts[1]) {
+    pathHandle = pathParts[1].replace('.html', '');
+  }
+  const queryHandle = new URLSearchParams(window.location.search).get('handle') || '';
+  const handle = decodeURIComponent(pathHandle || queryHandle || 'jaipur-wedding-talwar');
   let product = Array.isArray(products) ? products.find(item => item.handle === handle) : null;
   if (!product && KM_STATIC_PRODUCTS[handle]) {
     product = KM_STATIC_PRODUCTS[handle];
@@ -611,9 +641,22 @@ async function initRealCatalogue() {
       displayProducts = products.filter(p => Number(p.variants[0]?.price) <= 2000);
     }
 
+    // Automatically sort products from low to high price
+    displayProducts.sort((a, b) => {
+      const aPrice = Number(a.variants[0]?.price || 0);
+      const bPrice = Number(b.variants[0]?.price || 0);
+      return aPrice - bPrice;
+    });
+
+    const homeProducts = [...products].sort((a, b) => {
+      const aPrice = Number(a.variants[0]?.price || 0);
+      const bPrice = Number(b.variants[0]?.price || 0);
+      return aPrice - bPrice;
+    });
+
     document.querySelectorAll('[data-live-products]').forEach(grid => {
       const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
-      const sourceList = isCatalog ? displayProducts : products;
+      const sourceList = isCatalog ? displayProducts : homeProducts;
       const limit = grid.dataset.liveProducts === 'all' ? sourceList.length : Number(grid.dataset.liveProducts);
       grid.innerHTML = sourceList.slice(0, limit).map(p => kmProductCard(p, isCatalog)).join('');
     });
@@ -622,14 +665,18 @@ async function initRealCatalogue() {
     if (count) count.textContent = `${displayProducts.length} KraftMart products`;
 
     const sort = document.getElementById('kmCatalogSort');
-    sort?.addEventListener('change', () => {
-      const grid = document.querySelector('[data-live-mode="catalog"]') || document.getElementById('kmProductGrid');
-      const sorted = [...displayProducts].sort((a, b) => {
-        const aPrice = Number(a.variants[0]?.price), bPrice = Number(b.variants[0]?.price);
-        return sort.selectedIndex === 1 ? aPrice - bPrice : sort.selectedIndex === 2 ? bPrice - aPrice : 0;
+    if (sort) {
+      sort.value = 'price-asc';
+      sort.addEventListener('change', () => {
+        const grid = document.querySelector('[data-live-mode="catalog"]') || document.getElementById('kmProductGrid');
+        const sorted = [...displayProducts].sort((a, b) => {
+          const aPrice = Number(a.variants[0]?.price || 0), bPrice = Number(b.variants[0]?.price || 0);
+          if (sort.value === 'price-desc') return bPrice - aPrice;
+          return aPrice - bPrice; // default low to high
+        });
+        if (grid) grid.innerHTML = sorted.map(p => kmProductCard(p, true)).join('');
       });
-      if (grid) grid.innerHTML = sorted.map(p => kmProductCard(p, true)).join('');
-    });
+    }
     hydrateProductDetail(products);
     initProductBubbleClicks(products);
   } catch (error) {
@@ -720,7 +767,7 @@ function initFloatingSwords() {
       const price = Number(variant.price);
       const compare = Number(variant.compare_at_price);
       const image = product.images[0]?.src;
-      const detailUrl = `product-detail.html?handle=${encodeURIComponent(product.handle)}`;
+      const detailUrl = `/products/${encodeURIComponent(product.handle)}`;
 
       // Update href
       sword.href = detailUrl;
@@ -1096,6 +1143,23 @@ function initSegmentedTabs() {
 
   tabContainers.forEach(container => {
     const tabs = container.querySelectorAll('.km-tab-btn');
+    const sortTabsGrid = () => {
+      const parentSection = container.closest('section') || document;
+      const grid = parentSection.querySelector('.km-product-grid');
+      if (grid) {
+        const cards = Array.from(grid.querySelectorAll('.km-product-card'));
+        cards.sort((a, b) => {
+          const pA = Number(a.getAttribute('data-inr-price') || a.getAttribute('data-price') || 0);
+          const pB = Number(b.getAttribute('data-inr-price') || b.getAttribute('data-price') || 0);
+          return pA - pB;
+        });
+        cards.forEach(card => grid.appendChild(card));
+      }
+    };
+
+    // Sort initially
+    sortTabsGrid();
+
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
@@ -1115,6 +1179,8 @@ function initSegmentedTabs() {
               item.style.display = 'none';
             }
           });
+          // Keep sorted from low to high
+          sortTabsGrid();
         }
       });
     });
@@ -1534,11 +1600,13 @@ function initSearchOverlayModal() {
       }
 
       resultsBox.innerHTML = matches.map(c => {
+        const handle = c.getAttribute('data-handle') || '';
+        const targetUrl = handle ? `/products/${encodeURIComponent(handle)}` : '/collections/all';
         const img = c.getAttribute('data-qv-img') || c.querySelector('img')?.src;
         const title = c.getAttribute('data-qv-title') || c.querySelector('.km-product-title')?.textContent;
         const price = c.getAttribute('data-qv-price') || c.querySelector('.km-price-current')?.textContent;
         return `
-          <div style="display:flex;align-items:center;gap:16px;background:rgba(250,247,242,0.95);padding:12px 16px;border-radius:8px;cursor:pointer;" onclick="window.location.href='product-detail.html'">
+          <div style="display:flex;align-items:center;gap:16px;background:rgba(250,247,242,0.95);padding:12px 16px;border-radius:8px;cursor:pointer;" onclick="window.location.href='${targetUrl}'">
             <img src="${img}" alt="${title}" style="width:50px;height:50px;object-fit:contain;" />
             <div style="flex-grow:1;">
               <strong style="color:var(--km-text-primary);display:block;font-family:var(--km-font-heading);font-size:1.05rem;">${title}</strong>
@@ -1799,7 +1867,7 @@ function initProductBubbleClicks(liveProducts = null) {
       }
     }
 
-    const targetUrl = `product-detail.html?handle=${encodeURIComponent(targetHandle)}`;
+    const targetUrl = `/products/${encodeURIComponent(targetHandle)}`;
 
     if (bubble.tagName.toLowerCase() === 'a') {
       bubble.href = targetUrl;
@@ -2010,23 +2078,27 @@ function initCatalogToolbarAndFilters() {
     });
   }
 
-  // 4. Sorting Selector Logic
+  // 4. Sorting Selector Logic (Default: Price Low to High)
   if (sortSelect && grid) {
-    sortSelect.addEventListener('change', () => {
-      const val = sortSelect.value;
+    const applySort = () => {
+      const val = sortSelect.value || 'price-asc';
       const cards = Array.from(grid.querySelectorAll('.km-product-card'));
 
       cards.sort((a, b) => {
-        const priceA = parseInt(String(a.getAttribute('data-price') || '0').replace(/[^0-9]/g, ''), 10);
-        const priceB = parseInt(String(b.getAttribute('data-price') || '0').replace(/[^0-9]/g, ''), 10);
+        const priceA = parseInt(String(a.getAttribute('data-price') || a.getAttribute('data-inr-price') || '0').replace(/[^0-9]/g, ''), 10);
+        const priceB = parseInt(String(b.getAttribute('data-price') || b.getAttribute('data-inr-price') || '0').replace(/[^0-9]/g, ''), 10);
 
-        if (val === 'price-asc') return priceA - priceB;
         if (val === 'price-desc') return priceB - priceA;
-        return 0; // Default order
+        return priceA - priceB; // Default low to high
       });
 
       cards.forEach(card => grid.appendChild(card));
-    });
+    };
+
+    sortSelect.value = 'price-asc';
+    sortSelect.addEventListener('change', applySort);
+    // Sort low to high immediately upon load
+    applySort();
   }
 }
 
@@ -2049,6 +2121,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (container) {
         container.querySelectorAll('.km-swatch-btn').forEach(el => el.classList.remove('km-swatch-btn-active'));
         variantBtn.classList.add('km-swatch-btn-active');
+      }
+    }
+
+    // Product Card Navigation (Clicking card navigates to PDP unless clicking controls)
+    const productCard = e.target.closest('.km-product-card');
+    if (productCard && !e.target.closest('.km-add-cart-btn, .km-quick-view-btn, .km-card-wishlist-btn, .km-swatch-container, .km-color-swatch, .km-swatch-btn, a')) {
+      const handle = productCard.getAttribute('data-handle');
+      if (handle) {
+        window.location.href = `/products/${encodeURIComponent(handle)}`;
       }
     }
   });

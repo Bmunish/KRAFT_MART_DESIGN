@@ -1,0 +1,86 @@
+<article class="km-section" style="padding: 72px 0 100px 0; background: var(--km-bg-main, #FAF7F2);">
+  <div class="km-container">
+    <div style="max-width: 820px; margin: 0 auto;">
+      
+      <!-- Breadcrumb -->
+      <div style="margin-bottom: 24px; font-size: 0.8rem; color: var(--km-text-secondary);">
+        <a href="{{ routes.root_url }}" style="text-decoration: underline;">Home</a> &nbsp;/&nbsp;
+        <a href="{{ routes.all_blogs_url | default: '/blogs' }}" style="text-decoration: underline;">Blogs</a> &nbsp;/&nbsp;
+        <span style="color: var(--km-gold-dark);">{{ article.title | default: "Wedding Talwar Selection Guide" }}</span>
+      </div>
+
+      <!-- Featured Article Hero Image -->
+      <div style="margin-bottom: 36px; border-radius: 12px; overflow: hidden; width: 100%; box-shadow: 0 12px 36px rgba(0,0,0,0.08); border: 1px solid rgba(197,160,89,0.3);">
+        {% if article.image %}
+          <img src="{{ article.image | img_url: 'master' }}" alt="{{ article.image.alt | escape }}" style="width: 100%; height: auto; max-height: 480px; object-fit: cover; display: block;" decoding="async" />
+        {% else %}
+          <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Authentic Royal Wedding Talwar" style="width: 100%; height: auto; max-height: 480px; object-fit: cover; display: block;" decoding="async" />
+        {% endif %}
+      </div>
+
+      <!-- Article Header & Meta -->
+      <div class="km-article-header" style="text-align: center; margin-bottom: 36px;">
+        <div class="km-blog-meta" style="justify-content: center; margin-bottom: 14px; gap: 14px; font-size: 0.82rem;">
+          <span>📅 {{ article.published_at | date: "%B %d, %Y" | default: "August 10, 2026" }}</span>
+          <span>&bull;</span>
+          <span>⏱️ 5 min read</span>
+          <span>&bull;</span>
+          <span style="color: var(--km-gold-dark); font-weight: 600;">🏷️ {{ article.tags | join: ', ' | default: "Wedding Guide · Master Metallurgy" }}</span>
+        </div>
+        <h1 class="km-heading-1" style="margin-bottom: 14px; font-size: clamp(2rem, 3.5vw, 2.8rem); line-height: 1.25;">{{ article.title | default: "How to Choose the Perfect Wedding Talwar for Your Ceremony" }}</h1>
+        <div style="color: var(--km-text-secondary); font-size: 0.95rem; font-weight: 500;">
+          Authored by <strong>{{ article.author | default: "Amritsar Master Bladesmith" }}</strong> · Lineage Workshop
+        </div>
+      </div>
+
+      <!-- Article Body Content -->
+      <div class="km-page-content" style="color: var(--km-text-secondary); line-height: 1.85; font-size: 1.05rem;">
+        {% if article.content != blank %}
+          {{ article.content }}
+        {% else %}
+          <p class="km-lead" style="font-size: 1.15rem; font-weight: 500; color: var(--km-text-primary); margin-bottom: 24px;">
+            In Indian weddings, the ceremonial sword carried by the groom is far more than an accessory — it is a sacred emblem of protection, honor, and enduring family lineage.
+          </p>
+
+          <h2 style="font-family: var(--km-font-heading); color: var(--km-text-primary); margin: 32px 0 16px; font-size: 1.6rem;">1. Blade Alloy: Choosing Between Damascus and Carbon Steel</h2>
+          <p>
+            When selecting a groom talwar, the choice of steel defines both the weight balance and the aesthetic prestige of the blade:
+          </p>
+          <ul style="margin: 16px 0 24px 24px; line-height: 1.8;">
+            <li><strong>1095/15N20 Damascus Steel:</strong> Forged from over 300 folds of high-carbon steel, creating iridescent wood-grain swirls that catch the light during photography. Rated 56–58 HRC.</li>
+            <li><strong>Mirror-Polished Carbon Steel:</strong> Authentic mirror chrome luster with superior flex resistance, ideal for traditional Anand Karaj and Baraat ceremonies.</li>
+          </ul>
+
+          <h2 style="font-family: var(--km-font-heading); color: var(--km-text-primary); margin: 32px 0 16px; font-size: 1.6rem;">2. Scabbard Velvet Matching with Royal Sherwani</h2>
+          <p>
+            Our master scabbards are carved from seasoned rosewood and wrapped in heavy bridal velvet. For deep crimson or maroon sherwanis, the classic Royal Red Velvet sheath is universally favored. For ivory or gold sherwanis, emerald green or midnight navy velvet creates a striking royal contrast.
+          </p>
+
+          <h2 style="font-family: var(--km-font-heading); color: var(--km-text-primary); margin: 32px 0 16px; font-size: 1.6rem;">3. Complimentary Custom Laser Inscription</h2>
+          <p>
+            KraftMart provides free fiber-laser engraving along the spine of the blade. Grooms frequently request Bride &amp; Groom names, the wedding date, or sacred blessings in Gurmukhi, Devanagari, or English calligraphy.
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Back to Blog Navigation CTA -->
+      <div style="margin-top: 64px; text-align: center; border-top: 1px solid rgba(197,160,89,0.3); padding-top: 36px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <a href="{{ blog.url | default: '/blogs' }}" class="km-btn km-btn-outline" style="padding: 12px 28px;">← Back to All Articles</a>
+        <a href="/collections/all" class="km-btn km-btn-primary" style="padding: 12px 28px;">Explore Wedding Swords →</a>
+      </div>
+
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Article"
+    }
+  ]
+}
+{% endschema %}

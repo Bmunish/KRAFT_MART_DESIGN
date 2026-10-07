@@ -1,0 +1,261 @@
+
+<!-- Top Utility Bar: Helpline & Country/Currency Switcher -->
+<div class="km-top-utility-bar">
+  <div class="km-container km-top-utility-inner">
+    <div class="km-top-utility-left">
+      <span class="km-helpline-label">Helpline Number:</span>
+      <a href="tel:+917508427731" class="km-helpline-num">+91-75084-27731</a>
+      <span style="opacity: 0.35; margin: 0 8px; color: #FAF7F2;">|</span>
+      <a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&amp;rlz=1C1FHFK_enIN1105IN1105&amp;sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&amp;kgmid=/g/11q2rz95sv&amp;q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop&amp;shem=dlvs1,epsd1,esd2e,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=ac419447525adea1&amp;utm_source=dlvs1,epsd1,esd2e,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x39197d192e9f82b5:0x73a13ed215287278,1,,,," target="_blank" rel="noopener noreferrer" class="km-google-rating-pill" title="View KraftMart on Google Business" style="display: inline-flex; align-items: center; gap: 5px; color: #FAF7F2; text-decoration: none; font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(197, 160, 89, 0.4);">
+        <svg width="12" height="12" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
+        <span style="font-weight: 700; color: #FFD700;">4.9 ★</span>
+        <span style="color: rgba(250,247,242,0.85);">Google Business</span>
+      </a>
+    </div>
+    <div class="km-top-utility-right">
+      <div class="km-currency-selector-widget" id="kmCurrencyWidget">
+        <button type="button" class="km-currency-trigger" id="kmCurrencyTrigger" aria-haspopup="true" aria-expanded="false" title="Select Country &amp; Currency">
+          <span class="km-trigger-text" id="kmTriggerText">India | INR ₹</span>
+          <span class="km-trigger-chevron">⌵</span>
+        </button>
+        <div class="km-currency-menu" id="kmCurrencyMenu" role="menu">
+          <div class="km-currency-menu-title">Select Shipping Destination</div>
+          <div class="km-currency-options">
+            <button type="button" class="km-currency-opt is-active" data-country="India" data-currency="INR" data-symbol="₹" data-label="India | INR ₹">
+              <span class="km-opt-flag">🇮🇳</span>
+              <span class="km-opt-name">India</span>
+              <span class="km-opt-badge">INR (₹)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="United States" data-currency="USD" data-symbol="$" data-label="United States | USD $">
+              <span class="km-opt-flag">🇺🇸</span>
+              <span class="km-opt-name">United States</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="United Kingdom" data-currency="USD" data-symbol="$" data-label="United Kingdom | USD $">
+              <span class="km-opt-flag">🇬🇧</span>
+              <span class="km-opt-name">United Kingdom</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="Canada" data-currency="USD" data-symbol="$" data-label="Canada | USD $">
+              <span class="km-opt-flag">🇨🇦</span>
+              <span class="km-opt-name">Canada</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="Australia" data-currency="USD" data-symbol="$" data-label="Australia | USD $">
+              <span class="km-opt-flag">🇦🇺</span>
+              <span class="km-opt-name">Australia</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="United Arab Emirates" data-currency="USD" data-symbol="$" data-label="UAE | USD $">
+              <span class="km-opt-flag">🇦🇪</span>
+              <span class="km-opt-name">United Arab Emirates</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="Europe" data-currency="USD" data-symbol="$" data-label="Europe | USD $">
+              <span class="km-opt-flag">🇪🇺</span>
+              <span class="km-opt-name">Europe (EU)</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="Rest of World" data-currency="USD" data-symbol="$" data-label="International | USD $">
+              <span class="km-opt-flag">🌐</span>
+              <span class="km-opt-name">Rest of World</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Top Announcement Bar Marquee -->
+<div class="km-announcement-bar">
+  <div class="km-marquee-track">
+    <div class="km-marquee-item">
+      <span>Our USP: Affordable swords at your doorstep with a pinch of customisation</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Cash on Delivery Available in India</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Free Custom Engraving on All Orders</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Worldwide Shipping via FedEx &amp; DHL</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Handcrafted in Amritsar, Punjab Since 1996</span>
+      <span class="km-marquee-divider">❖</span>
+    </div>
+    <div class="km-marquee-item" aria-hidden="true">
+      <span>Our USP: Affordable swords at your doorstep with a pinch of customisation</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Cash on Delivery Available in India</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Free Custom Engraving on All Orders</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Worldwide Shipping via FedEx &amp; DHL</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Handcrafted in Amritsar, Punjab Since 1996</span>
+      <span class="km-marquee-divider">❖</span>
+    </div>
+  </div>
+</div>
+
+<!-- Header Navigation -->
+<header class="km-header">
+  <div class="km-container">
+    <div class="km-header-inner">
+      <a href="{{ routes.root_url }}" class="km-header-logo">
+        {% if section.settings.logo %}
+          <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
+        {% else %}
+          <img src="{{ 'logo.jpeg' | asset_url }}" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
+        {% endif %}
+        <span style="color: var(--color-ink-navy); font-weight: 700;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+      </a>
+
+      <nav class="km-desktop-nav" aria-label="Main Navigation">
+        <ul class="km-nav-list">
+          <li><a href="{{ routes.root_url }}" class="km-nav-link {% if request.page_type == 'index' %}active{% endif %}">Home</a></li>
+          <li><a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="km-nav-link {% if request.page_type == 'collection' %}active{% endif %}">Products</a></li>
+          <li><a href="/pages/wedding-swords" class="km-nav-link">Wedding Swords</a></li>
+          <li><a href="/pages/about" class="km-nav-link {% if request.path contains '/pages/about' %}active{% endif %}">About Us</a></li>
+          <li><a href="{{ routes.all_blogs_url | default: '/blogs' }}" class="km-nav-link {% if request.page_type == 'blog' or request.page_type == 'article' %}active{% endif %}">Blogs</a></li>
+          <li><a href="/pages/contact" class="km-nav-link {% if request.path contains '/pages/contact' %}active{% endif %}">Contact</a></li>
+
+          <!-- Policy Dropdown Menu -->
+          <li class="km-nav-item km-has-dropdown">
+            <a href="#" class="km-nav-link km-dropdown-toggle">
+              Our Policies <span class="km-dropdown-arrow">▾</span>
+            </a>
+            <div class="km-policy-dropdown">
+              <ul class="km-policy-dropdown-list">
+                <li><a href="/policies/shipping-policy" class="km-policy-link">SHIPPING POLICY</a></li>
+                <li><a href="/policies/processing-time" class="km-policy-link">PROCESSING TIME POLICY</a></li>
+                <li><a href="/policies/privacy-policy" class="km-policy-link">PRIVACY POLICY</a></li>
+                <li><a href="/policies/refund-policy" class="km-policy-link">RETURNS AND REFUNDS</a></li>
+                <li><a href="/pages/contact" class="km-policy-link">CONTACT US</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="km-header-actions">
+        <button class="km-icon-btn" id="kmSearchBtn" aria-label="Search">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        <a href="{{ routes.cart_url }}" class="km-icon-btn" data-action="open-cart" aria-label="Cart" style="text-decoration: none; color: inherit;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span class="km-cart-badge">{{ cart.item_count }}</span>
+        </a>
+        <!-- Mobile Hamburger -->
+        <button class="km-icon-btn km-mobile-menu-btn" id="kmMobileMenuBtn" aria-label="Menu" style="display: none;">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav Drawer -->
+<div id="kmMobileNav" class="km-mobile-nav-overlay" aria-hidden="true">
+  <div class="km-mobile-nav-backdrop" id="kmMobileNavBackdrop"></div>
+  <nav class="km-mobile-nav-panel" aria-label="Mobile Navigation">
+    <div class="km-mobile-nav-header">
+      <span style="font-weight: 700; font-size: 1.1rem;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+      <button id="kmMobileNavClose" class="km-icon-btn" aria-label="Close menu">&#10005;</button>
+    </div>
+    <ul class="km-mobile-nav-list">
+      <li><a href="{{ routes.root_url }}" class="km-mobile-nav-link">Home</a></li>
+      <li><a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="km-mobile-nav-link">Products</a></li>
+      <li><a href="/pages/wedding-swords" class="km-mobile-nav-link">Wedding Swords</a></li>
+      <li><a href="/pages/about" class="km-mobile-nav-link">About Us</a></li>
+      <li><a href="{{ routes.all_blogs_url | default: '/blogs' }}" class="km-mobile-nav-link">Blogs</a></li>
+      <li><a href="/pages/contact" class="km-mobile-nav-link">Contact</a></li>
+      <li style="border-top: 1px solid rgba(197,160,89,0.2); margin-top: 12px; padding-top: 12px;">
+        <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--km-gold-primary); font-weight: 600; padding: 0 20px; display: block; margin-bottom: 8px;">Our Policies</span>
+      </li>
+      <li><a href="/policies/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
+      <li><a href="/policies/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
+      <li><a href="/policies/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
+      <li><a href="/policies/refund-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
+    </ul>
+  </nav>
+</div>
+
+<style>
+  /* Mobile nav styles */
+  @media (max-width: 900px) {
+    .km-desktop-nav { display: none !important; }
+    .km-mobile-menu-btn { display: flex !important; }
+  }
+  .km-mobile-nav-overlay {
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0; transition: opacity 0.25s;
+  }
+  .km-mobile-nav-overlay.is-open {
+    pointer-events: all; opacity: 1;
+  }
+  .km-mobile-nav-backdrop {
+    position: absolute; inset: 0; background: rgba(10,10,10,0.7); backdrop-filter: blur(4px);
+  }
+  .km-mobile-nav-panel {
+    position: absolute; top: 0; right: 0; width: min(320px, 90vw); height: 100vh;
+    background: var(--color-cloud, #FAF7F2); overflow-y: auto;
+    transform: translateX(100%); transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+    box-shadow: -8px 0 40px rgba(0,0,0,0.3);
+  }
+  .km-mobile-nav-overlay.is-open .km-mobile-nav-panel { transform: translateX(0); }
+  .km-mobile-nav-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px; border-bottom: 1px solid rgba(197,160,89,0.2);
+  }
+  .km-mobile-nav-list { list-style: none; margin: 0; padding: 12px 0; }
+  .km-mobile-nav-link {
+    display: block; padding: 14px 20px; color: var(--color-ink-navy, #1a2744);
+    font-weight: 500; text-decoration: none; font-size: 1rem;
+    transition: background 0.15s, color 0.15s;
+  }
+  .km-mobile-nav-link:hover { background: rgba(197,160,89,0.1); color: var(--km-gold-primary, #C5A059); }
+</style>
+
+<script>
+  // Mobile nav toggle
+  (function() {
+    var btn = document.getElementById('kmMobileMenuBtn');
+    var nav = document.getElementById('kmMobileNav');
+    var close = document.getElementById('kmMobileNavClose');
+    var backdrop = document.getElementById('kmMobileNavBackdrop');
+    function open() { nav.classList.add('is-open'); nav.setAttribute('aria-hidden','false'); }
+    function closeNav() { nav.classList.remove('is-open'); nav.setAttribute('aria-hidden','true'); }
+    if (btn) btn.addEventListener('click', open);
+    if (close) close.addEventListener('click', closeNav);
+    if (backdrop) backdrop.addEventListener('click', closeNav);
+  })();
+  // Search button wire-up
+  var searchBtn = document.getElementById('kmSearchBtn');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function() {
+      var overlay = document.getElementById('kmSearchOverlay');
+      if (overlay) { overlay.classList.add('is-open'); var inp = document.getElementById('kmSearchInput'); if(inp) inp.focus(); }
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    }
+  ],
+  "blocks": []
+}
+{% endschema %}

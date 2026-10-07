@@ -1,0 +1,22 @@
+<section class="km-section" style="padding: 120px 0; text-align: center; background-color: var(--km-bg-secondary);">
+  <div class="km-container">
+    <h1 class="km-heading-hero" style="font-size: 6rem; color: var(--km-gold-primary); margin: 0; line-height: 1;">404</h1>
+    <h2 class="km-heading-2" style="margin-top: 16px;">Page Not Found</h2>
+    <p style="color: var(--km-text-secondary); max-width: 500px; margin: 16px auto 32px;">
+      The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+    </p>
+    <a href="{{ routes.root_url }}" class="km-btn km-btn-primary" style="padding: 14px 32px;">Return to Home</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "404 Page"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,79 @@
+{
+  "sections": {
+    "home_hero_0": {
+      "type": "home-hero",
+      "settings": {
+        "hero_title": "Royal Wedding Talwars, Handcrafted in Amritsar",
+        "hero_subtext": "Authentic Rajput talwars &amp; ceremonial blades with complimentary custom laser engraving. Delivered with royal lineage to your doorstep.",
+        "hero_collection": "wedding-swords",
+        "product_1": "jaipur-wedding-talwar",
+        "card_image_1": "hero_talwar.png",
+        "card_tag_1": "Bestseller",
+        "card_title_1": "Jaipur Wedding Talwar",
+        "card_sub_1": "Kundan Brass Hilt • Red Velvet Scabbard • Free Engraving",
+        "card_price_1": "₹2,599",
+        "card_compare_1": "₹3,099",
+        "product_2": "royal-jodhpur-damascus",
+        "card_image_2": "sword2.png",
+        "card_tag_2": "Master Metallurgy",
+        "card_title_2": "Royal Jodhpur Damascus",
+        "card_sub_2": "1095/15N20 Damascus Steel • 56–58 HRC Hardness",
+        "card_price_2": "₹4,299",
+        "card_compare_2": "₹4,999",
+        "product_3": "dawami-ceremonial-sword",
+        "card_image_3": "sword.png",
+        "card_tag_3": "Heritage Classic",
+        "card_title_3": "Dawami Ceremonial Sword",
+        "card_sub_3": "Polished Blade • Zari Velvet Scabbard • COD Available",
+        "card_price_3": "₹1,999",
+        "banner_image_1": "kraftmart_banner_2.jpg",
+        "banner_image_2": "kraftmart_banner_1.jpg",
+        "banner_image_3": "kraftmart_banner_3.jpg",
+        "banner_image_4": "kraftmart_banner_4.jpg"
+      }
+    },
+    "home_home-section-2_1": {
+      "type": "home-home-section-2"
+    },
+    "home_featured-products_2": {
+      "type": "home-featured-products"
+    },
+    "home_wedding-swords_3": {
+      "type": "home-wedding-swords"
+    },
+    "home_home-section-5_4": {
+      "type": "home-home-section-5"
+    },
+    "home_home-section-6_5": {
+      "type": "home-home-section-6"
+    },
+    "home_about-us_6": {
+      "type": "home-about-us"
+    },
+    "home_faq_8": {
+      "type": "home-faq"
+    },
+    "home_home-section-10_9": {
+      "type": "home-home-section-10"
+    },
+    "home_testimonials-marquee_10": {
+      "type": "home-testimonials-marquee"
+    },
+    "home_journal-editorial_7": {
+      "type": "home-journal-editorial"
+    }
+  },
+  "order": [
+    "home_hero_0",
+    "home_home-section-2_1",
+    "home_featured-products_2",
+    "home_wedding-swords_3",
+    "home_home-section-5_4",
+    "home_home-section-6_5",
+    "home_about-us_6",
+    "home_journal-editorial_7",
+    "home_faq_8",
+    "home_home-section-10_9",
+    "home_testimonials-marquee_10"
+  ]
+}

@@ -1,0 +1,59 @@
+<section class="km-section" style="padding: 96px 0;">
+  <div class="km-container" style="max-width: 800px;">
+    <h1 class="km-heading-2" style="margin-bottom: 32px; text-align: center;">Your Cart</h1>
+    
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div style="border: 1px solid var(--km-border-subtle); border-radius: 12px; overflow: hidden; margin-bottom: 32px;">
+          {% for item in cart.items %}
+            <div style="display: flex; gap: 20px; padding: 20px; border-bottom: 1px solid var(--km-border-subtle); align-items: center;">
+              <a href="{{ item.url }}" style="flex-shrink: 0;">
+                <img src="{{ item.image | img_url: 'medium' }}" alt="{{ item.title | escape }}" width="100" height="100" loading="lazy" style="width: 100px; height: 100px; object-fit: contain; background: #fff; border-radius: 8px;">
+              </a>
+              <div style="flex-grow: 1;">
+                <a href="{{ item.url }}" style="font-family: var(--km-font-heading); font-size: 1.2rem; font-weight: 600; text-decoration: none; color: var(--km-text-primary);">{{ item.product.title }}</a>
+                {% unless item.product.has_only_default_variant %}
+                  <div style="font-size: 0.85rem; color: var(--km-text-secondary); margin-top: 4px;">{{ item.variant.title }}</div>
+                {% endunless %}
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+                  <div style="display: flex; align-items: center; border: 1px solid var(--km-border-subtle); border-radius: 4px;">
+                    <a href="/cart/change?line={{ forloop.index }}&amp;quantity={{ item.quantity | minus: 1 }}" style="padding: 6px 12px; text-decoration: none; color: var(--km-text-primary);">-</a>
+                    <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width: 40px; text-align: center; border: none; background: transparent;" />
+                    <a href="/cart/change?line={{ forloop.index }}&amp;quantity={{ item.quantity | plus: 1 }}" style="padding: 6px 12px; text-decoration: none; color: var(--km-text-primary);">+</a>
+                  </div>
+                  <div style="font-weight: 700; font-size: 1.1rem; color: var(--km-gold-dark);">
+                    {{ item.final_line_price | money }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        <div style="text-align: right; margin-bottom: 32px;">
+          <h3 style="font-family: var(--km-font-heading); font-size: 1.5rem; margin-bottom: 16px;">Subtotal: <span style="color: var(--km-gold-dark);">{{ cart.total_price | money }}</span></h3>
+          <p style="font-size: 0.9rem; color: var(--km-text-secondary); margin-bottom: 24px;">Taxes and shipping calculated at checkout</p>
+          <button type="submit" name="checkout" class="km-btn km-btn-primary" style="padding: 16px 40px; font-size: 1.1rem; width: 100%; max-width: 320px;">Proceed to Checkout &rarr;</button>
+        </div>
+      </form>
+    {% else %}
+      <div style="text-align: center; padding: 60px 0;">
+        <p style="font-size: 1.2rem; color: var(--km-text-secondary); margin-bottom: 24px;">Your heritage cart is currently empty.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="km-btn km-btn-outline" style="padding: 12px 32px;">Continue Shopping</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Cart Page"
+    }
+  ]
+}
+{% endschema %}
