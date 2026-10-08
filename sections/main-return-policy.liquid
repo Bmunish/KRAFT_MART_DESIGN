@@ -1,6 +1,6 @@
 <section class="km-section" style="padding: 64px 0 80px; background: var(--km-bg-main, #fcfbf9);">
   <div class="km-container">
-<div class="km-policy-page-wrap km-reveal">
+    <div class="km-policy-page-wrap km-reveal">
         
         <!-- Tabbed Policy Navigation Strip -->
         <div class="km-policy-nav-strip">
@@ -16,24 +16,24 @@
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">⏱️</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">3-Day Claim Window</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">Notify us within 3 days of delivery with your unboxing video.</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_1_title | default: "3-Day Claim Window" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_1_desc | default: "Notify us within 3 days of delivery with your unboxing video." }}</span>
             </div>
           </div>
 
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">🛡️</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">Defect Protection</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">Immediate resolution or replacement for any verified transit damage.</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_2_title | default: "Defect Protection" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_2_desc | default: "Immediate resolution or replacement for any verified transit damage." }}</span>
             </div>
           </div>
 
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">🤝</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">Amicable Solutions</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">Dedicated support team to address your concerns with care.</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_3_title | default: "Amicable Solutions" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_3_desc | default: "Dedicated support team to address your concerns with care." }}</span>
             </div>
           </div>
         </div>
@@ -41,10 +41,10 @@
         <!-- Section 1: Overview -->
         <div class="km-policy-section-block">
           <p>
-            At <strong>Lakshmi Engineering Works</strong>, we take great pride in our handcrafted products. However, due to the customized nature of our swords, daggers, and handicrafts, <strong>we do not accept returns or refunds for international orders.</strong>
+            {{ section.settings.overview_1 | default: "At Lakshmi Engineering Works, we take great pride in our handcrafted products. However, due to the customized nature of our swords, daggers, and handicrafts, we do not accept returns or refunds for international orders." }}
           </p>
           <p>
-            If you face any issue with your order, we encourage you to reach out to us, and we will work together to resolve your concerns <strong>amicably</strong>.
+            {{ section.settings.overview_2 | default: "If you face any issue with your order, we encourage you to reach out to us, and we will work together to resolve your concerns amicably." }}
           </p>
         </div>
 
@@ -106,7 +106,7 @@
             ⚠️ Custom Engraved &amp; Bespoke Articles
           </div>
           <p style="color: var(--km-text-primary); font-size: 0.92rem; line-height: 1.7; margin: 0;">
-            Blades and handicrafts with <strong>personalized laser engraving</strong> (such as bride &amp; groom names, dates, or holy scripture) cannot be returned or resold. Please ensure all spelling and dates submitted during order checkout are 100% accurate.
+            {{ section.settings.engraving_notice | default: "Blades and handicrafts with personalized laser engraving (such as bride & groom names, dates, or holy scripture) cannot be returned or resold. Please ensure all spelling and dates submitted during order checkout are 100% accurate." }}
           </p>
         </div>
 
@@ -117,8 +117,8 @@
             Contact our dedicated support desk directly. We respond to all WhatsApp messages and emails within hours:
           </p>
           <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 18px;">
-            <a href="https://wa.me/917508427731" class="km-btn km-btn-primary" style="padding: 12px 24px; font-size: 0.88rem;">📱 WhatsApp: +91-75084-27731</a>
-            <a href="mailto:kraftengineering2024@gmail.com" class="km-btn km-btn-outline" style="padding: 12px 24px; font-size: 0.88rem;">✉ kraftengineering2024@gmail.com</a>
+            <a href="https://wa.me/{{ section.settings.whatsapp_digits | default: '917508427731' }}" class="km-btn km-btn-primary" style="padding: 12px 24px; font-size: 0.88rem;">📱 WhatsApp: {{ section.settings.support_phone | default: "+91-75084-27731" }}</a>
+            <a href="mailto:{{ section.settings.support_email | default: 'kraftengineering2024@gmail.com' }}" class="km-btn km-btn-outline" style="padding: 12px 24px; font-size: 0.88rem;">✉ {{ section.settings.support_email | default: "kraftengineering2024@gmail.com" }}</a>
           </div>
         </div>
 
@@ -129,11 +129,96 @@
 
 {% schema %}
 {
-  "name": "Return Policy",
-  "settings": [],
+  "name": "Return Policy Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Key Feature Highlights"
+    },
+    {
+      "type": "text",
+      "id": "feat_1_title",
+      "label": "Card 1 Title",
+      "default": "3-Day Claim Window"
+    },
+    {
+      "type": "text",
+      "id": "feat_1_desc",
+      "label": "Card 1 Description",
+      "default": "Notify us within 3 days of delivery with your unboxing video."
+    },
+    {
+      "type": "text",
+      "id": "feat_2_title",
+      "label": "Card 2 Title",
+      "default": "Defect Protection"
+    },
+    {
+      "type": "text",
+      "id": "feat_2_desc",
+      "label": "Card 2 Description",
+      "default": "Immediate resolution or replacement for any verified transit damage."
+    },
+    {
+      "type": "text",
+      "id": "feat_3_title",
+      "label": "Card 3 Title",
+      "default": "Amicable Solutions"
+    },
+    {
+      "type": "text",
+      "id": "feat_3_desc",
+      "label": "Card 3 Description",
+      "default": "Dedicated support team to address your concerns with care."
+    },
+    {
+      "type": "header",
+      "content": "Policy Overview"
+    },
+    {
+      "type": "textarea",
+      "id": "overview_1",
+      "label": "Overview Paragraph 1",
+      "default": "At Lakshmi Engineering Works, we take great pride in our handcrafted products. However, due to the customized nature of our swords, daggers, and handicrafts, we do not accept returns or refunds for international orders."
+    },
+    {
+      "type": "textarea",
+      "id": "overview_2",
+      "label": "Overview Paragraph 2",
+      "default": "If you face any issue with your order, we encourage you to reach out to us, and we will work together to resolve your concerns amicably."
+    },
+    {
+      "type": "textarea",
+      "id": "engraving_notice",
+      "label": "Custom Engraving Policy Note",
+      "default": "Blades and handicrafts with personalized laser engraving (such as bride & groom names, dates, or holy scripture) cannot be returned or resold. Please ensure all spelling and dates submitted during order checkout are 100% accurate."
+    },
+    {
+      "type": "header",
+      "content": "Contact Details"
+    },
+    {
+      "type": "text",
+      "id": "support_phone",
+      "label": "Support Phone",
+      "default": "+91-75084-27731"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_digits",
+      "label": "WhatsApp Digits (no spaces/hyphens)",
+      "default": "917508427731"
+    },
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support Email",
+      "default": "kraftengineering2024@gmail.com"
+    }
+  ],
   "presets": [
     {
-      "name": "Return Policy"
+      "name": "Return Policy Page"
     }
   ]
 }

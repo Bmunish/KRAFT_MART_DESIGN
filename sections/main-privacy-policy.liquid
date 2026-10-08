@@ -1,6 +1,6 @@
 <section class="km-section" style="padding: 64px 0 80px; background: var(--km-bg-main, #fcfbf9);">
   <div class="km-container">
-<div class="km-policy-page-wrap km-reveal">
+    <div class="km-policy-page-wrap km-reveal">
         
         <!-- Tabbed Policy Navigation Strip -->
         <div class="km-policy-nav-strip">
@@ -16,24 +16,24 @@
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">🔒</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">256-Bit Encryption</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">All order transactions and personal data are strictly encrypted.</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_1_title | default: "256-Bit Encryption" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_1_desc | default: "All order transactions and personal data are strictly encrypted." }}</span>
             </div>
           </div>
 
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">🚫</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">Zero Data Selling</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">We never monetize, rent, or sell customer contact information.</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_2_title | default: "Zero Data Selling" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_2_desc | default: "We never monetize, rent, or sell customer contact information." }}</span>
             </div>
           </div>
 
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">📦</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">Logistics Only</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">Information shared strictly with couriers (FedEx/DHL) for delivery.</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_3_title | default: "Logistics Only" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_3_desc | default: "Information shared strictly with couriers (FedEx/DHL) for delivery." }}</span>
             </div>
           </div>
         </div>
@@ -41,10 +41,10 @@
         <!-- Section 1: Overview -->
         <div class="km-policy-section-block">
           <div style="font-size: 0.8rem; color: var(--km-gold-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">
-            LAST UPDATED: MAY 17, 2025
+            LAST UPDATED: {{ section.settings.last_updated | default: "MAY 17, 2025" }}
           </div>
           <p>
-            This Privacy Policy describes how <strong>KraftMart</strong> (a subsidiary of <strong>Lakshmi Engineering Works</strong>, collectively "we", "us", or "our") collects, uses, and discloses your personal information when you visit, use our services, or make a purchase from <strong>kraftmart.shop</strong>.
+            {{ section.settings.overview_text | default: "This Privacy Policy describes how KraftMart (a subsidiary of Lakshmi Engineering Works, collectively 'we', 'us', or 'our') collects, uses, and discloses your personal information when you visit, use our services, or make a purchase from kraftmart.shop." }}
           </p>
         </div>
 
@@ -77,7 +77,7 @@
             🔒 Security &amp; Data Protection Commitment
           </div>
           <p style="color: var(--km-text-primary); font-size: 0.92rem; line-height: 1.7; margin: 0;">
-            We maintain strict administrative, technical, and physical safeguards to prevent unauthorized access, loss, or alteration of your personal data. We will never sell, rent, or trade your personal records with third-party advertising brokers.
+            {{ section.settings.security_commitment | default: "We maintain strict administrative, technical, and physical safeguards to prevent unauthorized access, loss, or alteration of your personal data. We will never sell, rent, or trade your personal records with third-party advertising brokers." }}
           </p>
         </div>
 
@@ -88,10 +88,10 @@
             You have the right to request access to the personal data we hold about you, request corrections, or request deletion of your account records. To exercise these rights or for any privacy questions:
           </p>
           <ul class="km-policy-list">
-            <li><strong>Company:</strong> Lakshmi Engineering Works / KraftMart</li>
-            <li><strong>Helpline:</strong> +91-75084-27731 / +91-92178-00003</li>
-            <li><strong>Email:</strong> support@kraftmart.shop / kraftengineering2024@gmail.com</li>
-            <li><strong>Location:</strong> Land of Five Rivers, Amritsar, Punjab, India</li>
+            <li><strong>Company:</strong> {{ section.settings.company_name | default: "Lakshmi Engineering Works / KraftMart" }}</li>
+            <li><strong>Helpline:</strong> {{ section.settings.contact_helpline | default: "+91-75084-27731 / +91-92178-00003" }}</li>
+            <li><strong>Email:</strong> {{ section.settings.contact_email | default: "support@kraftmart.shop / kraftengineering2024@gmail.com" }}</li>
+            <li><strong>Location:</strong> {{ section.settings.contact_location | default: "Land of Five Rivers, Amritsar, Punjab, India" }}</li>
           </ul>
         </div>
 
@@ -102,11 +102,102 @@
 
 {% schema %}
 {
-  "name": "Privacy Policy",
-  "settings": [],
+  "name": "Privacy Policy Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Key Feature Highlights"
+    },
+    {
+      "type": "text",
+      "id": "feat_1_title",
+      "label": "Card 1 Title",
+      "default": "256-Bit Encryption"
+    },
+    {
+      "type": "text",
+      "id": "feat_1_desc",
+      "label": "Card 1 Description",
+      "default": "All order transactions and personal data are strictly encrypted."
+    },
+    {
+      "type": "text",
+      "id": "feat_2_title",
+      "label": "Card 2 Title",
+      "default": "Zero Data Selling"
+    },
+    {
+      "type": "text",
+      "id": "feat_2_desc",
+      "label": "Card 2 Description",
+      "default": "We never monetize, rent, or sell customer contact information."
+    },
+    {
+      "type": "text",
+      "id": "feat_3_title",
+      "label": "Card 3 Title",
+      "default": "Logistics Only"
+    },
+    {
+      "type": "text",
+      "id": "feat_3_desc",
+      "label": "Card 3 Description",
+      "default": "Information shared strictly with couriers (FedEx/DHL) for delivery."
+    },
+    {
+      "type": "header",
+      "content": "Policy Overview"
+    },
+    {
+      "type": "text",
+      "id": "last_updated",
+      "label": "Last Updated Date",
+      "default": "MAY 17, 2025"
+    },
+    {
+      "type": "textarea",
+      "id": "overview_text",
+      "label": "Overview Statement",
+      "default": "This Privacy Policy describes how KraftMart (a subsidiary of Lakshmi Engineering Works, collectively 'we', 'us', or 'our') collects, uses, and discloses your personal information when you visit, use our services, or make a purchase from kraftmart.shop."
+    },
+    {
+      "type": "textarea",
+      "id": "security_commitment",
+      "label": "Security Commitment",
+      "default": "We maintain strict administrative, technical, and physical safeguards to prevent unauthorized access, loss, or alteration of your personal data. We will never sell, rent, or trade your personal records with third-party advertising brokers."
+    },
+    {
+      "type": "header",
+      "content": "Contact Details"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Company Legal Name",
+      "default": "Lakshmi Engineering Works / KraftMart"
+    },
+    {
+      "type": "text",
+      "id": "contact_helpline",
+      "label": "Helpline Numbers",
+      "default": "+91-75084-27731 / +91-92178-00003"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Support Emails",
+      "default": "support@kraftmart.shop / kraftengineering2024@gmail.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_location",
+      "label": "Location / Jurisdiction",
+      "default": "Land of Five Rivers, Amritsar, Punjab, India"
+    }
+  ],
   "presets": [
     {
-      "name": "Privacy Policy"
+      "name": "Privacy Policy Page"
     }
   ]
 }

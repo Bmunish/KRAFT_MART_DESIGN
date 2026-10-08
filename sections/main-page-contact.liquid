@@ -147,28 +147,28 @@
         <!-- Workshop Card -->
         <div class="km-contact-card">
           <div class="km-contact-icon-wrap">📍</div>
-          <span class="km-eyebrow" style="font-size: 0.68rem;">Our Forging Workshop</span>
-          <h3 style="font-family: var(--km-font-heading); font-size: 1.3rem; color: var(--km-text-primary); margin: 6px 0 10px;">KraftMart Workshop &amp; Offices</h3>
+          <span class="km-eyebrow" style="font-size: 0.68rem;">{{ section.settings.workshop_eyebrow | default: "Our Forging Workshop" }}</span>
+          <h3 style="font-family: var(--km-font-heading); font-size: 1.3rem; color: var(--km-text-primary); margin: 6px 0 10px;">{{ section.settings.workshop_title | default: "KraftMart Workshop &amp; Offices" }}</h3>
           <p style="color: var(--km-text-secondary); font-size: 0.875rem; line-height: 1.65;">
-            <strong style="color: var(--km-text-primary);">Lakshmi Engineering Works / KraftMart</strong><br>
-            Industrial Area, GT Road, Amritsar, Punjab &ndash; 143001, India
+            <strong style="color: var(--km-text-primary);">{{ section.settings.workshop_company | default: "Lakshmi Engineering Works / KraftMart" }}</strong><br>
+            {{ section.settings.workshop_address | default: "Industrial Area, GT Road, Amritsar, Punjab – 143001, India" }}
           </p>
           <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(197,160,89,0.15); display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--km-text-secondary);">
-            <span>🕘</span> Workshop Hours: Mon–Sat, 9 AM – 7 PM IST
+            <span>🕘</span> {{ section.settings.workshop_hours | default: "Workshop Hours: Mon–Sat, 9 AM – 7 PM IST" }}
           </div>
         </div>
 
         <!-- WhatsApp Card -->
         <div class="km-contact-card">
           <div class="km-contact-icon-wrap">💬</div>
-          <span class="km-eyebrow" style="font-size: 0.68rem;">Instant WhatsApp COD Support</span>
-          <h3 style="font-family: var(--km-font-heading); font-size: 1.3rem; color: var(--km-text-primary); margin: 6px 0 10px;">WhatsApp Concierge</h3>
+          <span class="km-eyebrow" style="font-size: 0.68rem;">{{ section.settings.whatsapp_eyebrow | default: "Instant WhatsApp COD Support" }}</span>
+          <h3 style="font-family: var(--km-font-heading); font-size: 1.3rem; color: var(--km-text-primary); margin: 6px 0 10px;">{{ section.settings.whatsapp_title | default: "WhatsApp Concierge" }}</h3>
           <p style="color: var(--km-text-secondary); font-size: 0.875rem; line-height: 1.65; margin-bottom: 20px;">
-            Chat directly with our Amritsar craftsmen for live engraving photos, order tracking, and COD advance confirmations.
+            {{ section.settings.whatsapp_description | default: "Chat directly with our Amritsar craftsmen for live engraving photos, order tracking, and COD advance confirmations." }}
           </p>
-          <a href="https://wa.me/917508427731" target="_blank" rel="noopener noreferrer" class="km-whatsapp-btn">
+          <a href="https://wa.me/{{ section.settings.whatsapp_number | default: '917508427731' }}" target="_blank" rel="noopener noreferrer" class="km-whatsapp-btn">
             <svg width="20" height="20" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="15" fill="#25D366"/><path d="M20.5 18.3c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4z" fill="#fff"/></svg>
-            Chat on WhatsApp
+            {{ section.settings.whatsapp_button_label | default: "Chat on WhatsApp" }}
           </a>
         </div>
 
@@ -178,12 +178,12 @@
           <span class="km-eyebrow" style="font-size: 0.68rem;">Global Express Shipping</span>
           <h3 style="font-family: var(--km-font-heading); font-size: 1.3rem; color: var(--km-text-primary); margin: 6px 0 10px;">FedEx &amp; DHL Express</h3>
           <p style="color: var(--km-text-secondary); font-size: 0.875rem; line-height: 1.65;">
-            International priority dispatch to USA, Canada, UK, Australia, UAE, and Europe with full tracking and insurance.
+            {{ section.settings.shipping_description | default: "International priority dispatch to USA, Canada, UK, Australia, UAE, and Europe with full tracking and insurance." }}
           </p>
           <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
-            <span style="background: rgba(197,160,89,0.1); border: 1px solid rgba(197,160,89,0.25); border-radius: 6px; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; color: var(--km-gold-dark);">FedEx: 3–7 days</span>
-            <span style="background: rgba(197,160,89,0.1); border: 1px solid rgba(197,160,89,0.25); border-radius: 6px; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; color: var(--km-gold-dark);">DHL: 2–5 days</span>
-            <span style="background: rgba(107,29,47,0.08); border: 1px solid rgba(107,29,47,0.15); border-radius: 6px; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; color: #6b1d2f;">COD: India Only</span>
+            <span style="background: rgba(197,160,89,0.1); border: 1px solid rgba(197,160,89,0.25); border-radius: 6px; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; color: var(--km-gold-dark);">{{ section.settings.badge_fedex | default: "FedEx: 3–7 days" }}</span>
+            <span style="background: rgba(197,160,89,0.1); border: 1px solid rgba(197,160,89,0.25); border-radius: 6px; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; color: var(--km-gold-dark);">{{ section.settings.badge_dhl | default: "DHL: 2–5 days" }}</span>
+            <span style="background: rgba(107,29,47,0.08); border: 1px solid rgba(107,29,47,0.15); border-radius: 6px; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; color: #6b1d2f;">{{ section.settings.badge_cod | default: "COD: India Only" }}</span>
           </div>
         </div>
 
@@ -193,11 +193,11 @@
             <svg width="22" height="22" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
           </div>
           <span class="km-eyebrow" style="font-size: 0.68rem; color: #1a73e8;">Verified Business Listing</span>
-          <h3 style="font-family: var(--km-font-heading); font-size: 1.3rem; color: var(--km-text-primary); margin: 6px 0 10px;">Google Business Profile (4.9 ★)</h3>
+          <h3 style="font-family: var(--km-font-heading); font-size: 1.3rem; color: var(--km-text-primary); margin: 6px 0 10px;">{{ section.settings.google_title | default: "Google Business Profile (4.9 ★)" }}</h3>
           <p style="color: var(--km-text-secondary); font-size: 0.875rem; line-height: 1.65; margin-bottom: 18px;">
-            Read authentic reviews from wedding families &amp; sword collectors worldwide, or find our verified Amritsar workshop location on Google.
+            {{ section.settings.google_subtext | default: "Read authentic reviews from wedding families & sword collectors worldwide, or find our verified Amritsar workshop location on Google." }}
           </p>
-          <a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&amp;rlz=1C1FHFK_enIN1105IN1105&amp;sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&amp;kgmid=/g/11q2rz95sv&amp;q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop&amp;shem=dlvs1,epsd1,esd2e,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=ac419447525adea1&amp;utm_source=dlvs1,epsd1,esd2e,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x39197d192e9f82b5:0x73a13ed215287278,1,,,," target="_blank" rel="noopener noreferrer" class="km-btn km-btn-outline" style="display: inline-flex; align-items: center; gap: 8px; border-color: #4285F4; color: #1a73e8; background: #fff; font-weight: 700; font-size: 0.84rem;">
+          <a href="{{ section.settings.google_url | default: 'https://www.google.com/search?sca_esv=9690ff17f276db6e&rlz=1C1FHFK_enIN1105IN1105&sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&kgmid=/g/11q2rz95sv&q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop' }}" target="_blank" rel="noopener noreferrer" class="km-btn km-btn-outline" style="display: inline-flex; align-items: center; gap: 8px; border-color: #4285F4; color: #1a73e8; background: #fff; font-weight: 700; font-size: 0.84rem;">
             Visit Our Google Business Profile &rarr;
           </a>
         </div>
@@ -219,24 +219,24 @@
       <div class="km-reveal" data-delay="1" style="background: #FFFFFF; border: 1px solid rgba(197,160,89,0.2); border-radius: 12px; padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px;">
         <span style="font-size: 1.2rem; flex-shrink: 0;">🪙</span>
         <div>
-          <div style="font-family: var(--km-font-heading); font-size: 1rem; font-weight: 600; color: var(--km-text-primary); margin-bottom: 4px;">How does Cash on Delivery work?</div>
-          <p style="font-size: 0.85rem; color: var(--km-text-secondary); line-height: 1.6;">Pay 15% advance to confirm your custom order, then 85% when the sword arrives at your doorstep. Full advance orders get an extra 5% discount.</p>
+          <div style="font-family: var(--km-font-heading); font-size: 1rem; font-weight: 600; color: var(--km-text-primary); margin-bottom: 4px;">{{ section.settings.faq_1_q | default: "How does Cash on Delivery work?" }}</div>
+          <p style="font-size: 0.85rem; color: var(--km-text-secondary); line-height: 1.6;">{{ section.settings.faq_1_a | default: "Pay 15% advance to confirm your custom order, then 85% when the sword arrives at your doorstep. Full advance orders get an extra 5% discount." }}</p>
         </div>
       </div>
 
       <div class="km-reveal" data-delay="2" style="background: #FFFFFF; border: 1px solid rgba(197,160,89,0.2); border-radius: 12px; padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px;">
         <span style="font-size: 1.2rem; flex-shrink: 0;">✍</span>
         <div>
-          <div style="font-family: var(--km-font-heading); font-size: 1rem; font-weight: 600; color: var(--km-text-primary); margin-bottom: 4px;">How do I request custom laser engraving?</div>
-          <p style="font-size: 0.85rem; color: var(--km-text-secondary); line-height: 1.6;">Simply mention the text you want (names, dates, shlokas) in your order notes or WhatsApp us. Engraving is FREE on all orders — our craftsmen apply it before final polishing.</p>
+          <div style="font-family: var(--km-font-heading); font-size: 1rem; font-weight: 600; color: var(--km-text-primary); margin-bottom: 4px;">{{ section.settings.faq_2_q | default: "How do I request custom laser engraving?" }}</div>
+          <p style="font-size: 0.85rem; color: var(--km-text-secondary); line-height: 1.6;">{{ section.settings.faq_2_a | default: "Simply mention the text you want (names, dates, shlokas) in your order notes or WhatsApp us. Engraving is FREE on all orders — our craftsmen apply it before final polishing." }}</p>
         </div>
       </div>
 
       <div class="km-reveal" data-delay="3" style="background: #FFFFFF; border: 1px solid rgba(197,160,89,0.2); border-radius: 12px; padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px;">
         <span style="font-size: 1.2rem; flex-shrink: 0;">✈</span>
         <div>
-          <div style="font-family: var(--km-font-heading); font-size: 1rem; font-weight: 600; color: var(--km-text-primary); margin-bottom: 4px;">Do you ship internationally?</div>
-          <p style="font-size: 0.85rem; color: var(--km-text-secondary); line-height: 1.6;">Yes! We dispatch worldwide to USA, Canada, UK, Europe, Australia, UAE and beyond via FedEx and DHL Express. Full tracking details emailed upon dispatch.</p>
+          <div style="font-family: var(--km-font-heading); font-size: 1rem; font-weight: 600; color: var(--km-text-primary); margin-bottom: 4px;">{{ section.settings.faq_3_q | default: "Do you ship internationally?" }}</div>
+          <p style="font-size: 0.85rem; color: var(--km-text-secondary); line-height: 1.6;">{{ section.settings.faq_3_a | default: "Yes! We dispatch worldwide to USA, Canada, UK, Europe, Australia, UAE and beyond via FedEx and DHL Express. Full tracking details emailed upon dispatch." }}</p>
         </div>
       </div>
 
@@ -247,7 +247,165 @@
 {% schema %}
 {
   "name": "Contact Page",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Workshop Information"
+    },
+    {
+      "type": "text",
+      "id": "workshop_eyebrow",
+      "label": "Workshop Subtitle",
+      "default": "Our Forging Workshop"
+    },
+    {
+      "type": "text",
+      "id": "workshop_title",
+      "label": "Workshop Card Title",
+      "default": "KraftMart Workshop & Offices"
+    },
+    {
+      "type": "text",
+      "id": "workshop_company",
+      "label": "Company Line",
+      "default": "Lakshmi Engineering Works / KraftMart"
+    },
+    {
+      "type": "textarea",
+      "id": "workshop_address",
+      "label": "Workshop Address",
+      "default": "Industrial Area, GT Road, Amritsar, Punjab – 143001, India"
+    },
+    {
+      "type": "text",
+      "id": "workshop_hours",
+      "label": "Operating Hours",
+      "default": "Workshop Hours: Mon–Sat, 9 AM – 7 PM IST"
+    },
+    {
+      "type": "header",
+      "content": "WhatsApp Concierge"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_eyebrow",
+      "label": "WhatsApp Eyebrow",
+      "default": "Instant WhatsApp COD Support"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_title",
+      "label": "WhatsApp Title",
+      "default": "WhatsApp Concierge"
+    },
+    {
+      "type": "textarea",
+      "id": "whatsapp_description",
+      "label": "WhatsApp Description",
+      "default": "Chat directly with our Amritsar craftsmen for live engraving photos, order tracking, and COD advance confirmations."
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp Phone (digits with country code)",
+      "default": "917508427731"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_button_label",
+      "label": "Button Label",
+      "default": "Chat on WhatsApp"
+    },
+    {
+      "type": "header",
+      "content": "Shipping Badges"
+    },
+    {
+      "type": "textarea",
+      "id": "shipping_description",
+      "label": "Shipping Description",
+      "default": "International priority dispatch to USA, Canada, UK, Australia, UAE, and Europe with full tracking and insurance."
+    },
+    {
+      "type": "text",
+      "id": "badge_fedex",
+      "label": "FedEx Badge",
+      "default": "FedEx: 3–7 days"
+    },
+    {
+      "type": "text",
+      "id": "badge_dhl",
+      "label": "DHL Badge",
+      "default": "DHL: 2–5 days"
+    },
+    {
+      "type": "text",
+      "id": "badge_cod",
+      "label": "COD Badge",
+      "default": "COD: India Only"
+    },
+    {
+      "type": "header",
+      "content": "Google Business Card"
+    },
+    {
+      "type": "text",
+      "id": "google_title",
+      "label": "Google Card Title",
+      "default": "Google Business Profile (4.9 ★)"
+    },
+    {
+      "type": "textarea",
+      "id": "google_subtext",
+      "label": "Google Subtext",
+      "default": "Read authentic reviews from wedding families & sword collectors worldwide, or find our verified Amritsar workshop location on Google."
+    },
+    {
+      "type": "url",
+      "id": "google_url",
+      "label": "Google Business Link"
+    },
+    {
+      "type": "header",
+      "content": "Common Questions (FAQ)"
+    },
+    {
+      "type": "text",
+      "id": "faq_1_q",
+      "label": "Question 1",
+      "default": "How does Cash on Delivery work?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_1_a",
+      "label": "Answer 1",
+      "default": "Pay 15% advance to confirm your custom order, then 85% when the sword arrives at your doorstep. Full advance orders get an extra 5% discount."
+    },
+    {
+      "type": "text",
+      "id": "faq_2_q",
+      "label": "Question 2",
+      "default": "How do I request custom laser engraving?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_2_a",
+      "label": "Answer 2",
+      "default": "Simply mention the text you want (names, dates, shlokas) in your order notes or WhatsApp us. Engraving is FREE on all orders — our craftsmen apply it before final polishing."
+    },
+    {
+      "type": "text",
+      "id": "faq_3_q",
+      "label": "Question 3",
+      "default": "Do you ship internationally?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_3_a",
+      "label": "Answer 3",
+      "default": "Yes! We dispatch worldwide to USA, Canada, UK, Europe, Australia, UAE and beyond via FedEx and DHL Express. Full tracking details emailed upon dispatch."
+    }
+  ],
   "presets": [
     {
       "name": "Contact Page"

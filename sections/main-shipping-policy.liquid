@@ -1,6 +1,6 @@
 <section class="km-section" style="padding: 64px 0 80px; background: var(--km-bg-main, #fcfbf9);">
   <div class="km-container">
-<div class="km-policy-page-wrap km-reveal">
+    <div class="km-policy-page-wrap km-reveal">
         
         <!-- Tabbed Policy Navigation Strip -->
         <div class="km-policy-nav-strip">
@@ -16,24 +16,24 @@
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">🚚</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">Pan-India Delivery</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">Delhivery, DTDC &amp; India Post (<strong>7–10 business days</strong>).</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_1_title | default: "Pan-India Delivery" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_1_desc | default: "Delhivery, DTDC & India Post (7–10 business days)." }}</span>
             </div>
           </div>
 
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">✈️</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">Export Shipping</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">For export orders: <strong>8 business days</strong> via FedEx &amp; DHL Express.</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_2_title | default: "Export Shipping" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_2_desc | default: "For export orders: 8 business days via FedEx & DHL Express." }}</span>
             </div>
           </div>
 
           <div class="km-policy-feature-card">
             <div class="km-policy-feature-icon">🎁</div>
             <div>
-              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">Velvet Armor Packaging</strong>
-              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">Damage-resistant gift casing guaranteed to arrive in mint collector quality.</span>
+              <strong style="color: var(--km-text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ section.settings.feat_3_title | default: "Velvet Armor Packaging" }}</strong>
+              <span style="color: var(--km-text-secondary); font-size: 0.84rem; line-height: 1.4;">{{ section.settings.feat_3_desc | default: "Damage-resistant gift casing guaranteed to arrive in mint collector quality." }}</span>
             </div>
           </div>
         </div>
@@ -41,16 +41,16 @@
         <!-- Section 1: Overview -->
         <div class="km-policy-section-block">
           <p>
-            At <strong>KraftMart / Lakshmi Engineering Works</strong>, our USP is <strong>affordable swords at your doorstep with a pinch of customisation</strong>. We ensure safe, insured, and timely delivery of our handcrafted products both <strong>within India and worldwide</strong>. Every item is inspected with master precision before dispatch from our Amritsar workshop.
+            {{ section.settings.overview_text | default: "At KraftMart / Lakshmi Engineering Works, our USP is affordable swords at your doorstep with a pinch of customisation. We ensure safe, insured, and timely delivery of our handcrafted products both within India and worldwide. Every item is inspected with master precision before dispatch from our Amritsar workshop." }}
           </p>
         </div>
 
         <!-- Section 2: Domestic Shipping -->
         <div class="km-policy-section-block">
-          <h2><span>🚚</span> Domestic Shipping (India)</h2>
+          <h2><span>🚚</span> {{ section.settings.domestic_heading | default: "Domestic Shipping (India)" }}</h2>
           <ul class="km-policy-list">
             <li>We deliver pan-India through verified premier courier partners including <strong>Delhivery, DTDC, and India Post</strong>.</li>
-            <li><strong>Estimated Delivery Time:</strong> <strong>7–10 business days</strong>.</li>
+            <li><strong>Estimated Delivery Time:</strong> <strong>{{ section.settings.domestic_timeline | default: "7–10 business days" }}</strong>.</li>
             <li>Delivery timelines may vary slightly depending on your exact postal code and local courier service operations.</li>
             <li>Cash on Delivery (COD) is available with 15% booking advance + 85% payable upon parcel receipt at your doorstep.</li>
           </ul>
@@ -58,10 +58,10 @@
 
         <!-- Section 3: International Shipping -->
         <div class="km-policy-section-block">
-          <h2><span>🌍</span> International Shipping (Exports)</h2>
+          <h2><span>🌍</span> {{ section.settings.intl_heading | default: "International Shipping (Exports)" }}</h2>
           <ul class="km-policy-list">
             <li>For our global customers, we ship using trusted international couriers such as <strong>India Post International, FedEx, and DHL Express</strong>.</li>
-            <li><strong>Estimated Delivery Time for Export:</strong> <strong>8 business days</strong> transit time after dispatch.</li>
+            <li><strong>Estimated Delivery Time for Export:</strong> <strong>{{ section.settings.intl_timeline | default: "8 business days" }}</strong> transit time after dispatch.</li>
             <li>Destinations served include: <strong>United States of America, United Kingdom, Canada, United Arab Emirates, Europe, Australia, and 40+ countries</strong> worldwide.</li>
             <li>Actual transit time may vary slightly based on destination country customs clearance and courier flight logistics.</li>
           </ul>
@@ -73,7 +73,7 @@
             🔧 Processing Time (Varies by Item)
           </div>
           <p style="color: var(--km-text-primary); font-size: 0.92rem; line-height: 1.7; margin: 0;">
-            Please note that <strong>processing time varies from item to item</strong>. Please check the item description on each product page for exact crafting, engraving, and dispatch schedules. For complete details, see our <a href="/policies/processing-time" style="color: var(--km-gold-dark); font-weight: 600; text-decoration: underline;">Processing Time Policy</a>.
+            Please note that <strong>processing time varies from item to item</strong>. Please check the item description on each product page for exact crafting, engraving, and dispatch schedules. For complete details, see our <a href="/pages/processing-time" style="color: var(--km-gold-dark); font-weight: 600; text-decoration: underline;">Processing Time Policy</a>.
           </p>
         </div>
 
@@ -87,27 +87,123 @@
             If you need urgent delivery for an upcoming wedding or Anand Karaj ceremony, please contact our team in advance to request expedited processing:
           </p>
           <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; align-items: center;">
-            <a href="https://wa.me/917508427731" class="km-btn km-btn-primary" style="padding: 12px 22px; font-size: 0.88rem;">💬 WhatsApp Dispatch Team (+91-75084-27731)</a>
+            <a href="https://wa.me/{{ section.settings.whatsapp_digits | default: '917508427731' }}" class="km-btn km-btn-primary" style="padding: 12px 22px; font-size: 0.88rem;">💬 WhatsApp Dispatch Team ({{ section.settings.support_phone | default: "+91-75084-27731" }})</a>
             <a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&amp;rlz=1C1FHFK_enIN1105IN1105&amp;sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&amp;kgmid=/g/11q2rz95sv&amp;q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop&amp;shem=dlvs1,epsd1,esd2e,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=ac419447525adea1&amp;utm_source=dlvs1,epsd1,esd2e,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x39197d192e9f82b5:0x73a13ed215287278,1,,,," target="_blank" rel="noopener noreferrer" class="km-btn km-btn-outline" style="padding: 12px 22px; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 8px;">
               <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
               <span>Verified Google Business (4.9 ★)</span>
             </a>
-            <a href="mailto:kraftengineering2024@gmail.com" class="km-btn km-btn-outline" style="padding: 12px 22px; font-size: 0.88rem;">✉ Email Support</a>
+            <a href="mailto:{{ section.settings.support_email | default: 'kraftengineering2024@gmail.com' }}" class="km-btn km-btn-outline" style="padding: 12px 22px; font-size: 0.88rem;">✉ Email Support</a>
           </div>
         </div>
 
-      </div>
-
     </div>
-  </section>
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "Shipping Policy",
-  "settings": [],
+  "name": "Shipping Policy Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Key Feature Highlights"
+    },
+    {
+      "type": "text",
+      "id": "feat_1_title",
+      "label": "Card 1 Title",
+      "default": "Pan-India Delivery"
+    },
+    {
+      "type": "text",
+      "id": "feat_1_desc",
+      "label": "Card 1 Description",
+      "default": "Delhivery, DTDC & India Post (7–10 business days)."
+    },
+    {
+      "type": "text",
+      "id": "feat_2_title",
+      "label": "Card 2 Title",
+      "default": "Export Shipping"
+    },
+    {
+      "type": "text",
+      "id": "feat_2_desc",
+      "label": "Card 2 Description",
+      "default": "For export orders: 8 business days via FedEx & DHL Express."
+    },
+    {
+      "type": "text",
+      "id": "feat_3_title",
+      "label": "Card 3 Title",
+      "default": "Velvet Armor Packaging"
+    },
+    {
+      "type": "text",
+      "id": "feat_3_desc",
+      "label": "Card 3 Description",
+      "default": "Damage-resistant gift casing guaranteed to arrive in mint collector quality."
+    },
+    {
+      "type": "header",
+      "content": "Policy Content"
+    },
+    {
+      "type": "textarea",
+      "id": "overview_text",
+      "label": "Policy Overview Text",
+      "default": "At KraftMart / Lakshmi Engineering Works, our USP is affordable swords at your doorstep with a pinch of customisation. We ensure safe, insured, and timely delivery of our handcrafted products both within India and worldwide. Every item is inspected with master precision before dispatch from our Amritsar workshop."
+    },
+    {
+      "type": "text",
+      "id": "domestic_heading",
+      "label": "Domestic Heading",
+      "default": "Domestic Shipping (India)"
+    },
+    {
+      "type": "text",
+      "id": "domestic_timeline",
+      "label": "Domestic Timeline",
+      "default": "7–10 business days"
+    },
+    {
+      "type": "text",
+      "id": "intl_heading",
+      "label": "International Heading",
+      "default": "International Shipping (Exports)"
+    },
+    {
+      "type": "text",
+      "id": "intl_timeline",
+      "label": "Export Timeline",
+      "default": "8 business days"
+    },
+    {
+      "type": "header",
+      "content": "Contact & Support"
+    },
+    {
+      "type": "text",
+      "id": "support_phone",
+      "label": "Support Phone",
+      "default": "+91-75084-27731"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_digits",
+      "label": "WhatsApp Digits (no spaces or hyphens)",
+      "default": "917508427731"
+    },
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support Email",
+      "default": "kraftengineering2024@gmail.com"
+    }
+  ],
   "presets": [
     {
-      "name": "Shipping Policy"
+      "name": "Shipping Policy Page"
     }
   ]
 }

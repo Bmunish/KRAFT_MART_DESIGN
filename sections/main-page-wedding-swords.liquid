@@ -15,11 +15,11 @@
           <span style="color:var(--km-gold-light);">Wedding Swords</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px;">
-          <h1 class="km-heading-hero" style="font-size:clamp(1.5rem,2.6vw,2.1rem);margin:0;line-height:1.2;">Wedding Swords Collection</h1>
-          <span class="km-glass-badge">⚔ Groom's Heritage</span>
+          <h1 class="km-heading-hero" style="font-size:clamp(1.5rem,2.6vw,2.1rem);margin:0;line-height:1.2;">{{ section.settings.hero_title | default: "Wedding Swords Collection" }}</h1>
+          <span class="km-glass-badge">{{ section.settings.hero_badge | default: "⚔ Groom's Heritage" }}</span>
         </div>
         <p class="km-page-hero-lead" style="margin:0;max-width:560px;font-size:0.88rem;line-height:1.5;color:rgba(250,247,242,0.8);">
-          Ceremonial talwars handcrafted for Indian weddings — with free custom bride &amp; groom laser engraving, velvet scabbards, and same-day dispatch.
+          {{ section.settings.hero_lead | default: "Ceremonial talwars handcrafted for Indian weddings — with free custom bride &amp; groom laser engraving, velvet scabbards, and same-day dispatch." }}
         </p>
       </div>
       <div class="km-mini-showcase">
@@ -44,23 +44,23 @@
       <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;text-align:center;">
         <div style="flex:1;min-width:160px;max-width:220px;">
           <div style="font-size:1.5rem;margin-bottom:6px;">✍️</div>
-          <div style="font-weight:700;font-size:0.875rem;color:var(--km-text-primary);">Free Laser Engraving</div>
-          <div style="font-size:0.8rem;color:var(--km-text-secondary);">Names &amp; wedding date on blade</div>
+          <div style="font-weight:700;font-size:0.875rem;color:var(--km-text-primary);">{{ section.settings.prop_1_title | default: "Free Laser Engraving" }}</div>
+          <div style="font-size:0.8rem;color:var(--km-text-secondary);">{{ section.settings.prop_1_desc | default: "Names &amp; wedding date on blade" }}</div>
         </div>
         <div style="flex:1;min-width:160px;max-width:220px;">
           <div style="font-size:1.5rem;margin-bottom:6px;">💎</div>
-          <div style="font-weight:700;font-size:0.875rem;color:var(--km-text-primary);">Premium Velvet Scabbards</div>
-          <div style="font-size:0.8rem;color:var(--km-text-secondary);">Royal red, burgundy &amp; white zari</div>
+          <div style="font-weight:700;font-size:0.875rem;color:var(--km-text-primary);">{{ section.settings.prop_2_title | default: "Premium Velvet Scabbards" }}</div>
+          <div style="font-size:0.8rem;color:var(--km-text-secondary);">{{ section.settings.prop_2_desc | default: "Royal red, burgundy &amp; white zari" }}</div>
         </div>
         <div style="flex:1;min-width:160px;max-width:220px;">
           <div style="font-size:1.5rem;margin-bottom:6px;">🚀</div>
-          <div style="font-weight:700;font-size:0.875rem;color:var(--km-text-primary);">Express Worldwide Delivery</div>
-          <div style="font-size:0.8rem;color:var(--km-text-secondary);">FedEx &amp; DHL in 7–10 days</div>
+          <div style="font-weight:700;font-size:0.875rem;color:var(--km-text-primary);">{{ section.settings.prop_3_title | default: "Express Worldwide Delivery" }}</div>
+          <div style="font-size:0.8rem;color:var(--km-text-secondary);">{{ section.settings.prop_3_desc | default: "FedEx &amp; DHL in 7–10 days" }}</div>
         </div>
         <div style="flex:1;min-width:160px;max-width:220px;">
           <div style="font-size:1.5rem;margin-bottom:6px;">💰</div>
-          <div style="font-weight:700;font-size:0.875rem;color:var(--km-text-primary);">15% Advance + 85% COD</div>
-          <div style="font-size:0.8rem;color:var(--km-text-secondary);">Flexible Cash on Delivery in India</div>
+          <div style="font-weight:700;font-size:0.875rem;color:var(--km-text-primary);">{{ section.settings.prop_4_title | default: "15% Advance + 85% COD" }}</div>
+          <div style="font-size:0.8rem;color:var(--km-text-secondary);">{{ section.settings.prop_4_desc | default: "Flexible Cash on Delivery in India" }}</div>
         </div>
       </div>
     </div>
@@ -70,9 +70,9 @@
   <section class="km-section" style="padding:40px 0 80px;background:#FAF7F2;">
     <div class="km-container">
       <div class="km-section-header" style="text-align:center;margin-bottom:40px;">
-        <span class="km-eyebrow" style="color:var(--km-gold-primary);">CURATED WEDDING COLLECTION</span>
-        <h2 class="km-heading-1" style="color:var(--km-text-primary);margin:6px 0 10px;">Heritage Wedding Talwars</h2>
-        <p style="color:var(--km-text-secondary);max-width:560px;margin:0 auto;font-size:0.9rem;">Each talwar is hand-forged in Amritsar and arrives with complimentary custom laser engraving for your special day.</p>
+        <span class="km-eyebrow" style="color:var(--km-gold-primary);">{{ section.settings.collection_eyebrow | default: "CURATED WEDDING COLLECTION" }}</span>
+        <h2 class="km-heading-1" style="color:var(--km-text-primary);margin:6px 0 10px;">{{ section.settings.collection_title | default: "Heritage Wedding Talwars" }}</h2>
+        <p style="color:var(--km-text-secondary);max-width:560px;margin:0 auto;font-size:0.9rem;">{{ section.settings.collection_lead | default: "Each talwar is hand-forged in Amritsar and arrives with complimentary custom laser engraving for your special day." }}</p>
       </div>
 
       <div id="kmProductGrid" class="km-product-grid" data-live-mode="catalog" aria-live="polite" style="--km-grid-cols:3;">
@@ -265,12 +265,12 @@
     <div class="km-container" style="position:relative;z-index:1;">
       <div class="km-wedding-grid">
         <div class="km-wedding-content">
-          <span class="km-eyebrow" style="color:var(--km-gold-primary);letter-spacing:0.15em;">THE GROOM'S HERITAGE</span>
-          <h2 class="km-heading-1 km-wedding-title" style="margin-bottom:20px;">Honor Tradition on Your Special Day</h2>
-          <p class="km-body-lead" style="color:var(--km-text-muted-light);margin-bottom:28px;line-height:1.7;">In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and honor. Personalize your talwar with free laser engraving.</p>
+          <span class="km-eyebrow" style="color:var(--km-gold-primary);letter-spacing:0.15em;">{{ section.settings.engraving_eyebrow | default: "THE GROOM'S HERITAGE" }}</span>
+          <h2 class="km-heading-1 km-wedding-title" style="margin-bottom:20px;">{{ section.settings.engraving_title | default: "Honor Tradition on Your Special Day" }}</h2>
+          <p class="km-body-lead" style="color:var(--km-text-muted-light);margin-bottom:28px;line-height:1.7;">{{ section.settings.engraving_lead | default: "In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and honor. Personalize your talwar with free laser engraving." }}</p>
           <div class="km-engraving-simulator-card">
             <div class="km-engraving-card-header"><span class="km-engraving-badge">&#10022; Free Custom Laser Engraving Simulator</span></div>
-            <input type="text" id="kmEngravingInput" class="km-engraving-input" value="Gurpreet ❤️ Simran • 24.10.2026" placeholder="e.g. Gurpreet ❤️ Simran • 24.10.2026" />
+            <input type="text" id="kmEngravingInput" class="km-engraving-input" value="{{ section.settings.engraving_sample_text | default: 'Gurpreet ❤️ Simran • 24.10.2026' }}" placeholder="e.g. Gurpreet ❤️ Simran • 24.10.2026" />
             <div class="km-engraving-preset-chips">
               <span style="font-size:0.72rem;color:var(--km-text-muted-light);margin-right:4px;">Presets:</span>
               <button type="button" class="km-engraving-chip active" data-preset="Gurpreet ❤️ Simran • 24.10.2026">Gurpreet ❤️ Simran</button>
@@ -284,7 +284,7 @@
             </div>
           </div>
           <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:24px;">
-            <a href="/products/jaipur-wedding-talwar" class="km-btn km-btn-primary" style="padding:14px 32px;">Shop Most Popular Talwar →</a>
+            <a href="{{ section.settings.engraving_btn_url | default: '/products/jaipur-wedding-talwar' }}" class="km-btn km-btn-primary" style="padding:14px 32px;">{{ section.settings.engraving_btn_text | default: "Shop Most Popular Talwar →" }}</a>
             <span style="font-size:0.85rem;color:var(--km-gold-light);">✓ Free Laser Engraving Included</span>
           </div>
         </div>
@@ -367,11 +367,148 @@
   <!-- Footer -->
 {% schema %}
 {
-  "name": "Wedding Swords",
-  "settings": [],
+  "name": "Wedding Swords Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Wedding Swords Collection"
+    },
+    {
+      "type": "text",
+      "id": "hero_badge",
+      "label": "Hero Badge",
+      "default": "⚔ Groom's Heritage"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_lead",
+      "label": "Hero Subtitle",
+      "default": "Ceremonial talwars handcrafted for Indian weddings — with free custom bride & groom laser engraving, velvet scabbards, and same-day dispatch."
+    },
+    {
+      "type": "header",
+      "content": "Value Propositions"
+    },
+    {
+      "type": "text",
+      "id": "prop_1_title",
+      "label": "Feature 1 Title",
+      "default": "Free Laser Engraving"
+    },
+    {
+      "type": "text",
+      "id": "prop_1_desc",
+      "label": "Feature 1 Description",
+      "default": "Names & wedding date on blade"
+    },
+    {
+      "type": "text",
+      "id": "prop_2_title",
+      "label": "Feature 2 Title",
+      "default": "Premium Velvet Scabbards"
+    },
+    {
+      "type": "text",
+      "id": "prop_2_desc",
+      "label": "Feature 2 Description",
+      "default": "Royal red, burgundy & white zari"
+    },
+    {
+      "type": "text",
+      "id": "prop_3_title",
+      "label": "Feature 3 Title",
+      "default": "Express Worldwide Delivery"
+    },
+    {
+      "type": "text",
+      "id": "prop_3_desc",
+      "label": "Feature 3 Description",
+      "default": "FedEx & DHL in 7–10 days"
+    },
+    {
+      "type": "text",
+      "id": "prop_4_title",
+      "label": "Feature 4 Title",
+      "default": "15% Advance + 85% COD"
+    },
+    {
+      "type": "text",
+      "id": "prop_4_desc",
+      "label": "Feature 4 Description",
+      "default": "Flexible Cash on Delivery in India"
+    },
+    {
+      "type": "header",
+      "content": "Curated Catalogue Header"
+    },
+    {
+      "type": "text",
+      "id": "collection_eyebrow",
+      "label": "Catalogue Eyebrow",
+      "default": "CURATED WEDDING COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "collection_title",
+      "label": "Catalogue Title",
+      "default": "Heritage Wedding Talwars"
+    },
+    {
+      "type": "textarea",
+      "id": "collection_lead",
+      "label": "Catalogue Description",
+      "default": "Each talwar is hand-forged in Amritsar and arrives with complimentary custom laser engraving for your special day."
+    },
+    {
+      "type": "header",
+      "content": "Laser Engraving Simulator Section"
+    },
+    {
+      "type": "text",
+      "id": "engraving_eyebrow",
+      "label": "Engraving Eyebrow",
+      "default": "THE GROOM'S HERITAGE"
+    },
+    {
+      "type": "text",
+      "id": "engraving_title",
+      "label": "Engraving Heading",
+      "default": "Honor Tradition on Your Special Day"
+    },
+    {
+      "type": "textarea",
+      "id": "engraving_lead",
+      "label": "Engraving Description",
+      "default": "In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and honor. Personalize your talwar with free laser engraving."
+    },
+    {
+      "type": "text",
+      "id": "engraving_sample_text",
+      "label": "Sample Engraving Inscription",
+      "default": "Gurpreet ❤️ Simran • 24.10.2026"
+    },
+    {
+      "type": "text",
+      "id": "engraving_btn_text",
+      "label": "Engraving Action Button Text",
+      "default": "Shop Most Popular Talwar →"
+    },
+    {
+      "type": "url",
+      "id": "engraving_btn_url",
+      "label": "Engraving Action Button URL",
+      "default": "/products/jaipur-wedding-talwar"
+    }
+  ],
   "presets": [
     {
-      "name": "Wedding Swords"
+      "name": "Wedding Swords Page"
     }
   ]
 }
