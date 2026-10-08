@@ -1,12 +1,19 @@
+{% assign hero_banner_1 = 'kraftmart_banner_2.jpg' | asset_url %}
+{% assign hero_banner_2 = 'kraftmart_banner_1.jpg' | asset_url %}
+{% assign hero_banner_3 = 'kraftmart_banner_3.jpg' | asset_url %}
+{% assign hero_banner_4 = 'kraftmart_banner_4.jpg' | asset_url %}
+{% assign hero_card_1 = 'hero_talwar.png' | asset_url %}
+{% assign hero_card_2 = 'sword2.png' | asset_url %}
+{% assign hero_card_3 = 'sword.png' | asset_url %}
 <section class="km-hero-section km-blob-wrapper" id="km-hero"
     style="min-height: 76vh; display: flex; align-items: center; position: relative; overflow: hidden;">
 
     <!-- Sliding image background from KraftMart official website -->
     <div class="km-hero-slider" id="kmHeroSlider" aria-hidden="true">
-      <div class="km-hero-slide is-active" style="background-image: url('{{ section.settings.banner_image_1 | default: ('kraftmart_banner_2.jpg' | asset_url) }}');"></div>
-      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_2 | default: ('kraftmart_banner_1.jpg' | asset_url) }}');"></div>
-      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_3 | default: ('kraftmart_banner_3.jpg' | asset_url) }}');"></div>
-      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_4 | default: ('kraftmart_banner_4.jpg' | asset_url) }}');"></div>
+      <div class="km-hero-slide is-active" style="background-image: url('{{ section.settings.banner_image_1 | default: hero_banner_1 }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_2 | default: hero_banner_2 }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_3 | default: hero_banner_3 }}');"></div>
+      <div class="km-hero-slide" style="background-image: url('{{ section.settings.banner_image_4 | default: hero_banner_4 }}');"></div>
     </div>
     <!-- Layered warm overlay -->
     <div class="km-hero-video-overlay"></div>
@@ -53,7 +60,7 @@
             <!-- Card 1: Jaipur Wedding Talwar (CENTER) -->
             <div class="km-3d-card is-center" data-index="0" data-hero-card="1">
               <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg1" src="{{ section.settings.card_image_1 | default: ('hero_talwar.png' | asset_url) }}" alt="{{ section.settings.card_title_1 | default: 'Jaipur Wedding Talwar' }}" decoding="async" />
+                <img id="kmHeroCardImg1" src="{{ section.settings.card_image_1 | default: hero_card_1 }}" alt="{{ section.settings.card_title_1 | default: 'Jaipur Wedding Talwar' }}" decoding="async" />
               </div>
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag1">&#10022; {{ section.settings.card_tag_1 | default: "Bestseller" }}</span>
@@ -66,7 +73,7 @@
             <!-- Card 2: Royal Jodhpur Damascus (RIGHT) -->
             <div class="km-3d-card is-right" data-index="1" data-hero-card="2">
               <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg2" src="{{ section.settings.card_image_2 | default: ('sword2.png' | asset_url) }}" alt="{{ section.settings.card_title_2 | default: 'Royal Jodhpur Damascus' }}" decoding="async" loading="lazy" />
+                <img id="kmHeroCardImg2" src="{{ section.settings.card_image_2 | default: hero_card_2 }}" alt="{{ section.settings.card_title_2 | default: 'Royal Jodhpur Damascus' }}" decoding="async" loading="lazy" />
               </div>
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag2">&#10022; {{ section.settings.card_tag_2 | default: "Master Metallurgy" }}</span>
@@ -79,7 +86,7 @@
             <!-- Card 3: Dawami Ceremonial Sword (LEFT) -->
             <div class="km-3d-card is-left" data-index="2" data-hero-card="3">
               <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg3" src="{{ section.settings.card_image_3 | default: ('sword.png' | asset_url) }}" alt="{{ section.settings.card_title_3 | default: 'Dawami Ceremonial Sword' }}" decoding="async" loading="lazy" />
+                <img id="kmHeroCardImg3" src="{{ section.settings.card_image_3 | default: hero_card_3 }}" alt="{{ section.settings.card_title_3 | default: 'Dawami Ceremonial Sword' }}" decoding="async" loading="lazy" />
               </div>
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag3">&#10022; {{ section.settings.card_tag_3 | default: "Heritage Classic" }}</span>

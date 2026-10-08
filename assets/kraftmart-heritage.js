@@ -48,8 +48,13 @@ let kmProductsPromise;
 
 function getLiveProducts() {
   if (!kmProductsPromise) {
-    kmProductsPromise = fetch(KM_PRODUCTS_ENDPOINT)
-      .then(response => response.ok ? response.json() : {products: []})
+    const isShopify = typeof window !== 'undefined' && (Boolean(window.Shopify) || window.location.hostname.includes('myshopify.com') || window.location.hostname.includes('shopify.com'));
+    const endpoint = isShopify ? '/products.json?limit=250' : '/api/products';
+    kmProductsPromise = fetch(endpoint)
+      .then(response => {
+        if (response.ok) return response.json();
+        return fetch('/products.json?limit=250').then(r => r.ok ? r.json() : {products: []});
+      })
       .then(data => (data.products || []).filter(product => product.handle !== 'partial-payment'))
       .catch(() => []);
   }
@@ -2107,27 +2112,20 @@ function initCatalogToolbarAndFilters() {
 document.addEventListener('DOMContentLoaded', () => {
   // Swatches Click (Size & Color)
   document.body.addEventListener('click', (e) => {
-    const colorSwatch = e.target.closest('.km-color-swatch');
-    if (colorSwatch) {
-      const container = colorSwatch.closest('.km-color-swatches');
+    const swatch = e.target.closest('.km-color-swatch, .km-swatch-btn');
+    if (swatch) {
+      const container = swatch.closest('.km-color-swatches, .km-variant-swatches');
       if (container) {
-        container.querySelectorAll('.km-color-swatch').forEach(el => el.classList.remove('km-color-active'));
-        colorSwatch.classList.add('km-color-active');
-      }
-    }
-
-    const variantBtn = e.target.closest('.km-swatch-btn');
-    if (variantBtn) {
-      const container = variantBtn.closest('.km-variant-swatches');
-      if (container) {
-        container.querySelectorAll('.km-swatch-btn').forEach(el => el.classList.remove('km-swatch-btn-active'));
-        variantBtn.classList.add('km-swatch-btn-active');
+        const isColor = swatch.classList.contains('km-color-swatch');
+        const activeClass = isColor ? 'km-color-active' : 'km-swatch-btn-active';
+        container.querySelectorAll(isColor ? '.km-color-swatch' : '.km-swatch-btn').forEach(el => el.classList.remove(activeClass));
+        swatch.classList.add(activeClass);
       }
     }
 
     // Product Card Navigation (Clicking card navigates to PDP unless clicking controls)
     const productCard = e.target.closest('.km-product-card');
-    if (productCard && !e.target.closest('.km-add-cart-btn, .km-quick-view-btn, .km-card-wishlist-btn, .km-swatch-container, .km-color-swatch, .km-swatch-btn, a')) {
+    if (productCard && !e.target.closest('.km-add-cart-btn, .km-quick-view-btn, .km-card-wishlist-btn, .km-swatch-container, .km-color-swatch, .km-swatch-btn, a, button, input, form')) {
       const handle = productCard.getAttribute('data-handle');
       if (handle) {
         window.location.href = `/products/${encodeURIComponent(handle)}`;

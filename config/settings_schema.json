@@ -2,9 +2,99 @@
   {
     "name": "theme_info",
     "theme_name": "KraftMart Heritage",
-    "theme_author": "Antigravity",
+    "theme_author": "KraftMart Design Team",
     "theme_documentation_url": "https://kraftmart.shop",
-    "theme_version": "1.0.0",
+    "theme_version": "2.0.0",
     "theme_support_email": "support@kraftmart.shop"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary_gold",
+        "label": "Primary Heritage Gold",
+        "default": "#C5A059"
+      },
+      {
+        "type": "color",
+        "id": "color_dark_gold",
+        "label": "Dark Gold Accent",
+        "default": "#9C7A32"
+      },
+      {
+        "type": "color",
+        "id": "color_ink_navy",
+        "label": "Deep Ink Navy",
+        "default": "#1A2744"
+      },
+      {
+        "type": "color",
+        "id": "color_crimson",
+        "label": "Royal Crimson Accent",
+        "default": "#8B1E2B"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_main",
+        "label": "Main Background",
+        "default": "#FAF7F2"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_dark",
+        "label": "Dark Section Background",
+        "default": "#0D0B08"
+      }
+    ]
+  },
+  {
+    "name": "Social Media Links",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_whatsapp",
+        "label": "WhatsApp Number (with country code)",
+        "default": "917508427731"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram Profile URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook Page URL"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube Channel URL"
+      }
+    ]
+  },
+  {
+    "name": "Lineage & Store Trust",
+    "settings": [
+      {
+        "type": "text",
+        "id": "store_founding_year",
+        "label": "Founding Year",
+        "default": "1996"
+      },
+      {
+        "type": "text",
+        "id": "store_origin_city",
+        "label": "Workshop Origin City",
+        "default": "Amritsar, Punjab, India"
+      },
+      {
+        "type": "text",
+        "id": "store_usp_line",
+        "label": "Store USP Tagline",
+        "default": "Affordable swords at your doorstep with a pinch of customisation"
+      }
+    ]
   }
 ]

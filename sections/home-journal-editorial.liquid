@@ -1,4 +1,4 @@
-<!-- Heritage Blog Section: Grand Royal Journal Layout -->
+<!-- Heritage Blog Section: Grand Royal Journal Layout with Theme Editor Blog & Custom Post Options -->
 <section class="km-section km-journal-editorial-section" style="background: var(--km-bg-secondary); border-top: var(--km-border-gold); padding: 96px 0;">
   <div class="km-container">
     <div class="km-section-header" style="margin-bottom: 48px; text-align: center;">
@@ -10,43 +10,90 @@
     </div>
 
     <div class="km-blog-grid km-blog-grid-grand">
-      {% for article in blogs[section.settings.blog].articles limit: section.settings.post_limit %}
-        <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="{{ forloop.index }}">
-          <div class="km-blog-img-wrap">
-            <img src="{{ article.image | default: ('hero_talwar.png' | asset_url) }}" alt="{{ article.title | default: 'KraftMart Heritage Blog' | escape }}" decoding="async" loading="lazy" />
-            <span class="km-blog-tag">&#10022; {{ article.tags.first | default: "Heritage" }}</span>
-            <div class="km-blog-img-overlay" aria-hidden="true"></div>
-          </div>
-          <div class="km-blog-body">
-            <div class="km-blog-meta">
-              <span class="km-blog-meta-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
-                {{ article.published_at | date: "%b %d, %Y" }}
-              </span>
-              <span class="km-blog-meta-divider">&bull;</span>
-              <span class="km-blog-meta-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                5 min read
-              </span>
+      {% if section.blocks.size > 0 %}
+        <!-- Merchant-defined custom editorial blocks -->
+        {% assign default_blog_fallback = 'hero_talwar.png' | asset_url %}
+        {% for block in section.blocks %}
+          {% assign b_img = block.settings.image | default: default_blog_fallback %}
+          <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="{{ forloop.index }}" {{ block.shopify_attributes }}>
+            <div class="km-blog-img-wrap">
+              <img src="{{ b_img }}" alt="{{ block.settings.title | default: 'KraftMart Heritage Blog' | escape }}" decoding="async" loading="lazy" />
+              <span class="km-blog-tag">&#10022; {{ block.settings.tag | default: "Heritage" }}</span>
+              <div class="km-blog-img-overlay" aria-hidden="true"></div>
             </div>
-            <h3 class="km-blog-title">{{ article.title }}</h3>
-            <p class="km-blog-excerpt">
-              {{ article.excerpt_or_content | strip_html | truncatewords: 25 }}
-            </p>
-            <div class="km-blog-footer">
-              <div class="km-blog-author">
-                <span class="km-author-badge">⚔</span>
-                <div>
-                  <strong class="km-author-byline">{{ article.author | default: "KraftMart Forge" }}</strong>
-                  <small>Heritage Journal</small>
-                </div>
+            <div class="km-blog-body">
+              <div class="km-blog-meta">
+                <span class="km-blog-meta-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                  {{ block.settings.date | default: "Oct 2026" }}
+                </span>
+                <span class="km-blog-meta-divider">&bull;</span>
+                <span class="km-blog-meta-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                  {{ block.settings.read_time | default: "5 min read" }}
+                </span>
               </div>
-              <a href="{{ article.url }}" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+              <h3 class="km-blog-title">{{ block.settings.title | default: "Ceremonial Sword Lineage & Traditions" }}</h3>
+              <p class="km-blog-excerpt">
+                {{ block.settings.excerpt | default: "Explore the deep metallurgical secrets, hand-forging techniques, and heirloom scabbard preservation passed down generations." }}
+              </p>
+              <div class="km-blog-footer">
+                <div class="km-blog-author">
+                  <span class="km-author-badge">⚔</span>
+                  <div>
+                    <strong class="km-author-byline">{{ block.settings.author | default: "KraftMart Forge" }}</strong>
+                    <small>{{ block.settings.author_role | default: "Heritage Journal" }}</small>
+                  </div>
+                </div>
+                <a href="{{ block.settings.url | default: '/blogs/news' }}" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
+        {% endfor %}
+      {% elsif section.settings.blog != blank and blogs[section.settings.blog].articles_count > 0 %}
+        <!-- Dynamic Shopify Blog Articles -->
+        {% for article in blogs[section.settings.blog].articles limit: section.settings.post_limit %}
+          <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="{{ forloop.index }}">
+            <div class="km-blog-img-wrap">
+              {% if article.image %}
+                <img src="{{ article.image | img_url: '600x' }}" alt="{{ article.title | escape }}" decoding="async" loading="lazy" />
+              {% else %}
+                <img src="{{ 'hero_talwar.png' | asset_url }}" alt="{{ article.title | escape }}" decoding="async" loading="lazy" />
+              {% endif %}
+              <span class="km-blog-tag">&#10022; {{ article.tags.first | default: "Heritage" }}</span>
+              <div class="km-blog-img-overlay" aria-hidden="true"></div>
+            </div>
+            <div class="km-blog-body">
+              <div class="km-blog-meta">
+                <span class="km-blog-meta-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                  {{ article.published_at | date: "%b %d, %Y" }}
+                </span>
+                <span class="km-blog-meta-divider">&bull;</span>
+                <span class="km-blog-meta-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                  5 min read
+                </span>
+              </div>
+              <h3 class="km-blog-title">{{ article.title }}</h3>
+              <p class="km-blog-excerpt">
+                {{ article.excerpt_or_content | strip_html | truncatewords: 25 }}
+              </p>
+              <div class="km-blog-footer">
+                <div class="km-blog-author">
+                  <span class="km-author-badge">⚔</span>
+                  <div>
+                    <strong class="km-author-byline">{{ article.author | default: "KraftMart Forge" }}</strong>
+                    <small>Heritage Journal</small>
+                  </div>
+                </div>
+                <a href="{{ article.url }}" class="km-blog-link-btn">Read Article <span>&rarr;</span></a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
       {% else %}
-        <!-- Curated Heritage Blog Card 1 -->
+        <!-- Default Curated Heritage Blog Posts -->
         <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="1">
           <div class="km-blog-img-wrap">
             <img src="{{ 'hero_talwar.png' | asset_url }}" alt="How to Choose a Wedding Talwar for Indian Grooms" decoding="async" loading="lazy" />
@@ -82,7 +129,6 @@
           </div>
         </article>
 
-        <!-- Curated Heritage Blog Card 2 -->
         <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="2">
           <div class="km-blog-img-wrap">
             <img src="{{ 'sword2.png' | asset_url }}" alt="Damascus Steel Metallurgy Explained" decoding="async" loading="lazy" />
@@ -118,7 +164,6 @@
           </div>
         </article>
 
-        <!-- Curated Heritage Blog Card 3 -->
         <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="3">
           <div class="km-blog-img-wrap">
             <img src="{{ 'sword.png' | asset_url }}" alt="Caring for Heirloom Indian Swords" decoding="async" loading="lazy" />
@@ -153,12 +198,12 @@
             </div>
           </div>
         </article>
-      {% endfor %}
+      {% endif %}
     </div>
 
     <div style="text-align: center; margin-top: 52px;">
-      <a href="{{ routes.all_blogs_url | default: '/blogs' }}" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
-        Explore All Blog Articles &rarr;
+      <a href="{{ section.settings.button_link | default: '/blogs' }}" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
+        {{ section.settings.button_label | default: "Explore All Blog Articles →" }}
       </a>
     </div>
   </div>
@@ -170,15 +215,15 @@
   "settings": [
     {
       "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "From the KraftMart Blog"
+      "id": "subtitle",
+      "label": "Eyebrow Subtitle",
+      "default": "❖ THE ROYAL ARCHIVES & FORGE BLOG ❖"
     },
     {
       "type": "text",
-      "id": "subtitle",
-      "label": "Eyebrow",
-      "default": "❖ THE ROYAL ARCHIVES & FORGE BLOG ❖"
+      "id": "title",
+      "label": "Heading",
+      "default": "From the KraftMart Blog"
     },
     {
       "type": "textarea",
@@ -189,21 +234,131 @@
     {
       "type": "blog",
       "id": "blog",
-      "label": "Blog to feature"
+      "label": "Select Shopify Blog"
     },
     {
       "type": "range",
       "id": "post_limit",
       "min": 3,
-      "max": 9,
+      "max": 12,
       "step": 3,
       "default": 3,
-      "label": "Articles to show"
+      "label": "Articles to show from blog"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Explore All Blog Articles →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/blogs"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Custom Blog Article",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Featured Image"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Category Tag",
+          "default": "Wedding Guide"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Article Title",
+          "default": "How to Choose the Perfect Wedding Talwar for Your Ceremony"
+        },
+        {
+          "type": "textarea",
+          "id": "excerpt",
+          "label": "Excerpt / Summary",
+          "default": "From blade curvature and hilt ergonomics to velvet scabbard colour-matching with your royal sherwani — our complete groom's guide to selecting an authentic heirloom sword."
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Published Date",
+          "default": "Aug 10, 2026"
+        },
+        {
+          "type": "text",
+          "id": "read_time",
+          "label": "Read Time",
+          "default": "5 min read"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Amritsar Master Forge"
+        },
+        {
+          "type": "text",
+          "id": "author_role",
+          "label": "Author Role",
+          "default": "Groom Ceremonials"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Article Link"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Journal Editorial"
+      "name": "Journal Editorial",
+      "blocks": [
+        {
+          "type": "article",
+          "settings": {
+            "tag": "Wedding Guide",
+            "title": "How to Choose the Perfect Wedding Talwar for Your Ceremony",
+            "excerpt": "From blade curvature and hilt ergonomics to velvet scabbard colour-matching with your royal sherwani — our complete groom's guide to selecting an authentic heirloom sword.",
+            "date": "Aug 10, 2026",
+            "read_time": "5 min read",
+            "author": "Amritsar Master Forge",
+            "author_role": "Groom Ceremonials"
+          }
+        },
+        {
+          "type": "article",
+          "settings": {
+            "tag": "Master Metallurgy",
+            "title": "Damascus Steel Explained: Why 1095/15N20 Is the King of Blade Alloys",
+            "excerpt": "The intricate swirling pattern on a true Damascus blade isn't surface etching — it is forged from 300+ folds of high-carbon steel, delivering superior hardness, flex balance, and edge strength.",
+            "date": "Aug 04, 2026",
+            "read_time": "7 min read",
+            "author": "Master Metallurgist",
+            "author_role": "56–58 HRC Research"
+          }
+        },
+        {
+          "type": "article",
+          "settings": {
+            "tag": "Care & Heirloom",
+            "title": "How to Oil, Store & Maintain Your Ceremonial Talwar for Decades",
+            "excerpt": "A heritage sword is meant to be passed down generations. Learn our master oiling techniques, velvet scabbard humidity control, and brass pommel polish rituals.",
+            "date": "Jul 28, 2026",
+            "read_time": "4 min read",
+            "author": "Lineage Workshop",
+            "author_role": "Restoration & Care"
+          }
+        }
+      ]
     }
   ]
 }

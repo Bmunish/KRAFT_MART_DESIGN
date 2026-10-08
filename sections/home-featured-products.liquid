@@ -1,24 +1,68 @@
-<!-- Featured Products Grid — Expanded 8-product catalogue (Compact Layout) -->
-  <section id="featured-products" class="km-section km-featured-compact" style="background-color: var(--color-cloud); padding: 36px 0 54px 0;">
-    <div class="km-container">
-      <div class="km-section-header km-header-compact" style="margin: 0 auto 20px auto;">
-        <span class="km-eyebrow" style="margin-bottom: 4px; font-size: 0.72rem; letter-spacing: 0.12em;">{{ section.settings.subtitle | default: "CURATED HERITAGE PICKS" }}</span>
-        <h2 class="km-heading-1 km-heading-featured" style="color: var(--km-text-primary); font-size: clamp(1.8rem, 3.2vw, 2.4rem); margin: 4px 0 6px 0; line-height: 1.15;">{{ section.settings.title | default: "Ceremonial Collection" }}</h2>
-        <p class="km-body-lead km-lead-compact" style="color: var(--km-text-secondary); margin-bottom: 16px; font-size: 0.88rem; line-height: 1.45;">
-          {{ section.settings.description | default: "Hand-forged talwars with premium scabbards and complimentary name engraving." }}</p>
+<!-- Featured Products Grid — Dynamic Collection or Curated Catalogue -->
+<section id="featured-products" class="km-section km-featured-compact" style="background-color: var(--color-cloud); padding: 36px 0 54px 0;">
+  <div class="km-container">
+    <div class="km-section-header km-header-compact" style="margin: 0 auto 20px auto;">
+      <span class="km-eyebrow" style="margin-bottom: 4px; font-size: 0.72rem; letter-spacing: 0.12em;">{{ section.settings.subtitle | default: "CURATED HERITAGE PICKS" }}</span>
+      <h2 class="km-heading-1 km-heading-featured" style="color: var(--km-text-primary); font-size: clamp(1.8rem, 3.2vw, 2.4rem); margin: 4px 0 6px 0; line-height: 1.15;">{{ section.settings.title | default: "Ceremonial Collection" }}</h2>
+      <p class="km-body-lead km-lead-compact" style="color: var(--km-text-secondary); margin-bottom: 16px; font-size: 0.88rem; line-height: 1.45;">
+        {{ section.settings.description | default: "Hand-forged talwars with premium scabbards and complimentary name engraving." }}
+      </p>
+
+      {% if section.settings.show_tabs %}
         <!-- Heritage Segmented Tab Control -->
         <div class="km-segmented-tabs" style="margin-bottom: 20px; padding: 3px; gap: 3px;">
-          <button class="km-tab-btn active" data-tab="all" style="padding: 7px 16px; font-size: 0.75rem;">All Catalogue</button>
-          <button class="km-tab-btn" data-tab="wedding" style="padding: 7px 16px; font-size: 0.75rem;">Wedding Swords</button>
-          <button class="km-tab-btn" data-tab="damascus" style="padding: 7px 16px; font-size: 0.75rem;">Damascus Steel</button>
-          <button class="km-tab-btn" data-tab="miniature" style="padding: 7px 16px; font-size: 0.75rem;">Miniatures</button>
+          <button class="km-tab-btn active" data-tab="all" style="padding: 7px 16px; font-size: 0.75rem;">{{ section.settings.tab_all_label | default: "All Catalogue" }}</button>
+          <button class="km-tab-btn" data-tab="wedding" style="padding: 7px 16px; font-size: 0.75rem;">{{ section.settings.tab_wedding_label | default: "Wedding Swords" }}</button>
+          <button class="km-tab-btn" data-tab="damascus" style="padding: 7px 16px; font-size: 0.75rem;">{{ section.settings.tab_damascus_label | default: "Damascus Steel" }}</button>
+          <button class="km-tab-btn" data-tab="miniature" style="padding: 7px 16px; font-size: 0.75rem;">{{ section.settings.tab_miniature_label | default: "Miniatures" }}</button>
         </div>
-      </div>
+      {% endif %}
+    </div>
 
-      <div class="km-product-grid" data-live-mode="home" aria-live="polite">
+    <div class="km-product-grid" data-live-mode="home" aria-live="polite">
+      {% assign chosen_collection = collections[section.settings.collection] %}
+      {% if chosen_collection != blank and chosen_collection.products_count > 0 %}
+        {% for product in chosen_collection.products limit: section.settings.products_to_show %}
+          {% assign cat_handle = "wedding" %}
+          {% if product.tags contains "damascus" or product.title contains "Damascus" %}
+            {% assign cat_handle = "damascus" %}
+          {% elsif product.tags contains "miniature" or product.title contains "Miniature" %}
+            {% assign cat_handle = "miniature" %}
+          {% endif %}
+          <div class="km-product-card km-noise-card km-reveal" data-delay="{{ forloop.index }}" data-category="{{ cat_handle }}" data-handle="{{ product.handle }}"
+            data-qv-img="{{ product.featured_image | img_url: '600x' }}" data-qv-title="{{ product.title | escape }}"
+            data-qv-desc="{{ product.description | strip_html | truncatewords: 16 | escape }}"
+            data-qv-price="{{ product.price | money }}" data-qv-compare="{{ product.compare_at_price | money }}"
+            data-qv-specs="Handcrafted Amritsar Forging | Free Custom Laser Engraving | Tracked Express Delivery">
+            <div class="km-product-media">
+              {% if product.compare_at_price > product.price %}
+                <span class="km-sale-badge">Sale</span>
+              {% endif %}
+              <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
+              <button class="km-quick-view-btn" data-qv-handle="{{ product.handle }}">⚡ Quick View</button>
+            </div>
+            <div class="km-product-info">
+              <span class="km-product-vendor">{{ product.vendor | default: "KraftMart Heritage" }}</span>
+              <h3 class="km-product-title"><a href="{{ product.url }}" style="color: inherit; text-decoration: none;">{{ product.title }}</a></h3>
+              <p class="km-product-desc-short">{{ product.description | strip_html | truncatewords: 8 }}</p>
+              <div class="km-price-wrapper">
+                <span class="km-price-current">{{ product.price | money }}</span>
+                {% if product.compare_at_price > product.price %}
+                  <span class="km-price-compare">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+              <form method="post" action="/cart/add" style="margin: 0;">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                <button type="button" class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <!-- Curated Catalogue Fallback -->
         <!-- Card 1 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="1" data-category="wedding"
-          data-qv-img="assets/sword.png" data-qv-title="Jaipur Wedding Talwar"
+        <div class="km-product-card km-noise-card km-reveal" data-delay="1" data-category="wedding" data-handle="jaipur-wedding-talwar"
+          data-qv-img="/assets/sword.png" data-qv-title="Jaipur Wedding Talwar"
           data-qv-desc="Red Velvet Scabbard · Kundan Brass Hilt · Free Laser Engraving · Ceremonial Grade"
           data-qv-price="₹2,599" data-qv-compare="₹3,099"
           data-qv-specs="Blade Length: 28 in|Hilt: Solid Brass Kundan|Scabbard: Deep Red Velvet|Dispatch: 5–7 Days">
@@ -38,9 +82,10 @@
             <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
           </div>
         </div>
+
         <!-- Card 2 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="2" data-category="damascus"
-          data-qv-img="assets/sword2.png" data-qv-title="Kundan Hilt Rajput Talwar"
+        <div class="km-product-card km-noise-card km-reveal" data-delay="2" data-category="damascus" data-handle="royal-jodhpur-damascus"
+          data-qv-img="/assets/sword2.png" data-qv-title="Kundan Hilt Rajput Talwar"
           data-qv-desc="Authentic Damascus Steel · Semi-precious kundan stone hilt · Museum-grade forging by Amritsar masters"
           data-qv-price="₹4,299" data-qv-compare="₹4,999"
           data-qv-specs="Steel: 1095/15N20 Damascus|Hardness: 56–58 HRC|Hilt: Kundan with Semi-precious Stones|Blade: 30 in">
@@ -60,9 +105,10 @@
             <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
           </div>
         </div>
+
         <!-- Card 3 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="3" data-category="wedding"
-          data-qv-img="assets/hero_talwar.png" data-qv-title="Dawami Velvet Scabbard Talwar"
+        <div class="km-product-card km-noise-card km-reveal" data-delay="3" data-category="wedding" data-handle="dawami-velvet-scabbard-talwar"
+          data-qv-img="/assets/hero_talwar.png" data-qv-title="Dawami Velvet Scabbard Talwar"
           data-qv-desc="Zari Velvet-lined scabbard · Hand-polished blade · Traditional Rajput grip with brass pommel"
           data-qv-price="₹4,299" data-qv-compare=""
           data-qv-specs="Blade Length: 30 in|Hilt: Brass Rajput Grip|Scabbard: Zari Velvet Sheath|Dispatch: 5–7 Days">
@@ -80,12 +126,13 @@
             <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
           </div>
         </div>
+
         <!-- Card 4 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="4" data-category="wedding"
-          data-qv-img="assets/sword.png" data-qv-title="Dawami Ceremonial Sword"
-          data-qv-desc="Traditional Sikh &amp; Rajput marriage sword with mirror-polish carbon steel blade and gold zari velvet scabbard."
+        <div class="km-product-card km-noise-card km-reveal" data-delay="4" data-category="wedding" data-handle="dawami-ceremonial-sword"
+          data-qv-img="/assets/sword.png" data-qv-title="Dawami Ceremonial Sword"
+          data-qv-desc="Traditional Sikh & Rajput marriage sword with mirror-polish carbon steel blade and gold zari velvet scabbard."
           data-qv-price="₹1,999" data-qv-compare="₹2,499"
-          data-qv-specs="Blade: High Carbon Steel|Hilt: Traditional Cast Brass|Scabbard: Gold Zari Velvet|Usage: Wedding &amp; Display">
+          data-qv-specs="Blade: High Carbon Steel|Hilt: Traditional Cast Brass|Scabbard: Gold Zari Velvet|Usage: Wedding & Display">
           <div class="km-product-media">
             <span class="km-sale-badge">Under ₹2K</span>
             <img src="{{ 'sword.png' | asset_url }}" alt="Dawami Ceremonial Sword" class="km-product-img" decoding="async" loading="lazy" />
@@ -102,99 +149,107 @@
             <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
           </div>
         </div>
+
         <!-- Card 5 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="5" data-category="damascus"
-          data-qv-img="assets/sword2.png" data-qv-title="Royal Jodhpur Damascus Talwar"
-          data-qv-desc="Hand-forged 1095/15N20 Damascus blade with intricate brass guard and deep burgundy velvet scabbard"
-          data-qv-price="₹3,899" data-qv-compare="₹4,499"
-          data-qv-specs="Steel: Damascus 1095/15N20|Guard: Solid Brass|Scabbard: Burgundy Velvet|Balance: 3.5&quot; from Guard">
+        <div class="km-product-card km-noise-card km-reveal" data-delay="5" data-category="miniature" data-handle="miniature-khanda-sahib-shield"
+          data-qv-img="/assets/sword2.png" data-qv-title="Miniature Khanda Sahib Shield"
+          data-qv-desc="Solid cast brass miniature Khanda with dual crossed kirpans and chakkar. Perfect for car dashboards and home altars."
+          data-qv-price="₹1,299" data-qv-compare=""
+          data-qv-specs="Material: Solid Brass Casting|Finish: Lacquered Antique Gold|Base: Felt-lined Stand|Size: 6.5 in">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Auspicious</span>
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Miniature Khanda Sahib Shield" class="km-product-img" decoding="async" loading="lazy" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Miniature Khanda Sahib Shield</h3>
+            <p class="km-product-desc-short">Solid Brass Casting · Antique Gold Finish</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹1,299</span>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="6" data-category="damascus" data-handle="amritsar-royal-damascus-kirpan"
+          data-qv-img="/assets/hero_talwar.png" data-qv-title="Amritsar Royal Damascus Kirpan"
+          data-qv-desc="Pattern-welded high carbon Damascus steel with ram-head carved brass pommel and hardwood core scabbard."
+          data-qv-price="₹3,799" data-qv-compare="₹4,499"
+          data-qv-specs="Steel: 300-Fold Damascus|Blade Length: 9 in|Pommel: Ram Head Carved Brass|Scabbard: Rosewood & Brass">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Top Rated</span>
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Amritsar Royal Damascus Kirpan" class="km-product-img" decoding="async" loading="lazy" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Amritsar Royal Damascus Kirpan</h3>
+            <p class="km-product-desc-short">300-Fold Damascus · Carved Ram-Head Pommel</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹3,799</span>
+              <span class="km-price-compare">₹4,499</span>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="7" data-category="wedding" data-handle="sikh-groom-ceremonial-talwar"
+          data-qv-img="/assets/sword.png" data-qv-title="Sikh Groom Ceremonial Talwar"
+          data-qv-desc="Curved carbon steel talwar with emerald velvet scabbard, gold zari lace border, and traditional brass basket hilt."
+          data-qv-price="₹2,799" data-qv-compare="₹3,299"
+          data-qv-specs="Blade: High Carbon Steel|Scabbard: Emerald Green Velvet|Hilt: Traditional Basket Hilt|Engraving: Free">
           <div class="km-product-media">
             <span class="km-sale-badge">Bestseller</span>
+            <img src="{{ 'sword.png' | asset_url }}" alt="Sikh Groom Ceremonial Talwar" class="km-product-img" decoding="async" loading="lazy" />
+            <button class="km-quick-view-btn">⚡ Quick View</button>
+          </div>
+          <div class="km-product-info">
+            <span class="km-product-vendor">KraftMart Heritage</span>
+            <h3 class="km-product-title">Sikh Groom Ceremonial Talwar</h3>
+            <p class="km-product-desc-short">Emerald Velvet Scabbard · Gold Zari Lace</p>
+            <div class="km-price-wrapper">
+              <span class="km-price-current">₹2,799</span>
+              <span class="km-price-compare">₹3,299</span>
+            </div>
+            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="km-product-card km-noise-card km-reveal" data-delay="8" data-category="damascus" data-handle="royal-jodhpur-damascus-talwar"
+          data-qv-img="/assets/sword2.png" data-qv-title="Royal Jodhpur Damascus Talwar"
+          data-qv-desc="Master forged 1095/15N20 layered Damascus steel ceremonial sword. Museum display finish with midnight blue velvet sheath."
+          data-qv-price="₹4,299" data-qv-compare="₹4,999"
+          data-qv-specs="Steel: 1095/15N20 Damascus|Hardness: 56–58 HRC|Scabbard: Midnight Blue Velvet|Hilt: Chased Brass">
+          <div class="km-product-media">
+            <span class="km-sale-badge">Heirloom Grade</span>
             <img src="{{ 'sword2.png' | asset_url }}" alt="Royal Jodhpur Damascus Talwar" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">
             <span class="km-product-vendor">KraftMart Heritage</span>
             <h3 class="km-product-title">Royal Jodhpur Damascus Talwar</h3>
-            <p class="km-product-desc-short">1095/15N20 Damascus · Solid Brass Guard</p>
+            <p class="km-product-desc-short">1095/15N20 Damascus · Midnight Blue Velvet</p>
             <div class="km-price-wrapper">
-              <span class="km-price-current">₹3,899</span>
-              <span class="km-price-compare">₹4,499</span>
+              <span class="km-price-current">₹4,299</span>
+              <span class="km-price-compare">₹4,999</span>
             </div>
             <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
           </div>
         </div>
-        <!-- Card 6 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="6" data-category="wedding"
-          data-qv-img="assets/hero_talwar.png" data-qv-title="Shekhawati Bridal Talwar"
-          data-qv-desc="Gold-plated hilt with white zari velvet scabbard · Ideal for brides and royal wedding ceremonies"
-          data-qv-price="₹3,299" data-qv-compare=""
-          data-qv-specs="Hilt: Gold-Plated Brass|Scabbard: White Zari Velvet|Blade: 28 in Polished|Engraving: Free">
-          <div class="km-product-media">
-            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Shekhawati Bridal Talwar" class="km-product-img" decoding="async" loading="lazy" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Shekhawati Bridal Talwar</h3>
-            <p class="km-product-desc-short">Gold-Plated Hilt · White Zari Velvet</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹3,299</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 7 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="7" data-category="miniature"
-          data-qv-img="assets/sword.png" data-qv-title="Miniature Kirpan Gift Set"
-          data-qv-desc="Collectible 10-inch miniature Kirpan in premium gift box · Perfect for gifting at Sikh ceremonies"
-          data-qv-price="₹899" data-qv-compare="₹1,199"
-          data-qv-specs="Size: 10 in Miniature|Packaging: Premium Gift Box|Material: Stainless + Brass|Use: Ceremonial Gift">
-          <div class="km-product-media">
-            <span class="km-sale-badge">COD Available</span>
-            <img src="{{ 'sword.png' | asset_url }}" alt="Miniature Kirpan Set" class="km-product-img" decoding="async" loading="lazy" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Miniature Kirpan Gift Set</h3>
-            <p class="km-product-desc-short">Collectible 10" · Premium Gift Box</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹899</span>
-              <span class="km-price-compare">₹1,199</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Card 8 -->
-        <div class="km-product-card km-noise-card km-reveal" data-delay="8" data-category="damascus"
-          data-qv-img="assets/sword2.png" data-qv-title="Mughal Court Talwar"
-          data-qv-desc="Museum-grade Mughal court sword with inlaid brass filigree work and traditional courtly proportions"
-          data-qv-price="₹5,499" data-qv-compare=""
-          data-qv-specs="Grade: Museum Quality|Inlay: Brass Filigree|Blade: 32 in High Carbon|Finish: Hand-Polished">
-          <div class="km-product-media">
-            <img src="{{ 'sword2.png' | asset_url }}" alt="Mughal Court Talwar" class="km-product-img" decoding="async" loading="lazy" />
-            <button class="km-quick-view-btn">⚡ Quick View</button>
-          </div>
-          <div class="km-product-info">
-            <span class="km-product-vendor">KraftMart Heritage</span>
-            <h3 class="km-product-title">Mughal Court Talwar</h3>
-            <p class="km-product-desc-short">Museum-Grade · Inlaid Brass Filigree</p>
-            <div class="km-price-wrapper">
-              <span class="km-price-current">₹5,499</span>
-            </div>
-            <button class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-
-
-      <div style="text-align: center; margin-top: 48px;">
-        <a href="/collections/all" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">View Complete Collection &rarr;</a>
-      </div>
+      {% endif %}
     </div>
-  </section>
 
+    <div style="text-align: center; margin-top: 48px;">
+      <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="km-btn km-btn-outline-gold" style="padding: 14px 36px;">
+        {{ section.settings.button_label | default: "View Complete Collection →" }}
+      </a>
+    </div>
+  </div>
+</section>
 
 {% schema %}
 {
@@ -202,15 +257,15 @@
   "settings": [
     {
       "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "Ceremonial Collection"
+      "id": "subtitle",
+      "label": "Eyebrow Subtitle",
+      "default": "CURATED HERITAGE PICKS"
     },
     {
       "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "CURATED HERITAGE PICKS"
+      "id": "title",
+      "label": "Heading",
+      "default": "Ceremonial Collection"
     },
     {
       "type": "textarea",
@@ -221,7 +276,7 @@
     {
       "type": "collection",
       "id": "collection",
-      "label": "Collection"
+      "label": "Collection of Products"
     },
     {
       "type": "range",
@@ -230,7 +285,37 @@
       "max": 24,
       "step": 4,
       "default": 8,
-      "label": "Products to show"
+      "label": "Number of Products to show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tabs",
+      "label": "Show Category Filter Tabs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tab_all_label",
+      "label": "Tab 1 Label",
+      "default": "All Catalogue"
+    },
+    {
+      "type": "text",
+      "id": "tab_wedding_label",
+      "label": "Tab 2 Label",
+      "default": "Wedding Swords"
+    },
+    {
+      "type": "text",
+      "id": "tab_damascus_label",
+      "label": "Tab 3 Label",
+      "default": "Damascus Steel"
+    },
+    {
+      "type": "text",
+      "id": "tab_miniature_label",
+      "label": "Tab 4 Label",
+      "default": "Miniatures"
     },
     {
       "type": "text",

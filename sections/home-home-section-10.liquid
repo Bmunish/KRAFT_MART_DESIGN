@@ -1,54 +1,119 @@
-<!-- Section 4: Dedicated Heritage COD Certificate Block -->
-  <section class="km-section" style="background-color: var(--color-cloud); padding: 60px 0;">
-    <div class="km-container">
-      <div class="km-cod-certificate">
-        <div class="km-cod-seal">❖</div>
-        <span class="km-eyebrow" style="color: var(--km-gold-primary); font-weight: 700;">HERITAGE TRUST
-          GUARANTEE</span>
-        <h2 class="km-heading-1" style="color: var(--color-ink-navy); margin: 10px 0 16px 0;">Cash on Delivery Available
-          Across India</h2>
-        <p
-          style="color: var(--color-slate-gray); max-width: 620px; margin: 0 auto 24px auto; font-size: 1.05rem; line-height: 1.7;">
-          To ensure 100% confidence when buying your wedding sword, KraftMart offers a secure <strong>15% Advance
-            Booking + 85% Cash on Delivery</strong> model for all orders within India.
-        </p>
+<!-- Dedicated Heritage COD Certificate Block -->
+<section class="km-section" style="background-color: var(--color-cloud); padding: 60px 0;">
+  <div class="km-container">
+    <div class="km-cod-certificate">
+      <div class="km-cod-seal">{{ section.settings.seal | default: "❖" }}</div>
+      <span class="km-eyebrow" style="color: var(--km-gold-primary); font-weight: 700;">{{ section.settings.eyebrow | default: "HERITAGE TRUST GUARANTEE" }}</span>
+      <h2 class="km-heading-1" style="color: var(--color-ink-navy); margin: 10px 0 16px 0;">{{ section.settings.heading | default: "Cash on Delivery Available Across India" }}</h2>
+      <p style="color: var(--color-slate-gray); max-width: 620px; margin: 0 auto 24px auto; font-size: 1.05rem; line-height: 1.7;">
+        {{ section.settings.description | default: "To ensure 100% confidence when buying your wedding sword, KraftMart offers a secure 15% Advance Booking + 85% Cash on Delivery model for all orders within India." }}
+      </p>
 
-        <div
-          style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; text-align: left; max-width: 600px; margin: 0 auto 28px auto;">
-          <div style="display: flex; gap: 12px; align-items: flex-start;">
-            <span style="color: var(--km-gold-primary); font-size: 1.2rem;">✓</span>
-            <div>
-              <strong style="color: var(--color-ink-navy); font-size: 0.875rem;">15% Advance Payment</strong>
-              <div style="font-size: 0.75rem; color: var(--color-slate-gray);">Confirms laser engraving &amp; forging
-              </div>
-            </div>
-          </div>
-          <div style="display: flex; gap: 12px; align-items: flex-start;">
-            <span style="color: var(--km-gold-primary); font-size: 1.2rem;">✓</span>
-            <div>
-              <strong style="color: var(--color-ink-navy); font-size: 0.875rem;">85% Balance on Delivery</strong>
-              <div style="font-size: 0.75rem; color: var(--color-slate-gray);">Paid to delivery courier at doorstep
-              </div>
-            </div>
+      <div style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; text-align: left; max-width: 600px; margin: 0 auto 28px auto;">
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="color: var(--km-gold-primary); font-size: 1.2rem;">✓</span>
+          <div>
+            <strong style="color: var(--color-ink-navy); font-size: 0.875rem;">{{ section.settings.step_1_title | default: "15% Advance Payment" }}</strong>
+            <div style="font-size: 0.75rem; color: var(--color-slate-gray);">{{ section.settings.step_1_sub | default: "Confirms laser engraving & forging" }}</div>
           </div>
         </div>
-
-        <a href="/collections/all" class="km-btn"
-          style="background-color: var(--color-ink-navy); color: #FFF; border-radius: 8px; padding: 12px 28px;">
-          Shop COD Eligible Swords →
-        </a>
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="color: var(--km-gold-primary); font-size: 1.2rem;">✓</span>
+          <div>
+            <strong style="color: var(--color-ink-navy); font-size: 0.875rem;">{{ section.settings.step_2_title | default: "85% Balance on Delivery" }}</strong>
+            <div style="font-size: 0.75rem; color: var(--color-slate-gray);">{{ section.settings.step_2_sub | default: "Paid to delivery courier at doorstep" }}</div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
 
+      <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="km-btn"
+        style="background-color: var(--color-ink-navy); color: #FFF; border-radius: 8px; padding: 12px 28px;">
+        {{ section.settings.button_label | default: "Shop COD Eligible Swords →" }}
+      </a>
+    </div>
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "Home Section 10",
-  "settings": [],
+  "name": "COD Trust Guarantee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "seal",
+      "label": "Seal Symbol",
+      "default": "❖"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Subtitle",
+      "default": "HERITAGE TRUST GUARANTEE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Cash on Delivery Available Across India"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "To ensure 100% confidence when buying your wedding sword, KraftMart offers a secure 15% Advance Booking + 85% Cash on Delivery model for all orders within India."
+    },
+    {
+      "type": "header",
+      "content": "Step 1"
+    },
+    {
+      "type": "text",
+      "id": "step_1_title",
+      "label": "Step 1 Title",
+      "default": "15% Advance Payment"
+    },
+    {
+      "type": "text",
+      "id": "step_1_sub",
+      "label": "Step 1 Subtitle",
+      "default": "Confirms laser engraving & forging"
+    },
+    {
+      "type": "header",
+      "content": "Step 2"
+    },
+    {
+      "type": "text",
+      "id": "step_2_title",
+      "label": "Step 2 Title",
+      "default": "85% Balance on Delivery"
+    },
+    {
+      "type": "text",
+      "id": "step_2_sub",
+      "label": "Step 2 Subtitle",
+      "default": "Paid to delivery courier at doorstep"
+    },
+    {
+      "type": "header",
+      "content": "Action Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop COD Eligible Swords →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/all"
+    }
+  ],
   "presets": [
     {
-      "name": "Home Section 10"
+      "name": "COD Trust Guarantee"
     }
   ]
 }

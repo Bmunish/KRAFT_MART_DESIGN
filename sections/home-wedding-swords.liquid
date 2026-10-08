@@ -1,72 +1,200 @@
 <!-- Section: Wedding Campaign & Live Engraving Simulator (The Groom's Heritage) -->
-  <section id="wedding-swords" class="km-section km-wedding-heritage-section">
-    <div class="km-container" style="position: relative; z-index: 1;">
-      <div class="km-wedding-grid">
-        <div class="km-wedding-content">
-          <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.15em;">THE GROOM'S HERITAGE</span>
-          <h2 class="km-heading-1 km-wedding-title" style="margin-bottom: 20px;">Honor Tradition on Your Special Day</h2>
-          <p class="km-body-lead" style="color: var(--km-text-muted-light); margin-bottom: 28px; line-height: 1.7;">
-            In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and
-            honor. Our wedding talwars feature velvet-sheathed scabbards, hand-engraved brass hilts, and personalized
-            blade inscriptions.
+<section id="wedding-swords" class="km-section km-wedding-heritage-section">
+  <div class="km-container" style="position: relative; z-index: 1;">
+    <div class="km-wedding-grid">
+      <div class="km-wedding-content">
+        <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.15em;">{{ section.settings.eyebrow | default: "THE GROOM'S HERITAGE" }}</span>
+        <h2 class="km-heading-1 km-wedding-title" style="margin-bottom: 20px;">{{ section.settings.title | default: "Honor Tradition on Your Special Day" }}</h2>
+        <p class="km-body-lead" style="color: var(--km-text-muted-light); margin-bottom: 28px; line-height: 1.7;">
+          {{ section.settings.description | default: "In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and honor. Our wedding talwars feature velvet-sheathed scabbards, hand-engraved brass hilts, and personalized blade inscriptions." }}
+        </p>
+
+        <!-- Interactive Live Engraving Preview: Heritage Parchment Styling -->
+        <div class="km-engraving-simulator-card">
+          <div class="km-engraving-card-header">
+            <span class="km-engraving-badge">&#10022; {{ section.settings.engraving_badge | default: "Free Custom Laser Engraving Simulator" }}</span>
+          </div>
+          <p style="font-size: 0.8125rem; color: var(--km-text-muted-light); margin-bottom: 12px;">
+            {{ section.settings.engraving_instruction | default: "Type Bride &amp; Groom names below to simulate live blade laser inscription:" }}
           </p>
+          <input type="text" id="kmEngravingInput" class="km-engraving-input"
+            value="{{ section.settings.engraving_default | default: 'Gurpreet ❤️ Simran • 24.10.2026' }}"
+            placeholder="{{ section.settings.engraving_placeholder | default: 'e.g. Gurpreet ❤️ Simran • 24.10.2026' }}" />
 
-          <!-- Interactive Live Engraving Preview: Heritage Parchment Styling -->
-          <div class="km-engraving-simulator-card">
-            <div class="km-engraving-card-header">
-              <span class="km-engraving-badge">&#10022; Free Custom Laser Engraving Simulator</span>
-            </div>
-            <p style="font-size: 0.8125rem; color: var(--km-text-muted-light); margin-bottom: 12px;">
-              Type Bride &amp; Groom names below to simulate live blade laser inscription:
-            </p>
-            <input type="text" id="kmEngravingInput" class="km-engraving-input"
-              value="Gurpreet ❤️ Simran • 24.10.2026"
-              placeholder="e.g. Gurpreet ❤️ Simran • 24.10.2026" />
-            
-            <div class="km-engraving-preset-chips">
-              <span style="font-size: 0.72rem; color: var(--km-text-muted-light); margin-right: 4px;">Presets:</span>
-              <button type="button" class="km-engraving-chip active" data-preset="Gurpreet ❤️ Simran • 24.10.2026">Gurpreet ❤️ Simran</button>
-              <button type="button" class="km-engraving-chip" data-preset="Rajveer Singh • 2026">Rajveer Singh</button>
-              <button type="button" class="km-engraving-chip" data-preset="Harman & Navjot • Forever">Harman &amp; Navjot</button>
-            </div>
-
-            <div class="km-engraving-preview-box">
-              <span class="km-engraving-preview-label">Blade Inscription Preview</span>
-              <div class="km-engraving-preview-text" id="kmEngravingPreviewText">&ldquo;Gurpreet ❤️ Simran • 24.10.2026&rdquo;</div>
-              <div class="km-engraving-laser-shine" aria-hidden="true"></div>
-            </div>
+          <div class="km-engraving-preset-chips">
+            <span style="font-size: 0.72rem; color: var(--km-text-muted-light); margin-right: 4px;">Presets:</span>
+            <button type="button" class="km-engraving-chip active" data-preset="{{ section.settings.preset_1 | default: 'Gurpreet ❤️ Simran • 24.10.2026' }}">{{ section.settings.preset_1_label | default: "Gurpreet ❤️ Simran" }}</button>
+            <button type="button" class="km-engraving-chip" data-preset="{{ section.settings.preset_2 | default: 'Rajveer Singh • 2026' }}">{{ section.settings.preset_2_label | default: "Rajveer Singh" }}</button>
+            <button type="button" class="km-engraving-chip" data-preset="{{ section.settings.preset_3 | default: 'Harman & Navjot • Forever' }}">{{ section.settings.preset_3_label | default: "Harman &amp; Navjot" }}</button>
           </div>
 
-          <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
-            <a href="/collections/wedding-swords" class="km-btn km-btn-primary" style="padding: 14px 32px;">Shop Wedding Talwars &rarr;</a>
-            <span style="font-size: 0.85rem; color: var(--km-gold-light); display: inline-flex; align-items: center; gap: 6px;">
-              <span>✓</span> Free Laser Engraving Included
-            </span>
+          <div class="km-engraving-preview-box">
+            <span class="km-engraving-preview-label">{{ section.settings.preview_label | default: "Blade Inscription Preview" }}</span>
+            <div class="km-engraving-preview-text" id="kmEngravingPreviewText">&ldquo;{{ section.settings.engraving_default | default: 'Gurpreet ❤️ Simran • 24.10.2026' }}&rdquo;</div>
+            <div class="km-engraving-laser-shine" aria-hidden="true"></div>
           </div>
         </div>
 
-        <div class="km-wedding-visual">
-          <div class="km-wedding-glow-backdrop" aria-hidden="true"></div>
-          <div class="km-wedding-image-wrapper">
-            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="KraftMart Groom Wedding Talwar with Royal Red Velvet Scabbard" class="km-wedding-sword-img" decoding="async" loading="lazy" />
-          </div>
-          <div class="km-wedding-floating-tag">
-            <span class="km-tag-icon">&#10022;</span>
-            <div>
-              <strong>Master Handcrafted in Amritsar</strong>
-              <span>Solid Brass Kundan Hilt &bull; Velvet Sheath</span>
-            </div>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+          <a href="{{ section.settings.button_link | default: '/collections/wedding-swords' }}" class="km-btn km-btn-primary" style="padding: 14px 32px;">
+            {{ section.settings.button_label | default: "Shop Wedding Talwars →" }}
+          </a>
+          <span style="font-size: 0.85rem; color: var(--km-gold-light); display: inline-flex; align-items: center; gap: 6px;">
+            <span>✓</span> {{ section.settings.perk_text | default: "Free Laser Engraving Included" }}
+          </span>
+        </div>
+      </div>
+
+      <div class="km-wedding-visual">
+        <div class="km-wedding-glow-backdrop" aria-hidden="true"></div>
+        <div class="km-wedding-image-wrapper">
+          {% assign default_wedding_img = 'hero_talwar.png' | asset_url %}
+          <img src="{{ section.settings.image | default: default_wedding_img }}" alt="{{ section.settings.title | default: 'KraftMart Groom Wedding Talwar' | escape }}" class="km-wedding-sword-img" decoding="async" loading="lazy" />
+        </div>
+        <div class="km-wedding-floating-tag">
+          <span class="km-tag-icon">&#10022;</span>
+          <div>
+            <strong>{{ section.settings.floating_title | default: "Master Handcrafted in Amritsar" }}</strong>
+            <span>{{ section.settings.floating_subtitle | default: "Solid Brass Kundan Hilt • Velvet Sheath" }}</span>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
+  </div>
+</section>
 
 {% schema %}
 {
   "name": "Wedding Swords",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Subtitle",
+      "default": "THE GROOM'S HERITAGE"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Honor Tradition on Your Special Day"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and honor. Our wedding talwars feature velvet-sheathed scabbards, hand-engraved brass hilts, and personalized blade inscriptions."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Feature Sword Image"
+    },
+    {
+      "type": "text",
+      "id": "floating_title",
+      "label": "Floating Badge Title",
+      "default": "Master Handcrafted in Amritsar"
+    },
+    {
+      "type": "text",
+      "id": "floating_subtitle",
+      "label": "Floating Badge Subtitle",
+      "default": "Solid Brass Kundan Hilt • Velvet Sheath"
+    },
+    {
+      "type": "header",
+      "content": "Laser Engraving Simulator"
+    },
+    {
+      "type": "text",
+      "id": "engraving_badge",
+      "label": "Simulator Badge",
+      "default": "Free Custom Laser Engraving Simulator"
+    },
+    {
+      "type": "text",
+      "id": "engraving_instruction",
+      "label": "Simulator Instruction",
+      "default": "Type Bride & Groom names below to simulate live blade laser inscription:"
+    },
+    {
+      "type": "text",
+      "id": "engraving_default",
+      "label": "Default Inscription Text",
+      "default": "Gurpreet ❤️ Simran • 24.10.2026"
+    },
+    {
+      "type": "text",
+      "id": "engraving_placeholder",
+      "label": "Input Placeholder",
+      "default": "e.g. Gurpreet ❤️ Simran • 24.10.2026"
+    },
+    {
+      "type": "text",
+      "id": "preset_1_label",
+      "label": "Preset 1 Chip Label",
+      "default": "Gurpreet ❤️ Simran"
+    },
+    {
+      "type": "text",
+      "id": "preset_1",
+      "label": "Preset 1 Inscription",
+      "default": "Gurpreet ❤️ Simran • 24.10.2026"
+    },
+    {
+      "type": "text",
+      "id": "preset_2_label",
+      "label": "Preset 2 Chip Label",
+      "default": "Rajveer Singh"
+    },
+    {
+      "type": "text",
+      "id": "preset_2",
+      "label": "Preset 2 Inscription",
+      "default": "Rajveer Singh • 2026"
+    },
+    {
+      "type": "text",
+      "id": "preset_3_label",
+      "label": "Preset 3 Chip Label",
+      "default": "Harman & Navjot"
+    },
+    {
+      "type": "text",
+      "id": "preset_3",
+      "label": "Preset 3 Inscription",
+      "default": "Harman & Navjot • Forever"
+    },
+    {
+      "type": "text",
+      "id": "preview_label",
+      "label": "Preview Box Label",
+      "default": "Blade Inscription Preview"
+    },
+    {
+      "type": "header",
+      "content": "Action Button & Perks"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Wedding Talwars →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/wedding-swords"
+    },
+    {
+      "type": "text",
+      "id": "perk_text",
+      "label": "Checkmark Perk Text",
+      "default": "Free Laser Engraving Included"
+    }
+  ],
   "presets": [
     {
       "name": "Wedding Swords"

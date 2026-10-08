@@ -1,3 +1,4 @@
+{% assign default_article_img = 'hero_talwar.png' | asset_url %}
 {% paginate blog.articles by 12 %}
 <section class="km-page-hero km-glass-hero km-hero-minimal">
   <div class="km-bg-gradient-container" aria-hidden="true">
@@ -43,7 +44,7 @@
       {% for article in blog.articles %}
         <article class="km-blog-card km-reveal" data-delay="{{ forloop.index }}">
           <div class="km-blog-img-wrap">
-            <img src="{{ article.image | default: ('hero_talwar.png' | asset_url) }}" alt="{{ article.title | default: 'KraftMart Heritage Guide' | escape }}" decoding="async" loading="lazy" />
+            <img src="{{ article.image | default: default_article_img }}" alt="{{ article.title | default: 'KraftMart Heritage Guide' | escape }}" decoding="async" loading="lazy" />
             <span class="km-blog-tag">{{ article.tags.first | default: "Heritage" }}</span>
           </div>
           <div class="km-blog-body">

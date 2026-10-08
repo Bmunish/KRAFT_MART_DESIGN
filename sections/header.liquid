@@ -3,12 +3,12 @@
 <div class="km-top-utility-bar">
   <div class="km-container km-top-utility-inner">
     <div class="km-top-utility-left">
-      <span class="km-helpline-label">Helpline Number:</span>
-      <a href="tel:+917508427731" class="km-helpline-num">+91-75084-27731</a>
+      <span class="km-helpline-label">{{ section.settings.helpline_label | default: "Helpline Number:" }}</span>
+      <a href="tel:{{ section.settings.helpline_phone | default: '+917508427731' }}" class="km-helpline-num">{{ section.settings.helpline_phone | default: "+91-75084-27731" }}</a>
       <span style="opacity: 0.35; margin: 0 8px; color: #FAF7F2;">|</span>
-      <a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&amp;rlz=1C1FHFK_enIN1105IN1105&amp;sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&amp;kgmid=/g/11q2rz95sv&amp;q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop&amp;shem=dlvs1,epsd1,esd2e,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=ac419447525adea1&amp;utm_source=dlvs1,epsd1,esd2e,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x39197d192e9f82b5:0x73a13ed215287278,1,,,," target="_blank" rel="noopener noreferrer" class="km-google-rating-pill" title="View KraftMart on Google Business" style="display: inline-flex; align-items: center; gap: 5px; color: #FAF7F2; text-decoration: none; font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(197, 160, 89, 0.4);">
+      <a href="{{ section.settings.google_url | default: 'https://www.google.com/search?sca_esv=9690ff17f276db6e&rlz=1C1FHFK_enIN1105IN1105&sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&kgmid=/g/11q2rz95sv&q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop' }}" target="_blank" rel="noopener noreferrer" class="km-google-rating-pill" title="View KraftMart on Google Business" style="display: inline-flex; align-items: center; gap: 5px; color: #FAF7F2; text-decoration: none; font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(197, 160, 89, 0.4);">
         <svg width="12" height="12" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
-        <span style="font-weight: 700; color: #FFD700;">4.9 ★</span>
+        <span style="font-weight: 700; color: #FFD700;">{{ section.settings.google_rating | default: "4.9 ★" }}</span>
         <span style="color: rgba(250,247,242,0.85);">Google Business</span>
       </a>
     </div>
@@ -72,27 +72,27 @@
 <div class="km-announcement-bar">
   <div class="km-marquee-track">
     <div class="km-marquee-item">
-      <span>Our USP: Affordable swords at your doorstep with a pinch of customisation</span>
+      <span>{{ section.settings.announcement_1 | default: "Our USP: Affordable swords at your doorstep with a pinch of customisation" }}</span>
       <span class="km-marquee-divider">❖</span>
-      <span>Cash on Delivery Available in India</span>
+      <span>{{ section.settings.announcement_2 | default: "Cash on Delivery Available in India" }}</span>
       <span class="km-marquee-divider">❖</span>
-      <span>Free Custom Engraving on All Orders</span>
+      <span>{{ section.settings.announcement_3 | default: "Free Custom Engraving on All Orders" }}</span>
       <span class="km-marquee-divider">❖</span>
-      <span>Worldwide Shipping via FedEx &amp; DHL</span>
+      <span>{{ section.settings.announcement_4 | default: "Worldwide Shipping via FedEx & DHL" }}</span>
       <span class="km-marquee-divider">❖</span>
-      <span>Handcrafted in Amritsar, Punjab Since 1996</span>
+      <span>{{ section.settings.announcement_5 | default: "Handcrafted in Amritsar, Punjab Since 1996" }}</span>
       <span class="km-marquee-divider">❖</span>
     </div>
     <div class="km-marquee-item" aria-hidden="true">
-      <span>Our USP: Affordable swords at your doorstep with a pinch of customisation</span>
+      <span>{{ section.settings.announcement_1 | default: "Our USP: Affordable swords at your doorstep with a pinch of customisation" }}</span>
       <span class="km-marquee-divider">❖</span>
-      <span>Cash on Delivery Available in India</span>
+      <span>{{ section.settings.announcement_2 | default: "Cash on Delivery Available in India" }}</span>
       <span class="km-marquee-divider">❖</span>
-      <span>Free Custom Engraving on All Orders</span>
+      <span>{{ section.settings.announcement_3 | default: "Free Custom Engraving on All Orders" }}</span>
       <span class="km-marquee-divider">❖</span>
-      <span>Worldwide Shipping via FedEx &amp; DHL</span>
+      <span>{{ section.settings.announcement_4 | default: "Worldwide Shipping via FedEx & DHL" }}</span>
       <span class="km-marquee-divider">❖</span>
-      <span>Handcrafted in Amritsar, Punjab Since 1996</span>
+      <span>{{ section.settings.announcement_5 | default: "Handcrafted in Amritsar, Punjab Since 1996" }}</span>
       <span class="km-marquee-divider">❖</span>
     </div>
   </div>
@@ -127,10 +127,10 @@
             </a>
             <div class="km-policy-dropdown">
               <ul class="km-policy-dropdown-list">
-                <li><a href="/policies/shipping-policy" class="km-policy-link">SHIPPING POLICY</a></li>
-                <li><a href="/policies/processing-time" class="km-policy-link">PROCESSING TIME POLICY</a></li>
-                <li><a href="/policies/privacy-policy" class="km-policy-link">PRIVACY POLICY</a></li>
-                <li><a href="/policies/refund-policy" class="km-policy-link">RETURNS AND REFUNDS</a></li>
+                <li><a href="/pages/shipping-policy" class="km-policy-link">SHIPPING POLICY</a></li>
+                <li><a href="/pages/processing-time" class="km-policy-link">PROCESSING TIME POLICY</a></li>
+                <li><a href="/pages/privacy-policy" class="km-policy-link">PRIVACY POLICY</a></li>
+                <li><a href="/pages/return-policy" class="km-policy-link">RETURNS AND REFUNDS</a></li>
                 <li><a href="/pages/contact" class="km-policy-link">CONTACT US</a></li>
               </ul>
             </div>
@@ -179,10 +179,10 @@
       <li style="border-top: 1px solid rgba(197,160,89,0.2); margin-top: 12px; padding-top: 12px;">
         <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--km-gold-primary); font-weight: 600; padding: 0 20px; display: block; margin-bottom: 8px;">Our Policies</span>
       </li>
-      <li><a href="/policies/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
-      <li><a href="/policies/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
-      <li><a href="/policies/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
-      <li><a href="/policies/refund-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
+      <li><a href="/pages/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
+      <li><a href="/pages/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
+      <li><a href="/pages/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
+      <li><a href="/pages/return-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
     </ul>
   </nav>
 </div>
@@ -253,9 +253,84 @@
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo image"
+      "label": "Logo Image"
+    },
+    {
+      "type": "header",
+      "content": "Top Utility Bar"
+    },
+    {
+      "type": "text",
+      "id": "helpline_label",
+      "label": "Helpline Label",
+      "default": "Helpline Number:"
+    },
+    {
+      "type": "text",
+      "id": "helpline_phone",
+      "label": "Phone Number",
+      "default": "+91-75084-27731"
+    },
+    {
+      "type": "text",
+      "id": "google_rating",
+      "label": "Google Rating Badge",
+      "default": "4.9 ★"
+    },
+    {
+      "type": "url",
+      "id": "google_url",
+      "label": "Google Business Link"
+    },
+    {
+      "type": "header",
+      "content": "Announcement Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_1",
+      "label": "Message 1",
+      "default": "Our USP: Affordable swords at your doorstep with a pinch of customisation"
+    },
+    {
+      "type": "text",
+      "id": "announcement_2",
+      "label": "Message 2",
+      "default": "Cash on Delivery Available in India"
+    },
+    {
+      "type": "text",
+      "id": "announcement_3",
+      "label": "Message 3",
+      "default": "Free Custom Engraving on All Orders"
+    },
+    {
+      "type": "text",
+      "id": "announcement_4",
+      "label": "Message 4",
+      "default": "Worldwide Shipping via FedEx & DHL"
+    },
+    {
+      "type": "text",
+      "id": "announcement_5",
+      "label": "Message 5",
+      "default": "Handcrafted in Amritsar, Punjab Since 1996"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu"
     }
-  ],
-  "blocks": []
+  ]
 }
 {% endschema %}

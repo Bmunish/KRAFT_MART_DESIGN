@@ -1,59 +1,211 @@
-<!-- Heritage Craft Numbers Strip (replaces dark Masterpiece section) -->
-  <section class="km-section"
-    style="padding: 56px 0; background: var(--km-bg-secondary); border-top: var(--km-border-gold); border-bottom: var(--km-border-gold);">
-    <div class="km-container">
-      <div class="km-stats-grid">
-        <div class="km-stat-item">
-          <div class="km-stat-number">30<span>+</span></div>
-          <div class="km-stat-label">Years of Legacy</div>
-          <div class="km-stat-sub">Amritsar · Since 1996</div>
-        </div>
-        <div class="km-stat-divider"></div>
-        <div class="km-stat-item">
-          <div class="km-stat-number">10K<span>+</span></div>
-          <div class="km-stat-label">Blades Handcrafted</div>
-          <div class="km-stat-sub">Talwars · Kirpans · Ceremonials</div>
-        </div>
-        <div class="km-stat-divider"></div>
-        <div class="km-stat-item">
-          <div class="km-stat-number">42<span>+</span></div>
-          <div class="km-stat-label">Countries Served</div>
-          <div class="km-stat-sub">Trusted global delivery</div>
-        </div>
-        <div class="km-stat-divider"></div>
-        <div class="km-stat-item">
-          <div class="km-stat-number">4.9<span>★</span></div>
-          <div class="km-stat-label">Verified Rating</div>
-          <div class="km-stat-sub">10,000+ happy buyers</div>
-        </div>
+<!-- Heritage Craft Numbers Strip & Trust Ribbon -->
+<section class="km-section"
+  style="padding: 56px 0; background: var(--km-bg-secondary); border-top: var(--km-border-gold); border-bottom: var(--km-border-gold);">
+  <div class="km-container">
+    <div class="km-stats-grid">
+      <div class="km-stat-item">
+        <div class="km-stat-number">{{ section.settings.stat_1_num | default: "30" }}<span>{{ section.settings.stat_1_suffix | default: "+" }}</span></div>
+        <div class="km-stat-label">{{ section.settings.stat_1_label | default: "Years of Legacy" }}</div>
+        <div class="km-stat-sub">{{ section.settings.stat_1_sub | default: "Amritsar · Since 1996" }}</div>
       </div>
-
-      <div class="km-heritage-ribbon" aria-label="KraftMart trust highlights">
-        <div class="km-ribbon-glow" aria-hidden="true"></div>
-        <div class="km-ribbon-item">
-          <span class="km-ribbon-kicker">Royal Wedding Ready</span>
-          <p>Personalized engraving included</p>
-        </div>
-        <div class="km-ribbon-item">
-          <span class="km-ribbon-kicker">Museum-grade Craft</span>
-          <p>Forged with ceremonial balance</p>
-        </div>
-        <div class="km-ribbon-item">
-          <span class="km-ribbon-kicker">Secure Shipping</span>
-          <p>FedEx and DHL insured worldwide</p>
-        </div>
+      <div class="km-stat-divider"></div>
+      <div class="km-stat-item">
+        <div class="km-stat-number">{{ section.settings.stat_2_num | default: "10K" }}<span>{{ section.settings.stat_2_suffix | default: "+" }}</span></div>
+        <div class="km-stat-label">{{ section.settings.stat_2_label | default: "Blades Handcrafted" }}</div>
+        <div class="km-stat-sub">{{ section.settings.stat_2_sub | default: "Talwars · Kirpans · Ceremonials" }}</div>
+      </div>
+      <div class="km-stat-divider"></div>
+      <div class="km-stat-item">
+        <div class="km-stat-number">{{ section.settings.stat_3_num | default: "42" }}<span>{{ section.settings.stat_3_suffix | default: "+" }}</span></div>
+        <div class="km-stat-label">{{ section.settings.stat_3_label | default: "Countries Served" }}</div>
+        <div class="km-stat-sub">{{ section.settings.stat_3_sub | default: "Trusted global delivery" }}</div>
+      </div>
+      <div class="km-stat-divider"></div>
+      <div class="km-stat-item">
+        <div class="km-stat-number">{{ section.settings.stat_4_num | default: "4.9" }}<span>{{ section.settings.stat_4_suffix | default: "★" }}</span></div>
+        <div class="km-stat-label">{{ section.settings.stat_4_label | default: "Verified Rating" }}</div>
+        <div class="km-stat-sub">{{ section.settings.stat_4_sub | default: "10,000+ happy buyers" }}</div>
       </div>
     </div>
-  </section>
 
+    <div class="km-heritage-ribbon" aria-label="KraftMart trust highlights">
+      <div class="km-ribbon-glow" aria-hidden="true"></div>
+      <div class="km-ribbon-item">
+        <span class="km-ribbon-kicker">{{ section.settings.ribbon_1_kicker | default: "Royal Wedding Ready" }}</span>
+        <p>{{ section.settings.ribbon_1_text | default: "Personalized engraving included" }}</p>
+      </div>
+      <div class="km-ribbon-item">
+        <span class="km-ribbon-kicker">{{ section.settings.ribbon_2_kicker | default: "Museum-grade Craft" }}</span>
+        <p>{{ section.settings.ribbon_2_text | default: "Forged with ceremonial balance" }}</p>
+      </div>
+      <div class="km-ribbon-item">
+        <span class="km-ribbon-kicker">{{ section.settings.ribbon_3_kicker | default: "Secure Shipping" }}</span>
+        <p>{{ section.settings.ribbon_3_text | default: "FedEx and DHL insured worldwide" }}</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "Home Section 5",
-  "settings": [],
+  "name": "Craft Legacy & Numbers",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Stat 1"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_num",
+      "label": "Number",
+      "default": "30"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_suffix",
+      "label": "Suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Label",
+      "default": "Years of Legacy"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_sub",
+      "label": "Subtitle",
+      "default": "Amritsar · Since 1996"
+    },
+    {
+      "type": "header",
+      "content": "Stat 2"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_num",
+      "label": "Number",
+      "default": "10K"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_suffix",
+      "label": "Suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Label",
+      "default": "Blades Handcrafted"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_sub",
+      "label": "Subtitle",
+      "default": "Talwars · Kirpans · Ceremonials"
+    },
+    {
+      "type": "header",
+      "content": "Stat 3"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_num",
+      "label": "Number",
+      "default": "42"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_suffix",
+      "label": "Suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Label",
+      "default": "Countries Served"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_sub",
+      "label": "Subtitle",
+      "default": "Trusted global delivery"
+    },
+    {
+      "type": "header",
+      "content": "Stat 4"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_num",
+      "label": "Number",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_suffix",
+      "label": "Suffix",
+      "default": "★"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Label",
+      "default": "Verified Rating"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_sub",
+      "label": "Subtitle",
+      "default": "10,000+ happy buyers"
+    },
+    {
+      "type": "header",
+      "content": "Trust Ribbon Highlights"
+    },
+    {
+      "type": "text",
+      "id": "ribbon_1_kicker",
+      "label": "Ribbon 1 Title",
+      "default": "Royal Wedding Ready"
+    },
+    {
+      "type": "text",
+      "id": "ribbon_1_text",
+      "label": "Ribbon 1 Text",
+      "default": "Personalized engraving included"
+    },
+    {
+      "type": "text",
+      "id": "ribbon_2_kicker",
+      "label": "Ribbon 2 Title",
+      "default": "Museum-grade Craft"
+    },
+    {
+      "type": "text",
+      "id": "ribbon_2_text",
+      "label": "Ribbon 2 Text",
+      "default": "Forged with ceremonial balance"
+    },
+    {
+      "type": "text",
+      "id": "ribbon_3_kicker",
+      "label": "Ribbon 3 Title",
+      "default": "Secure Shipping"
+    },
+    {
+      "type": "text",
+      "id": "ribbon_3_text",
+      "label": "Ribbon 3 Text",
+      "default": "FedEx and DHL insured worldwide"
+    }
+  ],
   "presets": [
     {
-      "name": "Home Section 5"
+      "name": "Craft Legacy & Numbers"
     }
   ]
 }

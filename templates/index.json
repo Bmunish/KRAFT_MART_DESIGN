@@ -5,62 +5,129 @@
       "settings": {
         "hero_title": "Royal Wedding Talwars, Handcrafted in Amritsar",
         "hero_subtext": "Authentic Rajput talwars &amp; ceremonial blades with complimentary custom laser engraving. Delivered with royal lineage to your doorstep.",
-        "hero_collection": "wedding-swords",
-        "product_1": "jaipur-wedding-talwar",
-        "card_image_1": "hero_talwar.png",
         "card_tag_1": "Bestseller",
         "card_title_1": "Jaipur Wedding Talwar",
         "card_sub_1": "Kundan Brass Hilt • Red Velvet Scabbard • Free Engraving",
         "card_price_1": "₹2,599",
         "card_compare_1": "₹3,099",
-        "product_2": "royal-jodhpur-damascus",
-        "card_image_2": "sword2.png",
         "card_tag_2": "Master Metallurgy",
         "card_title_2": "Royal Jodhpur Damascus",
         "card_sub_2": "1095/15N20 Damascus Steel • 56–58 HRC Hardness",
         "card_price_2": "₹4,299",
         "card_compare_2": "₹4,999",
-        "product_3": "dawami-ceremonial-sword",
-        "card_image_3": "sword.png",
         "card_tag_3": "Heritage Classic",
         "card_title_3": "Dawami Ceremonial Sword",
         "card_sub_3": "Polished Blade • Zari Velvet Scabbard • COD Available",
-        "card_price_3": "₹1,999",
-        "banner_image_1": "kraftmart_banner_2.jpg",
-        "banner_image_2": "kraftmart_banner_1.jpg",
-        "banner_image_3": "kraftmart_banner_3.jpg",
-        "banner_image_4": "kraftmart_banner_4.jpg"
+        "card_price_3": "₹1,999"
       }
     },
     "home_home-section-2_1": {
-      "type": "home-home-section-2"
+      "type": "home-home-section-2",
+      "settings": {
+        "subtitle": "CURATED HERITAGE SELECTIONS",
+        "title": "Explore Collections",
+        "scroll_hint": "← Drag or swipe to scroll →"
+      }
     },
     "home_featured-products_2": {
-      "type": "home-featured-products"
+      "type": "home-featured-products",
+      "settings": {
+        "subtitle": "CURATED HERITAGE PICKS",
+        "title": "Ceremonial Collection",
+        "description": "Hand-forged talwars with premium scabbards and complimentary name engraving.",
+        "show_tabs": true,
+        "tab_all_label": "All Catalogue",
+        "tab_wedding_label": "Wedding Swords",
+        "tab_damascus_label": "Damascus Steel",
+        "tab_miniature_label": "Miniatures",
+        "products_to_show": 8,
+        "button_label": "View Complete Collection →",
+        "button_link": "/collections/all"
+      }
     },
     "home_wedding-swords_3": {
-      "type": "home-wedding-swords"
+      "type": "home-wedding-swords",
+      "settings": {
+        "eyebrow": "THE GROOM'S HERITAGE",
+        "title": "Honor Tradition on Your Special Day",
+        "description": "In Indian wedding culture, a groom carrying a ceremonial sword symbolizes protection, royal lineage, and honor. Our wedding talwars feature velvet-sheathed scabbards, hand-engraved brass hilts, and personalized blade inscriptions.",
+        "button_label": "Shop Wedding Talwars →",
+        "button_link": "/collections/wedding-swords",
+        "perk_text": "Free Laser Engraving Included",
+        "floating_title": "Master Handcrafted in Amritsar",
+        "floating_subtitle": "Solid Brass Kundan Hilt • Velvet Sheath"
+      }
     },
     "home_home-section-5_4": {
-      "type": "home-home-section-5"
+      "type": "home-home-section-5",
+      "settings": {
+        "stat_1_num": "30",
+        "stat_1_label": "Years of Legacy",
+        "stat_1_sub": "Amritsar · Since 1996",
+        "stat_2_num": "10K",
+        "stat_2_label": "Blades Handcrafted",
+        "stat_2_sub": "Talwars · Kirpans · Ceremonials",
+        "stat_3_num": "42",
+        "stat_3_label": "Countries Served",
+        "stat_3_sub": "Trusted global delivery",
+        "stat_4_num": "4.9",
+        "stat_4_label": "Verified Rating",
+        "stat_4_sub": "10,000+ happy buyers"
+      }
     },
     "home_home-section-6_5": {
-      "type": "home-home-section-6"
+      "type": "home-home-section-6",
+      "settings": {
+        "eyebrow": "TRUSTED GLOBAL LOGISTICS",
+        "title": "Our Delivery Partners",
+        "description": "Every order ships with full tracking, insurance, and express delivery to 42+ countries worldwide."
+      }
     },
     "home_about-us_6": {
-      "type": "home-about-us"
-    },
-    "home_faq_8": {
-      "type": "home-faq"
-    },
-    "home_home-section-10_9": {
-      "type": "home-home-section-10"
-    },
-    "home_testimonials-marquee_10": {
-      "type": "home-testimonials-marquee"
+      "type": "home-about-us",
+      "settings": {
+        "header_eyebrow": "❖ OUR HERITAGE & ARTISANAL LINEAGE ❖",
+        "header_title": "Lakshmi Engineering Works → KraftMart",
+        "header_description": "Situated in the land of five rivers, Punjab — our journey began in 1996 with precision nickel and chrome electroplating, evolving into KraftMart on 1st November 2019 to bring authentic Sikh articles, wedding swords, and Indo-traditional handicrafts to patrons across the globe."
+      }
     },
     "home_journal-editorial_7": {
-      "type": "home-journal-editorial"
+      "type": "home-journal-editorial",
+      "settings": {
+        "subtitle": "❖ THE ROYAL ARCHIVES & FORGE BLOG ❖",
+        "title": "From the KraftMart Blog",
+        "description": "Historical guides, traditions, metallurgy secrets, and heirloom preservation from our Amritsar master workshop.",
+        "button_label": "Explore All Blog Articles →",
+        "button_link": "/blogs"
+      }
+    },
+    "home_faq_8": {
+      "type": "home-faq",
+      "settings": {
+        "eyebrow": "HELP & INFORMATION",
+        "title": "Frequently Asked Questions"
+      }
+    },
+    "home_home-section-10_9": {
+      "type": "home-home-section-10",
+      "settings": {
+        "eyebrow": "HERITAGE TRUST GUARANTEE",
+        "heading": "Cash on Delivery Available Across India",
+        "description": "To ensure 100% confidence when buying your wedding sword, KraftMart offers a secure 15% Advance Booking + 85% Cash on Delivery model for all orders within India.",
+        "button_label": "Shop COD Eligible Swords →",
+        "button_link": "/collections/all"
+      }
+    },
+    "home_testimonials-marquee_10": {
+      "type": "home-testimonials-marquee",
+      "settings": {
+        "eyebrow": "VERIFIED ROYAL REVIEWS & PATRON EXPERIENCES",
+        "title": "Trusted by 10,000+ Grooms Worldwide",
+        "subtitle": "Every sword is forged by multigenerational Amritsar artisans and accompanied by our Lineage Guarantee.",
+        "google_banner_title": "Lakshmi Engineering Works A.K.A Kraftmart.shop",
+        "google_rating": "4.9 / 5",
+        "google_button_label": "Open Google Business Reviews"
+      }
     }
   },
   "order": [

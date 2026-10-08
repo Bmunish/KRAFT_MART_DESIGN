@@ -1,13 +1,25 @@
 <!-- FAQ Section -->
+<section id="faq" class="km-section" style="background-color: var(--color-cloud);">
+  <div class="km-container">
+    <div class="km-section-header">
+      <span class="km-eyebrow">{{ section.settings.eyebrow | default: "HELP &amp; INFORMATION" }}</span>
+      <h2 class="km-heading-1" style="color: var(--color-ink-navy);">{{ section.settings.title | default: "Frequently Asked Questions" }}</h2>
+    </div>
 
-  <section id="faq" class="km-section" style="background-color: var(--color-cloud);">
-    <div class="km-container">
-      <div class="km-section-header">
-        <span class="km-eyebrow">HELP &amp; INFORMATION</span>
-        <h2 class="km-heading-1" style="color: var(--color-ink-navy);">Frequently Asked Questions</h2>
-      </div>
-
-      <div class="km-faq-list">
+    <div class="km-faq-list">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <div class="km-faq-item" {{ block.shopify_attributes }}>
+            <button class="km-faq-trigger">
+              <span>{{ block.settings.question }}</span>
+              <span class="km-faq-icon">▼</span>
+            </button>
+            <div class="km-faq-content">
+              <p>{{ block.settings.answer }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
         <div class="km-faq-item">
           <button class="km-faq-trigger">
             <span>Are decorative ceremonial swords legal to purchase and own?</span>
@@ -54,18 +66,81 @@
               services (FedEx and DHL Express). Full tracking details are emailed automatically upon dispatch.</p>
           </div>
         </div>
-      </div>
+      {% endif %}
     </div>
-  </section>
-
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "Faq",
-  "settings": [],
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Subtitle",
+      "default": "HELP & INFORMATION"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Are decorative ceremonial swords legal to purchase and own?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Yes. All KraftMart ceremonial talwars and decorative swords are blunt, handcrafted objects created strictly for ceremonial, wedding, display, and cultural purposes."
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Faq"
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are decorative ceremonial swords legal to purchase and own?",
+            "answer": "Yes. All KraftMart ceremonial talwars and decorative swords are blunt, handcrafted objects created strictly for ceremonial, wedding, display, and cultural purposes. They comply with Indian legal standards and international customs regulations for decorative metalwork."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How does Cash on Delivery (COD) work for Indian orders?",
+            "answer": "For orders within India, we offer a flexible Cash on Delivery option requiring a 15% advance booking amount at checkout to confirm your order, with the remaining 85% payable upon delivery. Customers choosing 100% full advance payment receive an additional 5% instant discount."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I request Free Custom Laser Engraving?",
+            "answer": "You can enter your desired text (names, wedding date, or special message) directly in the 'Custom Engraving Notes' field inside your cart or at checkout. Our master craftsman will engrave your inscription prior to final polishing and dispatch."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you ship internationally via FedEx & DHL?",
+            "answer": "Yes! We ship worldwide to the USA, Canada, UK, Europe, Australia, UAE, and beyond via express courier services (FedEx and DHL Express). Full tracking details are emailed automatically upon dispatch."
+          }
+        }
+      ]
     }
   ]
 }
