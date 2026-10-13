@@ -1,7 +1,76 @@
 {
   "sections": {
     "main": {
-      "type": "main-shipping-policy"
+      "type": "main-page-shipping",
+      "settings": {
+        "padding_top": 64,
+        "padding_bottom": 80,
+        "bg_color": "#FAF7F2",
+        "container_width": 880,
+        "title_size": 32,
+        "body_size": 16,
+        "text_alignment": "left"
+      },
+      "blocks": {
+        "shipping_domestic": {
+          "type": "highlight_card",
+          "settings": {
+            "icon": "🚚",
+            "title": "Pan-India Delivery",
+            "description": "7–10 business days via Delhivery, DTDC and India Post."
+          }
+        },
+        "shipping_international": {
+          "type": "highlight_card",
+          "settings": {
+            "icon": "✈️",
+            "title": "International Shipping",
+            "description": "Express delivery available to 42+ countries."
+          }
+        },
+        "shipping_india_rate": {
+          "type": "rate_row",
+          "settings": {
+            "zone": "India (Domestic)",
+            "method": "Delhivery / DTDC / India Post",
+            "timeline": "7–10 business days",
+            "rate": "COD available (15% advance)"
+          }
+        },
+        "shipping_world_rate": {
+          "type": "rate_row",
+          "settings": {
+            "zone": "International",
+            "method": "FedEx / DHL Express",
+            "timeline": "About 8 business days",
+            "rate": "Prepaid only"
+          }
+        },
+        "shipping_faq": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "Yes. We ship to 42+ countries using express courier services."
+          }
+        },
+        "shipping_contact": {
+          "type": "contact_card",
+          "settings": {
+            "title": "Questions about shipping?",
+            "email": "support@kraftmart.shop",
+            "phone": "+917508427731",
+            "address": ""
+          }
+        }
+      },
+      "block_order": [
+        "shipping_domestic",
+        "shipping_international",
+        "shipping_india_rate",
+        "shipping_world_rate",
+        "shipping_faq",
+        "shipping_contact"
+      ]
     }
   },
   "order": [

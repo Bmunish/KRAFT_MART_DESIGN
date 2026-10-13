@@ -22,19 +22,48 @@
           {{ section.settings.hero_lead | default: "Ceremonial talwars handcrafted for Indian weddings — with free custom bride &amp; groom laser engraving, velvet scabbards, and same-day dispatch." }}
         </p>
       </div>
+      {%- assign show_pill = section.settings.show_featured_pill -%}
+      {%- if show_pill != false -%}
+      {%- liquid
+        assign fp = section.settings.featured_product
+        assign fp_url = section.settings.featured_url | default: '/products/jaipur-wedding-talwar'
+        assign fp_title = section.settings.featured_title | default: 'Jaipur Wedding Talwar'
+        assign fp_tag = section.settings.featured_tag | default: 'Most Popular'
+        assign fp_price = section.settings.featured_price | default: '₹2,599'
+        assign fp_save = section.settings.featured_save | default: 'Save ₹500'
+        assign fp_img = 'hero_talwar.png' | asset_url
+        if section.settings.featured_image != blank
+          assign fp_img = section.settings.featured_image | image_url: width: 160
+        endif
+        if fp != blank
+          assign fp_url = fp.url
+          if section.settings.featured_title == blank
+            assign fp_title = fp.title
+          endif
+          assign fp_price = fp.price | money
+          assign fp_save = ''
+          if fp.compare_at_price > fp.price
+            assign fp_save = fp.compare_at_price | minus: fp.price | money | prepend: 'Save '
+          endif
+          if section.settings.featured_image == blank and fp.featured_image
+            assign fp_img = fp.featured_image | image_url: width: 160
+          endif
+        endif
+      -%}
       <div class="km-mini-showcase">
-        <a href="/products/jaipur-wedding-talwar" class="km-mini-pill">
+        <a href="{{ fp_url }}" class="km-mini-pill">
           <div class="km-mini-img-box">
-            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar" class="km-mini-img" decoding="async" />
+            <img src="{{ fp_img }}" alt="{{ fp_title | escape }}" class="km-mini-img" width="80" height="80" decoding="async" />
           </div>
           <div class="km-mini-info">
-            <div class="km-mini-tag">Most Popular</div>
-            <div class="km-mini-title">Jaipur Wedding Talwar</div>
-            <div class="km-mini-price">₹2,599 <span class="km-mini-save">Save ₹500</span></div>
+            <div class="km-mini-tag">{{ fp_tag }}</div>
+            <div class="km-mini-title">{{ fp_title }}</div>
+            <div class="km-mini-price">{{ fp_price }}{% if fp_save != blank %} <span class="km-mini-save">{{ fp_save }}</span>{% endif %}</div>
           </div>
           <span class="km-mini-btn">→</span>
         </a>
       </div>
+      {%- endif -%}
     </div>
   </section>
 
@@ -76,7 +105,50 @@
       </div>
 
       <div id="kmProductGrid" class="km-product-grid" data-live-mode="catalog" aria-live="polite" style="--km-grid-cols:3;">
-
+        {% assign chosen_wedding_col = collections[section.settings.collection] %}
+        {% if chosen_wedding_col != blank and chosen_wedding_col.products_count > 0 %}
+          {% for product in chosen_wedding_col.products limit: section.settings.products_to_show %}
+            {% assign card_save = '' %}
+            {% if product.compare_at_price > product.price %}
+              {% assign card_save = product.compare_at_price | minus: product.price | money | prepend: 'Save ' %}
+            {% endif %}
+            <article class="km-product-card km-noise-card" data-category="wedding" data-price="{{ product.price }}"
+              data-handle="{{ product.handle }}"
+              data-variant-id="{{ product.selected_or_first_available_variant.id | default: product.variants.first.id }}"
+              data-qv-img="{{ product.featured_image | image_url: width: 600 }}"
+              data-qv-title="{{ product.title | escape }}"
+              data-qv-price="{{ product.price | money }}"
+              data-qv-compare="{% if product.compare_at_price > product.price %}{{ product.compare_at_price | money }}{% endif %}"
+              data-qv-specs="Handcrafted Amritsar Forging | Free Custom Laser Engraving | Velvet Scabbard">
+              <div class="km-product-media">
+                {% if card_save != blank %}
+                  <span class="km-card-badge-gold">{{ card_save }}</span>
+                {% endif %}
+                <button class="km-card-wishlist-btn" aria-label="Save to Wishlist">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </button>
+                <a href="{{ product.url }}"><img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" /></a>
+                <button class="km-quick-view-btn" data-qv-handle="{{ product.handle }}">⚡ Quick View</button>
+              </div>
+              <div class="km-product-info">
+                <span class="km-product-vendor">{{ product.vendor | default: "KraftMart Heritage" }}</span>
+                <h3 class="km-product-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+                <p class="km-product-desc-short">{{ product.description | strip_html | truncatewords: 8 }}</p>
+                <div class="km-price-wrapper">
+                  <span class="km-price-current">{{ product.price | money }}</span>
+                  {% if product.compare_at_price > product.price %}
+                    <span class="km-price-compare">{{ product.compare_at_price | money }}</span>
+                  {% endif %}
+                </div>
+                <button class="km-add-cart-btn" data-variant-id="{{ product.selected_or_first_available_variant.id | default: product.variants.first.id }}">
+                  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                  <span>Add to Cart</span>
+                </button>
+              </div>
+            </article>
+          {% endfor %}
+        {% else %}
+        <!-- Curated Fallback Catalogue -->
         <!-- Card 1: Jaipur Wedding Talwar -->
         <article class="km-product-card km-noise-card" data-category="wedding" data-price="2599"
           data-handle="jaipur-wedding-talwar"
@@ -250,7 +322,7 @@
             </button>
           </div>
         </article>
-
+        {% endif %}
       </div>
 
       <!-- View All -->
@@ -393,6 +465,55 @@
     },
     {
       "type": "header",
+      "content": "Hero Featured Pill"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_pill",
+      "label": "Show Featured Pill",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured Product"
+    },
+    {
+      "type": "text",
+      "id": "featured_tag",
+      "label": "Featured Tag",
+      "default": "Most Popular"
+    },
+    {
+      "type": "text",
+      "id": "featured_title",
+      "label": "Featured Title",
+      "default": "Jaipur Wedding Talwar"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Featured Image Override"
+    },
+    {
+      "type": "text",
+      "id": "featured_price",
+      "label": "Featured Price",
+      "default": "₹2,599"
+    },
+    {
+      "type": "text",
+      "id": "featured_save",
+      "label": "Featured Savings",
+      "default": "Save ₹500"
+    },
+    {
+      "type": "url",
+      "id": "featured_url",
+      "label": "Featured Link"
+    },
+    {
+      "type": "header",
       "content": "Value Propositions"
     },
     {
@@ -446,6 +567,21 @@
     {
       "type": "header",
       "content": "Curated Catalogue Header"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Wedding Collection",
+      "info": "Choose a collection to showcase (e.g. Wedding Swords). Leave blank to display the default curated catalogue."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9,
+      "label": "Number of products to show"
     },
     {
       "type": "text",

@@ -16,6 +16,7 @@ def clean_liquid(html):
     html = re.sub(r"{{\s*routes\.collections_url[^}]*}}", '/collections/all', html)
     html = re.sub(r"{{\s*routes\.all_products_collection_url[^}]*}}", '/collections/all', html)
     html = re.sub(r"{{\s*routes\.all_blogs_url[^}]*}}", '/blogs', html)
+    html = re.sub(r"{{\s*blogs\.news\.url[^}]*}}", '/blogs/news', html)
     html = re.sub(r"{{\s*routes\.search_url[^}]*}}", '/search', html)
     html = re.sub(r"{{\s*shop\.name\s*}}", 'KraftMart', html)
     html = re.sub(r"{{\s*shop\.url\s*}}", '', html)
@@ -24,6 +25,8 @@ def clean_liquid(html):
     html = re.sub(r"{{\s*section\.settings\.hero_title[^}]*}}", 'Royal Wedding Talwars, Handcrafted in Amritsar', html)
     html = re.sub(r"{{\s*section\.settings\.hero_subtext[^}]*}}", 'Authentic Rajput talwars &amp; ceremonial blades with complimentary custom laser engraving. Delivered with royal lineage to your doorstep.', html)
     html = re.sub(r"{{\s*content_for_header\s*}}", '', html)
+    html = re.sub(r"{%\s*unless\s+page_title.*?{%\s*endunless\s*%}", '', html, flags=re.DOTALL)
+    html = re.sub(r"{{\s*page_title[^}]*}}", 'KraftMart | Luxury Indian Heritage Swords', html)
     html = re.sub(r"{{\s*blog\.url[^}]*}}", '/blogs', html)
     html = re.sub(r"{{\s*blog\.title[^}]*}}", 'The Royal Archives &amp; Forge Blog', html)
     html = re.sub(r"{{\s*page\.title\s*}}", 'KraftMart', html)
@@ -65,19 +68,35 @@ def clean_liquid(html):
     html = re.sub(r'{%[-]?\s*assign\s+[^%]*[-]?%}', '', html)
     html = re.sub(r'{%[-]?\s*capture\s+[^%]*[-]?%}.*?{%[-]?\s*endcapture\s*[-]?%}', '', html, flags=re.DOTALL)
 
-    # Resolve nested if/else/endif blocks safely from innermost to outermost
-    if_pattern = r'{%[-]?\s*if\s+([^{%]*?)\s*[-]?%}((?:(?!{%[-]?\s*if).)*?){%[-]?\s*endif\s*[-]?%}'
-    while True:
-        m = re.search(if_pattern, html, flags=re.DOTALL)
-        if not m:
-            break
+    # Resolve nested if/elsif/else/endif blocks from innermost to outermost.
+    # Strategy:
+    #   condition "X != blank" or "X" alone → truthy → take if-branch
+    #   condition "X == blank" or "X == ''" or "X == \"\"" → falsy → take else-branch
+    #   "paginate.pages > 1" → falsy (no pages in preview)
+    #   anything else → optimistic: take if-branch
+    if_pattern = r'{%[-]?\s*if\s+(.*?)[-]?%}((?:(?!{%[-]?\s*if\b).)*?){%[-]?\s*endif\s*[-]?%}'
+    def _resolve_if(m):
+        cond = m.group(1).strip()
         body = m.group(2)
-        if re.search(r'{%[-]?\s*else\s*[-]?%}', body):
-            parts = re.split(r'{%[-]?\s*else\s*[-]?%}', body, maxsplit=1)
-            replacement = parts[1]
+        # Determine truthiness of the condition
+        falsy = (
+            re.search(r'==\s*(blank|\'\'"|"")', cond) or
+            re.search(r'paginate\.pages\s*>\s*1', cond)
+        )
+        truthy = not falsy
+        # Split on elsif/else
+        # Remove any elsif branches entirely (they're rare in this theme)
+        body_no_elsif = re.sub(r'{%[-]?\s*elsif\b.*?[-]?%}.*?(?={%[-]?\s*(?:elsif|else|endif))', '', body, flags=re.DOTALL)
+        if re.search(r'{%[-]?\s*else\s*[-]?%}', body_no_elsif):
+            parts = re.split(r'{%[-]?\s*else\s*[-]?%}', body_no_elsif, maxsplit=1)
+            return parts[0] if truthy else parts[1]
         else:
-            replacement = ''
-        html = html[:m.start()] + replacement + html[m.end():]
+            return body_no_elsif if truthy else ''
+    while True:
+        new_html = re.sub(if_pattern, _resolve_if, html, count=1, flags=re.DOTALL)
+        if new_html == html:
+            break
+        html = new_html
 
     # FINAL PASS: Strip ANY remaining Liquid control tags {% ... %} and unrendered {{ ... }}
     # so NO Liquid syntax ever appears on screen!
@@ -129,7 +148,7 @@ def render_template(template_name):
                 s_settings = s_info.get('settings', {})
                 out.append(render_section(s_type, settings=s_settings))
         return '\n'.join(out)
-    elif os.path.exists(liquid_path):
+    elif os.path.exists(liquid_path) and template_name != '404':  # 404.liquid uses request.path - skip for local
         with open(liquid_path, 'r', encoding='utf-8') as f:
             return clean_liquid(f.read())
     return render_section('main-404')
@@ -243,6 +262,8 @@ class KraftMartPreview(SimpleHTTPRequestHandler):
             '/blog': 'blog',
             '/blog.html': 'blog',
             '/cart': 'cart',
+            '/checkout': 'checkout',
+            '/checkout.html': 'checkout',
             '/search': 'search',
             '/pages/privacy-policy': 'page.privacy-policy',
             '/policies/privacy-policy': 'page.privacy-policy',

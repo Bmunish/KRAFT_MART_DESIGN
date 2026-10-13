@@ -175,12 +175,7 @@
     // Wire checkout button
     var checkoutBtn = footer && footer.querySelector('.km-btn-gold, [class*="btn-gold"]');
     if (checkoutBtn) {
-      checkoutBtn.onclick = function() {
-        var lines = KMCart.get().map(function(i) {
-          return '\u2022 ' + i.title + ' \u00d7 ' + i.qty + ' \u2014 ' + fmtPrice(i.price * i.qty);
-        }).join('\n');
-        alert('Checkout requires the live Shopify store.\nVisit kraftmart.shop to complete your purchase.\n\n' + lines + '\n\nTotal: ' + fmtPrice(KMCart.total()));
-      };
+      checkoutBtn.onclick = function() { checkout(checkoutBtn); };
     }
 
     // Wire +/- and remove via event delegation on body (avoids stale closures)
@@ -218,6 +213,109 @@
     _rendering = false;
   }
 
+  // ── Shopify checkout ──
+  // The drawer cart lives in localStorage. At checkout we mirror it into
+  // Shopify's server cart (Ajax Cart API) and hand off to hosted /checkout.
+
+  function resolveVariantId(item) {
+    var variantId = Number(item.variantId);
+    if (Number.isSafeInteger(variantId) && variantId > 0) return Promise.resolve(variantId);
+    var gone = new Error('"' + item.title + '" is no longer available');
+    if (!item.handle) return Promise.reject(gone);
+    return fetch('/products/' + encodeURIComponent(item.handle) + '.js')
+      .then(function(r) { if (!r.ok) throw gone; return r.json(); })
+      .then(function(p) {
+        var v = p.variants.filter(function(x) { return x.available; })[0] || p.variants[0];
+        return v.id;
+      });
+  }
+
+  function postJSON(url, data) {
+    return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data || {}) })
+      .then(function(r) {
+        if (r.ok) return r.json();
+        return r.json().catch(function() { return {}; }).then(function(e) {
+          throw new Error(e.description || e.message || 'Cart update failed');
+        });
+      });
+  }
+
+  function getJSON(url) {
+    return fetch(url, { headers: { 'Accept': 'application/json' } }).then(function(r) {
+      if (r.ok) return r.json();
+      throw new Error('Could not verify the Shopify cart');
+    });
+  }
+
+  function cartMatches(lines, cart) {
+    var expected = {};
+    var actual = {};
+    function key(id, properties) {
+      return id + '|' + Object.keys(properties || {}).sort().map(function(name) {
+        return name + ':' + properties[name];
+      }).join('|');
+    }
+    lines.forEach(function(line) {
+      var lineKey = key(line.id, line.properties);
+      expected[lineKey] = (expected[lineKey] || 0) + line.quantity;
+    });
+    (cart.items || []).forEach(function(item) {
+      actual[key(item.variant_id, item.properties)] = item.quantity;
+    });
+    var expectedKeys = Object.keys(expected);
+    var actualKeys = Object.keys(actual);
+    return expectedKeys.length === actualKeys.length && expectedKeys.every(function(lineKey) {
+      return expected[lineKey] === actual[lineKey];
+    });
+  }
+
+  function checkout(btn) {
+    var items = KMCart.get();
+    if (!items.length) {
+      showCartToast('Your cart is empty.');
+      return;
+    }
+    var isLiveShopify = typeof window !== 'undefined' && (
+      Boolean(window.Shopify && window.Shopify.shop) ||
+      window.location.hostname.includes('myshopify.com') ||
+      (window.location.hostname.includes('kraftmart.shop') && !window.location.hostname.includes('127.0.0.1'))
+    );
+    if (!isLiveShopify) {
+      window.location.href = '/checkout';
+      return;
+    }
+    var label = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Opening checkout\u2026'; }
+    var noteEl = document.querySelector('#kmCartDrawerFooter textarea[name="note"]');
+    var note = noteEl ? noteEl.value.trim() : '';
+
+    var cartRoot = window.Shopify && window.Shopify.routes && window.Shopify.routes.root || '/';
+    if (cartRoot.charAt(cartRoot.length - 1) !== '/') cartRoot += '/';
+
+    Promise.all(items.map(function(i) {
+        return resolveVariantId(i).then(function(id) {
+          var line = { id: Number(id), quantity: i.qty };
+          if (i.variant) line.properties = { 'Personalisation': i.variant };
+          return line;
+        });
+      })).then(function(lines) {
+        return postJSON(cartRoot + 'cart/clear.js').then(function() {
+          return postJSON(cartRoot + 'cart/add.js', { items: lines });
+        }).then(function() {
+          return getJSON(cartRoot + 'cart.js');
+        }).then(function(cart) {
+          if (!cartMatches(lines, cart)) throw new Error('The Shopify cart does not match your selected products');
+          if (!note) return;
+          return postJSON(cartRoot + 'cart/update.js', { note: note }).catch(function() {});
+        });
+      }).then(function() {
+        window.location.href = cartRoot + 'checkout';
+      }).catch(function(error) {
+        if (btn) { btn.disabled = false; btn.textContent = label; }
+        showCartToast(error.message || 'Could not sync your cart. Please try again.', true);
+    });
+  }
+
   // ── Toast ──────────────────────────────────────────────────────────────────
 
   function showCartToast(msg, isError) {
@@ -248,7 +346,9 @@
 
   function buildItemFromCard(card) {
     var handle = card.dataset.handle || '';
-    var variantId = card.dataset.variantId || '';
+    var variantId = card.dataset.variantId ||
+                    (card.querySelector('[data-variant-id]') && card.querySelector('[data-variant-id]').dataset.variantId) ||
+                    (card.querySelector('input[name="id"]') && card.querySelector('input[name="id"]').value) || '';
     var title = card.dataset.qvTitle ||
                 (card.querySelector('.km-product-title') && card.querySelector('.km-product-title').textContent.trim()) ||
                 'KraftMart Product';
@@ -295,18 +395,12 @@
       var qvAdd = e.target.closest && e.target.closest('#kmQvAddToCartBtn');
       if (qvAdd) {
         e.preventDefault();
-        var t = (document.getElementById('kmQvTitle') || {}).textContent || 'Heritage Product';
-        var img = (document.getElementById('kmQvImage') || {}).src || 'assets/sword.png';
-        var pt = (document.getElementById('kmQvPrice') || {}).textContent || '0';
-        var price = parseInt(pt.replace(/[^0-9]/g, ''), 10) || 0;
-        var handle = t.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-        var qty = parseInt(((document.getElementById('kmQvQtyVal') || {}).textContent || '1'), 10) || 1;
-        if (!price) { showCartToast('Price not available.', true); return; }
-        KMCart.add({ id: handle, handle: handle, title: t.trim(), image: img, variant: '', price: price, qty: qty });
+        var item = qvItem();
+        if (!item.price) { showCartToast('Price not available.', true); return; }
+        KMCart.add(item);
         renderCartDrawer();
-        showCartToast('\u2713 ' + t.trim().split(/[|\u2013\u2014]/)[0].trim() + ' added to cart');
-        var qv = document.getElementById('kmQuickViewModal');
-        if (qv) { qv.classList.remove('is-open'); document.body.classList.remove('modal-open'); }
+        showCartToast('\u2713 ' + item.title.split(/[|\u2013\u2014]/)[0].trim() + ' added to cart');
+        closeQuickView();
         openCartDrawer();
         return;
       }
@@ -315,19 +409,30 @@
       var qvBuy = e.target.closest && e.target.closest('#kmQvBuyNowBtn');
       if (qvBuy) {
         e.preventDefault();
-        var t2 = (document.getElementById('kmQvTitle') || {}).textContent || 'Heritage Product';
-        var img2 = (document.getElementById('kmQvImage') || {}).src || 'assets/sword.png';
-        var pt2 = (document.getElementById('kmQvPrice') || {}).textContent || '0';
-        var price2 = parseInt(pt2.replace(/[^0-9]/g, ''), 10) || 0;
-        var handle2 = t2.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-        var qty2 = parseInt(((document.getElementById('kmQvQtyVal') || {}).textContent || '1'), 10) || 1;
-        KMCart.add({ id: handle2, handle: handle2, title: t2.trim(), image: img2, variant: '', price: price2, qty: qty2 });
-        var qv2 = document.getElementById('kmQuickViewModal');
-        if (qv2) { qv2.classList.remove('is-open'); document.body.classList.remove('modal-open'); }
-        alert('Checkout requires the live Shopify store at kraftmart.shop\n\nAdded: ' + t2.trim() + '\nCart Total: ' + fmtPrice(KMCart.total()));
+        var item2 = qvItem();
+        if (!item2.price) { showCartToast('Price not available.', true); return; }
+        KMCart.add(item2);
+        checkout(qvBuy);
         return;
       }
     });
+  }
+
+  function qvItem() {
+    var modal = document.getElementById('kmQuickViewModal') || { dataset: {} };
+    var t = ((document.getElementById('kmQvTitle') || {}).textContent || 'Heritage Product').trim();
+    var img = (document.getElementById('kmQvImage') || {}).src || 'assets/sword.png';
+    var pt = (document.getElementById('kmQvPrice') || {}).textContent || '0';
+    var handle = modal.dataset.handle || t.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    var variantId = modal.dataset.variantId || '';
+    var qty = parseInt(((document.getElementById('kmQvQtyVal') || {}).textContent || '1'), 10) || 1;
+    return { id: variantId || handle, handle: handle, variantId: variantId, title: t, image: img, variant: '',
+             price: parseInt(pt.replace(/[^0-9]/g, ''), 10) || 0, qty: qty };
+  }
+
+  function closeQuickView() {
+    var qv = document.getElementById('kmQuickViewModal');
+    if (qv) { qv.classList.remove('is-open'); document.body.classList.remove('modal-open'); }
   }
 
   // ── PDP buttons ────────────────────────────────────────────────────────────
@@ -344,12 +449,15 @@
       var image = imgEl ? imgEl.src : 'assets/sword.png';
       var priceEl = document.querySelector('[data-product-price] .km-qv-price') || document.querySelector('.km-qv-price');
       var price = priceEl ? parseInt((priceEl.dataset.inrPrice || priceEl.textContent).replace(/[^0-9]/g, ''), 10) || 0 : 0;
-      var handle = new URLSearchParams(window.location.search).get('handle') || title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      var pathHandle = (window.location.pathname.match(/\/products\/([^\/?#]+)/) || [])[1];
+      var handle = pathHandle ? decodeURIComponent(pathHandle) : (new URLSearchParams(window.location.search).get('handle') || title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''));
+      var idInput = document.querySelector('form[id^="product-form-"] input[name="id"]');
+      var variantId = idInput && /^\d+$/.test(idInput.value) ? idInput.value : '';
       var qtyEl = document.getElementById('kmPdpQtyVal') || document.getElementById('kmQvQtyVal');
       var qty = qtyEl ? (parseInt(qtyEl.textContent, 10) || 1) : 1;
       var engEl = document.querySelector('.km-engraving-input');
       var variant = (engEl && engEl.value.trim()) ? 'Engraving: "' + engEl.value.trim() + '"' : '';
-      return { id: handle, handle: handle, title: title, image: image, variant: variant, price: price, qty: qty };
+      return { id: (variantId || handle) + (variant ? '|' + variant : ''), handle: handle, variantId: variantId, title: title, image: image, variant: variant, price: price, qty: qty };
     }
 
     if (addBtn) {
@@ -378,14 +486,8 @@
         e.preventDefault();
         var item = getPdpItem();
         if (!item.price) { showCartToast('Product unavailable. Please refresh.', true); return; }
-        buyBtn.disabled = true;
-        buyBtn.textContent = 'Processing\u2026';
-        setTimeout(function() {
-          KMCart.add(item);
-          buyBtn.disabled = false;
-          buyBtn.textContent = 'Buy it now';
-          alert('Checkout requires the live Shopify store at kraftmart.shop\n\nAdded: ' + item.title + '\nCart Total: ' + fmtPrice(KMCart.total()));
-        }, 400);
+        KMCart.add(item);
+        checkout(buyBtn);
       });
     }
   }

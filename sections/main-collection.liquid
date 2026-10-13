@@ -18,31 +18,58 @@
         <div class="km-page-hero-breadcrumb" style="margin-bottom: 4px; font-size: 0.74rem;">
           <a href="/">Home</a>
           <span>›</span>
-          <span style="color: var(--km-gold-light);">Products Catalogue</span>
+          <span style="color: var(--km-gold-light);">{{ section.settings.breadcrumb_label | default: 'Products Catalogue' }}</span>
         </div>
         
         <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px;">
-          <h1 class="km-heading-hero" style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin: 0; line-height: 1.2;">Handcrafted Heritage Catalogue</h1>
-          <span class="km-glass-badge">⚔ Amritsar Metalcraft</span>
+          <h1 class="km-heading-hero" style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin: 0; line-height: 1.2;">{{ section.settings.hero_title | default: 'Handcrafted Heritage Catalogue' }}</h1>
+          {%- if section.settings.hero_badge != blank -%}<span class="km-glass-badge">{{ section.settings.hero_badge }}</span>{%- endif -%}
         </div>
         
-        <p class="km-page-hero-lead" style="margin: 0; max-width: 580px; font-size: 0.82rem; line-height: 1.45; color: rgba(250,247,242,0.8);">Individually hand-forged wedding swords &amp; ceremonial blades with free custom laser engraving. <strong>Our USP: Affordable swords at your doorstep with a pinch of customisation.</strong></p>
+        <div class="km-page-hero-lead" style="margin: 0; max-width: 580px; font-size: 0.82rem; line-height: 1.45; color: rgba(250,247,242,0.8);">{{ section.settings.hero_lead | default: '<p>Individually hand-forged wedding swords &amp; ceremonial blades with free custom laser engraving. <strong>Our USP: Affordable swords at your doorstep with a pinch of customisation.</strong></p>' }}</div>
       </div>
 
+      {%- if section.settings.show_featured -%}
+      {%- liquid
+        assign fp = section.settings.featured_product
+        assign fp_url = section.settings.featured_url | default: '/products/jaipur-wedding-talwar'
+        assign fp_title = section.settings.featured_title | default: 'Jaipur Wedding Talwar'
+        assign fp_price = section.settings.featured_price | default: '₹2,599'
+        assign fp_save = section.settings.featured_save | default: 'Save ₹500'
+        assign fp_img = 'sword.png' | asset_url
+        if section.settings.featured_image != blank
+          assign fp_img = section.settings.featured_image | image_url: width: 160
+        endif
+        if fp != blank
+          assign fp_url = fp.url
+          if section.settings.featured_title == blank
+            assign fp_title = fp.title
+          endif
+          assign fp_price = fp.price | money
+          assign fp_save = ''
+          if fp.compare_at_price > fp.price
+            assign fp_save = fp.compare_at_price | minus: fp.price | money | prepend: 'Save '
+          endif
+          if section.settings.featured_image == blank and fp.featured_image
+            assign fp_img = fp.featured_image | image_url: width: 160
+          endif
+        endif
+      -%}
       <!-- Right: Minimalist Floating Preview Pill (Takes almost no vertical space) -->
       <div class="km-mini-showcase">
-        <a href="/products/jaipur-wedding-talwar" class="km-mini-pill">
+        <a href="{{ fp_url }}" class="km-mini-pill">
           <div class="km-mini-img-box">
-            <img src="{{ 'sword.png' | asset_url }}" alt="Featured Talwar" class="km-mini-img" decoding="async" />
+            <img src="{{ fp_img }}" alt="{{ fp_title | escape }}" class="km-mini-img" width="80" height="80" decoding="async" />
           </div>
           <div class="km-mini-info">
-            <div class="km-mini-tag">Featured Masterpiece</div>
-            <div class="km-mini-title">Jaipur Wedding Talwar</div>
-            <div class="km-mini-price">₹2,599 <span class="km-mini-save">Save ₹500</span></div>
+            <div class="km-mini-tag">{{ section.settings.featured_tag | default: 'Featured Masterpiece' }}</div>
+            <div class="km-mini-title">{{ fp_title }}</div>
+            <div class="km-mini-price">{{ fp_price }}{% if fp_save != blank %} <span class="km-mini-save">{{ fp_save }}</span>{% endif %}</div>
           </div>
           <span class="km-mini-btn">→</span>
         </a>
       </div>
+      {%- endif -%}
 
     </div>
   </section>
@@ -147,8 +174,58 @@
           </div>
 
           <!-- Product Grid Container with Aceternity Focus Cards Effect -->
-          <div id="kmProductGrid" class="km-product-grid" data-live-products="all" data-live-mode="catalog" aria-live="polite">
-
+          {% paginate collection.products by section.settings.products_per_page %}
+          <div id="kmProductGrid" class="km-product-grid" data-live-mode="catalog" aria-live="polite">
+            {% if collection.products_count > 0 %}
+              {% for product in collection.products %}
+                {% assign cat_handle = "wedding" %}
+                {% if product.tags contains "damascus" or product.title contains "Damascus" %}
+                  {% assign cat_handle = "damascus" %}
+                {% elsif product.tags contains "miniature" or product.title contains "Miniature" %}
+                  {% assign cat_handle = "miniature" %}
+                {% endif %}
+                {% assign card_save = '' %}
+                {% if product.compare_at_price > product.price %}
+                  {% assign card_save = product.compare_at_price | minus: product.price | money | prepend: 'Save ' %}
+                {% endif %}
+                <article class="km-product-card km-noise-card" data-category="{{ cat_handle }}" data-price="{{ product.price }}"
+                  data-handle="{{ product.handle }}"
+                  data-variant-id="{{ product.selected_or_first_available_variant.id | default: product.variants.first.id }}"
+                  data-qv-img="{{ product.featured_image | image_url: width: 600 }}"
+                  data-qv-title="{{ product.title | escape }}"
+                  data-qv-desc="{{ product.description | strip_html | truncatewords: 16 | escape }}"
+                  data-qv-price="{{ product.price | money }}"
+                  data-qv-compare="{% if product.compare_at_price > product.price %}{{ product.compare_at_price | money }}{% endif %}"
+                  data-qv-specs="Handcrafted Amritsar Forging | Free Custom Laser Engraving | Tracked Express Delivery">
+                  <div class="km-product-media">
+                    {% if card_save != blank %}
+                      <span class="km-card-badge-gold">{{ card_save }}</span>
+                    {% endif %}
+                    <button class="km-card-wishlist-btn" aria-label="Save to Wishlist" title="Save to Wishlist">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </button>
+                    <a href="{{ product.url }}"><img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" /></a>
+                    <button class="km-quick-view-btn" data-qv-handle="{{ product.handle }}">⚡ Quick View</button>
+                  </div>
+                  <div class="km-product-info">
+                    <span class="km-product-vendor">{{ product.vendor | default: "KraftMart Heritage" }}</span>
+                    <h3 class="km-product-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+                    <p class="km-product-desc-short">{{ product.description | strip_html | truncatewords: 8 }}</p>
+                    <div class="km-price-wrapper">
+                      <span class="km-price-current">{{ product.price | money }}</span>
+                      {% if product.compare_at_price > product.price %}
+                        <span class="km-price-compare">{{ product.compare_at_price | money }}</span>
+                      {% endif %}
+                    </div>
+                    <button class="km-add-cart-btn" data-variant-id="{{ product.selected_or_first_available_variant.id | default: product.variants.first.id }}">
+                      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                      <span>Add to Cart</span>
+                    </button>
+                  </div>
+                </article>
+              {% endfor %}
+            {% else %}
+            <!-- Curated Fallback Catalogue -->
             <!-- Card 1 -->
             <article class="km-product-card km-noise-card" data-category="wedding" data-price="2599"
               data-qv-img="assets/sword.png" data-qv-title="Jaipur Wedding Talwar" data-handle="jaipur-wedding-talwar"
@@ -488,8 +565,14 @@
                 </button>
               </div>
             </article>
-
+            {% endif %}
           </div><!-- /#kmProductGrid -->
+          {% if paginate.pages > 1 %}
+            <div class="km-pagination" style="display:flex;justify-content:center;gap:8px;margin-top:36px;">
+              {{ paginate | default_pagination }}
+            </div>
+          {% endif %}
+          {% endpaginate %}
         </div><!-- /product-grid-column -->
 
       </div><!-- /.km-catalog-layout -->
@@ -563,7 +646,23 @@
 {% schema %}
 {
   "name": "Collection Section",
-  "settings": [],
+  "settings": [
+    { "type": "header", "content": "Page header" },
+    { "type": "range", "id": "products_per_page", "min": 6, "max": 48, "step": 6, "default": 12, "label": "Products per page" },
+    { "type": "text", "id": "breadcrumb_label", "label": "Breadcrumb label", "default": "Products Catalogue" },
+    { "type": "text", "id": "hero_title", "label": "Heading", "default": "Handcrafted Heritage Catalogue" },
+    { "type": "text", "id": "hero_badge", "label": "Badge", "default": "⚔ Amritsar Metalcraft" },
+    { "type": "richtext", "id": "hero_lead", "label": "Description", "default": "<p>Individually hand-forged wedding swords &amp; ceremonial blades with free custom laser engraving. <strong>Our USP: Affordable swords at your doorstep with a pinch of customisation.</strong></p>" },
+    { "type": "header", "content": "Featured product pill" },
+    { "type": "checkbox", "id": "show_featured", "label": "Show featured product", "default": true },
+    { "type": "product", "id": "featured_product", "label": "Featured product", "info": "Auto-fills image, title, price and link. Fields below act as overrides / fallback." },
+    { "type": "text", "id": "featured_tag", "label": "Tag line", "default": "Featured Masterpiece" },
+    { "type": "text", "id": "featured_title", "label": "Title override" },
+    { "type": "image_picker", "id": "featured_image", "label": "Image override" },
+    { "type": "text", "id": "featured_price", "label": "Fallback price (no product picked)", "default": "₹2,599" },
+    { "type": "text", "id": "featured_save", "label": "Fallback savings text (no product picked)", "default": "Save ₹500" },
+    { "type": "url", "id": "featured_url", "label": "Fallback link (no product picked)" }
+  ],
   "presets": [
     {
       "name": "Collection Section"

@@ -1,7 +1,12 @@
 {
   "sections": {
     "main": {
-      "type": "main-collection"
+      "type": "main-list-collections",
+      "settings": {
+        "title": "Collections",
+        "collections_per_page": 12,
+        "show_description": true
+      }
     }
   },
   "order": [

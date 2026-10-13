@@ -1,5 +1,4 @@
 {% assign default_article_img = 'hero_talwar.png' | asset_url %}
-{% paginate blog.articles by 12 %}
 <section class="km-page-hero km-glass-hero km-hero-minimal">
   <div class="km-bg-gradient-container" aria-hidden="true">
     <div class="km-gradients-group">
@@ -32,6 +31,7 @@
 </section>
 
 <section class="km-section" style="padding: 56px 0 100px 0;">
+  {%- paginate blog.articles by 12 -%}
   <div class="km-container">
     <div style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <div>
@@ -41,10 +41,11 @@
     </div>
 
     <div class="km-blog-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
+      {%- if blog.articles.size > 0 -%}
       {% for article in blog.articles %}
         <article class="km-blog-card km-reveal" data-delay="{{ forloop.index }}">
           <div class="km-blog-img-wrap">
-            <img src="{{ article.image | default: default_article_img }}" alt="{{ article.title | default: 'KraftMart Heritage Guide' | escape }}" decoding="async" loading="lazy" />
+            <img src="{% if article.image %}{{ article.image | image_url: width: 800 }}{% else %}{{ default_article_img }}{% endif %}" alt="{{ article.title | default: 'KraftMart Heritage Guide' | escape }}" decoding="async" loading="lazy" />
             <span class="km-blog-tag">{{ article.tags.first | default: "Heritage" }}</span>
           </div>
           <div class="km-blog-body">
@@ -57,7 +58,13 @@
             <a href="{{ article.url }}" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
-      {% else %}
+      {% endfor %}
+      {%- if paginate.pages > 1 -%}
+        <div class="km-reveal" style="grid-column: 1 / -1; text-align: center; margin-top: 20px;">
+          {{ paginate | default_pagination }}
+        </div>
+      {%- endif -%}
+      {%- else -%}
         <!-- Article 1 -->
         <article class="km-blog-card km-reveal" data-delay="1">
           <div class="km-blog-img-wrap">
@@ -159,17 +166,11 @@
             <a href="/blogs/news/wedding-talwar-selection" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
-      {% endfor %}
+      {%- endif -%}
     </div>
-
-    {% if paginate.pages > 1 %}
-      <div class="km-reveal" style="text-align: center; margin-top: 52px;">
-        {{ paginate | default_pagination }}
-      </div>
-    {% endif %}
   </div>
+  {%- endpaginate -%}
 </section>
-{% endpaginate %}
 
 {% schema %}
 {

@@ -27,10 +27,10 @@
       <div class="km-hero-grid">
         <!-- Left Column: Value Proposition & CTAs -->
         <div class="km-hero-content">
-          <span class="km-eyebrow" style="color: var(--km-gold-dark); letter-spacing: 0.16em; font-size: 0.72rem; margin-bottom: 8px;">AMRITSAR FORGE &bull; EST. 1996</span>
+          <span class="km-eyebrow" style="color: var(--km-gold-dark); letter-spacing: 0.16em; font-size: 0.72rem; margin-bottom: 8px;">{{ section.settings.hero_eyebrow | default: "AMRITSAR FORGE • EST. 1996" }}</span>
           <div class="km-usp-hero-banner" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(197, 160, 89, 0.12); border: 1px solid rgba(197, 160, 89, 0.4); border-radius: 20px; padding: 4px 14px; margin-bottom: 14px;">
             <span style="color: var(--km-gold-dark); font-size: 0.85rem;">✦</span>
-            <span style="font-family: var(--km-font-display); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.06em; color: var(--km-gold-dark); text-transform: uppercase;">Affordable Royal Swords at Your Doorstep &bull; Bespoke Customisation</span>
+            <span style="font-family: var(--km-font-display); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.06em; color: var(--km-gold-dark); text-transform: uppercase;">{{ section.settings.hero_usp | default: "Affordable Royal Swords at Your Doorstep • Bespoke Customisation" }}</span>
           </div>
           <h1 class="km-heading-hero" id="kmHeroTitle" style="color: var(--km-text-primary); margin-bottom: 16px;">{{ section.settings.hero_title | default: "Royal Wedding Talwars, Handcrafted in Amritsar" }}</h1>
           <p class="km-hero-subtext" id="kmHeroSubtext" style="color: var(--km-text-secondary); font-size: 1.05rem; line-height: 1.7; max-width: 520px; margin-bottom: 30px;">{{ section.settings.hero_subtext | default: "Authentic Rajput talwars &amp; ceremonial blades with complimentary custom laser engraving. Delivered with royal lineage to your doorstep." }}</p>
@@ -40,7 +40,7 @@
               style="padding: 16px 32px; font-weight: 700;">
               <span>EXPLORE WEDDING SWORDS &#8594;</span>
             </a>
-            <a href="/pages/about" class="km-btn km-btn-outline" style="padding: 16px 28px;">Our Heritage Story</a>
+            <a href="/pages/about-us-kraftmart" class="km-btn km-btn-outline" style="padding: 16px 28px;">Our Heritage Story</a>
           </div>
 
           <!-- Social proof pill under CTAs -->
@@ -121,6 +121,18 @@
 {
   "name": "Hero",
   "settings": [
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow Badge",
+      "default": "AMRITSAR FORGE • EST. 1996"
+    },
+    {
+      "type": "text",
+      "id": "hero_usp",
+      "label": "USP Announcement",
+      "default": "Affordable Royal Swords at Your Doorstep • Bespoke Customisation"
+    },
     {
       "type": "text",
       "id": "hero_title",

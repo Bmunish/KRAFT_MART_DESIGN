@@ -5,7 +5,7 @@
       <!-- Breadcrumb -->
       <div style="margin-bottom: 24px; font-size: 0.8rem; color: var(--km-text-secondary);">
         <a href="{{ routes.root_url }}" style="text-decoration: underline;">Home</a> &nbsp;/&nbsp;
-        <a href="{{ routes.all_blogs_url | default: '/blogs' }}" style="text-decoration: underline;">Blogs</a> &nbsp;/&nbsp;
+        <a href="{{ blog.url | default: '/blogs/news' }}" style="text-decoration: underline;">Blogs</a> &nbsp;/&nbsp;
         <span style="color: var(--km-gold-dark);">{{ article.title | default: "Wedding Talwar Selection Guide" }}</span>
       </div>
 
@@ -65,7 +65,7 @@
 
       <!-- Back to Blog Navigation CTA -->
       <div style="margin-top: 64px; text-align: center; border-top: 1px solid rgba(197,160,89,0.3); padding-top: 36px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-        <a href="{{ blog.url | default: '/blogs' }}" class="km-btn km-btn-outline" style="padding: 12px 28px;">← Back to All Articles</a>
+        <a href="{{ blog.url | default: '/blogs/news' }}" class="km-btn km-btn-outline" style="padding: 12px 28px;">← Back to All Articles</a>
         <a href="/collections/all" class="km-btn km-btn-primary" style="padding: 12px 28px;">Explore Wedding Swords →</a>
       </div>
 

@@ -202,7 +202,7 @@
     </div>
 
     <div style="text-align: center; margin-top: 52px;">
-      <a href="{{ section.settings.button_link | default: '/blogs' }}" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
+      <a href="{{ section.settings.button_link | default: '/blogs/news' }}" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
         {{ section.settings.button_label | default: "Explore All Blog Articles →" }}
       </a>
     </div>
@@ -254,8 +254,7 @@
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button Link",
-      "default": "/blogs"
+      "label": "Button Link"
     }
   ],
   "blocks": [

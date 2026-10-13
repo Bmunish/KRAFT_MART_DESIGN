@@ -30,6 +30,8 @@
             {% assign cat_handle = "miniature" %}
           {% endif %}
           <div class="km-product-card km-noise-card km-reveal" data-delay="{{ forloop.index }}" data-category="{{ cat_handle }}" data-handle="{{ product.handle }}"
+            data-variant-id="{{ product.selected_or_first_available_variant.id | default: product.variants.first.id }}"
+            data-inr-price="{{ product.price }}"
             data-qv-img="{{ product.featured_image | img_url: '600x' }}" data-qv-title="{{ product.title | escape }}"
             data-qv-desc="{{ product.description | strip_html | truncatewords: 16 | escape }}"
             data-qv-price="{{ product.price | money }}" data-qv-compare="{{ product.compare_at_price | money }}"

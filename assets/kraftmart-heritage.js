@@ -434,7 +434,13 @@ function kmCleanCardTitle(title) {
 }
 
 function hydrateHeroCards(products) {
-  document.querySelectorAll('.km-3d-card').forEach((card, index) => {
+  const cards = document.querySelectorAll('.km-3d-card');
+  if (!cards.length) return;
+  // If card already has content configured via Liquid section settings, preserve it
+  if (cards[0].querySelector('.km-3d-card-title') && cards[0].querySelector('.km-3d-card-title').textContent.trim()) {
+    return;
+  }
+  cards.forEach((card, index) => {
     const product = products[index];
     if (!product) return;
     const variant = product.variants[0] || {};
@@ -660,6 +666,8 @@ async function initRealCatalogue() {
     });
 
     document.querySelectorAll('[data-live-products]').forEach(grid => {
+      // Do not overwrite grids that are already populated with Liquid products from Shopify
+      if (grid.querySelectorAll('.km-product-card').length > 0) return;
       const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
       const sourceList = isCatalog ? displayProducts : homeProducts;
       const limit = grid.dataset.liveProducts === 'all' ? sourceList.length : Number(grid.dataset.liveProducts);
@@ -982,6 +990,8 @@ function initQuickViewModal() {
 
     // Extract attributes
     const handle = card.getAttribute('data-handle') || '';
+    const qvModalEl = document.getElementById('kmQuickViewModal');
+    if (qvModalEl) { qvModalEl.dataset.handle = handle; qvModalEl.dataset.variantId = card.getAttribute('data-variant-id') || ''; }
     const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src || 'assets/sword.png';
     const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent || 'Ceremonial Masterpiece';
     const desc = card.getAttribute('data-qv-desc') || '';
@@ -2123,13 +2133,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Product Card Navigation (Clicking card navigates to PDP unless clicking controls)
-    const productCard = e.target.closest('.km-product-card');
-    if (productCard && !e.target.closest('.km-add-cart-btn, .km-quick-view-btn, .km-card-wishlist-btn, .km-swatch-container, .km-color-swatch, .km-swatch-btn, a, button, input, form')) {
-      const handle = productCard.getAttribute('data-handle');
-      if (handle) {
-        window.location.href = `/products/${encodeURIComponent(handle)}`;
-      }
+    // Product card links are handled by standard anchor tags (<a>) on image and title.
+    // In Shopify Theme Editor, avoid intercepting clicks so sections/blocks can be selected.
+    if (window.Shopify && window.Shopify.designMode) {
+      return;
     }
   });
 
