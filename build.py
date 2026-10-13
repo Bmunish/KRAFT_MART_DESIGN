@@ -101,7 +101,18 @@ def build():
             os.makedirs(os.path.dirname(dest) if os.path.dirname(dest) else '.', exist_ok=True)
             with open(dest, 'w', encoding='utf-8') as f:
                 f.write(content)
-            print(f"  ✓ Created {dest} ({len(content)} bytes)")
+            # Also mirror into public/
+            pub_dest = os.path.join('public', dest)
+            os.makedirs(os.path.dirname(pub_dest), exist_ok=True)
+            with open(pub_dest, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print(f"  ✓ Created {dest}")
+
+    # Mirror assets to public/assets
+    if os.path.exists('public/assets'):
+        shutil.rmtree('public/assets')
+    shutil.copytree('assets', 'public/assets')
+    print("  ✓ Mirrored assets/ to public/assets/")
 
     print("\nStatic build completed successfully!")
 
