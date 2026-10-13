@@ -53,7 +53,8 @@ function getLiveProducts() {
     kmProductsPromise = fetch(endpoint)
       .then(response => {
         if (response.ok) return response.json();
-        return fetch('/products.json?limit=250').then(r => r.ok ? r.json() : {products: []});
+        return fetch('/api/products.json')
+          .then(r => r.ok ? r.json() : fetch('/products.json?limit=250').then(r2 => r2.ok ? r2.json() : {products: []}));
       })
       .then(data => (data.products || []).filter(product => product.handle !== 'partial-payment'))
       .catch(() => []);

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KraftMart | Luxury Indian Heritage Swords</title>
+  <meta name="description"
+    content="">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="/assets/kraftmart-heritage.css">
+  <style>
+    /* Strictly remove ABCD and color swatches on homepage */
+    .km-swatch-container,
+    .km-variant-swatches,
+    .km-color-swatches {
+      display: none !important;
+    }
+  </style>
+  <script src="/assets/kraftmart-heritage.js" defer></script>
+  <script src="/assets/km-cart.js" defer></script>
+
+  
+</head>
+<body>
+  
+<!-- Top Utility Bar: Helpline & Country/Currency Switcher -->
+<div class="km-top-utility-bar">
+  <div class="km-container km-top-utility-inner">
+    <div class="km-top-utility-left">
+      <span class="km-helpline-label">Helpline Number:</span>
+      <a href="tel:+917508427731" class="km-helpline-num">+91-75084-27731</a>
+      <span style="opacity: 0.35; margin: 0 8px; color: #FAF7F2;">|</span>
+      <a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&rlz=1C1FHFK_enIN1105IN1105&sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&kgmid=/g/11q2rz95sv&q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop" target="_blank" rel="noopener noreferrer" class="km-google-rating-pill" title="View KraftMart on Google Business" style="display: inline-flex; align-items: center; gap: 5px; color: #FAF7F2; text-decoration: none; font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(197, 160, 89, 0.4);">
+        <svg width="12" height="12" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
+        <span style="font-weight: 700; color: #FFD700;">4.9 ★</span>
+        <span style="color: rgba(250,247,242,0.85);">Google Business</span>
+      </a>
+    </div>
+    <div class="km-top-utility-right">
+      <div class="km-currency-selector-widget" id="kmCurrencyWidget">
+        <button type="button" class="km-currency-trigger" id="kmCurrencyTrigger" aria-haspopup="true" aria-expanded="false" title="Select Country &amp; Currency">
+          <span class="km-trigger-text" id="kmTriggerText">India | INR ₹</span>
+          <span class="km-trigger-chevron">⌵</span>
+        </button>
+        <div class="km-currency-menu" id="kmCurrencyMenu" role="menu">
+          <div class="km-currency-menu-title">Select Shipping Destination</div>
+          <div class="km-currency-options">
+            <button type="button" class="km-currency-opt is-active" data-country="India" data-currency="INR" data-symbol="₹" data-label="India | INR ₹">
+              <span class="km-opt-flag">🇮🇳</span>
+              <span class="km-opt-name">India</span>
+              <span class="km-opt-badge">INR (₹)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="United States" data-currency="USD" data-symbol="$" data-label="United States | USD $">
+              <span class="km-opt-flag">🇺🇸</span>
+              <span class="km-opt-name">United States</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="United Kingdom" data-currency="USD" data-symbol="$" data-label="United Kingdom | USD $">
+              <span class="km-opt-flag">🇬🇧</span>
+              <span class="km-opt-name">United Kingdom</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="Canada" data-currency="USD" data-symbol="$" data-label="Canada | USD $">
+              <span class="km-opt-flag">🇨🇦</span>
+              <span class="km-opt-name">Canada</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="Australia" data-currency="USD" data-symbol="$" data-label="Australia | USD $">
+              <span class="km-opt-flag">🇦🇺</span>
+              <span class="km-opt-name">Australia</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="United Arab Emirates" data-currency="USD" data-symbol="$" data-label="UAE | USD $">
+              <span class="km-opt-flag">🇦🇪</span>
+              <span class="km-opt-name">United Arab Emirates</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="Europe" data-currency="USD" data-symbol="$" data-label="Europe | USD $">
+              <span class="km-opt-flag">🇪🇺</span>
+              <span class="km-opt-name">Europe (EU)</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+            <button type="button" class="km-currency-opt" data-country="Rest of World" data-currency="USD" data-symbol="$" data-label="International | USD $">
+              <span class="km-opt-flag">🌐</span>
+              <span class="km-opt-name">Rest of World</span>
+              <span class="km-opt-badge">USD ($)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Top Announcement Bar Marquee -->
+<div class="km-announcement-bar">
+  <div class="km-marquee-track">
+    <div class="km-marquee-item">
+      <span>Our USP: Affordable swords at your doorstep with a pinch of customisation</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Cash on Delivery Available in India</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Free Custom Engraving on All Orders</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Worldwide Shipping via FedEx & DHL</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Handcrafted in Amritsar, Punjab Since 1996</span>
+      <span class="km-marquee-divider">❖</span>
+    </div>
+    <div class="km-marquee-item" aria-hidden="true">
+      <span>Our USP: Affordable swords at your doorstep with a pinch of customisation</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Cash on Delivery Available in India</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Free Custom Engraving on All Orders</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Worldwide Shipping via FedEx & DHL</span>
+      <span class="km-marquee-divider">❖</span>
+      <span>Handcrafted in Amritsar, Punjab Since 1996</span>
+      <span class="km-marquee-divider">❖</span>
+    </div>
+  </div>
+</div>
+
+<!-- Header Navigation -->
+<header class="km-header">
+  <div class="km-container">
+    <div class="km-header-inner">
+      <a href="/" class="km-header-logo">
+        
+          <img src="" alt="KraftMart" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
+        
+        <span style="color: var(--color-ink-navy); font-weight: 700;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+      </a>
+
+      <nav class="km-desktop-nav" aria-label="Main Navigation">
+        <ul class="km-nav-list">
+          <li><a href="/" class="km-nav-link active">Home</a></li>
+          <li><a href="/collections/all" class="km-nav-link active">Products</a></li>
+          <li><a href="/pages/wedding-swords" class="km-nav-link">Wedding Swords</a></li>
+          <li><a href="/pages/about-us-kraftmart" class="km-nav-link active">About Us</a></li>
+          <li><a href="/blogs/news" class="km-nav-link active">Blogs</a></li>
+          <li><a href="/pages/contact" class="km-nav-link active">Contact</a></li>
+
+          <!-- Policy Dropdown Menu -->
+          <li class="km-nav-item km-has-dropdown">
+            <a href="#" class="km-nav-link km-dropdown-toggle">
+              Our Policies <span class="km-dropdown-arrow">▾</span>
+            </a>
+            <div class="km-policy-dropdown">
+              <ul class="km-policy-dropdown-list">
+                <li><a href="/policies/shipping-policy" class="km-policy-link">SHIPPING POLICY</a></li>
+                <li><a href="/pages/processing-time" class="km-policy-link">PROCESSING TIME POLICY</a></li>
+                <li><a href="/policies/privacy-policy" class="km-policy-link">PRIVACY POLICY</a></li>
+                <li><a href="/policies/refund-policy" class="km-policy-link">RETURNS AND REFUNDS</a></li>
+                <li><a href="/pages/contact" class="km-policy-link">CONTACT US</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="km-header-actions">
+        <button class="km-icon-btn" id="kmSearchBtn" aria-label="Search">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        <a href="/cart" class="km-icon-btn" data-action="open-cart" aria-label="Cart" style="text-decoration: none; color: inherit;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span class="km-cart-badge">0</span>
+        </a>
+        <!-- Mobile Hamburger -->
+        <button class="km-icon-btn km-mobile-menu-btn" id="kmMobileMenuBtn" aria-label="Menu" style="display: none;">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav Drawer -->
+<div id="kmMobileNav" class="km-mobile-nav-overlay" aria-hidden="true">
+  <div class="km-mobile-nav-backdrop" id="kmMobileNavBackdrop"></div>
+  <nav class="km-mobile-nav-panel" aria-label="Mobile Navigation">
+    <div class="km-mobile-nav-header">
+      <span style="font-weight: 700; font-size: 1.1rem;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+      <button id="kmMobileNavClose" class="km-icon-btn" aria-label="Close menu">&#10005;</button>
+    </div>
+    <ul class="km-mobile-nav-list">
+      <li><a href="/" class="km-mobile-nav-link">Home</a></li>
+      <li><a href="/collections/all" class="km-mobile-nav-link">Products</a></li>
+      <li><a href="/pages/wedding-swords" class="km-mobile-nav-link">Wedding Swords</a></li>
+      <li><a href="/pages/about-us-kraftmart" class="km-mobile-nav-link">About Us</a></li>
+      <li><a href="/blogs/news" class="km-mobile-nav-link">Blogs</a></li>
+      <li><a href="/pages/contact" class="km-mobile-nav-link">Contact</a></li>
+      <li style="border-top: 1px solid rgba(197,160,89,0.2); margin-top: 12px; padding-top: 12px;">
+        <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--km-gold-primary); font-weight: 600; padding: 0 20px; display: block; margin-bottom: 8px;">Our Policies</span>
+      </li>
+      <li><a href="/policies/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
+      <li><a href="/pages/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
+      <li><a href="/policies/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
+      <li><a href="/policies/refund-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
+    </ul>
+  </nav>
+</div>
+
+<style>
+  /* Mobile nav styles */
+  @media (max-width: 900px) {
+    .km-desktop-nav { display: none !important; }
+    .km-mobile-menu-btn { display: flex !important; }
+  }
+  .km-mobile-nav-overlay {
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0; transition: opacity 0.25s;
+  }
+  .km-mobile-nav-overlay.is-open {
+    pointer-events: all; opacity: 1;
+  }
+  .km-mobile-nav-backdrop {
+    position: absolute; inset: 0; background: rgba(10,10,10,0.7); backdrop-filter: blur(4px);
+  }
+  .km-mobile-nav-panel {
+    position: absolute; top: 0; right: 0; width: min(320px, 90vw); height: 100vh;
+    background: var(--color-cloud, #FAF7F2); overflow-y: auto;
+    transform: translateX(100%); transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+    box-shadow: -8px 0 40px rgba(0,0,0,0.3);
+  }
+  .km-mobile-nav-overlay.is-open .km-mobile-nav-panel { transform: translateX(0); }
+  .km-mobile-nav-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px; border-bottom: 1px solid rgba(197,160,89,0.2);
+  }
+  .km-mobile-nav-list { list-style: none; margin: 0; padding: 12px 0; }
+  .km-mobile-nav-link {
+    display: block; padding: 14px 20px; color: var(--color-ink-navy, #1a2744);
+    font-weight: 500; text-decoration: none; font-size: 1rem;
+    transition: background 0.15s, color 0.15s;
+  }
+  .km-mobile-nav-link:hover { background: rgba(197,160,89,0.1); color: var(--km-gold-primary, #C5A059); }
+</style>
+
+<script>
+  // Mobile nav toggle
+  (function() {
+    var btn = document.getElementById('kmMobileMenuBtn');
+    var nav = document.getElementById('kmMobileNav');
+    var close = document.getElementById('kmMobileNavClose');
+    var backdrop = document.getElementById('kmMobileNavBackdrop');
+    function open() { nav.classList.add('is-open'); nav.setAttribute('aria-hidden','false'); }
+    function closeNav() { nav.classList.remove('is-open'); nav.setAttribute('aria-hidden','true'); }
+    if (btn) btn.addEventListener('click', open);
+    if (close) close.addEventListener('click', closeNav);
+    if (backdrop) backdrop.addEventListener('click', closeNav);
+  })();
+  // Search button wire-up
+  var searchBtn = document.getElementById('kmSearchBtn');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function() {
+      var overlay = document.getElementById('kmSearchOverlay');
+      if (overlay) { overlay.classList.add('is-open'); var inp = document.getElementById('kmSearchInput'); if(inp) inp.focus(); }
+    });
+  }
+</script>
+
+
+
+  
+  <main id="MainContent" role="main">
+    <section class="km-section" style="padding: 96px 0;">
+  <div class="km-container">
+    <div style="text-align: center; margin-bottom: 48px;">
+      <h1 class="km-heading-hero" style="font-size: 2.5rem; margin-bottom: 16px;">Search Results</h1>
+      
+      <form action="/search" method="get" role="search" style="max-width: 500px; margin: 0 auto; position: relative;">
+        <input type="search" name="q" value="" placeholder="Search products..." style="width: 100%; padding: 14px 24px; border-radius: 30px; border: 1px solid var(--km-border-gold); background: var(--km-bg-secondary); color: var(--km-text-primary); font-family: var(--km-font-body); outline: none;">
+        <button type="submit" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: var(--km-gold-primary); color: #fff; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-weight: 600;">Search</button>
+      </form>
+    </div>
+
+    s for ""</p>
+        </div>
+        
+        <div class="km-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px;">
+          
+            From 
+                  </div>
+                </div>
+              </a>
+            
+              <a href="" style="text-decoration: none; display: flex; flex-direction: column; justify-content: center; padding: 32px; background: var(--km-bg-secondary); border-radius: 12px; border: 1px solid rgba(197, 160, 89, 0.15);">
+                <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--km-gold-primary); margin-bottom: 8px;"></div>
+                <h3 style="font-family: var(--km-font-heading); font-size: 1.2rem; color: var(--km-text-primary); margin: 0 0 12px 0;"></h3>
+                <p style="color: var(--km-text-secondary); font-size: 0.9rem; margin: 0; line-height: 1.5;"></p>
+              </a>
+            
+          
+        </div>
+        
+      
+      
+    
+  </div>
+</section>
+
+
+
+  </main>
+  
+  <!-- Footer -->
+<footer class="km-footer" style="background-color: var(--color-midnight-ink); border-top: 1px solid var(--color-ld-graphite);">
+  <div class="km-container">
+    <div class="km-footer-grid">
+      <div class="km-footer-brand">
+        <a href="/" class="km-header-logo" style="color: #FFF; margin-bottom: 16px;">
+          
+            <img src="" alt="KraftMart" loading="lazy" decoding="async" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-ld-steel);" />
+          
+          <span>Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+        </a>
+        <p style="color: var(--color-ld-fog);">
+          Handcrafted Indian wedding swords, Rajput talwars, and Sikh ceremonial heritage objects forged in Amritsar, Punjab since 1996. Our USP: Affordable swords at your doorstep with a pinch of customisation.
+        </p>
+
+        <!-- Newsletter Capture Form -->
+        <form method="post" action="/cart/add">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="Enter your email for private offers..." required
+            style="background: var(--color-ld-carbon); border: 1px solid var(--color-ld-graphite); padding: 12px 16px; border-radius: 8px; color: #FFF; width: 100%; font-size: 0.875rem;" />
+          <button type="submit" aria-label="Subscribe"
+            style="background-color: var(--color-signal-blue, #C5A059); color: #FFF; padding: 12px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0;">
+            →
+          </button>
+        </form>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="km-footer-title">Quick Links</h4>
+        <ul class="km-footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/collections/all">All Products</a></li>
+          <li><a href="/pages/wedding-swords">Wedding Swords</a></li>
+          <li><a href="/pages/about-us-kraftmart">About KraftMart</a></li>
+          <li><a href="/blogs/news">Journal</a></li>
+          <li><a href="/pages/contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Policies -->
+      <div>
+        <h4 class="km-footer-title">Our Policies</h4>
+        <ul class="km-footer-links">
+          <li><a href="/policies/shipping-policy">Shipping &amp; Delivery</a></li>
+          <li><a href="/pages/processing-time">Processing Time Policy</a></li>
+          <li><a href="/policies/refund-policy">Refund &amp; Return Policy</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Connect -->
+      <div>
+        <h4 class="km-footer-title">Connect With Us</h4>
+        <ul class="km-footer-links">
+          <li><span>📍 Amritsar, Punjab, India</span></li>
+          <li><span>📞 <a href="tel:+917508427731" style="color: inherit;">+91-75084-27731</a></span></li>
+          <li><span>📧 <a href="mailto:support@kraftmart.shop" style="color: inherit;">support@kraftmart.shop</a></span></li>
+          <li><span>💬 <a href="https://wa.me/917508427731" target="_blank" rel="noopener noreferrer" style="color: inherit;">WhatsApp COD Support</a></span></li>
+          <li><a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&rlz=1C1FHFK_enIN1105IN1105&sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&kgmid=/g/11q2rz95sv&q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop" target="_blank" rel="noopener noreferrer" style="color: #4285F4; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg> Verified Google Business (4.9 ★)</a></li>
+          <li><span>✈️ FedEx &amp; DHL Express Shipping</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="km-footer-bottom">
+      <div>&copy; 2026 KraftMart. All Rights Reserved. Handcrafted in Amritsar, India.</div>
+      <div>Our USP: Affordable swords at your doorstep with a pinch of customisation • COD Available</div>
+    </div>
+  </div>
+</footer>
+
+
+
+  
+  <!-- AJAX Cart Drawer Demo -->
+  <div id="kmCartDrawer" class="km-cart-drawer">
+    <div class="km-cart-backdrop" data-action="close-cart"></div>
+    <div class="km-cart-panel">
+      <div class="km-cart-header">
+        <h3 class="km-cart-title">Your Heritage Cart</h3>
+        <button class="km-icon-btn" data-action="close-cart" aria-label="Close Cart">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="kmCartDrawerBody" class="km-cart-body">
+        <div style="text-align:center;padding:56px 20px;color:var(--km-text-secondary);">
+          <svg width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24" style="margin:0 auto 16px;display:block;opacity:0.35;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <p style="font-family:var(--km-font-heading);font-size:1.2rem;margin-bottom:8px;">Your Cart is Empty</p>
+          <p style="font-size:0.875rem;">Explore our handcrafted heritage swords.</p>
+          <a href="/collections/all" style="display:inline-block;margin-top:20px;padding:10px 24px;background:var(--km-gold-primary);color:#0E0A08;border-radius:6px;font-weight:700;font-size:0.875rem;text-decoration:none;">Browse Products</a>
+        </div>
+      </div>
+
+      <div id="kmCartDrawerFooter" class="km-cart-footer" style="display:none;">
+        <div style="margin-bottom: 16px;">
+          <label
+            style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; color: var(--km-text-secondary);">
+            Free Custom Engraving Instructions:
+          </label>
+          <textarea name="note" placeholder="Enter Bride &amp; Groom names or custom text to engrave on blade..."
+            style="width: 100%; height: 60px; background: #FFF; border: var(--km-border-subtle); padding: 8px; border-radius: var(--km-radius-sm); font-size: 0.8125rem; resize: none;"></textarea>
+        </div>
+
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 1.125rem; font-weight: 700;">
+          <span>Subtotal:</span>
+          <span id="kmCartSubtotal">₹0</span>
+        </div>
+
+        <button type="button" class="km-btn km-btn-gold" style="width: 100%;">
+          Proceed to Checkout →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick View Modal (Aceternity 2-Column Design matching screenshot) -->
+  <div id="kmQuickViewModal" class="km-qv-overlay" role="dialog" aria-modal="true" aria-label="Quick View">
+    <div class="km-qv-backdrop" id="kmQvBackdrop"></div>
+    <div class="km-qv-panel">
+      <button class="km-qv-close" id="kmQvClose" aria-label="Close">&#10005;</button>
+      <div class="km-qv-grid">
+        <!-- Left: Image Showcase Column with 4 Interactive Thumbnails -->
+        <div class="km-qv-media-col">
+          <div class="km-qv-img-box">
+            <img id="kmQvImage" src="/assets/sword.png" alt="Product Quick View" decoding="async" loading="lazy" />
+          </div>
+          <div class="km-qv-thumbs" id="kmQvThumbs">
+            <button type="button" class="km-qv-thumb-item is-active" aria-label="Thumbnail 1">
+              <img src="/assets/sword.png" alt="Thumbnail 1" decoding="async" loading="lazy" />
+            </button>
+            <button type="button" class="km-qv-thumb-item" aria-label="Thumbnail 2">
+              <img src="/assets/hero_talwar.png" alt="Thumbnail 2" decoding="async" loading="lazy" />
+            </button>
+            <button type="button" class="km-qv-thumb-item" aria-label="Thumbnail 3">
+              <img src="/assets/sword2.png" alt="Thumbnail 3" decoding="async" loading="lazy" />
+            </button>
+            <button type="button" class="km-qv-thumb-item" aria-label="Thumbnail 4">
+              <img src="/assets/sword.png" alt="Thumbnail 4" decoding="async" loading="lazy" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Product Details Column -->
+        <div class="km-qv-details-col">
+          <div class="km-qv-vendor" id="kmQvVendor">KraftMart</div>
+          <h2 class="km-qv-title" id="kmQvTitle">Wedding Sword – Sirohi Blade With Punjabi Detailing</h2>
+
+          <!-- Price Row with Green Sale Badge -->
+          <div class="km-qv-price-row">
+            <span class="km-qv-price" id="kmQvPrice">Rs. 9,999.00</span>
+            <span class="km-qv-compare" id="kmQvCompare">Rs. 14,999.00</span>
+            <span class="km-qv-sale-badge" id="kmQvSaleBadge">Sale</span>
+          </div>
+          <div class="km-qv-shipping-note">Shipping calculated at checkout.</div>
+
+          <!-- Room Booking Style Urgency Box -->
+          <div class="km-booking-urgency-box">
+            <div class="km-urgency-row">
+              <span class="km-urgency-icon-pulse">🔥</span>
+              <div class="km-urgency-text-group">
+                <span class="km-urgency-primary-text"><strong>Hurry! Only 3 pieces left in stock</strong></span>
+                <span class="km-urgency-social-viewers">⚡ 16 collectors viewing this blade right now</span>
+              </div>
+            </div>
+            <div class="km-urgency-stock-meter" aria-hidden="true">
+              <div class="km-urgency-stock-bar" style="width: 25%;"></div>
+            </div>
+          </div>
+
+          <!-- Quantity Stepper -->
+          <div class="km-qv-qty-box">
+            <label class="km-qv-qty-label">Quantity</label>
+            <div class="km-qv-stepper">
+              <button type="button" class="km-qv-qty-btn" id="kmQvQtyDec" aria-label="Decrease quantity">−</button>
+              <span class="km-qv-qty-val" id="kmQvQtyVal">1</span>
+              <button type="button" class="km-qv-qty-btn" id="kmQvQtyInc" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+
+          <!-- Actions: Add To Cart (Outlined) & Buy it now (Solid) -->
+          <div class="km-qv-actions-stacked">
+            <button type="button" class="km-btn-add-to-cart-outline" id="kmQvAddToCartBtn" data-action="open-cart">
+              Add To Cart
+            </button>
+            <button type="button" class="km-btn-buy-now-solid" id="kmQvBuyNowBtn" data-action="open-cart">
+              Buy it now
+            </button>
+          </div>
+
+          <!-- Minimized Description & Specifications -->
+          <div class="km-qv-details-bottom">
+            <h4 class="km-qv-specs-title" id="kmQvSpecsHeading">Wedding Sword – Handcrafted Sirohi Blade</h4>
+            <ul class="km-qv-specs-bullets" id="kmQvSpecsBullets">
+              <li>Solid Stainless Steel Hilt For A Comfortable Grip.</li>
+              <li>Includes Sheath For Safe Storage And Striking Display.</li>
+              <li>Handcrafted in Amritsar with Master Blade Polishing.</li>
+              <li>Free Custom Laser Engraving (Names &amp; Wedding Date).</li>
+              <li>A Meaningful Gift That Resonates Beyond A Single Occasion.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Overlay Modal -->
+          <div id="kmSearchOverlay" class="km-search-overlay" role="dialog" aria-label="Search Catalog">
+            <div class="km-search-box">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <span class="km-eyebrow" style="color:var(--km-gold-light);margin-bottom:0;">SEARCH KRAFTMART
+                  CATALOGUE</span>
+                <button id="kmSearchClose" style="color:#FFF;font-size:1.5rem;cursor:pointer;">&#10005;</button>
+              </div>
+              <input type="text" id="kmSearchInput" class="km-search-input"
+                placeholder="Search talwars, wedding swords, damascus steel, kirpans..." />
+            </div>
+            <div id="kmSearchResults" class="km-search-results"></div>
+          </div>
+
+  
+</body>
+</html>
