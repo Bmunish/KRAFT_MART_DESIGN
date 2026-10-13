@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/api/products", "destination": "https://kraftmart.shop/products.json?limit=250" },
+    { "source": "/collections/:match*", "destination": "/collections.html" },
+    { "source": "/products/:match*", "destination": "/product.html" },
+    { "source": "/blogs/:match*", "destination": "/blogs.html" },
+    { "source": "/blog/:match*", "destination": "/blogs.html" },
+    { "source": "/pages/:match*", "destination": "/pages/:match*.html" },
+    { "source": "/policies/:match*", "destination": "/pages/:match*.html" }
+  ]
+}
