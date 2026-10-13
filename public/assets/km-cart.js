@@ -352,7 +352,7 @@
     var title = card.dataset.qvTitle ||
                 (card.querySelector('.km-product-title') && card.querySelector('.km-product-title').textContent.trim()) ||
                 'KraftMart Product';
-    var image = card.dataset.qvImg || (card.querySelector('img') && card.querySelector('img').src) || 'assets/sword.png';
+    var image = card.dataset.qvImg || (card.querySelector('img') && card.querySelector('img').src) || '/assets/jaipur_wedding_talwar.png';
 
     // data-inr-price is the authoritative source (set directly on <article> by kmProductCard)
     var price = parseInt(String(card.dataset.inrPrice || card.dataset.price || '0').replace(/[^0-9]/g, ''), 10) || 0;
@@ -421,7 +421,7 @@
   function qvItem() {
     var modal = document.getElementById('kmQuickViewModal') || { dataset: {} };
     var t = ((document.getElementById('kmQvTitle') || {}).textContent || 'Heritage Product').trim();
-    var img = (document.getElementById('kmQvImage') || {}).src || 'assets/sword.png';
+    var img = (document.getElementById('kmQvImage') || {}).src || '/assets/jaipur_wedding_talwar.png';
     var pt = (document.getElementById('kmQvPrice') || {}).textContent || '0';
     var handle = modal.dataset.handle || t.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     var variantId = modal.dataset.variantId || '';
@@ -446,7 +446,7 @@
       var titleEl = document.querySelector('[data-product-title]');
       var title = titleEl ? titleEl.textContent.trim() : document.title;
       var imgEl = document.getElementById('kmPdpMainImage') || document.querySelector('.km-qv-img-box img');
-      var image = imgEl ? imgEl.src : 'assets/sword.png';
+      var image = imgEl ? imgEl.src : '/assets/jaipur_wedding_talwar.png';
       var priceEl = document.querySelector('[data-product-price] .km-qv-price') || document.querySelector('.km-qv-price');
       var price = priceEl ? parseInt((priceEl.dataset.inrPrice || priceEl.textContent).replace(/[^0-9]/g, ''), 10) || 0 : 0;
       var pathHandle = (window.location.pathname.match(/\/products\/([^\/?#]+)/) || [])[1];
