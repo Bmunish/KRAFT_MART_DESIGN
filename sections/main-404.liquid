@@ -1,48 +1,21 @@
-<section class="km-section" style="padding: 100px 0; text-align: center; background-color: var(--km-bg-secondary);">
-  <div class="km-container" style="max-width: 720px; margin: 0 auto;">
-    <span class="km-glass-badge" style="margin-bottom: 12px; display: inline-block;">✦ {{ section.settings.badge | default: "Lineage & Heritage" }}</span>
-    <h1 class="km-heading-hero" style="font-size: clamp(3.5rem, 8vw, 6rem); color: var(--km-gold-primary); margin: 0; line-height: 1;">404</h1>
-    <h2 class="km-heading-2" style="margin-top: 16px; color: var(--km-text-primary);">{{ section.settings.title | default: "Page Not Found" }}</h2>
-    <p style="color: var(--km-text-secondary); max-width: 520px; margin: 16px auto 32px; font-size: 0.95rem; line-height: 1.6;">
-      {{ section.settings.description | default: "The heirloom piece or page you are looking for might have been updated, or is temporarily unavailable. Explore our curated collections below." }}
+<section class="km-section" style="padding: 120px 0; text-align: center; background-color: var(--km-bg-secondary);">
+  <div class="km-container">
+    <h1 class="km-heading-hero" style="font-size: 6rem; color: var(--km-gold-primary); margin: 0; line-height: 1;">404</h1>
+    <h2 class="km-heading-2" style="margin-top: 16px;">Page Not Found</h2>
+    <p style="color: var(--km-text-secondary); max-width: 500px; margin: 16px auto 32px;">
+      The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
     </p>
-
-    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
-      <a href="{{ routes.root_url }}" class="km-btn km-btn-primary" style="padding: 14px 28px;">Return to Home</a>
-      <a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="km-btn km-btn-outline" style="padding: 14px 28px;">Browse Products Catalogue</a>
-      <a href="/pages/wedding-swords" class="km-btn km-btn-outline" style="padding: 14px 28px;">Wedding Swords</a>
-    </div>
-
-    <div style="background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 12px; padding: 20px; text-align: center;">
-      <p style="font-size: 0.85rem; color: var(--km-text-secondary); margin: 0 0 10px 0;">Need immediate assistance with a custom sword inscription or order status?</p>
-      <a href="https://wa.me/917508427731" target="_blank" rel="noopener noreferrer" style="color: var(--km-gold-dark, #8C6D2B); font-weight: 700; text-decoration: none; font-size: 0.9rem;">
-        💬 Chat on WhatsApp (+91 75084-27731) →
-      </a>
-    </div>
+    <a href="{{ routes.root_url }}" class="km-btn km-btn-primary" style="padding: 14px 32px;">Return to Home</a>
   </div>
 </section>
 
 {% schema %}
 {
   "name": "404 Page",
-  "settings": [
+  "settings": [],
+  "presets": [
     {
-      "type": "text",
-      "id": "badge",
-      "label": "Badge",
-      "default": "Lineage & Heritage"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "Page Not Found"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Description",
-      "default": "The heirloom piece or page you are looking for might have been updated, or is temporarily unavailable. Explore our curated collections below."
+      "name": "404 Page"
     }
   ]
 }

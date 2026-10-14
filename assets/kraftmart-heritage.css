@@ -7447,7 +7447,6 @@ body {
 
 .km-testimonial-card-v2 {
   flex: 0 0 380px;
-  width: 380px;
   max-width: 380px;
   background: rgba(24, 21, 19, 0.85);
   backdrop-filter: blur(16px);
@@ -7461,17 +7460,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
   text-align: left;
-  white-space: normal !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  box-sizing: border-box;
-  min-width: 0;
 }
 
 @media (max-width: 640px) {
   .km-testimonial-card-v2 {
     flex: 0 0 300px;
-    width: 300px;
     max-width: 300px;
     padding: 20px;
   }
@@ -7516,11 +7509,6 @@ body {
   color: #DDD6CE;
   margin: 0 0 18px 0;
   font-style: normal;
-  white-space: normal !important;
-  word-break: normal !important;
-  overflow-wrap: break-word !important;
-  word-wrap: break-word !important;
-  max-width: 100% !important;
 }
 
 .km-tcard-product {

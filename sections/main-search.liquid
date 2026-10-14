@@ -10,7 +10,6 @@
     </div>
 
     {% if search.performed %}
-      {% paginate search.results by 24 %}
       {% if search.results_count == 0 %}
         <div style="text-align: center; padding: 40px 0; color: var(--km-text-secondary);">
           <p>No results found for "{{ search.terms | escape }}". Try checking your spelling or using different keywords.</p>
@@ -43,13 +42,7 @@
             {% endif %}
           {% endfor %}
         </div>
-        {% if paginate.pages > 1 %}
-          <nav class="km-pagination" aria-label="Search results pages" style="display:flex;justify-content:center;gap:8px;margin-top:36px;">
-            {{ paginate | default_pagination }}
-          </nav>
-        {% endif %}
       {% endif %}
-      {% endpaginate %}
     {% endif %}
   </div>
 </section>

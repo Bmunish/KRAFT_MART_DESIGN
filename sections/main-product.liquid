@@ -18,7 +18,7 @@
             {% if product.featured_image %}
               <img id="kmPdpMainImage" src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title | escape }}" decoding="async" />
             {% else %}
-              <img id="kmPdpMainImage" src="{{ 'jaipur_wedding_talwar.png' | asset_url }}" alt="{{ product.title | escape }}" decoding="async" />
+              <img id="kmPdpMainImage" src="{{ 'sword.png' | asset_url }}" alt="{{ product.title | escape }}" decoding="async" />
             {% endif %}
           </div>
           <div class="km-pdp-thumbs">
@@ -29,17 +29,8 @@
               </div>
               {% endfor %}
             {% else %}
-              <div class="km-pdp-thumb is-active" onclick="document.getElementById('kmPdpMainImage').src='{{ 'jaipur_wedding_talwar.png' | asset_url }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-                <img src="{{ 'jaipur_wedding_talwar.png' | asset_url }}" alt="Sword Main View" decoding="async" loading="lazy" />
-              </div>
-              <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='{{ 'royal_damascus_talwar.jpg' | asset_url }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-                <img src="{{ 'royal_damascus_talwar.jpg' | asset_url }}" alt="Damascus Steel View" decoding="async" loading="lazy" />
-              </div>
-              <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='{{ 'red_velvet_ceremonial.png' | asset_url }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-                <img src="{{ 'red_velvet_ceremonial.png' | asset_url }}" alt="Velvet Scabbard View" decoding="async" loading="lazy" />
-              </div>
-              <div class="km-pdp-thumb" onclick="document.getElementById('kmPdpMainImage').src='{{ 'silver_inlay_damascus.png' | asset_url }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
-                <img src="{{ 'silver_inlay_damascus.png' | asset_url }}" alt="Silver Inlay Handle View" decoding="async" loading="lazy" />
+              <div class="km-pdp-thumb is-active" onclick="document.getElementById('kmPdpMainImage').src='{{ 'sword.png' | asset_url }}'; document.querySelectorAll('.km-pdp-thumb').forEach(t=>t.classList.remove('is-active')); this.classList.add('is-active');">
+                <img src="{{ 'sword.png' | asset_url }}" alt="{{ product.title | escape }}" decoding="async" loading="lazy" />
               </div>
             {% endif %}
           </div>
@@ -102,7 +93,7 @@
             <button type="submit" name="add" class="km-btn-add-to-cart-outline" data-product-add>
               Add To Cart
             </button>
-            <button type="button" class="km-btn-buy-now-solid">
+            <button type="button" class="km-btn-buy-now-solid" onclick="document.getElementById('product-form-{{ product.id }}').submit();">
               Buy it now
             </button>
           </form>
@@ -293,7 +284,7 @@
               <a href="{{ rel_product.url }}">{% if rel_product.featured_image %}
                 <img src="{{ rel_product.featured_image | img_url: '500x' }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
               {% else %}
-                <img src="{{ 'jaipur_wedding_talwar.png' | asset_url }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
+                <img src="{{ 'sword.png' | asset_url }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
               {% endif %}</a>
             </div>
             <div class="km-product-info">

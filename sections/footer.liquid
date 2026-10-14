@@ -34,8 +34,8 @@
           <li><a href="{{ routes.root_url }}">Home</a></li>
           <li><a href="{{ routes.all_products_collection_url | default: '/collections/all' }}">All Products</a></li>
           <li><a href="/pages/wedding-swords">Wedding Swords</a></li>
-          <li><a href="/pages/about-us-kraftmart">About KraftMart</a></li>
-          <li><a href="{{ blogs.news.url | default: '/blogs/news' }}">Journal</a></li>
+          <li><a href="/pages/about">About KraftMart</a></li>
+          <li><a href="{{ routes.all_blogs_url | default: '/blogs' }}">Journal</a></li>
           <li><a href="/pages/contact">Contact Us</a></li>
         </ul>
       </div>
@@ -44,10 +44,10 @@
       <div>
         <h4 class="km-footer-title">{{ section.settings.menu_2_title | default: "Our Policies" }}</h4>
         <ul class="km-footer-links">
-          <li><a href="/policies/shipping-policy">Shipping &amp; Delivery</a></li>
+          <li><a href="/pages/shipping-policy">Shipping &amp; Delivery</a></li>
           <li><a href="/pages/processing-time">Processing Time Policy</a></li>
-          <li><a href="/policies/refund-policy">Refund &amp; Return Policy</a></li>
-          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/pages/return-policy">Refund &amp; Return Policy</a></li>
+          <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
         </ul>
       </div>
 

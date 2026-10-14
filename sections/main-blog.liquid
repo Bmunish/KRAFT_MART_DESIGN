@@ -1,4 +1,5 @@
-{% assign default_article_img = 'jaipur_wedding_talwar.png' | asset_url %}
+{% assign default_article_img = 'hero_talwar.png' | asset_url %}
+{% paginate blog.articles by 12 %}
 <section class="km-page-hero km-glass-hero km-hero-minimal">
   <div class="km-bg-gradient-container" aria-hidden="true">
     <div class="km-gradients-group">
@@ -31,7 +32,6 @@
 </section>
 
 <section class="km-section" style="padding: 56px 0 100px 0;">
-  {%- paginate blog.articles by 12 -%}
   <div class="km-container">
     <div style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <div>
@@ -41,11 +41,10 @@
     </div>
 
     <div class="km-blog-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
-      {%- if blog.articles.size > 0 -%}
       {% for article in blog.articles %}
         <article class="km-blog-card km-reveal" data-delay="{{ forloop.index }}">
           <div class="km-blog-img-wrap">
-            <img src="{% if article.image %}{{ article.image | image_url: width: 800 }}{% else %}{{ default_article_img }}{% endif %}" alt="{{ article.title | default: 'KraftMart Heritage Guide' | escape }}" decoding="async" loading="lazy" />
+            <img src="{{ article.image | default: default_article_img }}" alt="{{ article.title | default: 'KraftMart Heritage Guide' | escape }}" decoding="async" loading="lazy" />
             <span class="km-blog-tag">{{ article.tags.first | default: "Heritage" }}</span>
           </div>
           <div class="km-blog-body">
@@ -58,17 +57,11 @@
             <a href="{{ article.url }}" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
-      {% endfor %}
-      {%- if paginate.pages > 1 -%}
-        <div class="km-reveal" style="grid-column: 1 / -1; text-align: center; margin-top: 20px;">
-          {{ paginate | default_pagination }}
-        </div>
-      {%- endif -%}
-      {%- else -%}
+      {% else %}
         <!-- Article 1 -->
         <article class="km-blog-card km-reveal" data-delay="1">
           <div class="km-blog-img-wrap">
-            <img src="{{ 'jaipur_wedding_talwar.png' | asset_url }}" alt="How to Choose a Wedding Talwar for Indian Grooms" decoding="async" loading="lazy" />
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="How to Choose a Wedding Talwar for Indian Grooms" decoding="async" loading="lazy" />
             <span class="km-blog-tag">Wedding Guide</span>
           </div>
           <div class="km-blog-body">
@@ -85,7 +78,7 @@
         <!-- Article 2 -->
         <article class="km-blog-card km-reveal" data-delay="2">
           <div class="km-blog-img-wrap">
-            <img src="{{ 'royal_damascus_talwar.jpg' | asset_url }}" alt="Damascus Steel Metallurgy Explained" decoding="async" loading="lazy" />
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Damascus Steel Metallurgy Explained" decoding="async" loading="lazy" />
             <span class="km-blog-tag">Master Metallurgy</span>
           </div>
           <div class="km-blog-body">
@@ -102,7 +95,7 @@
         <!-- Article 3 -->
         <article class="km-blog-card km-reveal" data-delay="3">
           <div class="km-blog-img-wrap">
-            <img src="{{ 'silver_inlay_damascus.png' | asset_url }}" alt="Caring for Heirloom Indian Swords" decoding="async" loading="lazy" />
+            <img src="{{ 'sword.png' | asset_url }}" alt="Caring for Heirloom Indian Swords" decoding="async" loading="lazy" />
             <span class="km-blog-tag">Care &amp; Heirloom</span>
           </div>
           <div class="km-blog-body">
@@ -166,11 +159,17 @@
             <a href="/blogs/news/wedding-talwar-selection" class="km-blog-link">Read Full Guide →</a>
           </div>
         </article>
-      {%- endif -%}
+      {% endfor %}
     </div>
+
+    {% if paginate.pages > 1 %}
+      <div class="km-reveal" style="text-align: center; margin-top: 52px;">
+        {{ paginate | default_pagination }}
+      </div>
+    {% endif %}
   </div>
-  {%- endpaginate -%}
 </section>
+{% endpaginate %}
 
 {% schema %}
 {

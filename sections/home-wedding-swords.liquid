@@ -48,7 +48,7 @@
       <div class="km-wedding-visual">
         <div class="km-wedding-glow-backdrop" aria-hidden="true"></div>
         <div class="km-wedding-image-wrapper">
-          {% assign default_wedding_img = 'jaipur_wedding_talwar.png' | asset_url %}
+          {% assign default_wedding_img = 'hero_talwar.png' | asset_url %}
           <img src="{{ section.settings.image | default: default_wedding_img }}" alt="{{ section.settings.title | default: 'KraftMart Groom Wedding Talwar' | escape }}" class="km-wedding-sword-img" decoding="async" loading="lazy" />
         </div>
         <div class="km-wedding-floating-tag">
@@ -185,7 +185,8 @@
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button Link"
+      "label": "Button Link",
+      "default": "/collections/wedding-swords"
     },
     {
       "type": "text",

@@ -12,7 +12,7 @@
     <div class="km-blog-grid km-blog-grid-grand">
       {% if section.blocks.size > 0 %}
         <!-- Merchant-defined custom editorial blocks -->
-        {% assign default_blog_fallback = 'jaipur_wedding_talwar.png' | asset_url %}
+        {% assign default_blog_fallback = 'hero_talwar.png' | asset_url %}
         {% for block in section.blocks %}
           {% assign b_img = block.settings.image | default: default_blog_fallback %}
           <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="{{ forloop.index }}" {{ block.shopify_attributes }}>
@@ -58,7 +58,7 @@
               {% if article.image %}
                 <img src="{{ article.image | img_url: '600x' }}" alt="{{ article.title | escape }}" decoding="async" loading="lazy" />
               {% else %}
-                <img src="{{ 'jaipur_wedding_talwar.png' | asset_url }}" alt="{{ article.title | escape }}" decoding="async" loading="lazy" />
+                <img src="{{ 'hero_talwar.png' | asset_url }}" alt="{{ article.title | escape }}" decoding="async" loading="lazy" />
               {% endif %}
               <span class="km-blog-tag">&#10022; {{ article.tags.first | default: "Heritage" }}</span>
               <div class="km-blog-img-overlay" aria-hidden="true"></div>
@@ -96,7 +96,7 @@
         <!-- Default Curated Heritage Blog Posts -->
         <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="1">
           <div class="km-blog-img-wrap">
-            <img src="{{ 'jaipur_wedding_talwar.png' | asset_url }}" alt="How to Choose a Wedding Talwar for Indian Grooms" decoding="async" loading="lazy" />
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="How to Choose a Wedding Talwar for Indian Grooms" decoding="async" loading="lazy" />
             <span class="km-blog-tag">&#10022; Wedding Guide</span>
             <div class="km-blog-img-overlay" aria-hidden="true"></div>
           </div>
@@ -131,7 +131,7 @@
 
         <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="2">
           <div class="km-blog-img-wrap">
-            <img src="{{ 'royal_damascus_talwar.jpg' | asset_url }}" alt="Damascus Steel Metallurgy Explained" decoding="async" loading="lazy" />
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Damascus Steel Metallurgy Explained" decoding="async" loading="lazy" />
             <span class="km-blog-tag">&#10022; Master Metallurgy</span>
             <div class="km-blog-img-overlay" aria-hidden="true"></div>
           </div>
@@ -166,7 +166,7 @@
 
         <article class="km-blog-card km-blog-card-grand km-reveal" data-delay="3">
           <div class="km-blog-img-wrap">
-            <img src="{{ 'silver_inlay_damascus.png' | asset_url }}" alt="Caring for Heirloom Indian Swords" decoding="async" loading="lazy" />
+            <img src="{{ 'sword.png' | asset_url }}" alt="Caring for Heirloom Indian Swords" decoding="async" loading="lazy" />
             <span class="km-blog-tag">&#10022; Care &amp; Heirloom</span>
             <div class="km-blog-img-overlay" aria-hidden="true"></div>
           </div>
@@ -202,7 +202,7 @@
     </div>
 
     <div style="text-align: center; margin-top: 52px;">
-      <a href="{{ section.settings.button_link | default: '/blogs/news' }}" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
+      <a href="{{ section.settings.button_link | default: '/blogs' }}" class="km-btn km-btn-outline-gold" style="padding: 16px 40px; font-size: 0.95rem; letter-spacing: 0.08em;">
         {{ section.settings.button_label | default: "Explore All Blog Articles →" }}
       </a>
     </div>
@@ -254,7 +254,8 @@
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button Link"
+      "label": "Button Link",
+      "default": "/blogs"
     }
   ],
   "blocks": [

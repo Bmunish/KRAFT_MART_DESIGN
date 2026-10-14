@@ -30,8 +30,6 @@
             {% assign cat_handle = "miniature" %}
           {% endif %}
           <div class="km-product-card km-noise-card km-reveal" data-delay="{{ forloop.index }}" data-category="{{ cat_handle }}" data-handle="{{ product.handle }}"
-            data-variant-id="{{ product.selected_or_first_available_variant.id | default: product.variants.first.id }}"
-            data-inr-price="{{ product.price }}"
             data-qv-img="{{ product.featured_image | img_url: '600x' }}" data-qv-title="{{ product.title | escape }}"
             data-qv-desc="{{ product.description | strip_html | truncatewords: 16 | escape }}"
             data-qv-price="{{ product.price | money }}" data-qv-compare="{{ product.compare_at_price | money }}"
@@ -64,13 +62,13 @@
         <!-- Curated Catalogue Fallback -->
         <!-- Card 1 -->
         <div class="km-product-card km-noise-card km-reveal" data-delay="1" data-category="wedding" data-handle="jaipur-wedding-talwar"
-          data-qv-img="/assets/jaipur_wedding_talwar.png" data-qv-title="Jaipur Wedding Talwar"
+          data-qv-img="/assets/sword.png" data-qv-title="Jaipur Wedding Talwar"
           data-qv-desc="Red Velvet Scabbard · Kundan Brass Hilt · Free Laser Engraving · Ceremonial Grade"
           data-qv-price="₹2,599" data-qv-compare="₹3,099"
           data-qv-specs="Blade Length: 28 in|Hilt: Solid Brass Kundan|Scabbard: Deep Red Velvet|Dispatch: 5–7 Days">
           <div class="km-product-media">
             <span class="km-sale-badge">Save ₹500</span>
-            <img src="{{ 'jaipur_wedding_talwar.png' | asset_url }}" alt="Jaipur Wedding Talwar" class="km-product-img" decoding="async" loading="lazy" />
+            <img src="{{ 'sword.png' | asset_url }}" alt="Jaipur Wedding Talwar" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">
@@ -87,13 +85,13 @@
 
         <!-- Card 2 -->
         <div class="km-product-card km-noise-card km-reveal" data-delay="2" data-category="damascus" data-handle="royal-jodhpur-damascus"
-          data-qv-img="/assets/royal_damascus_talwar.jpg" data-qv-title="Kundan Hilt Rajput Talwar"
+          data-qv-img="/assets/sword2.png" data-qv-title="Kundan Hilt Rajput Talwar"
           data-qv-desc="Authentic Damascus Steel · Semi-precious kundan stone hilt · Museum-grade forging by Amritsar masters"
           data-qv-price="₹4,299" data-qv-compare="₹4,999"
           data-qv-specs="Steel: 1095/15N20 Damascus|Hardness: 56–58 HRC|Hilt: Kundan with Semi-precious Stones|Blade: 30 in">
           <div class="km-product-media">
             <span class="km-sale-badge">Popular</span>
-            <img src="{{ 'royal_damascus_talwar.jpg' | asset_url }}" alt="Kundan Hilt Rajput Talwar" class="km-product-img" decoding="async" loading="lazy" />
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Kundan Hilt Rajput Talwar" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">
@@ -110,12 +108,12 @@
 
         <!-- Card 3 -->
         <div class="km-product-card km-noise-card km-reveal" data-delay="3" data-category="wedding" data-handle="dawami-velvet-scabbard-talwar"
-          data-qv-img="/assets/red_velvet_ceremonial.png" data-qv-title="Dawami Velvet Scabbard Talwar"
+          data-qv-img="/assets/hero_talwar.png" data-qv-title="Dawami Velvet Scabbard Talwar"
           data-qv-desc="Zari Velvet-lined scabbard · Hand-polished blade · Traditional Rajput grip with brass pommel"
           data-qv-price="₹4,299" data-qv-compare=""
           data-qv-specs="Blade Length: 30 in|Hilt: Brass Rajput Grip|Scabbard: Zari Velvet Sheath|Dispatch: 5–7 Days">
           <div class="km-product-media">
-            <img src="{{ 'red_velvet_ceremonial.png' | asset_url }}" alt="Dawami Velvet Scabbard Talwar" class="km-product-img" decoding="async" loading="lazy" />
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Dawami Velvet Scabbard Talwar" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">
@@ -131,13 +129,13 @@
 
         <!-- Card 4 -->
         <div class="km-product-card km-noise-card km-reveal" data-delay="4" data-category="wedding" data-handle="dawami-ceremonial-sword"
-          data-qv-img="/assets/gold_khanda_wedding.png" data-qv-title="Dawami Ceremonial Sword"
+          data-qv-img="/assets/sword.png" data-qv-title="Dawami Ceremonial Sword"
           data-qv-desc="Traditional Sikh & Rajput marriage sword with mirror-polish carbon steel blade and gold zari velvet scabbard."
           data-qv-price="₹1,999" data-qv-compare="₹2,499"
           data-qv-specs="Blade: High Carbon Steel|Hilt: Traditional Cast Brass|Scabbard: Gold Zari Velvet|Usage: Wedding & Display">
           <div class="km-product-media">
             <span class="km-sale-badge">Under ₹2K</span>
-            <img src="{{ 'gold_khanda_wedding.png' | asset_url }}" alt="Dawami Ceremonial Sword" class="km-product-img" decoding="async" loading="lazy" />
+            <img src="{{ 'sword.png' | asset_url }}" alt="Dawami Ceremonial Sword" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">
@@ -154,13 +152,13 @@
 
         <!-- Card 5 -->
         <div class="km-product-card km-noise-card km-reveal" data-delay="5" data-category="miniature" data-handle="miniature-khanda-sahib-shield"
-          data-qv-img="/assets/miniature_khanda_gift.jpg" data-qv-title="Miniature Khanda Sahib Shield"
+          data-qv-img="/assets/sword2.png" data-qv-title="Miniature Khanda Sahib Shield"
           data-qv-desc="Solid cast brass miniature Khanda with dual crossed kirpans and chakkar. Perfect for car dashboards and home altars."
           data-qv-price="₹1,299" data-qv-compare=""
           data-qv-specs="Material: Solid Brass Casting|Finish: Lacquered Antique Gold|Base: Felt-lined Stand|Size: 6.5 in">
           <div class="km-product-media">
             <span class="km-sale-badge">Auspicious</span>
-            <img src="{{ 'miniature_khanda_gift.jpg' | asset_url }}" alt="Miniature Khanda Sahib Shield" class="km-product-img" decoding="async" loading="lazy" />
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Miniature Khanda Sahib Shield" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">
@@ -176,13 +174,13 @@
 
         <!-- Card 6 -->
         <div class="km-product-card km-noise-card km-reveal" data-delay="6" data-category="damascus" data-handle="amritsar-royal-damascus-kirpan"
-          data-qv-img="/assets/kilij_damascus_sword.jpg" data-qv-title="Amritsar Royal Damascus Kirpan"
+          data-qv-img="/assets/hero_talwar.png" data-qv-title="Amritsar Royal Damascus Kirpan"
           data-qv-desc="Pattern-welded high carbon Damascus steel with ram-head carved brass pommel and hardwood core scabbard."
           data-qv-price="₹3,799" data-qv-compare="₹4,499"
           data-qv-specs="Steel: 300-Fold Damascus|Blade Length: 9 in|Pommel: Ram Head Carved Brass|Scabbard: Rosewood & Brass">
           <div class="km-product-media">
             <span class="km-sale-badge">Top Rated</span>
-            <img src="{{ 'kilij_damascus_sword.jpg' | asset_url }}" alt="Amritsar Royal Damascus Kirpan" class="km-product-img" decoding="async" loading="lazy" />
+            <img src="{{ 'hero_talwar.png' | asset_url }}" alt="Amritsar Royal Damascus Kirpan" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">
@@ -199,13 +197,13 @@
 
         <!-- Card 7 -->
         <div class="km-product-card km-noise-card km-reveal" data-delay="7" data-category="wedding" data-handle="sikh-groom-ceremonial-talwar"
-          data-qv-img="/assets/bahubali_wedding_sword.png" data-qv-title="Sikh Groom Ceremonial Talwar"
+          data-qv-img="/assets/sword.png" data-qv-title="Sikh Groom Ceremonial Talwar"
           data-qv-desc="Curved carbon steel talwar with emerald velvet scabbard, gold zari lace border, and traditional brass basket hilt."
           data-qv-price="₹2,799" data-qv-compare="₹3,299"
           data-qv-specs="Blade: High Carbon Steel|Scabbard: Emerald Green Velvet|Hilt: Traditional Basket Hilt|Engraving: Free">
           <div class="km-product-media">
             <span class="km-sale-badge">Bestseller</span>
-            <img src="{{ 'bahubali_wedding_sword.png' | asset_url }}" alt="Sikh Groom Ceremonial Talwar" class="km-product-img" decoding="async" loading="lazy" />
+            <img src="{{ 'sword.png' | asset_url }}" alt="Sikh Groom Ceremonial Talwar" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">
@@ -222,13 +220,13 @@
 
         <!-- Card 8 -->
         <div class="km-product-card km-noise-card km-reveal" data-delay="8" data-category="damascus" data-handle="royal-jodhpur-damascus-talwar"
-          data-qv-img="/assets/bhavani_talwar_replica.jpg" data-qv-title="Royal Jodhpur Damascus Talwar"
+          data-qv-img="/assets/sword2.png" data-qv-title="Royal Jodhpur Damascus Talwar"
           data-qv-desc="Master forged 1095/15N20 layered Damascus steel ceremonial sword. Museum display finish with midnight blue velvet sheath."
           data-qv-price="₹4,299" data-qv-compare="₹4,999"
           data-qv-specs="Steel: 1095/15N20 Damascus|Hardness: 56–58 HRC|Scabbard: Midnight Blue Velvet|Hilt: Chased Brass">
           <div class="km-product-media">
             <span class="km-sale-badge">Heirloom Grade</span>
-            <img src="{{ 'bhavani_talwar_replica.jpg' | asset_url }}" alt="Royal Jodhpur Damascus Talwar" class="km-product-img" decoding="async" loading="lazy" />
+            <img src="{{ 'sword2.png' | asset_url }}" alt="Royal Jodhpur Damascus Talwar" class="km-product-img" decoding="async" loading="lazy" />
             <button class="km-quick-view-btn">⚡ Quick View</button>
           </div>
           <div class="km-product-info">

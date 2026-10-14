@@ -53,8 +53,7 @@ function getLiveProducts() {
     kmProductsPromise = fetch(endpoint)
       .then(response => {
         if (response.ok) return response.json();
-        return fetch('/api/products.json')
-          .then(r => r.ok ? r.json() : fetch('/products.json?limit=250').then(r2 => r2.ok ? r2.json() : {products: []}));
+        return fetch('/products.json?limit=250').then(r => r.ok ? r.json() : {products: []});
       })
       .then(data => (data.products || []).filter(product => product.handle !== 'partial-payment'))
       .catch(() => []);
@@ -435,13 +434,7 @@ function kmCleanCardTitle(title) {
 }
 
 function hydrateHeroCards(products) {
-  const cards = document.querySelectorAll('.km-3d-card');
-  if (!cards.length) return;
-  // If card already has content configured via Liquid section settings, preserve it
-  if (cards[0].querySelector('.km-3d-card-title') && cards[0].querySelector('.km-3d-card-title').textContent.trim()) {
-    return;
-  }
-  cards.forEach((card, index) => {
+  document.querySelectorAll('.km-3d-card').forEach((card, index) => {
     const product = products[index];
     if (!product) return;
     const variant = product.variants[0] || {};
@@ -461,7 +454,7 @@ const KM_STATIC_PRODUCTS = {
     vendor: 'KraftMart Heritage',
     body_html: 'Crafted specifically for royal wedding ceremonies. Features a solid brass Kundan engraved hilt, deep red zari velvet-sheathed scabbard, and a hand-polished high carbon steel blade. Includes complimentary custom laser engraving of groom and bride names.',
     variants: [{ price: 2599, compare_at_price: 3099, available: true }],
-    images: [{ src: 'assets/jaipur_wedding_talwar.png', alt: 'Jaipur Wedding Talwar' }, { src: 'assets/red_velvet_ceremonial.png', alt: 'Scabbard View' }, { src: 'assets/gold_khanda_wedding.png', alt: 'Blade Inscription' }]
+    images: [{ src: 'assets/hero_talwar.png', alt: 'Jaipur Wedding Talwar' }, { src: 'assets/sword.png', alt: 'Scabbard View' }, { src: 'assets/sword2.png', alt: 'Blade Inscription' }]
   },
   'royal-jodhpur-damascus': {
     handle: 'royal-jodhpur-damascus',
@@ -470,7 +463,7 @@ const KM_STATIC_PRODUCTS = {
     vendor: 'KraftMart Heritage',
     body_html: 'Handforged 1095 & 15N20 layered pattern welded Damascus steel blade with solid brass hilt and midnight velvet scabbard. Tested to 56–58 HRC hardness. Complimentary custom laser engraving included.',
     variants: [{ price: 4299, compare_at_price: 4999, available: true }],
-    images: [{ src: 'assets/royal_damascus_talwar.jpg', alt: 'Royal Jodhpur Damascus' }, { src: 'assets/kilij_damascus_sword.jpg', alt: 'Damascus Pattern' }, { src: 'assets/silver_inlay_damascus.png', alt: 'Hilt Detail' }]
+    images: [{ src: 'assets/sword2.png', alt: 'Royal Jodhpur Damascus' }, { src: 'assets/hero_talwar.png', alt: 'Damascus Pattern' }, { src: 'assets/sword.png', alt: 'Hilt Detail' }]
   },
   'dawami-ceremonial-sword': {
     handle: 'dawami-ceremonial-sword',
@@ -479,7 +472,7 @@ const KM_STATIC_PRODUCTS = {
     vendor: 'KraftMart Heritage',
     body_html: 'Traditional Sikh & Rajput marriage sword with mirror-polish carbon steel blade and gold zari velvet scabbard. Handcrafted in Amritsar, Punjab with free custom blade inscription.',
     variants: [{ price: 1999, compare_at_price: 2499, available: true }],
-    images: [{ src: 'assets/bahubali_wedding_sword.png', alt: 'Dawami Ceremonial Sword' }, { src: 'assets/bhavani_talwar_replica.jpg', alt: 'Gold Zari Sheath' }, { src: 'assets/jaipur_wedding_talwar.png', alt: 'Grip Close-up' }]
+    images: [{ src: 'assets/sword.png', alt: 'Dawami Ceremonial Sword' }, { src: 'assets/hero_talwar.png', alt: 'Gold Zari Sheath' }, { src: 'assets/sword2.png', alt: 'Grip Close-up' }]
   }
 };
 
@@ -667,8 +660,6 @@ async function initRealCatalogue() {
     });
 
     document.querySelectorAll('[data-live-products]').forEach(grid => {
-      // Do not overwrite grids that are already populated with Liquid products from Shopify
-      if (grid.querySelectorAll('.km-product-card').length > 0) return;
       const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
       const sourceList = isCatalog ? displayProducts : homeProducts;
       const limit = grid.dataset.liveProducts === 'all' ? sourceList.length : Number(grid.dataset.liveProducts);
@@ -991,8 +982,6 @@ function initQuickViewModal() {
 
     // Extract attributes
     const handle = card.getAttribute('data-handle') || '';
-    const qvModalEl = document.getElementById('kmQuickViewModal');
-    if (qvModalEl) { qvModalEl.dataset.handle = handle; qvModalEl.dataset.variantId = card.getAttribute('data-variant-id') || ''; }
     const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src || 'assets/sword.png';
     const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent || 'Ceremonial Masterpiece';
     const desc = card.getAttribute('data-qv-desc') || '';
@@ -1040,7 +1029,7 @@ function initQuickViewModal() {
     if (liveProd && Array.isArray(liveProd.images) && liveProd.images.length > 0) {
       galleryImages = liveProd.images.map(i => i.src).filter(Boolean);
     }
-    const defaultFallbacks = ['assets/jaipur_wedding_talwar.png', 'assets/royal_damascus_talwar.jpg', 'assets/gold_khanda_wedding.png', 'assets/red_velvet_ceremonial.png'];
+    const defaultFallbacks = ['assets/sword.png', 'assets/hero_talwar.png', 'assets/sword2.png', 'assets/sword.png'];
     let idx = 0;
     while (galleryImages.length < 4) {
       galleryImages.push(defaultFallbacks[idx % defaultFallbacks.length]);
@@ -2134,10 +2123,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Product card links are handled by standard anchor tags (<a>) on image and title.
-    // In Shopify Theme Editor, avoid intercepting clicks so sections/blocks can be selected.
-    if (window.Shopify && window.Shopify.designMode) {
-      return;
+    // Product Card Navigation (Clicking card navigates to PDP unless clicking controls)
+    const productCard = e.target.closest('.km-product-card');
+    if (productCard && !e.target.closest('.km-add-cart-btn, .km-quick-view-btn, .km-card-wishlist-btn, .km-swatch-container, .km-color-swatch, .km-swatch-btn, a, button, input, form')) {
+      const handle = productCard.getAttribute('data-handle');
+      if (handle) {
+        window.location.href = `/products/${encodeURIComponent(handle)}`;
+      }
     }
   });
 

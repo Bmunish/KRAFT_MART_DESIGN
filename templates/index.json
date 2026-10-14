@@ -128,28 +128,6 @@
         "google_rating": "4.9 / 5",
         "google_button_label": "Open Google Business Reviews"
       }
-    },
-    "home_rich_text": {
-      "type": "rich-text",
-      "settings": {
-        "heading": "A little about KraftMart",
-        "text": "<p>Discover handcrafted heritage pieces made with care in Amritsar.</p>",
-        "alignment": "center",
-        "background_color": "#FAF7F2",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
-    "home_featured_blog": {
-      "type": "featured-blog",
-      "settings": {
-        "blog": "",
-        "post_limit": 3,
-        "heading": "From the blog",
-        "heading_alignment": "left",
-        "background_color": "#FAF7F2",
-        "show_view_all": true
-      }
     }
   },
   "order": [
@@ -161,8 +139,6 @@
     "home_home-section-6_5",
     "home_about-us_6",
     "home_journal-editorial_7",
-    "home_rich_text",
-    "home_featured_blog",
     "home_faq_8",
     "home_home-section-10_9",
     "home_testimonials-marquee_10"

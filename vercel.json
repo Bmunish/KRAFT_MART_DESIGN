@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
@@ -89,10 +91,6 @@
     {
       "source": "/cart",
       "destination": "/cart/index.html"
-    },
-    {
-      "source": "/checkout",
-      "destination": "/checkout/index.html"
     },
     {
       "source": "/search",

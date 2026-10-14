@@ -1,11 +1,9 @@
 {
   "name": "kraftmart-heritage-theme",
   "version": "1.0.0",
-  "description": "KraftMart Indian Heritage & Wedding Swords Luxury Shopify OS 2.0 Theme",
   "private": true,
   "scripts": {
-    "build": "echo 'Static build ready'",
-    "generate": "python3 build.py",
+    "build": "python3 build.py",
     "start": "python3 server.py"
   }
 }

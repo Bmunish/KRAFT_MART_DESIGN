@@ -116,8 +116,8 @@
           <li><a href="{{ routes.root_url }}" class="km-nav-link {% if request.page_type == 'index' %}active{% endif %}">Home</a></li>
           <li><a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="km-nav-link {% if request.page_type == 'collection' %}active{% endif %}">Products</a></li>
           <li><a href="/pages/wedding-swords" class="km-nav-link">Wedding Swords</a></li>
-          <li><a href="/pages/about-us-kraftmart" class="km-nav-link {% if request.path contains '/pages/about-us-kraftmart' %}active{% endif %}">About Us</a></li>
-          <li><a href="{{ blogs.news.url | default: '/blogs/news' }}" class="km-nav-link {% if request.page_type == 'blog' or request.page_type == 'article' %}active{% endif %}">Blogs</a></li>
+          <li><a href="/pages/about" class="km-nav-link {% if request.path contains '/pages/about' %}active{% endif %}">About Us</a></li>
+          <li><a href="{{ routes.all_blogs_url | default: '/blogs' }}" class="km-nav-link {% if request.page_type == 'blog' or request.page_type == 'article' %}active{% endif %}">Blogs</a></li>
           <li><a href="/pages/contact" class="km-nav-link {% if request.path contains '/pages/contact' %}active{% endif %}">Contact</a></li>
 
           <!-- Policy Dropdown Menu -->
@@ -127,10 +127,10 @@
             </a>
             <div class="km-policy-dropdown">
               <ul class="km-policy-dropdown-list">
-                <li><a href="/policies/shipping-policy" class="km-policy-link">SHIPPING POLICY</a></li>
+                <li><a href="/pages/shipping-policy" class="km-policy-link">SHIPPING POLICY</a></li>
                 <li><a href="/pages/processing-time" class="km-policy-link">PROCESSING TIME POLICY</a></li>
-                <li><a href="/policies/privacy-policy" class="km-policy-link">PRIVACY POLICY</a></li>
-                <li><a href="/policies/refund-policy" class="km-policy-link">RETURNS AND REFUNDS</a></li>
+                <li><a href="/pages/privacy-policy" class="km-policy-link">PRIVACY POLICY</a></li>
+                <li><a href="/pages/return-policy" class="km-policy-link">RETURNS AND REFUNDS</a></li>
                 <li><a href="/pages/contact" class="km-policy-link">CONTACT US</a></li>
               </ul>
             </div>
@@ -173,16 +173,16 @@
       <li><a href="{{ routes.root_url }}" class="km-mobile-nav-link">Home</a></li>
       <li><a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="km-mobile-nav-link">Products</a></li>
       <li><a href="/pages/wedding-swords" class="km-mobile-nav-link">Wedding Swords</a></li>
-      <li><a href="/pages/about-us-kraftmart" class="km-mobile-nav-link">About Us</a></li>
-      <li><a href="{{ blogs.news.url | default: '/blogs/news' }}" class="km-mobile-nav-link">Blogs</a></li>
+      <li><a href="/pages/about" class="km-mobile-nav-link">About Us</a></li>
+      <li><a href="{{ routes.all_blogs_url | default: '/blogs' }}" class="km-mobile-nav-link">Blogs</a></li>
       <li><a href="/pages/contact" class="km-mobile-nav-link">Contact</a></li>
       <li style="border-top: 1px solid rgba(197,160,89,0.2); margin-top: 12px; padding-top: 12px;">
         <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--km-gold-primary); font-weight: 600; padding: 0 20px; display: block; margin-bottom: 8px;">Our Policies</span>
       </li>
-      <li><a href="/policies/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
+      <li><a href="/pages/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
       <li><a href="/pages/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
-      <li><a href="/policies/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
-      <li><a href="/policies/refund-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
+      <li><a href="/pages/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
+      <li><a href="/pages/return-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
     </ul>
   </nav>
 </div>
