@@ -410,7 +410,6 @@ function kmProductCard(product, showSwatches) {
       <span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span>
       <h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3>
       <div class="km-card-trust-line">🛡️ Handcrafted in Amritsar &bull; Free Engraving</div>
-      <p class="km-card-rating" aria-label="4.9 out of 5 KraftMart Google rating"><span aria-hidden="true">★★★★★</span> 4.9/5 KraftMart Google rating</p>
       <div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>
       ${swatchesHtml}
       <button type="button" class="km-add-cart-btn">Add to Cart</button>
@@ -434,7 +433,8 @@ function hydrateHeroCards(products) {
     const compare = Number(variant.compare_at_price);
     const price = Number(variant.price);
     const shortTitle = kmCleanCardTitle(product.title);
-    card.innerHTML = `<a href="/products/${encodeURIComponent(product.handle)}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span><h3 class="km-3d-card-title" title="${kmEscape(product.title)}">${kmEscape(shortTitle)}</h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
+    const detailUrl = `/products/${encodeURIComponent(product.handle)}`;
+    card.innerHTML = `<a href="${detailUrl}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span>${compare > price ? `<span class="km-card-urgency-badge km-hero-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Save ${kmMoney(compare - price)}</span>` : ''}<h3 class="km-3d-card-title" title="${kmEscape(product.title)}"><a href="${detailUrl}">${kmEscape(shortTitle)}</a></h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
   });
 }
 
@@ -465,6 +465,31 @@ const KM_STATIC_PRODUCTS = {
     body_html: 'Traditional Sikh & Rajput marriage sword with mirror-polish carbon steel blade and gold zari velvet scabbard. Handcrafted in Amritsar, Punjab with free custom blade inscription.',
     variants: [{ price: 1999, compare_at_price: 2499, available: true }],
     images: [{ src: 'assets/sword.png', alt: 'Dawami Ceremonial Sword' }, { src: 'assets/hero_talwar.png', alt: 'Gold Zari Sheath' }, { src: 'assets/sword2.png', alt: 'Grip Close-up' }]
+  },
+  'dawami-velvet-scabbard-talwar': {
+    handle: 'dawami-velvet-scabbard-talwar', title: 'Dawami Velvet Scabbard Talwar', product_type: 'Wedding Swords', vendor: 'KraftMart Heritage',
+    body_html: 'Hand-polished ceremonial blade with zari velvet sheath.', variants: [{ price: 4299, compare_at_price: null, available: true }],
+    images: [{ src: 'assets/hero_talwar.png', alt: 'Dawami Velvet Scabbard Talwar' }]
+  },
+  'miniature-khanda-sahib-shield': {
+    handle: 'miniature-khanda-sahib-shield', title: 'Miniature Khanda Sahib Shield', product_type: 'Miniatures', vendor: 'KraftMart Heritage',
+    body_html: 'Solid brass miniature Khanda with dual crossed kirpans and chakkar.', variants: [{ price: 1299, available: true }],
+    images: [{ src: 'assets/sword2.png', alt: 'Miniature Khanda Sahib Shield' }]
+  },
+  'amritsar-royal-damascus-kirpan': {
+    handle: 'amritsar-royal-damascus-kirpan', title: 'Amritsar Royal Damascus Kirpan', product_type: 'Damascus Steel Swords', vendor: 'KraftMart Heritage',
+    body_html: 'Pattern-welded Damascus steel with carved brass pommel.', variants: [{ price: 3799, compare_at_price: 4499, available: true }],
+    images: [{ src: 'assets/hero_talwar.png', alt: 'Amritsar Royal Damascus Kirpan' }]
+  },
+  'sikh-groom-ceremonial-talwar': {
+    handle: 'sikh-groom-ceremonial-talwar', title: 'Sikh Groom Ceremonial Talwar', product_type: 'Wedding Swords', vendor: 'KraftMart Heritage',
+    body_html: 'Curved carbon steel talwar with emerald velvet scabbard.', variants: [{ price: 2799, compare_at_price: 3299, available: true }],
+    images: [{ src: 'assets/sword.png', alt: 'Sikh Groom Ceremonial Talwar' }]
+  },
+  'royal-jodhpur-damascus-talwar': {
+    handle: 'royal-jodhpur-damascus-talwar', title: 'Royal Jodhpur Damascus Talwar', product_type: 'Damascus Steel Swords', vendor: 'KraftMart Heritage',
+    body_html: 'Layered Damascus steel ceremonial sword with velvet sheath.', variants: [{ price: 4299, compare_at_price: 4999, available: true }],
+    images: [{ src: 'assets/sword2.png', alt: 'Royal Jodhpur Damascus Talwar' }]
   }
 };
 
@@ -483,9 +508,9 @@ function hydrateProductDetail(products = []) {
     product = KM_STATIC_PRODUCTS[handle];
   }
   if (!product) {
-    product = (Array.isArray(products) && products[0]) || KM_STATIC_PRODUCTS['jaipur-wedding-talwar'];
+    detail.innerHTML = '<div class="km-container"><h1>Product not found</h1><p>This product may no longer be available.</p><a href="/collections/all">Browse all products</a></div>';
+    return;
   }
-  if (!product) return;
   const variant = product.variants[0] || {};
   const price = Number(variant.price);
   const compare = Number(variant.compare_at_price);
