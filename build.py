@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Render the Shopify theme into static files for Vercel preview hosting."""
 
+import json
 import shutil
 from pathlib import Path
 
@@ -47,6 +48,15 @@ def build():
     shutil.copytree("assets", output / "assets")
     (output / "api").mkdir()
     shutil.copyfile("api/products.json", output / "api/products.json")
+
+    deployment = Path("vercel")
+    if deployment.exists():
+        shutil.rmtree(deployment)
+    shutil.copytree(output, deployment)
+    config = json.loads(Path("vercel.json").read_text(encoding="utf-8"))
+    config.pop("buildCommand", None)
+    config.pop("outputDirectory", None)
+    (deployment / "vercel.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

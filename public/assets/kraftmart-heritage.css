@@ -7785,6 +7785,23 @@ shopify-variant-selector::part(radio-selected) {
   gap: 4px;
 }
 
+.km-card-rating {
+  margin: 4px 0 8px;
+  color: var(--km-text-secondary);
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.km-card-rating span {
+  color: var(--km-gold-dark, #9C7A2E);
+  letter-spacing: 0.08em;
+}
+
+.km-related-products-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 24px;
+}
+
 /* 3. PDP & Quick View Booking Urgency Box */
 .km-booking-urgency-box {
   background: linear-gradient(135deg, rgba(254, 242, 242, 0.95) 0%, rgba(255, 247, 237, 0.95) 100%);

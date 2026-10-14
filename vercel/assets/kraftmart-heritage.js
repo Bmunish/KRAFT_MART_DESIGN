@@ -396,22 +396,13 @@ function kmProductCard(product, showSwatches) {
       </div>
     </div>` : '';
 
-  // Urgency badge (Room booking style: "Hurry, few in stock", "Only 3 left", etc.)
-  const urgencyVariants = [
-    'Hurry! Only 3 left',
-    'Last 4 pieces in stock',
-    'Only 2 left at this price',
-    'Hurry, few in stock',
-    'Last 3 pieces left'
-  ];
-  const charSum = (product.title || '').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  const urgencyText = urgencyVariants[charSum % urgencyVariants.length];
+  const urgencyText = compare > price ? `Hurry! Save ${kmMoney(compare - price)}` : '';
 
   const variantId = variant.id || '';
   return `<article class="km-product-card km-noise-card" data-handle="${kmEscapeAttr(product.handle || '')}" data-variant-id="${variantId}" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
     <div class="km-product-media">
       ${saving ? `<span class="km-sale-badge">${saving}</span>` : ''}
-      <span class="km-card-urgency-badge"><span class="km-urgency-pulse-dot"></span>${urgencyText}</span>
+      ${urgencyText ? `<span class="km-card-urgency-badge"><span class="km-urgency-pulse-dot"></span>${urgencyText}</span>` : ''}
       <a href="${detailUrl}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" class="km-product-img" loading="lazy" decoding="async">` : ''}</a>
       <button class="km-quick-view-btn" type="button">⚡ Quick View</button>
     </div>
@@ -419,6 +410,7 @@ function kmProductCard(product, showSwatches) {
       <span class="km-product-vendor">${kmEscape(product.vendor || 'KraftMart')}</span>
       <h3 class="km-product-title"><a href="${detailUrl}">${kmEscape(product.title)}</a></h3>
       <div class="km-card-trust-line">🛡️ Handcrafted in Amritsar &bull; Free Engraving</div>
+      <p class="km-card-rating" aria-label="4.9 out of 5 KraftMart Google rating"><span aria-hidden="true">★★★★★</span> 4.9/5 KraftMart Google rating</p>
       <div class="km-price-wrapper"><span class="km-price-current" data-inr-price="${price}">${kmMoney(price)}</span>${compare > price ? `<span class="km-price-compare" data-inr-price="${compare}">${kmMoney(compare)}</span>` : ''}</div>
       ${swatchesHtml}
       <button type="button" class="km-add-cart-btn">Add to Cart</button>
@@ -661,7 +653,11 @@ async function initRealCatalogue() {
 
     document.querySelectorAll('[data-live-products]').forEach(grid => {
       const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
-      const sourceList = isCatalog ? displayProducts : homeProducts;
+      const pageHandle = window.location.pathname.match(/^\/products\/([^/]+)/)?.[1];
+      const sourceList = grid.dataset.liveMode === 'related'
+        ? homeProducts.filter(product => product.handle !== pageHandle)
+        : isCatalog ? displayProducts : homeProducts;
+      if (!sourceList.length) return;
       const limit = grid.dataset.liveProducts === 'all' ? sourceList.length : Number(grid.dataset.liveProducts);
       grid.innerHTML = sourceList.slice(0, limit).map(p => kmProductCard(p, isCatalog)).join('');
     });

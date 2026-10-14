@@ -274,35 +274,62 @@
         <h2 class="km-heading-1" style="font-size: 2rem; margin-bottom: 24px;">You May Also Like</h2>
         
         
-        <div class="km-product-grid" data-live-products="4" data-live-mode="related" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));" aria-live="polite">
-          {% for rel_product in collections['all'].products limit:4 %}
-          <div class="km-product-card km-noise-card">
+        <div class="km-product-grid km-related-products-grid" data-live-products="8" data-live-mode="related" aria-live="polite">
+          <article class="km-product-card km-noise-card" data-handle="jaipur-wedding-talwar">
             <div class="km-product-media">
-              {% if rel_product.compare_at_price > rel_product.price %}
-              <span class="km-sale-badge">Sale</span>
-              {% endif %}
-              <a href="{{ rel_product.url }}">{% if rel_product.featured_image %}
-                <img src="{{ rel_product.featured_image | img_url: '500x' }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
-              {% else %}
-                <img src="{{ 'sword.png' | asset_url }}" alt="{{ rel_product.title | escape }}" class="km-product-img" decoding="async" loading="lazy" />
-              {% endif %}</a>
+              <span class="km-card-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Save ₹200</span>
+              <a href="/products/chhatrapati-shivaji-maharaj-miniature-metal-wall-plate-11-inch"><img src="https://cdn.shopify.com/s/files/1/0718/3600/8668/files/shivaji-maharaj-miniature-wall-plate.png?v=1765800371" alt="Chhatrapati Shivaji Maharaj Miniature Metal Wall Plate" class="km-product-img" decoding="async" loading="lazy" /></a>
             </div>
             <div class="km-product-info">
-              <span class="km-product-vendor">{{ rel_product.vendor }}</span>
-              <h3 class="km-product-title"><a href="{{ rel_product.url }}">{{ rel_product.title }}</a></h3>
+              <span class="km-product-vendor">KraftMart Heritage</span>
+              <h3 class="km-product-title"><a href="/products/chhatrapati-shivaji-maharaj-miniature-metal-wall-plate-11-inch">Chhatrapati Shivaji Maharaj Miniature Metal Wall Plate – 11 Inch</a></h3>
+              <p class="km-card-rating" aria-label="4.9 out of 5 KraftMart Google rating"><span aria-hidden="true">★★★★★</span> 4.9/5 KraftMart Google rating</p>
               <div class="km-price-wrapper">
-                <span class="km-price-current">{{ rel_product.price | money }}</span>
-                {% if rel_product.compare_at_price > rel_product.price %}
-                <span class="km-price-compare">{{ rel_product.compare_at_price | money }}</span>
-                {% endif %}
+                <span class="km-price-current">₹499</span>
+                <span class="km-price-compare">₹699</span>
               </div>
-              <form method="post" action="{{ routes.cart_add_url }}" style="margin-top: 10px;">
-                <input type="hidden" name="id" value="{{ rel_product.selected_or_first_available_variant.id }}" />
-                <button type="submit" class="km-add-cart-btn">Add to Cart</button>
-              </form>
+              <a class="km-add-cart-btn" href="/products/chhatrapati-shivaji-maharaj-miniature-metal-wall-plate-11-inch">View Product</a>
             </div>
-          </div>
-          {% endfor %}
+          </article>
+          <article class="km-product-card km-noise-card" data-handle="royal-jodhpur-damascus">
+            <div class="km-product-media">
+              <span class="km-card-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Save ₹700</span>
+              <a href="/products/indian-groom-artistic-sword-affordable-sword-steel-blade-free-shipping"><img src="https://cdn.shopify.com/s/files/1/0718/3600/8668/files/affordable-indian-groom-sword-front-view.png?v=1777726087" alt="Indian Groom Artistic Sword" class="km-product-img" decoding="async" loading="lazy" /></a>
+            </div>
+            <div class="km-product-info">
+              <span class="km-product-vendor">KraftMart Heritage</span>
+              <h3 class="km-product-title"><a href="/products/indian-groom-artistic-sword-affordable-sword-steel-blade-free-shipping">Indian Groom Artistic Sword</a></h3>
+              <p class="km-card-rating" aria-label="4.9 out of 5 KraftMart Google rating"><span aria-hidden="true">★★★★★</span> 4.9/5 KraftMart Google rating</p>
+              <div class="km-price-wrapper"><span class="km-price-current">₹799</span><span class="km-price-compare">₹1,499</span></div>
+              <a class="km-add-cart-btn" href="/products/indian-groom-artistic-sword-affordable-sword-steel-blade-free-shipping">View Product</a>
+            </div>
+          </article>
+          <article class="km-product-card km-noise-card" data-handle="dawami-ceremonial-sword">
+            <div class="km-product-media">
+              <span class="km-card-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Save ₹200</span>
+              <a href="/products/jay-shri-ram-miniature-free-handicraft"><img src="https://cdn.shopify.com/s/files/1/0718/3600/8668/files/jai-shree-ram-sword-under-1000..jpg?v=1787493256" alt="Jay Shri Ram miniature" class="km-product-img" decoding="async" loading="lazy" /></a>
+            </div>
+            <div class="km-product-info">
+              <span class="km-product-vendor">KraftMart Heritage</span>
+              <h3 class="km-product-title"><a href="/products/jay-shri-ram-miniature-free-handicraft">Jay Shri Ram miniature</a></h3>
+              <p class="km-card-rating" aria-label="4.9 out of 5 KraftMart Google rating"><span aria-hidden="true">★★★★★</span> 4.9/5 KraftMart Google rating</p>
+              <div class="km-price-wrapper"><span class="km-price-current">₹799</span><span class="km-price-compare">₹999</span></div>
+              <a class="km-add-cart-btn" href="/products/jay-shri-ram-miniature-free-handicraft">View Product</a>
+            </div>
+          </article>
+          <article class="km-product-card km-noise-card" data-handle="miniature-khanda-gift">
+            <div class="km-product-media">
+              <span class="km-card-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Save ₹300</span>
+              <a href="/products/rajput-wedding-handicraft-with-jai-shree-ram-engraving-under-1000"><img src="https://cdn.shopify.com/s/files/1/0718/3600/8668/files/rajput_wedding_sword.png?v=1777726087" alt="Rajput Wedding Handicraft" class="km-product-img" decoding="async" loading="lazy" /></a>
+            </div>
+            <div class="km-product-info">
+              <span class="km-product-vendor">KraftMart Heritage</span>
+              <h3 class="km-product-title"><a href="/products/rajput-wedding-handicraft-with-jai-shree-ram-engraving-under-1000">Rajput Wedding Handicraft</a></h3>
+              <p class="km-card-rating" aria-label="4.9 out of 5 KraftMart Google rating"><span aria-hidden="true">★★★★★</span> 4.9/5 KraftMart Google rating</p>
+              <div class="km-price-wrapper"><span class="km-price-current">₹899</span><span class="km-price-compare">₹1,199</span></div>
+              <a class="km-add-cart-btn" href="/products/rajput-wedding-handicraft-with-jai-shree-ram-engraving-under-1000">View Product</a>
+            </div>
+          </article>
         </div>
 
       </div>
