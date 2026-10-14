@@ -367,7 +367,7 @@ function kmProductCard(product, showSwatches) {
   const compare = Number(variant.compare_at_price);
   const price = Number(variant.price);
   const saving = compare > price ? `Save ${kmMoney(compare - price)}` : '';
-  const detailUrl = `/products/${encodeURIComponent(product.handle)}`;
+  const detailUrl = `/product-detail.html?handle=${encodeURIComponent(product.handle)}`;
   const details = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
   const specsAttr = details.specs.slice(0, 4).map(spec => `${spec.key}: ${spec.value}`).join('|');
 
@@ -433,7 +433,7 @@ function hydrateHeroCards(products) {
     const compare = Number(variant.compare_at_price);
     const price = Number(variant.price);
     const shortTitle = kmCleanCardTitle(product.title);
-    const detailUrl = `/products/${encodeURIComponent(product.handle)}`;
+    const detailUrl = `/product-detail.html?handle=${encodeURIComponent(product.handle)}`;
     card.innerHTML = `<a href="${detailUrl}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span>${compare > price ? `<span class="km-card-urgency-badge km-hero-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Limited time offer</span>` : ''}<h3 class="km-3d-card-title" title="${kmEscape(product.title)}"><a href="${detailUrl}">${kmEscape(shortTitle)}</a></h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
   });
 }
@@ -2149,7 +2149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (productCard && !e.target.closest('.km-add-cart-btn, .km-quick-view-btn, .km-card-wishlist-btn, .km-swatch-container, .km-color-swatch, .km-swatch-btn, a, button, input, form')) {
       const handle = productCard.getAttribute('data-handle');
       if (handle) {
-        window.location.href = `/products/${encodeURIComponent(handle)}`;
+        window.location.assign(`/product-detail.html?handle=${encodeURIComponent(handle)}`);
       }
     }
   });
