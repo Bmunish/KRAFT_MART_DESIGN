@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Render the Shopify theme into static files for Vercel preview hosting."""
 
+import hashlib
 import json
 import shutil
 from pathlib import Path
@@ -33,6 +34,10 @@ OUTPUTS = {
 
 
 def build():
+    versioned_assets = {
+        name: hashlib.sha256((Path("assets") / name).read_bytes()).hexdigest()[:12]
+        for name in ("kraftmart-heritage.css", "kraftmart-heritage.js", "km-cart.js")
+    }
     output = Path("public")
     if output.exists():
         shutil.rmtree(output)
@@ -40,6 +45,8 @@ def build():
 
     for template, destinations in OUTPUTS.items():
         page = "\n".join(line.rstrip() for line in server.render_page(template).splitlines()) + "\n"
+        for name, version in versioned_assets.items():
+            page = page.replace(f"/assets/{name}", f"/assets/{name}?v={version}")
         for destination in destinations:
             path = output / destination
             path.parent.mkdir(parents=True, exist_ok=True)

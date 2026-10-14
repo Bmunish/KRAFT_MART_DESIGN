@@ -7927,7 +7927,7 @@ shopify-variant-selector::part(radio-selected) {
 }
 
 
-/* Mobile homepage layout: clear hero, product cards and readable reviews. */
+/* Mobile homepage: hero banner, shoppable products, then supporting sections. */
 @media (max-width: 600px) {
   #km-hero {
     overflow: hidden !important;
@@ -7935,77 +7935,25 @@ shopify-variant-selector::part(radio-selected) {
   }
 
   #km-hero > .km-container {
-    padding: 20px 16px 28px !important;
+    padding: 24px 16px 30px !important;
   }
 
   #km-hero .km-hero-grid {
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
-    gap: 20px !important;
+    gap: 0 !important;
   }
 
-  #km-hero .km-hero-content,
-  #km-hero .km-hero-visual {
+  #km-hero .km-hero-content {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
+    order: 0;
   }
 
-  #km-hero .km-hero-content { order: 0; }
-  #km-hero .km-hero-visual { order: 1; }
-
-  #km-hero .km-3d-stage {
-    display: flex !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-width: 360px !important;
-    padding: 0 0 58px !important;
-    margin: 0 auto !important;
-    perspective: none !important;
-    transform: none !important;
-  }
-
-  #km-hero .km-3d-card {
+  #km-hero .km-hero-visual {
     display: none !important;
-  }
-
-  #km-hero .km-3d-card.is-center {
-    display: flex !important;
-    position: relative !important;
-    inset: auto !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    transform: none !important;
-    border-radius: 16px !important;
-    background: #faf7f2 !important;
-    box-shadow: 0 8px 22px rgba(69, 48, 29, 0.12) !important;
-  }
-
-  #km-hero .km-3d-card-img-wrap {
-    flex: none !important;
-    height: 210px !important;
-    padding: 16px !important;
-    background: #f3eee5 !important;
-  }
-
-  #km-hero .km-3d-card-img-wrap img {
-    max-height: 100% !important;
-    filter: none !important;
-  }
-
-  #km-hero .km-3d-card-label {
-    padding: 14px 16px 16px !important;
-    text-align: center !important;
-  }
-
-  #km-hero .km-3d-card-title {
-    font-size: 1rem !important;
-  }
-
-  #km-hero .km-3d-controls {
-    bottom: 0 !important;
   }
 
   #featured-products {
@@ -8123,10 +8071,7 @@ shopify-variant-selector::part(radio-selected) {
 
   .km-tcard-author > div { min-width: 0; }
   .km-tcard-author-name,
-  .km-tcard-author-meta {
-    overflow-wrap: anywhere;
-  }
-
+  .km-tcard-author-meta { overflow-wrap: anywhere; }
   .km-tcard-author-name { font-size: 0.82rem !important; }
   .km-tcard-author-meta { font-size: 0.66rem !important; }
 }
