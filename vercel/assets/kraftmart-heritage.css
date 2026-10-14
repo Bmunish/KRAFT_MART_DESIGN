@@ -7926,3 +7926,207 @@ shopify-variant-selector::part(radio-selected) {
   border-color: #FFD700 !important;
 }
 
+
+/* Mobile homepage layout: clear hero, product cards and readable reviews. */
+@media (max-width: 600px) {
+  #km-hero {
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  #km-hero > .km-container {
+    padding: 20px 16px 28px !important;
+  }
+
+  #km-hero .km-hero-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 20px !important;
+  }
+
+  #km-hero .km-hero-content,
+  #km-hero .km-hero-visual {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  #km-hero .km-hero-content { order: 0; }
+  #km-hero .km-hero-visual { order: 1; }
+
+  #km-hero .km-3d-stage {
+    display: flex !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-width: 360px !important;
+    padding: 0 0 58px !important;
+    margin: 0 auto !important;
+    perspective: none !important;
+    transform: none !important;
+  }
+
+  #km-hero .km-3d-card {
+    display: none !important;
+  }
+
+  #km-hero .km-3d-card.is-center {
+    display: flex !important;
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    transform: none !important;
+    border-radius: 16px !important;
+    background: #faf7f2 !important;
+    box-shadow: 0 8px 22px rgba(69, 48, 29, 0.12) !important;
+  }
+
+  #km-hero .km-3d-card-img-wrap {
+    flex: none !important;
+    height: 210px !important;
+    padding: 16px !important;
+    background: #f3eee5 !important;
+  }
+
+  #km-hero .km-3d-card-img-wrap img {
+    max-height: 100% !important;
+    filter: none !important;
+  }
+
+  #km-hero .km-3d-card-label {
+    padding: 14px 16px 16px !important;
+    text-align: center !important;
+  }
+
+  #km-hero .km-3d-card-title {
+    font-size: 1rem !important;
+  }
+
+  #km-hero .km-3d-controls {
+    bottom: 0 !important;
+  }
+
+  #featured-products {
+    padding: 28px 0 36px !important;
+  }
+
+  #featured-products .km-product-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+    max-width: 440px !important;
+    margin: 0 auto !important;
+  }
+
+  #featured-products .km-product-card {
+    width: 100% !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 16px rgba(69, 48, 29, 0.08) !important;
+    transform: none !important;
+  }
+
+  #featured-products .km-product-media {
+    aspect-ratio: 1.2 / 1 !important;
+    padding: 18px !important;
+  }
+
+  #featured-products .km-product-media img {
+    max-width: 100% !important;
+  }
+
+  #featured-products .km-product-info {
+    padding: 14px 16px 16px !important;
+  }
+
+  #featured-products .km-product-title {
+    min-height: 0 !important;
+    font-size: 1rem !important;
+    line-height: 1.35 !important;
+  }
+
+  #featured-products .km-card-trust-line {
+    white-space: normal !important;
+    font-size: 0.72rem !important;
+  }
+
+  #featured-products .km-price-current {
+    font-size: 1.05rem !important;
+  }
+
+  #featured-products .km-add-cart-btn {
+    min-height: 48px !important;
+    padding: 12px 16px !important;
+    font-size: 0.9rem !important;
+    border-radius: 8px !important;
+  }
+
+  .km-testimonials-marquee-section {
+    padding: 44px 0 !important;
+  }
+
+  .km-testimonials-header {
+    margin: 0 auto 24px !important;
+    padding: 0 16px;
+  }
+
+  .km-testimonials-header .km-eyebrow {
+    font-size: 0.62rem !important;
+    line-height: 1.5;
+  }
+
+  .km-testimonials-header h2 {
+    font-size: 1.65rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .km-testimonial-card-v2 {
+    flex: 0 0 min(84vw, 320px) !important;
+    width: min(84vw, 320px) !important;
+    max-width: min(84vw, 320px) !important;
+    min-height: 0 !important;
+    padding: 16px !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+
+  .km-tcard-top {
+    align-items: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 6px 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .km-tcard-badge {
+    max-width: 100%;
+    white-space: normal;
+    font-size: 0.58rem !important;
+  }
+
+  .km-tcard-quote {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 12px !important;
+    overflow-wrap: anywhere;
+  }
+
+  .km-tcard-product {
+    flex-wrap: wrap;
+    font-size: 0.68rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  .km-tcard-author {
+    gap: 9px !important;
+    min-width: 0;
+  }
+
+  .km-tcard-author > div { min-width: 0; }
+  .km-tcard-author-name,
+  .km-tcard-author-meta {
+    overflow-wrap: anywhere;
+  }
+
+  .km-tcard-author-name { font-size: 0.82rem !important; }
+  .km-tcard-author-meta { font-size: 0.66rem !important; }
+}

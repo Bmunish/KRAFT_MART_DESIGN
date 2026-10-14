@@ -60,7 +60,7 @@
             <!-- Card 1: Jaipur Wedding Talwar (CENTER) -->
             <div class="km-3d-card is-center" data-index="0" data-hero-card="1">
               <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg1" src="{{ section.settings.card_image_1 | default: hero_card_1 }}" alt="{{ section.settings.card_title_1 | default: 'Jaipur Wedding Talwar' }}" decoding="async" />
+                <img id="kmHeroCardImg1" src="{{ section.settings.card_image_1 | default: ('hero_talwar.png' | asset_url) }}" alt="{{ section.settings.card_title_1 | default: 'Jaipur Wedding Talwar' }}" decoding="async" />
               </div>
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag1">&#10022; {{ section.settings.card_tag_1 | default: "Bestseller" }}</span>
@@ -73,7 +73,7 @@
             <!-- Card 2: Royal Jodhpur Damascus (RIGHT) -->
             <div class="km-3d-card is-right" data-index="1" data-hero-card="2">
               <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg2" src="{{ section.settings.card_image_2 | default: hero_card_2 }}" alt="{{ section.settings.card_title_2 | default: 'Royal Jodhpur Damascus' }}" decoding="async" loading="lazy" />
+                <img id="kmHeroCardImg2" src="{{ section.settings.card_image_2 | default: ('sword2.png' | asset_url) }}" alt="{{ section.settings.card_title_2 | default: 'Royal Jodhpur Damascus' }}" decoding="async" loading="lazy" />
               </div>
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag2">&#10022; {{ section.settings.card_tag_2 | default: "Master Metallurgy" }}</span>
@@ -86,7 +86,7 @@
             <!-- Card 3: Dawami Ceremonial Sword (LEFT) -->
             <div class="km-3d-card is-left" data-index="2" data-hero-card="3">
               <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg3" src="{{ section.settings.card_image_3 | default: hero_card_3 }}" alt="{{ section.settings.card_title_3 | default: 'Dawami Ceremonial Sword' }}" decoding="async" loading="lazy" />
+                <img id="kmHeroCardImg3" src="{{ section.settings.card_image_3 | default: ('sword.png' | asset_url) }}" alt="{{ section.settings.card_title_3 | default: 'Dawami Ceremonial Sword' }}" decoding="async" loading="lazy" />
               </div>
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag3">&#10022; {{ section.settings.card_tag_3 | default: "Heritage Classic" }}</span>
