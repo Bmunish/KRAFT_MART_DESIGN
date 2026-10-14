@@ -396,7 +396,7 @@ function kmProductCard(product, showSwatches) {
       </div>
     </div>` : '';
 
-  const urgencyText = compare > price ? `Hurry! Save ${kmMoney(compare - price)}` : '';
+  const urgencyText = compare > price ? `Hurry! Limited time offer` : '';
 
   const variantId = variant.id || '';
   return `<article class="km-product-card km-noise-card" data-handle="${kmEscapeAttr(product.handle || '')}" data-variant-id="${variantId}" data-category="${kmCategory(product)}" data-qv-img="${kmEscapeAttr(image || '')}" data-qv-title="${kmEscapeAttr(product.title)}" data-qv-desc="${kmEscapeAttr(details.description || '')}" data-qv-specs="${kmEscapeAttr(specsAttr)}" data-qv-price="${kmEscapeAttr(kmMoney(price))}" data-qv-compare="${compare > price ? kmEscapeAttr(kmMoney(compare)) : ''}" data-inr-price="${price}" data-price="${price}">
@@ -434,7 +434,7 @@ function hydrateHeroCards(products) {
     const price = Number(variant.price);
     const shortTitle = kmCleanCardTitle(product.title);
     const detailUrl = `/products/${encodeURIComponent(product.handle)}`;
-    card.innerHTML = `<a href="${detailUrl}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span>${compare > price ? `<span class="km-card-urgency-badge km-hero-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Save ${kmMoney(compare - price)}</span>` : ''}<h3 class="km-3d-card-title" title="${kmEscape(product.title)}"><a href="${detailUrl}">${kmEscape(shortTitle)}</a></h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
+    card.innerHTML = `<a href="${detailUrl}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span>${compare > price ? `<span class="km-card-urgency-badge km-hero-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Limited time offer</span>` : ''}<h3 class="km-3d-card-title" title="${kmEscape(product.title)}"><a href="${detailUrl}">${kmEscape(shortTitle)}</a></h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
   });
 }
 
