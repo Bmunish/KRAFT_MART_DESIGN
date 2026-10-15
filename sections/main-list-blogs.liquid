@@ -1,0 +1,40 @@
+<section class="km-page-hero km-glass-hero km-hero-minimal">
+  <div class="km-container km-page-hero-inner">
+    <div>
+      <div class="km-page-hero-breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>›</span><span>Journal</span></div>
+      <h1 class="km-heading-hero">KraftMart Journal</h1>
+      <p class="km-page-hero-lead">Guides, forging traditions, and stories from our Amritsar workshop.</p>
+    </div>
+  </div>
+</section>
+
+<section class="km-section" style="padding:56px 0 100px">
+  <div class="km-container">
+    {% if blogs.size > 0 %}
+      <div class="km-blog-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px">
+        {% for blog_item in blogs %}
+          <article class="km-blog-card">
+            <div class="km-blog-body">
+              <span class="km-eyebrow">{{ blog_item.articles_count }} articles</span>
+              <h2 class="km-blog-title">{{ blog_item.title | escape }}</h2>
+              {% for article in blog_item.articles limit: 3 %}
+                <p class="km-blog-excerpt"><a href="{{ article.url }}">{{ article.title | escape }}</a></p>
+              {% endfor %}
+              <a href="{{ blog_item.url }}" class="km-blog-link">View all articles →</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No blogs are published yet. Publish a blog in Shopify Admin to show it here.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog index",
+  "settings": [],
+  "presets": [{ "name": "Blog index" }]
+}
+{% endschema %}

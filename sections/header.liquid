@@ -118,7 +118,8 @@
           {% if section.settings.menu != blank %}
             {% for link in section.settings.menu.links %}
               <li class="{% if link.links != blank %}km-nav-item km-has-dropdown{% endif %}">
-                <a href="{{ link.url }}" class="km-nav-link{% if link.active %} active{% endif %}">{{ link.title | escape }}{% if link.links != blank %} <span class="km-dropdown-arrow">▾</span>{% endif %}</a>
+                {% assign nav_title = link.title | downcase %}
+                <a href="{% if nav_title contains 'blog' or nav_title contains 'journal' %}{{ routes.all_blogs_url }}{% else %}{{ link.url }}{% endif %}" class="km-nav-link{% if link.active %} active{% endif %}">{{ link.title | escape }}{% if link.links != blank %} <span class="km-dropdown-arrow">▾</span>{% endif %}</a>
                 {% if link.links != blank %}
                   <div class="km-policy-dropdown"><ul class="km-policy-dropdown-list">
                     {% for child_link in link.links %}<li><a href="{{ child_link.url }}" class="km-policy-link">{{ child_link.title | escape }}</a></li>{% endfor %}
@@ -181,7 +182,8 @@
     <ul class="km-mobile-nav-list">
       {% if section.settings.menu != blank %}
         {% for link in section.settings.menu.links %}
-          <li><a href="{{ link.url }}" class="km-mobile-nav-link">{{ link.title | escape }}</a>
+          {% assign nav_title = link.title | downcase %}
+          <li><a href="{% if nav_title contains 'blog' or nav_title contains 'journal' %}{{ routes.all_blogs_url }}{% else %}{{ link.url }}{% endif %}" class="km-mobile-nav-link">{{ link.title | escape }}</a>
             {% if link.links != blank %}<ul class="km-mobile-nav-list">{% for child_link in link.links %}<li><a href="{{ child_link.url }}" class="km-mobile-nav-link" style="font-size: 0.875rem;">{{ child_link.title | escape }}</a></li>{% endfor %}</ul>{% endif %}
           </li>
         {% endfor %}
