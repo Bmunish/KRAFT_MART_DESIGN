@@ -53,7 +53,7 @@
                 {% endif %}
               </div>
               <form method="post" action="/cart/add" style="margin: 0;">
-                <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
                 <button type="button" class="km-add-cart-btn" data-action="open-cart">Add to Cart</button>
               </form>
             </div>

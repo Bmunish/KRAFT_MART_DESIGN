@@ -362,7 +362,7 @@ function kmCategory(product) {
 }
 
 function kmProductCard(product, showSwatches) {
-  const variant = product.variants[0] || {};
+  const variant = product.variants.find(item => item.available) || product.variants[0] || {};
   const image = product.images[0] && product.images[0].src;
   const compare = Number(variant.compare_at_price);
   const price = Number(variant.price);
@@ -545,6 +545,8 @@ function hydrateProductDetail(products = []) {
       if (pdpQty > 1) {
         pdpQty--;
         if (pdpQtyVal) pdpQtyVal.textContent = pdpQty;
+        const quantityInput = document.getElementById('kmPdpRealQty');
+        if (quantityInput) quantityInput.value = pdpQty;
       }
     });
   }
@@ -554,6 +556,8 @@ function hydrateProductDetail(products = []) {
       if (pdpQty < 99) {
         pdpQty++;
         if (pdpQtyVal) pdpQtyVal.textContent = pdpQty;
+        const quantityInput = document.getElementById('kmPdpRealQty');
+        if (quantityInput) quantityInput.value = pdpQty;
       }
     });
   }
@@ -663,18 +667,7 @@ async function initRealCatalogue() {
       displayProducts = products.filter(p => Number(p.variants[0]?.price) <= 2000);
     }
 
-    // Automatically sort products from low to high price
-    displayProducts.sort((a, b) => {
-      const aPrice = Number(a.variants[0]?.price || 0);
-      const bPrice = Number(b.variants[0]?.price || 0);
-      return aPrice - bPrice;
-    });
-
-    const homeProducts = [...products].sort((a, b) => {
-      const aPrice = Number(a.variants[0]?.price || 0);
-      const bPrice = Number(b.variants[0]?.price || 0);
-      return aPrice - bPrice;
-    });
+    const homeProducts = products;
 
     document.querySelectorAll('[data-live-products]').forEach(grid => {
       const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
@@ -690,19 +683,6 @@ async function initRealCatalogue() {
     const count = document.getElementById('kmCatalogCount');
     if (count) count.textContent = `${displayProducts.length} KraftMart products`;
 
-    const sort = document.getElementById('kmCatalogSort');
-    if (sort) {
-      sort.value = 'price-asc';
-      sort.addEventListener('change', () => {
-        const grid = document.querySelector('[data-live-mode="catalog"]') || document.getElementById('kmProductGrid');
-        const sorted = [...displayProducts].sort((a, b) => {
-          const aPrice = Number(a.variants[0]?.price || 0), bPrice = Number(b.variants[0]?.price || 0);
-          if (sort.value === 'price-desc') return bPrice - aPrice;
-          return aPrice - bPrice; // default low to high
-        });
-        if (grid) grid.innerHTML = sorted.map(p => kmProductCard(p, true)).join('');
-      });
-    }
     hydrateProductDetail(products);
     initProductBubbleClicks(products);
   } catch (error) {
@@ -901,34 +881,6 @@ function initCartDrawer() {
     });
   });
 
-  // Global handle for add-to-cart forms
-  document.querySelectorAll('form[action*="/cart/add"]').forEach(form => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) submitBtn.disabled = true;
-
-      try {
-        const formData = new FormData(form);
-        const res = await fetch('/cart/add.js', {
-          method: 'POST',
-          body: formData,
-          headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        });
-
-        if (res.ok) {
-          await updateCartDrawerContent();
-          openCartDrawer();
-        } else {
-          console.error('Cart add failed');
-        }
-      } catch (err) {
-        console.error('Cart submission error', err);
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-      }
-    });
-  });
 }
 
 function openCartDrawer() {
@@ -1003,6 +955,12 @@ function initQuickViewModal() {
 
     // Extract attributes
     const handle = card.getAttribute('data-handle') || '';
+    const modal = document.getElementById('kmQuickViewModal');
+    if (modal) {
+      modal.dataset.productHandle = handle;
+      const liveProduct = (window.KM_CACHED_PRODUCTS || []).find(product => product.handle === handle);
+      modal.dataset.variantId = liveProduct?.variants?.find(variant => variant.available)?.id || '';
+    }
     const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src || 'assets/sword.png';
     const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent || 'Ceremonial Masterpiece';
     const desc = card.getAttribute('data-qv-desc') || '';
@@ -2110,27 +2068,29 @@ function initCatalogToolbarAndFilters() {
     });
   }
 
-  // 4. Sorting Selector Logic (Default: Price Low to High)
+  // 4. Sorting Selector Logic (default keeps Shopify's product order)
   if (sortSelect && grid) {
     const applySort = () => {
-      const val = sortSelect.value || 'price-asc';
+      const val = sortSelect.value || 'featured';
       const cards = Array.from(grid.querySelectorAll('.km-product-card'));
+      cards.forEach((card, index) => {
+        if (card.dataset.featuredOrder === undefined) card.dataset.featuredOrder = index;
+      });
 
       cards.sort((a, b) => {
         const priceA = parseInt(String(a.getAttribute('data-price') || a.getAttribute('data-inr-price') || '0').replace(/[^0-9]/g, ''), 10);
         const priceB = parseInt(String(b.getAttribute('data-price') || b.getAttribute('data-inr-price') || '0').replace(/[^0-9]/g, ''), 10);
 
+        if (val === 'featured' || val === 'newest') return Number(a.dataset.featuredOrder) - Number(b.dataset.featuredOrder);
         if (val === 'price-desc') return priceB - priceA;
-        return priceA - priceB; // Default low to high
+        return priceA - priceB;
       });
 
       cards.forEach(card => grid.appendChild(card));
     };
 
-    sortSelect.value = 'price-asc';
+    sortSelect.value = 'featured';
     sortSelect.addEventListener('change', applySort);
-    // Sort low to high immediately upon load
-    applySort();
   }
 }
 

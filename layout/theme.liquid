@@ -26,6 +26,7 @@
       display: none !important;
     }
   </style>
+  <script>window.KMShopify = { root: {{ routes.root_url | json }}, moneyFormat: {{ shop.money_format | json }}, currency: {{ shop.currency | json }} };</script>
   <script src="{{ 'kraftmart-heritage.js' | asset_url }}" defer></script>
   <script src="{{ 'km-cart.js' | asset_url }}" defer></script>
 
