@@ -668,7 +668,7 @@ async function initRealCatalogue() {
 
     const homeProducts = products;
 
-    document.querySelectorAll('[data-live-products]').forEach(grid => {
+    document.querySelectorAll('[data-live-products]:not([data-live-mode="home"])').forEach(grid => {
       const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
       const pageHandle = window.location.pathname.match(/^\/products\/([^/]+)/)?.[1];
       const sourceList = grid.dataset.liveMode === 'related'
