@@ -5,6 +5,19 @@
 {% assign hero_card_1 = 'hero_talwar.png' | asset_url %}
 {% assign hero_card_2 = 'sword2.png' | asset_url %}
 {% assign hero_card_3 = 'sword.png' | asset_url %}
+{% assign hero_collection_products = section.settings.hero_collection.products %}
+{% if section.settings.hero_collection != blank %}
+  {% assign showcase_product_1 = hero_collection_products[0] %}
+  {% assign showcase_product_2 = hero_collection_products[1] %}
+  {% assign showcase_product_3 = hero_collection_products[2] %}
+{% else %}
+  {% assign showcase_product_1 = section.settings.product_1 %}
+  {% assign showcase_product_2 = section.settings.product_2 %}
+  {% assign showcase_product_3 = section.settings.product_3 %}
+{% endif %}
+{% assign showcase_variant_1 = showcase_product_1.selected_or_first_available_variant %}
+{% assign showcase_variant_2 = showcase_product_2.selected_or_first_available_variant %}
+{% assign showcase_variant_3 = showcase_product_3.selected_or_first_available_variant %}
 <section class="km-hero-section km-blob-wrapper" id="km-hero"
     style="min-height: 76vh; display: flex; align-items: center; position: relative; overflow: hidden;">
 
@@ -36,7 +49,7 @@
           <p class="km-hero-subtext" id="kmHeroSubtext" style="color: var(--km-text-secondary); font-size: 1.05rem; line-height: 1.7; max-width: 520px; margin-bottom: 30px;">{{ section.settings.hero_subtext | default: "Authentic Rajput talwars &amp; ceremonial blades with complimentary custom laser engraving. Delivered with royal lineage to your doorstep." }}</p>
           <div class="km-hero-actions">
             <!-- Sword-Slash Button Animation CTA: Royal Crimson with blade glint -->
-            <a href="/collections/all" class="km-btn km-btn-primary km-btn-sword-slash"
+            <a href="{{ section.settings.hero_collection.url | default: routes.all_products_collection_url }}" class="km-btn km-btn-primary km-btn-sword-slash"
               style="padding: 16px 32px; font-weight: 700;">
               <span>EXPLORE WEDDING SWORDS &#8594;</span>
             </a>
@@ -58,41 +71,41 @@
         <div class="km-hero-visual">
           <div class="km-3d-stage" id="km3dStage">
             <!-- Card 1: Jaipur Wedding Talwar (CENTER) -->
-            <div class="km-3d-card is-center" data-index="0" data-hero-card="1">
-              <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg1" src="{{ section.settings.card_image_1 | default: hero_card_1 }}" alt="{{ section.settings.card_title_1 | default: 'Jaipur Wedding Talwar' }}" decoding="async" />
-              </div>
+            <div class="km-3d-card is-center" data-index="0" data-hero-card="1" data-product-handle="{{ showcase_product_1.handle }}">
+              {% if showcase_product_1 != blank %}<a href="{{ showcase_product_1.url }}" class="km-3d-card-img-wrap">{% else %}<div class="km-3d-card-img-wrap">{% endif %}
+                <img id="kmHeroCardImg1" src="{% if section.settings.card_image_1 != blank %}{{ section.settings.card_image_1 | image_url: width: 900 }}{% elsif showcase_product_1.featured_image %}{{ showcase_product_1.featured_image | image_url: width: 900 }}{% else %}{{ hero_card_1 }}{% endif %}" alt="{{ showcase_product_1.title | default: section.settings.card_title_1 | default: 'Jaipur Wedding Talwar' | escape }}" decoding="async" />
+              {% if showcase_product_1 != blank %}</a>{% else %}</div>{% endif %}
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag1">&#10022; {{ section.settings.card_tag_1 | default: "Bestseller" }}</span>
-                <h3 class="km-3d-card-title" id="kmHeroCardTitle1">{{ section.settings.card_title_1 | default: "Jaipur Wedding Talwar" }}</h3>
+                <h3 class="km-3d-card-title" id="kmHeroCardTitle1">{% if showcase_product_1 != blank %}{{ showcase_product_1.title | escape }}{% else %}{{ section.settings.card_title_1 | default: "Jaipur Wedding Talwar" }}{% endif %}</h3>
                 <p class="km-3d-card-sub" id="kmHeroCardSub1">{{ section.settings.card_sub_1 | default: "Kundan Brass Hilt • Red Velvet Scabbard • Free Engraving" }}</p>
-                <div class="km-3d-card-price" id="kmHeroCardPrice1">{{ section.settings.card_price_1 | default: "₹2,599" }} <span id="kmHeroCardCompare1">{{ section.settings.card_compare_1 | default: "₹3,099" }}</span></div>
+                <div class="km-3d-card-price" id="kmHeroCardPrice1">{% if showcase_product_1 != blank %}{{ showcase_variant_1.price | money }}{% else %}{{ section.settings.card_price_1 | default: "₹2,599" }} <span id="kmHeroCardCompare1">{{ section.settings.card_compare_1 | default: "₹3,099" }}</span>{% endif %}{% if showcase_product_1 != blank and showcase_variant_1.compare_at_price > showcase_variant_1.price %} <span id="kmHeroCardCompare1">{{ showcase_variant_1.compare_at_price | money }}</span>{% endif %}</div>
               </div>
             </div>
 
             <!-- Card 2: Royal Jodhpur Damascus (RIGHT) -->
-            <div class="km-3d-card is-right" data-index="1" data-hero-card="2">
-              <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg2" src="{{ section.settings.card_image_2 | default: hero_card_2 }}" alt="{{ section.settings.card_title_2 | default: 'Royal Jodhpur Damascus' }}" decoding="async" loading="lazy" />
-              </div>
+            <div class="km-3d-card is-right" data-index="1" data-hero-card="2" data-product-handle="{{ showcase_product_2.handle }}">
+              {% if showcase_product_2 != blank %}<a href="{{ showcase_product_2.url }}" class="km-3d-card-img-wrap">{% else %}<div class="km-3d-card-img-wrap">{% endif %}
+                <img id="kmHeroCardImg2" src="{% if section.settings.card_image_2 != blank %}{{ section.settings.card_image_2 | image_url: width: 900 }}{% elsif showcase_product_2.featured_image %}{{ showcase_product_2.featured_image | image_url: width: 900 }}{% else %}{{ hero_card_2 }}{% endif %}" alt="{{ showcase_product_2.title | default: section.settings.card_title_2 | default: 'Royal Jodhpur Damascus' | escape }}" decoding="async" loading="lazy" />
+              {% if showcase_product_2 != blank %}</a>{% else %}</div>{% endif %}
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag2">&#10022; {{ section.settings.card_tag_2 | default: "Master Metallurgy" }}</span>
-                <h3 class="km-3d-card-title" id="kmHeroCardTitle2">{{ section.settings.card_title_2 | default: "Royal Jodhpur Damascus" }}</h3>
+                <h3 class="km-3d-card-title" id="kmHeroCardTitle2">{% if showcase_product_2 != blank %}{{ showcase_product_2.title | escape }}{% else %}{{ section.settings.card_title_2 | default: "Royal Jodhpur Damascus" }}{% endif %}</h3>
                 <p class="km-3d-card-sub" id="kmHeroCardSub2">{{ section.settings.card_sub_2 | default: "1095/15N20 Damascus Steel • 56–58 HRC Hardness" }}</p>
-                <div class="km-3d-card-price" id="kmHeroCardPrice2">{{ section.settings.card_price_2 | default: "₹4,299" }} <span id="kmHeroCardCompare2">{{ section.settings.card_compare_2 | default: "₹4,999" }}</span></div>
+                <div class="km-3d-card-price" id="kmHeroCardPrice2">{% if showcase_product_2 != blank %}{{ showcase_variant_2.price | money }}{% else %}{{ section.settings.card_price_2 | default: "₹4,299" }} <span id="kmHeroCardCompare2">{{ section.settings.card_compare_2 | default: "₹4,999" }}</span>{% endif %}{% if showcase_product_2 != blank and showcase_variant_2.compare_at_price > showcase_variant_2.price %} <span id="kmHeroCardCompare2">{{ showcase_variant_2.compare_at_price | money }}</span>{% endif %}</div>
               </div>
             </div>
 
             <!-- Card 3: Dawami Ceremonial Sword (LEFT) -->
-            <div class="km-3d-card is-left" data-index="2" data-hero-card="3">
-              <div class="km-3d-card-img-wrap">
-                <img id="kmHeroCardImg3" src="{{ section.settings.card_image_3 | default: hero_card_3 }}" alt="{{ section.settings.card_title_3 | default: 'Dawami Ceremonial Sword' }}" decoding="async" loading="lazy" />
-              </div>
+            <div class="km-3d-card is-left" data-index="2" data-hero-card="3" data-product-handle="{{ showcase_product_3.handle }}">
+              {% if showcase_product_3 != blank %}<a href="{{ showcase_product_3.url }}" class="km-3d-card-img-wrap">{% else %}<div class="km-3d-card-img-wrap">{% endif %}
+                <img id="kmHeroCardImg3" src="{% if section.settings.card_image_3 != blank %}{{ section.settings.card_image_3 | image_url: width: 900 }}{% elsif showcase_product_3.featured_image %}{{ showcase_product_3.featured_image | image_url: width: 900 }}{% else %}{{ hero_card_3 }}{% endif %}" alt="{{ showcase_product_3.title | default: section.settings.card_title_3 | default: 'Dawami Ceremonial Sword' | escape }}" decoding="async" loading="lazy" />
+              {% if showcase_product_3 != blank %}</a>{% else %}</div>{% endif %}
               <div class="km-3d-card-label">
                 <span class="km-3d-card-tag" id="kmHeroCardTag3">&#10022; {{ section.settings.card_tag_3 | default: "Heritage Classic" }}</span>
-                <h3 class="km-3d-card-title" id="kmHeroCardTitle3">{{ section.settings.card_title_3 | default: "Dawami Ceremonial Sword" }}</h3>
+                <h3 class="km-3d-card-title" id="kmHeroCardTitle3">{% if showcase_product_3 != blank %}{{ showcase_product_3.title | escape }}{% else %}{{ section.settings.card_title_3 | default: "Dawami Ceremonial Sword" }}{% endif %}</h3>
                 <p class="km-3d-card-sub" id="kmHeroCardSub3">{{ section.settings.card_sub_3 | default: "Polished Blade • Zari Velvet Scabbard • COD Available" }}</p>
-                <div class="km-3d-card-price" id="kmHeroCardPrice3">{{ section.settings.card_price_3 | default: "₹1,999" }}</div>
+                <div class="km-3d-card-price" id="kmHeroCardPrice3">{% if showcase_product_3 != blank %}{{ showcase_variant_3.price | money }}{% else %}{{ section.settings.card_price_3 | default: "₹1,999" }}{% endif %}{% if showcase_product_3 != blank and showcase_variant_3.compare_at_price > showcase_variant_3.price %} <span id="kmHeroCardCompare3">{{ showcase_variant_3.compare_at_price | money }}</span>{% endif %}</div>
               </div>
             </div>
 
@@ -141,7 +154,7 @@
       "type": "collection",
       "id": "hero_collection",
       "label": "Hero Showcase Collection (Optional)",
-      "info": "Choose a collection to link with the hero showcase"
+      "info": "When selected, the first three products in this collection fill the cards. Clear it to use the individual Product 1–3 settings."
     },
     {
       "type": "header",

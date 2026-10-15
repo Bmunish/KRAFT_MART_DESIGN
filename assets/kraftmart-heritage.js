@@ -40,6 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initCurrencySelector();
 });
 
+document.addEventListener('shopify:section:unload', event => {
+  const section = event.target;
+  const stage = section.querySelector && section.querySelector('#km3dStage');
+  const hero = section.querySelector && section.querySelector('#km-hero');
+  if (stage && stage.kmAutoplayTimer) clearInterval(stage.kmAutoplayTimer);
+  if (hero && hero.kmSliderTimer) clearInterval(hero.kmSliderTimer);
+});
+
+document.addEventListener('shopify:section:load', event => {
+  const section = event.target;
+  if (section.querySelector && section.querySelector('#km3dStage')) init3DCinematicCarousel();
+  if (section.querySelector && section.querySelector('#km-hero')) initHeroSlider();
+});
+
 
 /* Public Shopify data is the single catalogue source for the static preview.
    Shopify's theme itself continues to use Liquid product objects. */
@@ -424,20 +438,6 @@ function kmCleanCardTitle(title) {
   return clean;
 }
 
-function hydrateHeroCards(products) {
-  document.querySelectorAll('.km-3d-card').forEach((card, index) => {
-    const product = products[index];
-    if (!product) return;
-    const variant = product.variants[0] || {};
-    const image = product.images[0] && product.images[0].src;
-    const compare = Number(variant.compare_at_price);
-    const price = Number(variant.price);
-    const shortTitle = kmCleanCardTitle(product.title);
-    const detailUrl = `/product-detail.html?handle=${encodeURIComponent(product.handle)}`;
-    card.innerHTML = `<a href="${detailUrl}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span>${compare > price ? `<span class="km-card-urgency-badge km-hero-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Limited time offer</span>` : ''}<h3 class="km-3d-card-title" title="${kmEscape(product.title)}"><a href="${detailUrl}">${kmEscape(shortTitle)}</a></h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
-  });
-}
-
 const KM_STATIC_PRODUCTS = {
   'jaipur-wedding-talwar': {
     handle: 'jaipur-wedding-talwar',
@@ -646,7 +646,6 @@ async function initRealCatalogue() {
   try {
     const products = await getLiveProducts();
     window.KM_CACHED_PRODUCTS = products;
-    hydrateHeroCards(products);
 
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('category');
@@ -1274,6 +1273,7 @@ function init3DCinematicCarousel() {
   function startAutoplay() {
     if (!autoTimer) {
       autoTimer = setInterval(rotateNext, ROTATION_INTERVAL);
+      stage.kmAutoplayTimer = autoTimer;
     }
   }
 
@@ -1281,6 +1281,7 @@ function init3DCinematicCarousel() {
     if (autoTimer) {
       clearInterval(autoTimer);
       autoTimer = null;
+      stage.kmAutoplayTimer = null;
     }
   }
 
@@ -1718,13 +1719,17 @@ function initHeroSlider() {
   }
 
   function start() {
-    if (!timer) timer = setInterval(next, INTERVAL);
+    if (!timer) {
+      timer = setInterval(next, INTERVAL);
+      hero.kmSliderTimer = timer;
+    }
   }
 
   function stop() {
     if (timer) {
       clearInterval(timer);
       timer = null;
+      hero.kmSliderTimer = null;
     }
   }
 
