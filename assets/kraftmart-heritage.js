@@ -1737,7 +1737,7 @@ function initSearchOverlayModal() {
 
 /**
  * Hero Image Slider
- * Cross-fades between the three KraftMart sword images in the background
+ * Rotates the KraftMart hero banners; mobile uses a horizontal poster slide.
  */
 function initHeroSlider() {
   const hero = document.getElementById('km-hero');
@@ -1749,7 +1749,12 @@ function initHeroSlider() {
   const INTERVAL = 4500;
 
   function next() {
-    slides[current].classList.remove('is-active');
+    const outgoing = slides[current];
+    outgoing.classList.remove('is-active');
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      outgoing.classList.add('is-exiting-left');
+      setTimeout(() => outgoing.classList.remove('is-exiting-left'), 800);
+    }
     current = (current + 1) % slides.length;
     slides[current].classList.add('is-active');
   }

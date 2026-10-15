@@ -7927,17 +7927,54 @@ shopify-variant-selector::part(radio-selected) {
 }
 
 
-/* Mobile homepage: hero banner, shoppable products, then supporting sections. */
-@media (max-width: 600px) {
+/* Mobile homepage: show the poster carousel before the featured product cards. */
+@media (max-width: 768px) {
   #km-hero {
     overflow: hidden !important;
     padding: 0 !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 
+  #km-hero > .km-hero-slider {
+    position: relative !important;
+    inset: auto !important;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    flex: 0 0 auto;
+    background: #3a1b09;
+  }
+
+  #km-hero .km-hero-slide {
+    filter: none !important;
+    background-size: cover !important;
+    background-position: center !important;
+    opacity: 0;
+    transform: translateX(100%) !important;
+    transition: opacity 700ms ease, transform 700ms ease !important;
+  }
+
+  #km-hero .km-hero-slide.is-active {
+    opacity: 1;
+    transform: translateX(0) !important;
+  }
+
+  #km-hero .km-hero-slide.is-exiting-left {
+    opacity: 0;
+    transform: translateX(-100%) !important;
+  }
+
+  #km-hero .km-hero-video-overlay,
   #km-hero > .km-container {
-    padding: 24px 16px 30px !important;
+    display: none !important;
   }
+}
 
+/* Compact product cards for narrow phones. */
+@media (max-width: 600px) {
   #km-hero .km-hero-grid {
     display: flex !important;
     flex-direction: column !important;
