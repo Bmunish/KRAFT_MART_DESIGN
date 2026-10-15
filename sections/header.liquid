@@ -69,10 +69,11 @@
 </div>
 
 <!-- Top Announcement Bar Marquee -->
+{% if section.settings.show_announcement %}
 <div class="km-announcement-bar">
   <div class="km-marquee-track">
     <div class="km-marquee-item">
-      <span>{{ section.settings.announcement_1 | default: "Our USP: Affordable swords at your doorstep with a pinch of customisation" }}</span>
+      <span>{{ section.settings.announcement_1 | default: settings.store_usp_line }}</span>
       <span class="km-marquee-divider">❖</span>
       <span>{{ section.settings.announcement_2 | default: "Cash on Delivery Available in India" }}</span>
       <span class="km-marquee-divider">❖</span>
@@ -84,7 +85,7 @@
       <span class="km-marquee-divider">❖</span>
     </div>
     <div class="km-marquee-item" aria-hidden="true">
-      <span>{{ section.settings.announcement_1 | default: "Our USP: Affordable swords at your doorstep with a pinch of customisation" }}</span>
+      <span>{{ section.settings.announcement_1 | default: settings.store_usp_line }}</span>
       <span class="km-marquee-divider">❖</span>
       <span>{{ section.settings.announcement_2 | default: "Cash on Delivery Available in India" }}</span>
       <span class="km-marquee-divider">❖</span>
@@ -97,6 +98,7 @@
     </div>
   </div>
 </div>
+{% endif %}
 
 <!-- Header Navigation -->
 <header class="km-header">
@@ -108,33 +110,40 @@
         {% else %}
           <img src="{{ 'logo.jpeg' | asset_url }}" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
         {% endif %}
-        <span style="color: var(--color-ink-navy); font-weight: 700;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+        <span style="color: var(--color-ink-navy); font-weight: 700;">{{ shop.name | escape }}</span>
       </a>
 
       <nav class="km-desktop-nav" aria-label="Main Navigation">
         <ul class="km-nav-list">
-          <li><a href="{{ routes.root_url }}" class="km-nav-link {% if request.page_type == 'index' %}active{% endif %}">Home</a></li>
-          <li><a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="km-nav-link {% if request.page_type == 'collection' %}active{% endif %}">Products</a></li>
-          <li><a href="/pages/wedding-swords" class="km-nav-link">Wedding Swords</a></li>
-          <li><a href="/pages/about" class="km-nav-link {% if request.path contains '/pages/about' %}active{% endif %}">About Us</a></li>
-          <li><a href="{{ routes.all_blogs_url | default: '/blogs' }}" class="km-nav-link {% if request.page_type == 'blog' or request.page_type == 'article' %}active{% endif %}">Blogs</a></li>
-          <li><a href="/pages/contact" class="km-nav-link {% if request.path contains '/pages/contact' %}active{% endif %}">Contact</a></li>
-
-          <!-- Policy Dropdown Menu -->
-          <li class="km-nav-item km-has-dropdown">
-            <a href="#" class="km-nav-link km-dropdown-toggle">
-              Our Policies <span class="km-dropdown-arrow">▾</span>
-            </a>
-            <div class="km-policy-dropdown">
-              <ul class="km-policy-dropdown-list">
+          {% if section.settings.menu != blank %}
+            {% for link in section.settings.menu.links %}
+              <li class="{% if link.links != blank %}km-nav-item km-has-dropdown{% endif %}">
+                <a href="{{ link.url }}" class="km-nav-link{% if link.active %} active{% endif %}">{{ link.title | escape }}{% if link.links != blank %} <span class="km-dropdown-arrow">▾</span>{% endif %}</a>
+                {% if link.links != blank %}
+                  <div class="km-policy-dropdown"><ul class="km-policy-dropdown-list">
+                    {% for child_link in link.links %}<li><a href="{{ child_link.url }}" class="km-policy-link">{{ child_link.title | escape }}</a></li>{% endfor %}
+                  </ul></div>
+                {% endif %}
+              </li>
+            {% endfor %}
+          {% else %}
+            <li><a href="{{ routes.root_url }}" class="km-nav-link">Home</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}" class="km-nav-link">Products</a></li>
+            <li><a href="/pages/wedding-swords" class="km-nav-link">Wedding Swords</a></li>
+            <li><a href="/pages/about" class="km-nav-link">About Us</a></li>
+            <li><a href="{{ routes.all_blogs_url }}" class="km-nav-link">Blogs</a></li>
+            <li><a href="/pages/contact" class="km-nav-link">Contact</a></li>
+            <li class="km-nav-item km-has-dropdown">
+              <a href="#" class="km-nav-link km-dropdown-toggle">Our Policies <span class="km-dropdown-arrow">▾</span></a>
+              <div class="km-policy-dropdown"><ul class="km-policy-dropdown-list">
                 <li><a href="/pages/shipping-policy" class="km-policy-link">SHIPPING POLICY</a></li>
                 <li><a href="/pages/processing-time" class="km-policy-link">PROCESSING TIME POLICY</a></li>
                 <li><a href="/pages/privacy-policy" class="km-policy-link">PRIVACY POLICY</a></li>
                 <li><a href="/pages/return-policy" class="km-policy-link">RETURNS AND REFUNDS</a></li>
                 <li><a href="/pages/contact" class="km-policy-link">CONTACT US</a></li>
-              </ul>
-            </div>
-          </li>
+              </ul></div>
+            </li>
+          {% endif %}
         </ul>
       </nav>
 
@@ -166,23 +175,31 @@
   <div class="km-mobile-nav-backdrop" id="kmMobileNavBackdrop"></div>
   <nav class="km-mobile-nav-panel" aria-label="Mobile Navigation">
     <div class="km-mobile-nav-header">
-      <span style="font-weight: 700; font-size: 1.1rem;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+      <span style="font-weight: 700; font-size: 1.1rem;">{{ shop.name | escape }}</span>
       <button id="kmMobileNavClose" class="km-icon-btn" aria-label="Close menu">&#10005;</button>
     </div>
     <ul class="km-mobile-nav-list">
-      <li><a href="{{ routes.root_url }}" class="km-mobile-nav-link">Home</a></li>
-      <li><a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="km-mobile-nav-link">Products</a></li>
-      <li><a href="/pages/wedding-swords" class="km-mobile-nav-link">Wedding Swords</a></li>
-      <li><a href="/pages/about" class="km-mobile-nav-link">About Us</a></li>
-      <li><a href="{{ routes.all_blogs_url | default: '/blogs' }}" class="km-mobile-nav-link">Blogs</a></li>
-      <li><a href="/pages/contact" class="km-mobile-nav-link">Contact</a></li>
-      <li style="border-top: 1px solid rgba(197,160,89,0.2); margin-top: 12px; padding-top: 12px;">
-        <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--km-gold-primary); font-weight: 600; padding: 0 20px; display: block; margin-bottom: 8px;">Our Policies</span>
-      </li>
-      <li><a href="/pages/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
-      <li><a href="/pages/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
-      <li><a href="/pages/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
-      <li><a href="/pages/return-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
+      {% if section.settings.menu != blank %}
+        {% for link in section.settings.menu.links %}
+          <li><a href="{{ link.url }}" class="km-mobile-nav-link">{{ link.title | escape }}</a>
+            {% if link.links != blank %}<ul class="km-mobile-nav-list">{% for child_link in link.links %}<li><a href="{{ child_link.url }}" class="km-mobile-nav-link" style="font-size: 0.875rem;">{{ child_link.title | escape }}</a></li>{% endfor %}</ul>{% endif %}
+          </li>
+        {% endfor %}
+      {% else %}
+        <li><a href="{{ routes.root_url }}" class="km-mobile-nav-link">Home</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}" class="km-mobile-nav-link">Products</a></li>
+        <li><a href="/pages/wedding-swords" class="km-mobile-nav-link">Wedding Swords</a></li>
+        <li><a href="/pages/about" class="km-mobile-nav-link">About Us</a></li>
+        <li><a href="{{ routes.all_blogs_url }}" class="km-mobile-nav-link">Blogs</a></li>
+        <li><a href="/pages/contact" class="km-mobile-nav-link">Contact</a></li>
+        <li style="border-top: 1px solid rgba(197,160,89,0.2); margin-top: 12px; padding-top: 12px;">
+          <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--km-gold-primary); font-weight: 600; padding: 0 20px; display: block; margin-bottom: 8px;">Our Policies</span>
+        </li>
+        <li><a href="/pages/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
+        <li><a href="/pages/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
+        <li><a href="/pages/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
+        <li><a href="/pages/return-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
+      {% endif %}
     </ul>
   </nav>
 </div>
@@ -296,7 +313,7 @@
       "type": "text",
       "id": "announcement_1",
       "label": "Message 1",
-      "default": "Our USP: Affordable swords at your doorstep with a pinch of customisation"
+      "default": ""
     },
     {
       "type": "text",

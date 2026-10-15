@@ -8,6 +8,17 @@
     content="Buy authentic Indian wedding swords, Rajput talwars, Punjabi khandas & ceremonial swords online at KraftMart. Handcrafted in Amritsar, Punjab. Free custom engraving.">
   <link rel="stylesheet" href="{{ 'kraftmart-heritage.css' | asset_url }}">
   <style>
+    :root {
+      --km-gold-primary: {{ settings.color_primary_gold }};
+      --km-gold-dark: {{ settings.color_dark_gold }};
+      --km-crimson-primary: {{ settings.color_crimson }};
+      --km-bg-primary: {{ settings.color_bg_main }};
+      --km-bg-dark: {{ settings.color_bg_dark }};
+      --color-ink-navy: {{ settings.color_ink_navy }};
+      --color-signal-blue: {{ settings.color_primary_gold }};
+      --color-paper: {{ settings.color_bg_main }};
+      --color-midnight-ink: {{ settings.color_bg_dark }};
+    }
     /* Strictly remove ABCD and color swatches on homepage */
     .km-swatch-container,
     .km-variant-swatches,

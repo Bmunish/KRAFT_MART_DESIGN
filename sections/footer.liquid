@@ -14,6 +14,7 @@
         <p style="color: var(--color-ld-fog);">
           {{ section.settings.brand_bio | default: "Handcrafted Indian wedding swords, Rajput talwars, and Sikh ceremonial heritage objects forged in Amritsar, Punjab since 1996. Our USP: Affordable swords at your doorstep with a pinch of customisation." }}
         </p>
+        <p style="color: var(--color-ld-fog);">{{ settings.store_origin_city }} · Since {{ settings.store_founding_year }}</p>
 
         <!-- Newsletter Capture Form -->
         {% form 'customer', style: "display: flex; gap: 8px; max-width: 380px; margin-top: 20px;" %}
@@ -29,25 +30,33 @@
 
       <!-- Quick Links -->
       <div>
-        <h4 class="km-footer-title">{{ section.settings.menu_1_title | default: "Quick Links" }}</h4>
+        <h4 class="km-footer-title">{{ section.settings.quick_links_title | default: "Quick Links" }}</h4>
         <ul class="km-footer-links">
+          {% if section.settings.quick_links_menu != blank %}
+            {% for link in section.settings.quick_links_menu.links %}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+          {% else %}
           <li><a href="{{ routes.root_url }}">Home</a></li>
           <li><a href="{{ routes.all_products_collection_url | default: '/collections/all' }}">All Products</a></li>
           <li><a href="/pages/wedding-swords">Wedding Swords</a></li>
           <li><a href="/pages/about">About KraftMart</a></li>
           <li><a href="{{ routes.all_blogs_url | default: '/blogs' }}">Journal</a></li>
           <li><a href="/pages/contact">Contact Us</a></li>
+          {% endif %}
         </ul>
       </div>
 
       <!-- Policies -->
       <div>
-        <h4 class="km-footer-title">{{ section.settings.menu_2_title | default: "Our Policies" }}</h4>
+        <h4 class="km-footer-title">{{ section.settings.policy_links_title | default: "Our Policies" }}</h4>
         <ul class="km-footer-links">
+          {% if section.settings.policy_links_menu != blank %}
+            {% for link in section.settings.policy_links_menu.links %}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+          {% else %}
           <li><a href="/pages/shipping-policy">Shipping &amp; Delivery</a></li>
           <li><a href="/pages/processing-time">Processing Time Policy</a></li>
           <li><a href="/pages/return-policy">Refund &amp; Return Policy</a></li>
           <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
+          {% endif %}
         </ul>
       </div>
 
@@ -58,7 +67,10 @@
           <li><span>📍 {{ section.settings.contact_address | default: "Amritsar, Punjab, India" }}</span></li>
           <li><span>📞 <a href="tel:{{ section.settings.contact_phone | default: '+917508427731' }}" style="color: inherit;">{{ section.settings.contact_phone | default: "+91-75084-27731" }}</a></span></li>
           <li><span>📧 <a href="mailto:{{ section.settings.contact_email | default: 'support@kraftmart.shop' }}" style="color: inherit;">{{ section.settings.contact_email | default: "support@kraftmart.shop" }}</a></span></li>
-          <li><span>💬 <a href="https://wa.me/{{ section.settings.whatsapp_number | default: '917508427731' }}" target="_blank" rel="noopener noreferrer" style="color: inherit;">WhatsApp COD Support</a></span></li>
+          <li><span>💬 <a href="https://wa.me/{{ section.settings.whatsapp_number | default: settings.social_whatsapp }}" target="_blank" rel="noopener noreferrer" style="color: inherit;">WhatsApp COD Support</a></span></li>
+          {% if settings.social_instagram != blank %}<li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener noreferrer">Instagram</a></li>{% endif %}
+          {% if settings.social_facebook != blank %}<li><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener noreferrer">Facebook</a></li>{% endif %}
+          {% if settings.social_youtube != blank %}<li><a href="{{ settings.social_youtube }}" target="_blank" rel="noopener noreferrer">YouTube</a></li>{% endif %}
           <li><a href="{{ section.settings.google_url | default: 'https://www.google.com/search?sca_esv=9690ff17f276db6e&rlz=1C1FHFK_enIN1105IN1105&sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&kgmid=/g/11q2rz95sv&q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop' }}" target="_blank" rel="noopener noreferrer" style="color: #4285F4; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg> Verified Google Business (4.9 ★)</a></li>
           <li><span>✈️ FedEx &amp; DHL Express Shipping</span></li>
         </ul>
@@ -67,7 +79,7 @@
 
     <div class="km-footer-bottom">
       <div>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. {{ section.settings.copyright_subtext | default: "All Rights Reserved. Handcrafted in Amritsar, India." }}</div>
-      <div>{{ section.settings.footer_usp | default: "Our USP: Affordable swords at your doorstep with a pinch of customisation • COD Available" }}</div>
+      <div>{{ section.settings.footer_usp | default: settings.store_usp_line }}</div>
     </div>
   </div>
 </footer>
@@ -86,6 +98,28 @@
       "id": "brand_bio",
       "label": "Brand Description",
       "default": "Handcrafted Indian wedding swords, Rajput talwars, and Sikh ceremonial heritage objects forged in Amritsar, Punjab since 1996. Our USP: Affordable swords at your doorstep with a pinch of customisation."
+    },
+    {
+      "type": "link_list",
+      "id": "quick_links_menu",
+      "label": "Quick Links Menu"
+    },
+    {
+      "type": "text",
+      "id": "quick_links_title",
+      "label": "Quick Links Heading",
+      "default": "Quick Links"
+    },
+    {
+      "type": "link_list",
+      "id": "policy_links_menu",
+      "label": "Policies Menu"
+    },
+    {
+      "type": "text",
+      "id": "policy_links_title",
+      "label": "Policies Heading",
+      "default": "Our Policies"
     },
     {
       "type": "header",
@@ -140,7 +174,7 @@
       "type": "text",
       "id": "footer_usp",
       "label": "Bottom Tagline",
-      "default": "Our USP: Affordable swords at your doorstep with a pinch of customisation • COD Available"
+      "default": ""
     }
   ]
 }
