@@ -66,7 +66,7 @@
         <ul class="km-footer-links">
           <li><span>📍 {{ section.settings.contact_address | default: "Amritsar, Punjab, India" }}</span></li>
           <li><span>📞 <a href="tel:{{ section.settings.contact_phone | default: '+917508427731' }}" style="color: inherit;">{{ section.settings.contact_phone | default: "+91-75084-27731" }}</a></span></li>
-          <li><span>📧 <a href="mailto:{{ section.settings.contact_email | default: 'support@kraftmart.shop' }}" style="color: inherit;">{{ section.settings.contact_email | default: "support@kraftmart.shop" }}</a></span></li>
+          <li><span>📧 <a href="mailto:sales@kraftmart.shop" style="color: inherit;">sales@kraftmart.shop</a></span></li>
           <li><span>💬 <a href="https://wa.me/{{ section.settings.whatsapp_number | default: settings.social_whatsapp }}" target="_blank" rel="noopener noreferrer" style="color: inherit;">WhatsApp COD Support</a></span></li>
           {% if settings.social_instagram != blank %}<li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener noreferrer">Instagram</a></li>{% endif %}
           {% if settings.social_facebook != blank %}<li><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener noreferrer">Facebook</a></li>{% endif %}
@@ -147,7 +147,7 @@
       "type": "text",
       "id": "contact_email",
       "label": "Email Address",
-      "default": "support@kraftmart.shop"
+      "default": "sales@kraftmart.shop"
     },
     {
       "type": "text",
