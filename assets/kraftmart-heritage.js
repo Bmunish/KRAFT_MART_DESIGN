@@ -671,9 +671,15 @@ async function initRealCatalogue() {
     document.querySelectorAll('[data-live-products]:not([data-live-mode="home"])').forEach(grid => {
       const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
       const pageHandle = window.location.pathname.match(/^\/products\/([^/]+)/)?.[1];
-      const sourceList = grid.dataset.liveMode === 'related'
+      let sourceList = grid.dataset.liveMode === 'related'
         ? homeProducts.filter(product => product.handle !== pageHandle)
         : isCatalog ? displayProducts : homeProducts;
+      const orderedHandles = (grid.dataset.productHandles || '').split(',').filter(Boolean);
+      if (orderedHandles.length) {
+        const byHandle = new Map(sourceList.map(product => [product.handle, product]));
+        sourceList = orderedHandles.map(handle => byHandle.get(handle)).filter(Boolean);
+        if (grid.dataset.liveMode === 'related') sourceList = sourceList.filter(product => product.handle !== pageHandle);
+      }
       if (!sourceList.length) return;
       const limit = grid.dataset.liveProducts === 'all' ? sourceList.length : Number(grid.dataset.liveProducts);
       grid.innerHTML = sourceList.slice(0, limit).map(p => kmProductCard(p, isCatalog)).join('');

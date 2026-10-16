@@ -3,7 +3,7 @@
   style="background-color: var(--km-bg-secondary); border-top: var(--km-border-subtle); border-bottom: var(--km-border-subtle); padding: 96px 0;">
   <div class="km-container">
     <!-- Section Header -->
-    <div class="km-section-header km-reveal" style="text-align: center; margin-bottom: 64px;">
+    <div class="km-section-header km-reveal km-story-header" style="text-align: center; margin-bottom: 64px;">
       <span class="km-eyebrow" style="color: var(--km-gold-primary); letter-spacing: 0.16em;">{{ section.settings.header_eyebrow | default: "❖ OUR HERITAGE & ARTISANAL LINEAGE ❖" }}</span>
       <h2 class="km-heading-1" style="color: var(--km-text-primary); font-size: clamp(2.2rem, 3.8vw, 3.2rem); margin: 8px 0 14px 0;">
         {{ section.settings.header_title | default: "Lakshmi Engineering Works → KraftMart" }}
@@ -14,8 +14,8 @@
     </div>
 
     <!-- Story Row 1: Lakshmi Engineering Works (Image Left, Content Right) -->
-    <div style="display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: 60px; margin-bottom: 80px;">
-      <div style="position: relative;" class="km-reveal-left">
+    <div class="km-story-row km-story-row-one" style="display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: 60px; margin-bottom: 80px;">
+      <div style="position: relative;" class="km-reveal-left km-story-image">
         <div style="border-radius: var(--km-radius-md); overflow: hidden; border: 1px solid rgba(197, 160, 89, 0.35); box-shadow: var(--km-shadow-medium); background: #14100D;">
           {% assign default_lakshmi_img = 'live_about_lakshmi.jpg' | asset_url %}
           <img src="{{ section.settings.row_1_image | default: default_lakshmi_img }}" alt="{{ section.settings.row_1_title | default: 'Lakshmi Engineering Works - Established 1996 in Punjab' | escape }}"
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="km-reveal-right">
+      <div class="km-reveal-right km-story-copy">
         <span class="km-eyebrow" style="color: var(--km-gold-dark);">{{ section.settings.row_1_eyebrow | default: "SITUATE IN THE LAND OF FIVE RIVERS" }}</span>
         <h3 class="km-heading-1" style="font-size: clamp(1.6rem, 2.5vw, 2.1rem); margin-bottom: 18px; color: var(--km-text-primary);">
           {{ section.settings.row_1_title | default: "Our 1996 Roots: Electroplating, Polishing & Blade Craft" }}
@@ -62,8 +62,8 @@
     </div>
 
     <!-- Story Row 2: KraftMart (Content Left, Image Right) -->
-    <div style="display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 60px;">
-      <div class="km-reveal-left">
+    <div class="km-story-row km-story-row-two" style="display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 60px;">
+      <div class="km-reveal-left km-story-copy">
         <span class="km-eyebrow" style="color: var(--km-gold-dark);">{{ section.settings.row_2_eyebrow | default: "PROUD SUBSIDIARY OF LAKSHMI ENGINEERING WORKS" }}</span>
         <h3 class="km-heading-1" style="font-size: clamp(1.6rem, 2.5vw, 2.1rem); margin-bottom: 18px; color: var(--km-text-primary);">
           {{ section.settings.row_2_title | default: "A Venture Called KraftMart: Your All-In-One Heritage Store" }}
@@ -97,7 +97,7 @@
         </div>
       </div>
 
-      <div style="position: relative;" class="km-reveal-right">
+      <div style="position: relative;" class="km-reveal-right km-story-image">
         <div style="border-radius: var(--km-radius-md); overflow: hidden; border: 1px solid rgba(197, 160, 89, 0.35); box-shadow: var(--km-shadow-medium); background: #14100D;">
           {% assign default_kraftmart_img = 'live_about_kraftmart.jpg' | asset_url %}
           <img src="{{ section.settings.row_2_image | default: default_kraftmart_img }}" alt="{{ section.settings.row_2_title | default: 'KraftMart Exquisite Indo-Traditional Handicrafts and Wedding Swords' | escape }}"

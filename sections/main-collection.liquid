@@ -137,7 +137,7 @@
           </div>
 
           <!-- Product Grid Container with Aceternity Focus Cards Effect -->
-          <div id="kmProductGrid" class="km-product-grid" data-live-products="all" data-live-mode="catalog" aria-live="polite">
+          <div id="kmProductGrid" class="km-product-grid" data-live-products="all" data-live-mode="catalog" data-product-handles="{% for product in collection.products %}{{ product.handle }}{% unless forloop.last %},{% endunless %}{% endfor %}" aria-live="polite">
 
             <!-- Card 1 -->
             <article class="km-product-card km-noise-card" data-category="wedding" data-price="2599"
