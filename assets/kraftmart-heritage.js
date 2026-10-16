@@ -381,7 +381,7 @@ function kmProductCard(product, showSwatches) {
   const compare = Number(variant.compare_at_price);
   const price = Number(variant.price);
   const saving = compare > price ? `Save ${kmMoney(compare - price)}` : '';
-  const detailUrl = `/product-detail.html?handle=${encodeURIComponent(product.handle)}`;
+  const detailUrl = `/products/${encodeURIComponent(product.handle)}`;
   const details = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
   const specsAttr = details.specs.slice(0, 4).map(spec => `${spec.key}: ${spec.value}`).join('|');
 
@@ -2119,7 +2119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (productCard && !e.target.closest('.km-add-cart-btn, .km-quick-view-btn, .km-card-wishlist-btn, .km-swatch-container, .km-color-swatch, .km-swatch-btn, a, button, input, form')) {
       const handle = productCard.getAttribute('data-handle');
       if (handle) {
-        window.location.assign(`/product-detail.html?handle=${encodeURIComponent(handle)}`);
+        window.location.assign(`/products/${encodeURIComponent(handle)}`);
       }
     }
   });
