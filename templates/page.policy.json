@@ -1,0 +1,80 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page-policy",
+      "settings": {
+        "padding_top": 64,
+        "padding_bottom": 80,
+        "bg_color": "#FAF7F2",
+        "container_width": 920,
+        "title_size": 32,
+        "heading_size": 22,
+        "body_size": 16,
+        "last_updated": "",
+        "text_alignment": "left"
+      },
+      "blocks": {
+        "privacy_info_nav": {
+          "type": "anchor_link",
+          "settings": {
+            "anchor_label": "Information we collect",
+            "anchor_id": "info-collect"
+          }
+        },
+        "privacy_use_nav": {
+          "type": "anchor_link",
+          "settings": {
+            "anchor_label": "How we use your data",
+            "anchor_id": "data-use"
+          }
+        },
+        "privacy_info": {
+          "type": "text_section",
+          "settings": {
+            "heading": "Information We Collect",
+            "heading_icon": "🔍",
+            "anchor_id": "info-collect",
+            "content": "<p>We collect information you provide when placing an order or contacting support, such as your name, address, phone number and email address.</p>"
+          }
+        },
+        "privacy_use": {
+          "type": "text_section",
+          "settings": {
+            "heading": "How We Use Your Data",
+            "heading_icon": "⚙️",
+            "anchor_id": "data-use",
+            "content": "<p>We use your information to process and deliver orders, provide updates and respond to support requests.</p>"
+          }
+        },
+        "privacy_contact": {
+          "type": "contact_card",
+          "settings": {
+            "title": "Privacy questions",
+            "email": "sales@kraftmart.shop",
+            "phone": "",
+            "address": ""
+          }
+        }
+      },
+      "block_order": [
+        "privacy_info_nav",
+        "privacy_use_nav",
+        "privacy_info",
+        "privacy_use",
+        "privacy_contact"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
