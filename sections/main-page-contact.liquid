@@ -24,7 +24,7 @@
       <p class="km-page-hero-lead" style="margin: 0; max-width: 580px; font-size: 0.82rem; line-height: 1.45; color: rgba(250,247,242,0.7);">Direct consultation for laser blade engraving, domestic COD advance &amp; worldwide FedEx/DHL express dispatches.</p>
     </div>
     <div class="km-mini-showcase">
-      <a href="https://wa.me/917508427731" target="_blank" rel="noopener noreferrer" class="km-mini-pill" style="text-decoration: none;">
+      <a href="https://wa.me/917508427731?text=Hi%20KraftMart%2C%20I%20have%20a%20question." target="_blank" rel="noopener noreferrer" class="km-mini-pill" style="text-decoration: none;">
         <div class="km-mini-img-box" style="background: rgba(37,211,102,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">💬</div>
         <div class="km-mini-info">
           <div class="km-mini-tag" style="color: #25D366;">Instant Concierge</div>
@@ -86,7 +86,7 @@
             <h2 style="font-family: var(--km-font-heading); font-size: 1.9rem; color: var(--km-text-primary); margin-top: 6px;">We'll Respond in Hours</h2>
           </div>
 
-          {% form 'contact' %}
+          {% form 'contact', id: 'kmWhatsAppContactForm' %}
             {% if form.posted_successfully? %}
               <div style="background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.3); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; color: #1a7c3e; font-weight: 500;">
                 ✅ Thank you! Our Amritsar team will respond within 2–4 hours.
@@ -138,6 +138,25 @@
               🔒 Your information is secure. We respond within 2–4 hours on weekdays.
             </p>
           {% endform %}
+          {% assign whatsapp_digits = section.settings.whatsapp_number | default: '917508427731' | remove: '+' | remove: '-' | remove: ' ' %}
+          <script>
+            document.getElementById('kmWhatsAppContactForm')?.addEventListener('submit', function (event) {
+              event.preventDefault();
+              const fields = new FormData(this);
+              const message = [
+                'Contact request for KraftMart',
+                `Name: ${fields.get('contact[name]') || ''}`,
+                `Phone / WhatsApp: ${fields.get('contact[phone]') || 'Not provided'}`,
+                `Email: ${fields.get('contact[email]') || ''}`,
+                `Inquiry: ${fields.get('contact[body_inquiry_type]') || ''}`,
+                `Message: ${fields.get('contact[body]') || 'No additional details'}`
+              ].join('\n');
+              const whatsappUrl = `https://wa.me/{{ whatsapp_digits }}?text=${encodeURIComponent(message)}`;
+              const whatsappWindow = window.open(whatsappUrl, '_blank');
+              if (whatsappWindow) whatsappWindow.opener = null;
+              else window.location.assign(whatsappUrl);
+            });
+          </script>
         </div>
       </div>
 
@@ -166,7 +185,7 @@
           <p style="color: var(--km-text-secondary); font-size: 0.875rem; line-height: 1.65; margin-bottom: 20px;">
             {{ section.settings.whatsapp_description | default: "Chat directly with our Amritsar craftsmen for live engraving photos, order tracking, and COD advance confirmations." }}
           </p>
-          <a href="https://wa.me/{{ section.settings.whatsapp_number | default: '917508427731' }}" target="_blank" rel="noopener noreferrer" class="km-whatsapp-btn">
+          <a href="https://wa.me/{{ section.settings.whatsapp_number | default: '917508427731' }}?text=Hi%20KraftMart%2C%20I%20would%20like%20to%20speak%20with%20your%20team." target="_blank" rel="noopener noreferrer" class="km-whatsapp-btn">
             <svg width="20" height="20" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="15" fill="#25D366"/><path d="M20.5 18.3c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4z" fill="#fff"/></svg>
             {{ section.settings.whatsapp_button_label | default: "Chat on WhatsApp" }}
           </a>
