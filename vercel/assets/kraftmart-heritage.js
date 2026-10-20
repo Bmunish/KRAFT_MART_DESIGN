@@ -40,6 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initCurrencySelector();
 });
 
+document.addEventListener('shopify:section:unload', event => {
+  const section = event.target;
+  const stage = section.querySelector && section.querySelector('#km3dStage');
+  const hero = section.querySelector && section.querySelector('#km-hero');
+  if (stage && stage.kmAutoplayTimer) clearInterval(stage.kmAutoplayTimer);
+  if (hero && hero.kmSliderTimer) clearInterval(hero.kmSliderTimer);
+});
+
+document.addEventListener('shopify:section:load', event => {
+  const section = event.target;
+  if (section.querySelector && section.querySelector('#km3dStage')) init3DCinematicCarousel();
+  if (section.querySelector && section.querySelector('#km-hero')) initHeroSlider();
+});
+
 
 /* Public Shopify data is the single catalogue source for the static preview.
    Shopify's theme itself continues to use Liquid product objects. */
@@ -362,12 +376,12 @@ function kmCategory(product) {
 }
 
 function kmProductCard(product, showSwatches) {
-  const variant = product.variants[0] || {};
+  const variant = product.variants.find(item => item.available) || product.variants[0] || {};
   const image = product.images[0] && product.images[0].src;
   const compare = Number(variant.compare_at_price);
   const price = Number(variant.price);
   const saving = compare > price ? `Save ${kmMoney(compare - price)}` : '';
-  const detailUrl = `/product-detail.html?handle=${encodeURIComponent(product.handle)}`;
+  const detailUrl = `/products/${encodeURIComponent(product.handle)}`;
   const details = kmBuildQuickViewDetails(product.body_html || '', '', product.title);
   const specsAttr = details.specs.slice(0, 4).map(spec => `${spec.key}: ${spec.value}`).join('|');
 
@@ -422,20 +436,6 @@ function kmCleanCardTitle(title) {
   let clean = title.split(/[|–—]/)[0].trim();
   if (clean.length > 34) clean = clean.substring(0, 34) + '...';
   return clean;
-}
-
-function hydrateHeroCards(products) {
-  document.querySelectorAll('.km-3d-card').forEach((card, index) => {
-    const product = products[index];
-    if (!product) return;
-    const variant = product.variants[0] || {};
-    const image = product.images[0] && product.images[0].src;
-    const compare = Number(variant.compare_at_price);
-    const price = Number(variant.price);
-    const shortTitle = kmCleanCardTitle(product.title);
-    const detailUrl = `/product-detail.html?handle=${encodeURIComponent(product.handle)}`;
-    card.innerHTML = `<a href="${detailUrl}" class="km-3d-card-img-wrap" aria-label="${kmEscape(product.title)}">${image ? `<img src="${kmEscape(image)}" alt="${kmEscape(product.title)}" loading="lazy" decoding="async">` : ''}</a><div class="km-3d-card-label"><span class="km-3d-card-tag">✦ KraftMart Heritage</span>${compare > price ? `<span class="km-card-urgency-badge km-hero-urgency-badge"><span class="km-urgency-pulse-dot"></span>Hurry! Limited time offer</span>` : ''}<h3 class="km-3d-card-title" title="${kmEscape(product.title)}"><a href="${detailUrl}">${kmEscape(shortTitle)}</a></h3><div class="km-3d-card-price" data-inr-main="${price}">${kmMoney(price)}${compare > price ? `<span data-inr-comp="${compare}">${kmMoney(compare)}</span>` : ''}</div></div>`;
-  });
 }
 
 const KM_STATIC_PRODUCTS = {
@@ -545,6 +545,8 @@ function hydrateProductDetail(products = []) {
       if (pdpQty > 1) {
         pdpQty--;
         if (pdpQtyVal) pdpQtyVal.textContent = pdpQty;
+        const quantityInput = document.getElementById('kmPdpRealQty');
+        if (quantityInput) quantityInput.value = pdpQty;
       }
     });
   }
@@ -554,6 +556,8 @@ function hydrateProductDetail(products = []) {
       if (pdpQty < 99) {
         pdpQty++;
         if (pdpQtyVal) pdpQtyVal.textContent = pdpQty;
+        const quantityInput = document.getElementById('kmPdpRealQty');
+        if (quantityInput) quantityInput.value = pdpQty;
       }
     });
   }
@@ -642,7 +646,6 @@ async function initRealCatalogue() {
   try {
     const products = await getLiveProducts();
     window.KM_CACHED_PRODUCTS = products;
-    hydrateHeroCards(products);
 
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('category');
@@ -663,25 +666,20 @@ async function initRealCatalogue() {
       displayProducts = products.filter(p => Number(p.variants[0]?.price) <= 2000);
     }
 
-    // Automatically sort products from low to high price
-    displayProducts.sort((a, b) => {
-      const aPrice = Number(a.variants[0]?.price || 0);
-      const bPrice = Number(b.variants[0]?.price || 0);
-      return aPrice - bPrice;
-    });
+    const homeProducts = products;
 
-    const homeProducts = [...products].sort((a, b) => {
-      const aPrice = Number(a.variants[0]?.price || 0);
-      const bPrice = Number(b.variants[0]?.price || 0);
-      return aPrice - bPrice;
-    });
-
-    document.querySelectorAll('[data-live-products]').forEach(grid => {
+    document.querySelectorAll('[data-live-products]:not([data-live-mode="home"])').forEach(grid => {
       const isCatalog = grid.dataset.liveMode === 'catalog' || grid.id === 'kmProductGrid';
       const pageHandle = window.location.pathname.match(/^\/products\/([^/]+)/)?.[1];
-      const sourceList = grid.dataset.liveMode === 'related'
+      let sourceList = grid.dataset.liveMode === 'related'
         ? homeProducts.filter(product => product.handle !== pageHandle)
         : isCatalog ? displayProducts : homeProducts;
+      const orderedHandles = (grid.dataset.productHandles || '').split(',').filter(Boolean);
+      if (orderedHandles.length) {
+        const byHandle = new Map(sourceList.map(product => [product.handle, product]));
+        sourceList = orderedHandles.map(handle => byHandle.get(handle)).filter(Boolean);
+        if (grid.dataset.liveMode === 'related') sourceList = sourceList.filter(product => product.handle !== pageHandle);
+      }
       if (!sourceList.length) return;
       const limit = grid.dataset.liveProducts === 'all' ? sourceList.length : Number(grid.dataset.liveProducts);
       grid.innerHTML = sourceList.slice(0, limit).map(p => kmProductCard(p, isCatalog)).join('');
@@ -690,19 +688,6 @@ async function initRealCatalogue() {
     const count = document.getElementById('kmCatalogCount');
     if (count) count.textContent = `${displayProducts.length} KraftMart products`;
 
-    const sort = document.getElementById('kmCatalogSort');
-    if (sort) {
-      sort.value = 'price-asc';
-      sort.addEventListener('change', () => {
-        const grid = document.querySelector('[data-live-mode="catalog"]') || document.getElementById('kmProductGrid');
-        const sorted = [...displayProducts].sort((a, b) => {
-          const aPrice = Number(a.variants[0]?.price || 0), bPrice = Number(b.variants[0]?.price || 0);
-          if (sort.value === 'price-desc') return bPrice - aPrice;
-          return aPrice - bPrice; // default low to high
-        });
-        if (grid) grid.innerHTML = sorted.map(p => kmProductCard(p, true)).join('');
-      });
-    }
     hydrateProductDetail(products);
     initProductBubbleClicks(products);
   } catch (error) {
@@ -901,34 +886,6 @@ function initCartDrawer() {
     });
   });
 
-  // Global handle for add-to-cart forms
-  document.querySelectorAll('form[action*="/cart/add"]').forEach(form => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) submitBtn.disabled = true;
-
-      try {
-        const formData = new FormData(form);
-        const res = await fetch('/cart/add.js', {
-          method: 'POST',
-          body: formData,
-          headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        });
-
-        if (res.ok) {
-          await updateCartDrawerContent();
-          openCartDrawer();
-        } else {
-          console.error('Cart add failed');
-        }
-      } catch (err) {
-        console.error('Cart submission error', err);
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-      }
-    });
-  });
 }
 
 function openCartDrawer() {
@@ -1003,6 +960,12 @@ function initQuickViewModal() {
 
     // Extract attributes
     const handle = card.getAttribute('data-handle') || '';
+    const modal = document.getElementById('kmQuickViewModal');
+    if (modal) {
+      modal.dataset.productHandle = handle;
+      const liveProduct = (window.KM_CACHED_PRODUCTS || []).find(product => product.handle === handle);
+      modal.dataset.variantId = liveProduct?.variants?.find(variant => variant.available)?.id || '';
+    }
     const img = card.getAttribute('data-qv-img') || card.querySelector('.km-product-img')?.src || 'assets/sword.png';
     const title = card.getAttribute('data-qv-title') || card.querySelector('.km-product-title')?.textContent || 'Ceremonial Masterpiece';
     const desc = card.getAttribute('data-qv-desc') || '';
@@ -1316,6 +1279,7 @@ function init3DCinematicCarousel() {
   function startAutoplay() {
     if (!autoTimer) {
       autoTimer = setInterval(rotateNext, ROTATION_INTERVAL);
+      stage.kmAutoplayTimer = autoTimer;
     }
   }
 
@@ -1323,6 +1287,7 @@ function init3DCinematicCarousel() {
     if (autoTimer) {
       clearInterval(autoTimer);
       autoTimer = null;
+      stage.kmAutoplayTimer = null;
     }
   }
 
@@ -1737,7 +1702,7 @@ function initSearchOverlayModal() {
 
 /**
  * Hero Image Slider
- * Cross-fades between the three KraftMart sword images in the background
+ * Rotates the KraftMart hero banners; mobile uses a horizontal poster slide.
  */
 function initHeroSlider() {
   const hero = document.getElementById('km-hero');
@@ -1749,19 +1714,28 @@ function initHeroSlider() {
   const INTERVAL = 4500;
 
   function next() {
-    slides[current].classList.remove('is-active');
+    const outgoing = slides[current];
+    outgoing.classList.remove('is-active');
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      outgoing.classList.add('is-exiting-left');
+      setTimeout(() => outgoing.classList.remove('is-exiting-left'), 800);
+    }
     current = (current + 1) % slides.length;
     slides[current].classList.add('is-active');
   }
 
   function start() {
-    if (!timer) timer = setInterval(next, INTERVAL);
+    if (!timer) {
+      timer = setInterval(next, INTERVAL);
+      hero.kmSliderTimer = timer;
+    }
   }
 
   function stop() {
     if (timer) {
       clearInterval(timer);
       timer = null;
+      hero.kmSliderTimer = null;
     }
   }
 
@@ -2105,27 +2079,29 @@ function initCatalogToolbarAndFilters() {
     });
   }
 
-  // 4. Sorting Selector Logic (Default: Price Low to High)
+  // 4. Sorting Selector Logic (default keeps Shopify's product order)
   if (sortSelect && grid) {
     const applySort = () => {
-      const val = sortSelect.value || 'price-asc';
+      const val = sortSelect.value || 'featured';
       const cards = Array.from(grid.querySelectorAll('.km-product-card'));
+      cards.forEach((card, index) => {
+        if (card.dataset.featuredOrder === undefined) card.dataset.featuredOrder = index;
+      });
 
       cards.sort((a, b) => {
         const priceA = parseInt(String(a.getAttribute('data-price') || a.getAttribute('data-inr-price') || '0').replace(/[^0-9]/g, ''), 10);
         const priceB = parseInt(String(b.getAttribute('data-price') || b.getAttribute('data-inr-price') || '0').replace(/[^0-9]/g, ''), 10);
 
+        if (val === 'featured' || val === 'newest') return Number(a.dataset.featuredOrder) - Number(b.dataset.featuredOrder);
         if (val === 'price-desc') return priceB - priceA;
-        return priceA - priceB; // Default low to high
+        return priceA - priceB;
       });
 
       cards.forEach(card => grid.appendChild(card));
     };
 
-    sortSelect.value = 'price-asc';
+    sortSelect.value = 'featured';
     sortSelect.addEventListener('change', applySort);
-    // Sort low to high immediately upon load
-    applySort();
   }
 }
 
@@ -2149,7 +2125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (productCard && !e.target.closest('.km-add-cart-btn, .km-quick-view-btn, .km-card-wishlist-btn, .km-swatch-container, .km-color-swatch, .km-swatch-btn, a, button, input, form')) {
       const handle = productCard.getAttribute('data-handle');
       if (handle) {
-        window.location.assign(`/product-detail.html?handle=${encodeURIComponent(handle)}`);
+        window.location.assign(`/products/${encodeURIComponent(handle)}`);
       }
     }
   });

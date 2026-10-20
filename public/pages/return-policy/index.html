@@ -6,8 +6,19 @@
   <title>KraftMart | Luxury Indian Heritage E-Commerce Redesign</title>
   <meta name="description"
     content="Buy authentic Indian wedding swords, Rajput talwars, Punjabi khandas & ceremonial swords online at KraftMart. Handcrafted in Amritsar, Punjab. Free custom engraving.">
-  <link rel="stylesheet" href="/assets/kraftmart-heritage.css?v=eea27c4d2173">
+  <link rel="stylesheet" href="/assets/kraftmart-heritage.css?v=dc3bd6b0c5f0">
   <style>
+    :root {
+      --km-gold-primary: ;
+      --km-gold-dark: ;
+      --km-crimson-primary: ;
+      --km-bg-primary: ;
+      --km-bg-dark: ;
+      --color-ink-navy: ;
+      --color-signal-blue: ;
+      --color-paper: ;
+      --color-midnight-ink: ;
+    }
     /* Strictly remove ABCD and color swatches on homepage */
     .km-swatch-container,
     .km-variant-swatches,
@@ -15,8 +26,9 @@
       display: none !important;
     }
   </style>
-  <script src="/assets/kraftmart-heritage.js?v=2f4309069cb1" defer></script>
-  <script src="/assets/km-cart.js?v=1f9e54ec3b28" defer></script>
+  <script>window.KMShopify = { root: /, moneyFormat: , currency:  };</script>
+  <script src="/assets/kraftmart-heritage.js?v=f344d1a02f6c" defer></script>
+  <script src="/assets/km-cart.js?v=8ff5111f1931" defer></script>
 
 
 </head>
@@ -92,34 +104,7 @@
 </div>
 
 <!-- Top Announcement Bar Marquee -->
-<div class="km-announcement-bar">
-  <div class="km-marquee-track">
-    <div class="km-marquee-item">
-      <span>Our USP: Affordable swords at your doorstep with a pinch of customisation</span>
-      <span class="km-marquee-divider">❖</span>
-      <span>Cash on Delivery Available in India</span>
-      <span class="km-marquee-divider">❖</span>
-      <span>Free Custom Engraving on All Orders</span>
-      <span class="km-marquee-divider">❖</span>
-      <span>Worldwide Shipping via FedEx & DHL</span>
-      <span class="km-marquee-divider">❖</span>
-      <span>Handcrafted in Amritsar, Punjab Since 1996</span>
-      <span class="km-marquee-divider">❖</span>
-    </div>
-    <div class="km-marquee-item" aria-hidden="true">
-      <span>Our USP: Affordable swords at your doorstep with a pinch of customisation</span>
-      <span class="km-marquee-divider">❖</span>
-      <span>Cash on Delivery Available in India</span>
-      <span class="km-marquee-divider">❖</span>
-      <span>Free Custom Engraving on All Orders</span>
-      <span class="km-marquee-divider">❖</span>
-      <span>Worldwide Shipping via FedEx & DHL</span>
-      <span class="km-marquee-divider">❖</span>
-      <span>Handcrafted in Amritsar, Punjab Since 1996</span>
-      <span class="km-marquee-divider">❖</span>
-    </div>
-  </div>
-</div>
+
 
 <!-- Header Navigation -->
 <header class="km-header">
@@ -129,33 +114,29 @@
 
           <img src="/assets/logo.jpeg" alt="KraftMart Logo" style="height: 44px; width: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--color-hairline);" />
 
-        <span style="color: var(--color-ink-navy); font-weight: 700;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+        <span style="color: var(--color-ink-navy); font-weight: 700;"></span>
       </a>
 
       <nav class="km-desktop-nav" aria-label="Main Navigation">
         <ul class="km-nav-list">
-          <li><a href="/" class="km-nav-link ">Home</a></li>
-          <li><a href="/collections/all" class="km-nav-link ">Products</a></li>
-          <li><a href="/pages/wedding-swords" class="km-nav-link">Wedding Swords</a></li>
-          <li><a href="/pages/about" class="km-nav-link ">About Us</a></li>
-          <li><a href="/blogs" class="km-nav-link ">Blogs</a></li>
-          <li><a href="/pages/contact" class="km-nav-link ">Contact</a></li>
 
-          <!-- Policy Dropdown Menu -->
-          <li class="km-nav-item km-has-dropdown">
-            <a href="#" class="km-nav-link km-dropdown-toggle">
-              Our Policies <span class="km-dropdown-arrow">▾</span>
-            </a>
-            <div class="km-policy-dropdown">
-              <ul class="km-policy-dropdown-list">
+            <li><a href="/" class="km-nav-link">Home</a></li>
+            <li><a href="/collections/all" class="km-nav-link">Products</a></li>
+            <li><a href="/pages/wedding-swords" class="km-nav-link">Wedding Swords</a></li>
+            <li><a href="/pages/about-us" class="km-nav-link">About Us</a></li>
+            <li><a href="/blogs/news" class="km-nav-link">Blogs</a></li>
+            <li><a href="/pages/contact-us" class="km-nav-link">Contact</a></li>
+            <li class="km-nav-item km-has-dropdown">
+              <a href="#" class="km-nav-link km-dropdown-toggle">Our Policies <span class="km-dropdown-arrow">▾</span></a>
+              <div class="km-policy-dropdown"><ul class="km-policy-dropdown-list">
                 <li><a href="/pages/shipping-policy" class="km-policy-link">SHIPPING POLICY</a></li>
                 <li><a href="/pages/processing-time" class="km-policy-link">PROCESSING TIME POLICY</a></li>
                 <li><a href="/pages/privacy-policy" class="km-policy-link">PRIVACY POLICY</a></li>
                 <li><a href="/pages/return-policy" class="km-policy-link">RETURNS AND REFUNDS</a></li>
-                <li><a href="/pages/contact" class="km-policy-link">CONTACT US</a></li>
-              </ul>
-            </div>
-          </li>
+                <li><a href="/pages/contact-us" class="km-policy-link">CONTACT US</a></li>
+              </ul></div>
+            </li>
+
         </ul>
       </nav>
 
@@ -187,23 +168,25 @@
   <div class="km-mobile-nav-backdrop" id="kmMobileNavBackdrop"></div>
   <nav class="km-mobile-nav-panel" aria-label="Mobile Navigation">
     <div class="km-mobile-nav-header">
-      <span style="font-weight: 700; font-size: 1.1rem;">Kraft<span style="color: var(--km-gold-primary);">Mart</span></span>
+      <span style="font-weight: 700; font-size: 1.1rem;"></span>
       <button id="kmMobileNavClose" class="km-icon-btn" aria-label="Close menu">&#10005;</button>
     </div>
     <ul class="km-mobile-nav-list">
-      <li><a href="/" class="km-mobile-nav-link">Home</a></li>
-      <li><a href="/collections/all" class="km-mobile-nav-link">Products</a></li>
-      <li><a href="/pages/wedding-swords" class="km-mobile-nav-link">Wedding Swords</a></li>
-      <li><a href="/pages/about" class="km-mobile-nav-link">About Us</a></li>
-      <li><a href="/blogs" class="km-mobile-nav-link">Blogs</a></li>
-      <li><a href="/pages/contact" class="km-mobile-nav-link">Contact</a></li>
-      <li style="border-top: 1px solid rgba(197,160,89,0.2); margin-top: 12px; padding-top: 12px;">
-        <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--km-gold-primary); font-weight: 600; padding: 0 20px; display: block; margin-bottom: 8px;">Our Policies</span>
-      </li>
-      <li><a href="/pages/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
-      <li><a href="/pages/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
-      <li><a href="/pages/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
-      <li><a href="/pages/return-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
+
+        <li><a href="/" class="km-mobile-nav-link">Home</a></li>
+        <li><a href="/collections/all" class="km-mobile-nav-link">Products</a></li>
+        <li><a href="/pages/wedding-swords" class="km-mobile-nav-link">Wedding Swords</a></li>
+        <li><a href="/pages/about-us" class="km-mobile-nav-link">About Us</a></li>
+        <li><a href="/blogs/news" class="km-mobile-nav-link">Blogs</a></li>
+        <li><a href="/pages/contact-us" class="km-mobile-nav-link">Contact</a></li>
+        <li style="border-top: 1px solid rgba(197,160,89,0.2); margin-top: 12px; padding-top: 12px;">
+          <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--km-gold-primary); font-weight: 600; padding: 0 20px; display: block; margin-bottom: 8px;">Our Policies</span>
+        </li>
+        <li><a href="/pages/shipping-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Shipping Policy</a></li>
+        <li><a href="/pages/processing-time" class="km-mobile-nav-link" style="font-size: 0.875rem;">Processing Time Policy</a></li>
+        <li><a href="/pages/privacy-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Privacy Policy</a></li>
+        <li><a href="/pages/return-policy" class="km-mobile-nav-link" style="font-size: 0.875rem;">Returns &amp; Refunds</a></li>
+
     </ul>
   </nav>
 </div>
@@ -280,7 +263,7 @@
           <a href="/pages/processing-time" class="km-policy-tab-link">⏱️ Processing Time</a>
           <a href="/pages/return-policy" class="km-policy-tab-link active">↩ Returns &amp; Refunds</a>
           <a href="/pages/privacy-policy" class="km-policy-tab-link">🔒 Privacy Policy</a>
-          <a href="/pages/contact" class="km-policy-tab-link">✉ Contact Us</a>
+          <a href="/pages/contact-us" class="km-policy-tab-link">✉ Contact Us</a>
         </div>
 
         <!-- 3 Feature Highlight Cards -->
@@ -390,7 +373,7 @@
           </p>
           <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 18px;">
             <a href="https://wa.me/917508427731" class="km-btn km-btn-primary" style="padding: 12px 24px; font-size: 0.88rem;">📱 WhatsApp: +91-75084-27731</a>
-            <a href="mailto:kraftengineering2024@gmail.com" class="km-btn km-btn-outline" style="padding: 12px 24px; font-size: 0.88rem;">✉ kraftengineering2024@gmail.com</a>
+            <a href="mailto:sales@kraftmart.shop" class="km-btn km-btn-outline" style="padding: 12px 24px; font-size: 0.88rem;">✉ sales@kraftmart.shop</a>
           </div>
         </div>
 
@@ -398,6 +381,7 @@
 
     </div>
   </section>
+
 
 
   </main>
@@ -416,6 +400,7 @@
         <p style="color: var(--color-ld-fog);">
           Handcrafted Indian wedding swords, Rajput talwars, and Sikh ceremonial heritage objects forged in Amritsar, Punjab since 1996. Our USP: Affordable swords at your doorstep with a pinch of customisation.
         </p>
+        <p style="color: var(--color-ld-fog);"> · Since </p>
 
         <!-- Newsletter Capture Form -->
         <form method="post" action="/cart/add">
@@ -433,12 +418,14 @@
       <div>
         <h4 class="km-footer-title">Quick Links</h4>
         <ul class="km-footer-links">
+
           <li><a href="/">Home</a></li>
           <li><a href="/collections/all">All Products</a></li>
           <li><a href="/pages/wedding-swords">Wedding Swords</a></li>
-          <li><a href="/pages/about">About KraftMart</a></li>
-          <li><a href="/blogs">Journal</a></li>
-          <li><a href="/pages/contact">Contact Us</a></li>
+          <li><a href="/pages/about-us">About KraftMart</a></li>
+          <li><a href="/blogs/news">Journal</a></li>
+          <li><a href="/pages/contact-us">Contact Us</a></li>
+
         </ul>
       </div>
 
@@ -446,10 +433,12 @@
       <div>
         <h4 class="km-footer-title">Our Policies</h4>
         <ul class="km-footer-links">
+
           <li><a href="/pages/shipping-policy">Shipping &amp; Delivery</a></li>
           <li><a href="/pages/processing-time">Processing Time Policy</a></li>
           <li><a href="/pages/return-policy">Refund &amp; Return Policy</a></li>
           <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
+
         </ul>
       </div>
 
@@ -459,8 +448,11 @@
         <ul class="km-footer-links">
           <li><span>📍 Amritsar, Punjab, India</span></li>
           <li><span>📞 <a href="tel:+917508427731" style="color: inherit;">+91-75084-27731</a></span></li>
-          <li><span>📧 <a href="mailto:support@kraftmart.shop" style="color: inherit;">support@kraftmart.shop</a></span></li>
-          <li><span>💬 <a href="https://wa.me/917508427731" target="_blank" rel="noopener noreferrer" style="color: inherit;">WhatsApp COD Support</a></span></li>
+          <li><span>📧 <a href="mailto:sales@kraftmart.shop" style="color: inherit;">sales@kraftmart.shop</a></span></li>
+          <li><span>💬 <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" style="color: inherit;">WhatsApp COD Support</a></span></li>
+
+
+
           <li><a href="https://www.google.com/search?sca_esv=9690ff17f276db6e&rlz=1C1FHFK_enIN1105IN1105&sxsrf=APpeQnuC7VLyucK3RXEanRReOrH--HBCyw:1790882647447&kgmid=/g/11q2rz95sv&q=Lakshmi+Engineering+Works+A.K.A+Kraftmart.shop" target="_blank" rel="noopener noreferrer" style="color: #4285F4; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg> Verified Google Business (4.9 ★)</a></li>
           <li><span>✈️ FedEx &amp; DHL Express Shipping</span></li>
         </ul>
@@ -469,7 +461,7 @@
 
     <div class="km-footer-bottom">
       <div>&copy; 2026 KraftMart. All Rights Reserved. Handcrafted in Amritsar, India.</div>
-      <div>Our USP: Affordable swords at your doorstep with a pinch of customisation • COD Available</div>
+      <div></div>
     </div>
   </div>
 </footer>
@@ -490,32 +482,7 @@
         </button>
       </div>
 
-      <div id="kmCartDrawerBody" class="km-cart-body">
-        <div
-          style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
-          <img src="/assets/sword.png" alt="Jaipur Wedding Talwar" loading="lazy" decoding="async"
-            style="width: 70px; height: 70px; object-fit: contain; background: #FFF; border-radius: var(--km-radius-sm); border: var(--km-border-subtle);" />
-          <div style="flex-grow: 1;">
-            <a href="#" style="font-family: var(--km-font-heading); font-weight: 600; font-size: 1.05rem;">Jaipur
-              Wedding Talwar</a>
-            <div style="font-size: 0.75rem; color: var(--km-text-secondary); margin: 4px 0;">Red Velvet Scabbard / Brass
-              Hilt</div>
-            <div style="font-weight: 700; font-size: 0.9375rem;">₹2,599 x 1</div>
-          </div>
-        </div>
-
-        <div
-          style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: var(--km-border-subtle);">
-          <img src="/assets/sword2.png" alt="Royal Jodhpur Damascus Talwar" loading="lazy" decoding="async"
-            style="width: 70px; height: 70px; object-fit: contain; background: #FFF; border-radius: var(--km-radius-sm); border: var(--km-border-subtle);" />
-          <div style="flex-grow: 1;">
-            <a href="#" style="font-family: var(--km-font-heading); font-weight: 600; font-size: 1.05rem;">Royal Jodhpur
-              Damascus Talwar</a>
-            <div style="font-size: 0.75rem; color: var(--km-text-secondary); margin: 4px 0;">Damascus Forged Steel</div>
-            <div style="font-weight: 700; font-size: 0.9375rem;">₹4,299 x 1</div>
-          </div>
-        </div>
-      </div>
+      <div id="kmCartDrawerBody" class="km-cart-body"></div>
 
       <div id="kmCartDrawerFooter" class="km-cart-footer">
         <div style="margin-bottom: 16px;">
@@ -530,10 +497,10 @@
         <div
           style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 1.125rem; font-weight: 700;">
           <span>Subtotal:</span>
-          <span id="kmCartSubtotal">₹6,898</span>
+          <span id="kmCartSubtotal">₹0</span>
         </div>
 
-        <button type="button" class="km-btn km-btn-gold" style="width: 100%;">
+        <button type="button" id="kmCartCheckout" class="km-btn km-btn-gold" style="width: 100%;">
           Proceed to Checkout →
         </button>
       </div>
@@ -609,7 +576,7 @@
             <button type="button" class="km-btn-add-to-cart-outline" id="kmQvAddToCartBtn" data-action="open-cart">
               Add To Cart
             </button>
-            <button type="button" class="km-btn-buy-now-solid" id="kmQvBuyNowBtn" data-action="open-cart">
+            <button type="button" class="km-btn-buy-now-solid" id="kmQvBuyNowBtn">
               Buy it now
             </button>
           </div>
@@ -644,6 +611,7 @@
             </div>
             <div id="kmSearchResults" class="km-search-results"></div>
           </div>
+
 
 
 </body>

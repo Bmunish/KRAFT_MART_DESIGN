@@ -8156,3 +8156,18 @@ shopify-variant-selector::part(radio-selected) {
   #featured-products .km-add-cart-btn { padding: 9px 8px !important; font-size: 0.75rem !important; }
 }
 @media (prefers-reduced-motion: reduce) { #about-us .km-story-row { animation: none; } }
+
+/* Keep mobile storefront cards readable without horizontal overflow. */
+@media (max-width: 600px) {
+  .km-helpline-num { font-size: 0.64rem !important; letter-spacing: 0; }
+  #featured-products .km-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  #featured-products .km-product-media { aspect-ratio: 1 / 1 !important; padding: 8px !important; }
+  #featured-products .km-product-media img { width: 100%; height: 100%; object-fit: contain !important; }
+  #featured-products .km-product-title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  #featured-products .km-add-cart-btn { min-height: 40px !important; }
+  #about-us .km-story-row { gap: 10px !important; margin-bottom: 22px !important; }
+  #about-us .km-story-copy > p:first-of-type { -webkit-line-clamp: 2; margin-bottom: 8px; }
+  #about-us .km-story-image img { width: 100%; max-height: 180px !important; object-fit: cover; }
+  .km-category-item-card, .km-category-item-card a,
+  .km-product-card a, .km-product-card button { cursor: pointer; }
+}

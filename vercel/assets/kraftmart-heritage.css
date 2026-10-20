@@ -7927,17 +7927,60 @@ shopify-variant-selector::part(radio-selected) {
 }
 
 
-/* Mobile homepage: hero banner, shoppable products, then supporting sections. */
-@media (max-width: 600px) {
+/* Mobile homepage: show the poster carousel before the featured product cards. */
+@media (max-width: 768px) {
   #km-hero {
     overflow: hidden !important;
     padding: 0 !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 
+  #km-hero > .km-hero-slider {
+    position: relative !important;
+    inset: auto !important;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1600 / 583;
+    flex: 0 0 auto;
+    background: #3a1b09;
+  }
+
+  #kmHeroSlider:has(.km-hero-slide:nth-child(3).is-active),
+  #kmHeroSlider:has(.km-hero-slide:nth-child(4).is-active) {
+    aspect-ratio: 1 / 1;
+  }
+
+  #km-hero .km-hero-slide {
+    filter: none !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    opacity: 0;
+    transform: translateX(100%) !important;
+    transition: opacity 700ms ease, transform 700ms ease !important;
+  }
+
+  #km-hero .km-hero-slide.is-active {
+    opacity: 1;
+    transform: translateX(0) !important;
+  }
+
+  #km-hero .km-hero-slide.is-exiting-left {
+    opacity: 0;
+    transform: translateX(-100%) !important;
+  }
+
+  #km-hero .km-hero-video-overlay,
   #km-hero > .km-container {
-    padding: 24px 16px 30px !important;
+    display: none !important;
   }
+}
 
+/* Compact product cards for narrow phones. */
+@media (max-width: 600px) {
   #km-hero .km-hero-grid {
     display: flex !important;
     flex-direction: column !important;
@@ -8074,4 +8117,57 @@ shopify-variant-selector::part(radio-selected) {
   .km-tcard-author-meta { overflow-wrap: anywhere; }
   .km-tcard-author-name { font-size: 0.82rem !important; }
   .km-tcard-author-meta { font-size: 0.66rem !important; }
+}
+
+/* Mobile-only layout overrides; kept last to beat legacy rules above. */
+@media (max-width: 768px) {
+  .km-top-utility-left { min-width: 0; flex-wrap: wrap; gap: 4px 6px; }
+  .km-helpline-num { font-size: 0.7rem; white-space: nowrap; }
+  .km-filter-sidebar, .km-mobile-filter-trigger { display: none !important; }
+  .km-category-carousel-wrapper { overflow: visible; }
+  .km-category-carousel { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible !important; }
+  .km-category-item-card { width: 100%; min-width: 0 !important; height: auto !important; flex: initial !important; aspect-ratio: 4 / 5; border-radius: 14px; }
+  .km-category-card-overlay { padding: 14px 12px; }
+  .km-category-card-overlay h3 { font-size: 1rem !important; line-height: 1.2; }
+  .km-category-card-overlay span { font-size: 0.58rem !important; }
+  #about-us { padding: 40px 0 !important; }
+  #about-us .km-story-header { margin-bottom: 24px !important; }
+  #about-us .km-story-header h2 { font-size: 1.7rem !important; line-height: 1.2; }
+  #about-us .km-story-header > p { display: none; }
+  #about-us .km-story-row { display: flex !important; flex-direction: column; align-items: stretch; gap: 14px !important; margin-bottom: 28px !important; animation: km-mobile-story-in 600ms ease both; }
+  #about-us .km-story-row-one .km-story-copy, #about-us .km-story-row-two .km-story-copy { order: 0; }
+  #about-us .km-story-row-one .km-story-image, #about-us .km-story-row-two .km-story-image { order: 1; }
+  #about-us .km-story-copy .km-eyebrow { font-size: 0.62rem; }
+  #about-us .km-story-copy h3 { font-size: 1.3rem !important; line-height: 1.25; margin: 4px 0 8px !important; }
+  #about-us .km-story-copy > p:not(:first-of-type), #about-us .km-story-copy > div[style*="background: rgba"] { display: none !important; }
+  #about-us .km-story-copy > p:first-of-type { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+  #about-us .km-story-image img { max-height: 220px !important; object-fit: cover; }
+  #about-us .km-story-image > div + div { display: none; }
+  #about-us .km-story-copy .km-btn { min-height: 42px; padding: 10px 16px !important; }
+}
+@media (max-width: 600px) {
+  #featured-products .km-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; max-width: none !important; gap: 12px !important; padding: 0 12px; }
+  #featured-products .km-product-card { min-width: 0 !important; }
+  #featured-products .km-product-media { aspect-ratio: 1 / 1 !important; padding: 8px !important; overflow: hidden; }
+  #featured-products .km-product-media img { width: 100%; height: 100%; object-fit: contain !important; }
+  #featured-products .km-product-info { padding: 10px !important; }
+  #featured-products .km-product-title { font-size: 0.82rem !important; }
+  #featured-products .km-price-current { font-size: 0.9rem !important; }
+  #featured-products .km-add-cart-btn { padding: 9px 8px !important; font-size: 0.75rem !important; }
+}
+@media (prefers-reduced-motion: reduce) { #about-us .km-story-row { animation: none; } }
+
+/* Keep mobile storefront cards readable without horizontal overflow. */
+@media (max-width: 600px) {
+  .km-helpline-num { font-size: 0.64rem !important; letter-spacing: 0; }
+  #featured-products .km-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  #featured-products .km-product-media { aspect-ratio: 1 / 1 !important; padding: 8px !important; }
+  #featured-products .km-product-media img { width: 100%; height: 100%; object-fit: contain !important; }
+  #featured-products .km-product-title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  #featured-products .km-add-cart-btn { min-height: 40px !important; }
+  #about-us .km-story-row { gap: 10px !important; margin-bottom: 22px !important; }
+  #about-us .km-story-copy > p:first-of-type { -webkit-line-clamp: 2; margin-bottom: 8px; }
+  #about-us .km-story-image img { width: 100%; max-height: 180px !important; object-fit: cover; }
+  .km-category-item-card, .km-category-item-card a,
+  .km-product-card a, .km-product-card button { cursor: pointer; }
 }

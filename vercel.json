@@ -49,6 +49,10 @@
       "destination": "/product-detail.html"
     },
     {
+      "source": "/blogs/news",
+      "destination": "/blogs/news/index.html"
+    },
+    {
       "source": "/blogs/news/:path*",
       "destination": "/blogs/news/wedding-talwar-selection/index.html"
     },
